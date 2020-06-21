@@ -1,4 +1,4 @@
-# 프로젝트 추가, 복제
+## 프로젝트 추가, 복제
 ### 현재 프로젝트에 원격저장소 추가하기
 ```
 git remote add origin https://github.com/sdcomms4227/assacamping.git
@@ -15,25 +15,23 @@ git clone https://github.com/sdcomms4227/assacamping.git 폴더명
 
 ---
 
-# 브랜치
+## 브랜치
 
 각자 브랜치를 생성해서 작업합니다.
 
-###브랜치 생성하기
+### 브랜치 생성하기
 ```
 git branch 브랜치명
 ```
 
-###해당 브랜치에서 작업하기
+### 해당 브랜치에서 작업하기
 ```
 git checkout 브랜치명
 ```
 
 ---
 
-#오류 발생시
-
-### Push 오류 발생
+## Push 오류 발생시
 1. git push orign master 시 다음과 같은 오류가 발생할 경우
 ```
 [rejected]
