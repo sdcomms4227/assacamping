@@ -1,10 +1,10 @@
-# 작업중인 프로젝트에 추가하기
+### 작업중인 프로젝트에 추가하기
 ```
 git remote add origin https://github.com/sdcomms4227/assacamping.git
 git push -u origin master
 ```
 
-# 프로젝트 복제하기
+## 프로젝트 복제하기
 ```
 git clone https://github.com/sdcomms4227/assacamping.git
 ```
