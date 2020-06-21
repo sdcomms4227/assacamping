@@ -1,3 +1,4 @@
+# 프로젝트 추가, 복제
 ### 작업중인 프로젝트에 추가하기
 ```
 git remote add origin https://github.com/sdcomms4227/assacamping.git
@@ -14,12 +15,19 @@ git clone https://github.com/sdcomms4227/assacamping.git 폴더명
 
 ---
 
-### 브랜치 생성
+# 브랜치
+
+각자 브랜치를 생성해서 작업합니다.
+
+1. 브랜치 생성
 ```
 git branch 브랜치명
 ```
 
-각자 본인의 브랜치에서 계속 작업하면 됩니다.
+2. 해당 브랜치에서 작업하기
+```
+git checkout 브랜치명
+```
 
 ---
 
