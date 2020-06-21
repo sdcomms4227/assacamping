@@ -1,5 +1,5 @@
 # 프로젝트 추가, 복제
-### 작업중인 프로젝트에 추가하기
+### 현재 프로젝트에 원격저장소 추가하기
 ```
 git remote add origin https://github.com/sdcomms4227/assacamping.git
 git push -u origin master
@@ -19,33 +19,35 @@ git clone https://github.com/sdcomms4227/assacamping.git 폴더명
 
 각자 브랜치를 생성해서 작업합니다.
 
-1. 브랜치 생성
+###브랜치 생성하기
 ```
 git branch 브랜치명
 ```
 
-2. 해당 브랜치에서 작업하기
+###해당 브랜치에서 작업하기
 ```
 git checkout 브랜치명
 ```
 
 ---
 
-### PUSH 오류 발생시
+#오류 발생시
+
+### Push 오류 발생
 1. git push orign master 시 다음과 같은 오류가 발생할 경우
 ```
 [rejected]
 error: failed to push some refs to ...
 ```
-2. push 하기전 pull을 해서 프로젝트를 병합해주어야 한다.
+2. push 하기전 pull을 해서 프로젝트를 병합해주어야 합니다.
 ```
 git pull origin master
 ```
-3. local 과 remote 사이의 연관성이 없을 경우 다음과 같은 오류가 발생한다.
+3. local 과 remote 사이의 연관성이 없을 경우 다음과 같은 오류가 발생합니다.
 ```
 fatal :refusing to merge unrelated histories
 ```
-4. --allow-unrelated-histories 옵션을 사용하여 연관성이 없더라도 pull이 가능하도록 허용하자.
+4. --allow-unrelated-histories 옵션을 사용하여 연관성이 없더라도 pull이 가능하도록 허용해야 합니다.
 ```
 git pull origin master --allow-unrelated-histories
 ```
