@@ -24,21 +24,20 @@ git branch 브랜치명
 ### PUSH 오류 발생시
 
 1. git push orign master 시 다음과 같은 오류가 발생할 경우
-
-  > [rejected]
-  > error: failed to push some refs to ...
-
+```
+[rejected]
+error: failed to push some refs to ...
+```
 
 2. push 하기전 pull을 해서 프로젝트를 병합해주어야 한다.
 ```
 git pull origin master
 ```
 
-
 3. local 과 remote 사이의 연관성이 없을 경우 다음과 같은 오류가 발생한다.
-
-  > fatal :refusing to merge unrelated histories
-
+```
+fatal :refusing to merge unrelated histories
+```
 
 4. --allow-unrelated-histories 옵션을 사용하여 연관성이 없더라도 pull이 가능하도록 허용해준다.
 ```
