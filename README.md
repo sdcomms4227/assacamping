@@ -6,7 +6,7 @@ git push -u origin master
 
 ### 프로젝트 복제하기
 ```
-git clone https://github.com/sdcomms4227/assacamping.git
+git clone https://github.com/sdcomms4227/assacamping.git [폴더명:생략시 assacamping으로 생성됨]
 ```
 
 ### 브랜치 생성
