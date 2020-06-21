@@ -10,14 +10,19 @@ git clone https://github.com/sdcomms4227/assacamping.git
 ### 새로운 이름으로 프로젝트 복제하기
 ```
 git clone https://github.com/sdcomms4227/assacamping.git 폴더명
----
 ```
+
+---
+
 ### 브랜치 생성
 ```
 git branch 브랜치명
 ```
+
 각자 본인의 브랜치에서 계속 작업하면 됩니다.
+
 ---
+
 ### PUSH 오류 발생시
 1. git push orign master 시 다음과 같은 오류가 발생할 경우
 ```
