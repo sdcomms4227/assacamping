@@ -39,7 +39,7 @@ git pull origin master
 fatal :refusing to merge unrelated histories
 ```
 
-4. --allow-unrelated-histories 옵션을 사용하여 연관성이 없더라도 pull이 가능하도록 허용해준다.
+4. --allow-unrelated-histories 옵션을 사용하여 연관성이 없더라도 pull이 가능하도록 허용하자.
 ```
 git pull origin master --allow-unrelated-histories
 ```
