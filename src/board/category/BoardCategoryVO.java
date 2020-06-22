@@ -1,9 +1,11 @@
-package boardCategory;
+package board.category;
 
 public class BoardCategoryVO {
 
 	private int boardCategoryNo;
 	private String boardCategoryName;
+	
+	public BoardCategoryVO() {}
 	
 	public BoardCategoryVO(int boardCategoryNo, String boardCategoryName) {
 		super();

@@ -1,4 +1,4 @@
-package util;
+package dbUtil;
 
 import java.sql.Connection;
 
@@ -13,7 +13,7 @@ public class DBConnection {
 		Context init = new InitialContext();
 		
 		// 커넥션풀 얻기
-		DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/assacamping");
+		DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/assa");
 			
 		// 커넥션풀에 존재하는 커넥션 얻기
 		Connection conn = ds.getConnection();
