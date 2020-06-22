@@ -15,6 +15,28 @@ public class UserVO {
 	private Timestamp userDate;
 	private int userUse;
 	
+	public UserVO() {
+		System.out.println("객체 생성시 UserVO 생성자가 호출됨");
+	}
+	
+	
+	
+	public UserVO(String userId, String userPw, String userName, String userPhone, String userEmail, String userZipcode,
+			String userAddress1, String userAddress2, int userUse) {
+		super();
+		this.userId = userId;
+		this.userPw = userPw;
+		this.userName = userName;
+		this.userPhone = userPhone;
+		this.userEmail = userEmail;
+		this.userZipcode = userZipcode;
+		this.userAddress1 = userAddress1;
+		this.userAddress2 = userAddress2;
+		this.userUse = userUse;
+	}
+
+
+
 	public UserVO(String userId, String userPw, String userName, String userPhone, String userEmail, String userZipcode,
 			String userAddress1, String userAddress2, Timestamp userDate, int userUse) {
 		super();
