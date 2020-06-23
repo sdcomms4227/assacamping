@@ -39,7 +39,7 @@ public class ProductCategoryController extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		
 		String action = request.getPathInfo();
-		System.out.println("action:" + action);
+		System.out.println("action: " + action);
 		
 		List<ProductCategoryVO> productCategoryList = null;
 		
@@ -48,7 +48,7 @@ public class ProductCategoryController extends HttpServlet {
 				
 				productCategoryList = productCategoryService.listProductCategory();				
 				request.setAttribute("productCategoryList",  productCategoryList);				
-				nextPage = "/product/listProductCategory.jsp";
+				nextPage = "/admin/listProductCategory.jsp";
 				
 			}else if(action.contentEquals("/addProductCategory.do")) {
 				

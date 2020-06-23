@@ -14,8 +14,7 @@
 	</div>
 	<nav class="menu_nav">
 		<ul class="menu_mm">
-			<li class="menu_mm"><a href="${contextPath}/proCategory/listProductCategory.do">상품 카테고리 목록</a></li>
-			<li class="menu_mm"><a href="${contextPath}/brdCategory/listBoardCategory.do">게시판 카테고리 목록</a></li>
+			<li class="menu_mm"><a href="${contextPath}/admin/admin.jsp">관리자모드</a></li>
 		</ul>
 	</nav>
 </div>
