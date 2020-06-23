@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-
+<% request.setCharacterEncoding("UTF-8"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +13,12 @@
 <script>
 	function deleteCategory(boardCategoryNo){
 		if(confirm("정말로 삭제하시겠습니까?")){			
-			location.href="${contextPath}/brdCate/deleteBoardCategory.do?boardCategoryNo=" + boardCategoryNo;
+			location.href="${contextPath}/brdCategory/deleteBoardCategory.do?boardCategoryNo=" + boardCategoryNo;
 		}
 	}
 	function updateCategory(boardCategoryNo, boardCategoryName){
 		form = document.formBoardCategory;
-		form.action = "${contextPath}/brdCate/updateBoardCategory.do";
+		form.action = "${contextPath}/brdCategory/updateBoardCategory.do";
 		form.buttonBoardCategory.innerText = "수정하기";
 		form.buttonBoardCategory.classList.remove("btn-primary");
 		form.buttonBoardCategory.classList.add("btn-warning");
@@ -73,7 +68,7 @@
 				</tbody>
 			</table>
 		
-			<form action="${contextPath}/brdCate/addBoardCategory.do" method="post" name="formBoardCategory">
+			<form action="${contextPath}/brdCategory/addBoardCategory.do" method="post" name="formBoardCategory">
 				<input type="hidden" name="boardCategoryNo" />
 				<div class="input-group">
 					<div class="input-group-prepend">

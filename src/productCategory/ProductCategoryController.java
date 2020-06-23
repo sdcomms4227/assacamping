@@ -48,7 +48,7 @@ public class ProductCategoryController extends HttpServlet {
 				
 				productCategoryList = productCategoryService.listProductCategory();				
 				request.setAttribute("productCategoryList",  productCategoryList);				
-				nextPage = "/productCategory/listProductCategory.jsp";
+				nextPage = "/product/listProductCategory.jsp";
 				
 			}else if(action.contentEquals("/addProductCategory.do")) {
 				

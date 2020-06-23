@@ -1,4 +1,4 @@
-package board.category;
+package boardCategory;
 
 import java.util.List;
 
