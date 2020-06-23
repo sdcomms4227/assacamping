@@ -14,11 +14,8 @@
 	</div>
 	<nav class="menu_nav">
 		<ul class="menu_mm">
-			<li class="menu_mm"><a href="${contextPath}/product/productList.jsp">상품 목록</a></li>
-			<li class="menu_mm"><a href="${contextPath}/product/productInfo.jsp">상품 상세보기</a></li>
-			<li class="menu_mm"><a href="${contextPath}/order/cart.jsp">장바구니</a></li>
-			<li class="menu_mm"><a href="${contextPath}/order/checkout.jsp">주문하기</a></li>
-			<li class="menu_mm"><a href="${contextPath}/center/contact.jsp">contact</a></li>
+			<li class="menu_mm"><a href="${contextPath}/proCategory/listProductCategory.do">상품 카테고리 목록</a></li>
+			<li class="menu_mm"><a href="${contextPath}/brdCategory/listBoardCategory.do">게시판 카테고리 목록</a></li>
 		</ul>
 	</nav>
 </div>
