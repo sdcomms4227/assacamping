@@ -41,8 +41,8 @@ public class BoardCategoryController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=utf-8");
 		
-		String action = request.getPathInfo();		
-		System.out.println("action : " + action);
+		String action = request.getPathInfo();
+		System.out.println("action: " + action);
 		
 		List<BoardCategoryVO> boardCategoryList = null;
 		
@@ -51,7 +51,7 @@ public class BoardCategoryController extends HttpServlet {
 				
 				boardCategoryList = boardCategoryService.listBoardCategory();				
 				request.setAttribute("boardCategoryList",  boardCategoryList);				
-				nextPage = "/board/listBoardCategory.jsp";
+				nextPage = "/admin/listBoardCategory.jsp";
 				
 			}else if(action.contentEquals("/addBoardCategory.do")) {
 				
