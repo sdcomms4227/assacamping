@@ -1,4 +1,4 @@
-package board.category;
+package boardCategory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/brdCate/*")
+@WebServlet("/brdCategory/*")
 public class BoardCategoryController extends HttpServlet {
 	
 	BoardCategoryService boardCategoryService;
@@ -69,7 +69,7 @@ public class BoardCategoryController extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.write("<script>");
 				out.write("alert('" + msg + "');");
-				out.write("location.href='" + request.getContextPath() + "/brdCate/listBoardCategory.do';");
+				out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
 				out.write("</script>");
 				return;
 				
@@ -91,7 +91,7 @@ public class BoardCategoryController extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.write("<script>");
 				out.write("alert('" + msg + "');");
-				out.write("location.href='" + request.getContextPath() + "/brdCate/listBoardCategory.do';");
+				out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
 				out.write("</script>");
 				
 				return;
@@ -111,7 +111,7 @@ public class BoardCategoryController extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.write("<script>");
 				out.write("alert('" + msg + "');");
-				out.write("location.href='" + request.getContextPath() + "/brdCate/listBoardCategory.do';");
+				out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
 				out.write("</script>");
 				
 				return;
@@ -121,8 +121,8 @@ public class BoardCategoryController extends HttpServlet {
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);
 		}
+		
 	}
-	
 	
 }
 
