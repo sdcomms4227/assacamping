@@ -1,19 +1,29 @@
 package productCategory;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class ProductCategoryService {
 	
 	ProductCategoryDAO productCategoryDAO;
 	
-	public ProductCategoryService() throws ClassNotFoundException, SQLException {
+	public ProductCategoryService() {
 		productCategoryDAO = new ProductCategoryDAO();
 	}
 	
-	public List<ProductCategoryVO> listProductCategories() {
-		List<ProductCategoryVO> productCategoryList = productCategoryDAO.getAllproductCategories();
-		return productCategoryList;
+	public List<ProductCategoryVO> listProductCategory() {
+		return productCategoryDAO.selectAllproductCategory();
+	}
+
+	public int addProductCategory(ProductCategoryVO productCategoryVO) {
+		return productCategoryDAO.insertNewProductCategory(productCategoryVO);
+	}
+
+	public int updateProductCategory(ProductCategoryVO productCategoryVO) {
+		return productCategoryDAO.updateProductCategory(productCategoryVO);
+	}
+
+	public int deleteProductCategory(int productCategoryNo) {
+		return productCategoryDAO.deleteProductCategory(productCategoryNo);	
 	}
 
 }
