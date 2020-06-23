@@ -51,7 +51,7 @@ public class BoardCategoryController extends HttpServlet {
 				
 				boardCategoryList = boardCategoryService.listBoardCategory();				
 				request.setAttribute("boardCategoryList",  boardCategoryList);				
-				nextPage = "/boardCategory/listBoardCategory.jsp";
+				nextPage = "/board/listBoardCategory.jsp";
 				
 			}else if(action.contentEquals("/addBoardCategory.do")) {
 				

@@ -1,105 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
-<title>Categories</title>
+<title>ASSA Camping - 나혼자간다</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Wish shop project">
+<meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="styles/categories.css">
-<link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/categories.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/categories_responsive.css">
 </head>
 <body>
 
 <div class="super_container">
 	
 	<!-- Header -->
-
-	<header class="header">
-		<div class="header_inner d-flex flex-row align-items-center justify-content-start">
-			<div class="logo"><a href="#">Wish</a></div>
-			<nav class="main_nav">
-				<ul>
-					<li><a href="index.html">home</a></li>
-					<li><a href="categories.html">clothes</a></li>
-					<li><a href="categories.html">accessories</a></li>
-					<li><a href="categories.html">lingerie</a></li>
-					<li><a href="contact.html">contact</a></li>
-				</ul>
-			</nav>
-			<div class="header_content ml-auto">
-				<div class="search header_search">
-					<form action="#">
-						<input type="search" class="search_input" required="required">
-						<button type="submit" id="search_button" class="search_button"><img src="images/magnifying-glass.svg" alt=""></button>
-					</form>
-				</div>
-				<div class="shopping">
-					<!-- Cart -->
-					<a href="#">
-						<div class="cart">
-							<img src="images/shopping-bag.svg" alt="">
-							<div class="cart_num_container">
-								<div class="cart_num_inner">
-									<div class="cart_num">1</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<!-- Star -->
-					<a href="#">
-						<div class="star">
-							<img src="images/star.svg" alt="">
-							<div class="star_num_container">
-								<div class="star_num_inner">
-									<div class="star_num">0</div>
-								</div>
-							</div>
-						</div>
-					</a>
-					<!-- Avatar -->
-					<a href="#">
-						<div class="avatar">
-							<img src="images/avatar.svg" alt="">
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="burger_container d-flex flex-column align-items-center justify-content-around menu_mm"><div></div><div></div><div></div></div>
-		</div>
-	</header>
+	<jsp:include page="../inc/header.jsp" />
 
 	<!-- Menu -->
-
-	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		<div class="logo menu_mm"><a href="#">Wish</a></div>
-		<div class="search">
-			<form action="#">
-				<input type="search" class="search_input menu_mm" required="required">
-				<button type="submit" id="search_button_menu" class="search_button menu_mm"><img class="menu_mm" src="images/magnifying-glass.svg" alt=""></button>
-			</form>
-		</div>
-		<nav class="menu_nav">
-			<ul class="menu_mm">
-				<li class="menu_mm"><a href="#">home</a></li>
-				<li class="menu_mm"><a href="#">clothes</a></li>
-				<li class="menu_mm"><a href="#">accessories</a></li>
-				<li class="menu_mm"><a href="#">lingerie</a></li>
-				<li class="menu_mm"><a href="#">contact</a></li>
-			</ul>
-		</nav>
-	</div>
+	<jsp:include page="../inc/menu.jsp" />
 
 	<!-- Home -->
 
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/categories.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -194,7 +124,7 @@
 								<ul>
 									<!-- Best Seller Item -->
 									<li class="clearfix">
-										<div class="best_image"><img src="images/best_1.jpg" alt=""></div>
+										<div class="best_image"><img src="${contextPath}/images/best_1.jpg" alt=""></div>
 										<div class="best_content">
 											<div class="best_title"><a href="product.html">Blue dress with dots</a></div>
 											<div class="best_price">$45</div>
@@ -204,7 +134,7 @@
 
 									<!-- Best Seller Item -->
 									<li class="clearfix">
-										<div class="best_image"><img src="images/best_2.jpg" alt=""></div>
+										<div class="best_image"><img src="${contextPath}/images/best_2.jpg" alt=""></div>
 										<div class="best_content">
 											<div class="best_title"><a href="product.html">White t-shirt</a></div>
 											<div class="best_price">$45</div>
@@ -214,7 +144,7 @@
 
 									<!-- Best Seller Item -->
 									<li class="clearfix">
-										<div class="best_image"><img src="images/best_3.jpg" alt=""></div>
+										<div class="best_image"><img src="${contextPath}/images/best_3.jpg" alt=""></div>
 										<div class="best_content">
 											<div class="best_title"><a href="product.html">Blue dress with dots</a></div>
 											<div class="best_price">$45</div>
@@ -224,7 +154,7 @@
 
 									<!-- Best Seller Item -->
 									<li class="clearfix">
-										<div class="best_image"><img src="images/best_4.jpg" alt=""></div>
+										<div class="best_image"><img src="${contextPath}/images/best_4.jpg" alt=""></div>
 										<div class="best_content">
 											<div class="best_title"><a href="product.html">White t-shirt</a></div>
 											<div class="best_price">$45</div>
@@ -242,7 +172,7 @@
 
 								<!-- Option Item -->
 								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_1.png" alt=""></div>
+									<div class="option_image"><img src="${contextPath}/images/option_1.png" alt=""></div>
 									<div class="option_content">
 										<div class="option_title">30 Days Returns</div>
 										<div class="option_subtitle">No questions asked</div>
@@ -251,7 +181,7 @@
 
 								<!-- Option Item -->
 								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_2.png" alt=""></div>
+									<div class="option_image"><img src="${contextPath}/images/option_2.png" alt=""></div>
 									<div class="option_content">
 										<div class="option_title">Free Delivery</div>
 										<div class="option_subtitle">On all orders</div>
@@ -260,7 +190,7 @@
 
 								<!-- Option Item -->
 								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_3.png" alt=""></div>
+									<div class="option_image"><img src="${contextPath}/images/option_3.png" alt=""></div>
 									<div class="option_content">
 										<div class="option_title">Secure Payments</div>
 										<div class="option_subtitle">No need to worry</div>
@@ -269,7 +199,7 @@
 
 								<!-- Option Item -->
 								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_4.png" alt=""></div>
+									<div class="option_image"><img src="${contextPath}/images/option_4.png" alt=""></div>
 									<div class="option_content">
 										<div class="option_title">24/7 Support</div>
 										<div class="option_subtitle">Just call us</div>
@@ -325,7 +255,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_1.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_1.jpg" alt=""></div>
 							<div class="rating rating_4" data-rating="4">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -339,7 +269,7 @@
 									<div class="product_price">$45.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -347,7 +277,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_2.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_2.jpg" alt=""></div>
 							<div class="rating rating_5" data-rating="5">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -361,7 +291,7 @@
 									<div class="product_price">$35.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -369,7 +299,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_3.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_3.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -383,7 +313,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -391,7 +321,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_4.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_4.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -405,7 +335,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -413,7 +343,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_5.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_5.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -427,7 +357,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -435,7 +365,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_6.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_6.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -449,7 +379,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -457,7 +387,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_7.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_7.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -471,7 +401,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -479,7 +409,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_8.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_8.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -493,7 +423,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -501,7 +431,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_9.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_9.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -515,7 +445,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -523,7 +453,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_10.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_10.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -537,7 +467,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -545,7 +475,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_11.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_11.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -559,7 +489,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -567,7 +497,7 @@
 
 						<!-- Product -->
 						<div class="product">
-							<div class="product_image"><img src="images/product_12.jpg" alt=""></div>
+							<div class="product_image"><img src="${contextPath}/images/product_12.jpg" alt=""></div>
 							<div class="rating rating_3" data-rating="3">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -581,7 +511,7 @@
 									<div class="product_price">$145.00</div>
 								</div>
 								<div class="product_options">
-									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
+									<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 									<div class="product_fav product_option">+</div>
 								</div>
 							</div>
@@ -612,7 +542,7 @@
 
 			<!-- Promo 1 -->
 			<div class="sidebar_promo_1 sidebar_promo d-flex flex-column align-items-center justify-content-center">
-				<div class="sidebar_promo_image" style="background-image: url(images/sidebar_promo_1.jpg)"></div>
+				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_1.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
 					<div class="sidebar_promo_title">30%<span>off</span></div>
 					<div class="sidebar_promo_subtitle">On all shoes</div>
@@ -622,7 +552,7 @@
 
 			<!-- Promo 2 -->
 			<div class="sidebar_promo_2 sidebar_promo">
-				<div class="sidebar_promo_image" style="background-image: url(images/sidebar_promo_2.jpg)"></div>
+				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_2.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
 					<div class="sidebar_promo_title">30%<span>off</span></div>
 					<div class="sidebar_promo_subtitle">On all shoes</div>
@@ -641,7 +571,7 @@
 
 	<div class="newsletter">
 		<div class="newsletter_content">
-			<div class="newsletter_image" style="background-image:url(images/newsletter.jpg)"></div>
+			<div class="newsletter_image" style="background-image:url(${contextPath}/images/newsletter.jpg)"></div>
 			<div class="container">
 				<div class="row">
 					<div class="col">
@@ -667,47 +597,18 @@
 	</div>
 
 	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<div class="footer_logo"><a href="#">Wish</a></div>
-					<nav class="footer_nav">
-						<ul>
-							<li><a href="index.html">home</a></li>
-							<li><a href="categories.html">clothes</a></li>
-							<li><a href="categories.html">accessories</a></li>
-							<li><a href="categories.html">lingerie</a></li>
-							<li><a href="contact.html">contact</a></li>
-						</ul>
-					</nav>
-					<div class="footer_social">
-						<ul>
-							<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-reddit-alien" aria-hidden="true"></i></a></li>
-							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-						</ul>
-					</div>
-					<div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<jsp:include page="../inc/footer.jsp" />
+	
 </div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
-<script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="js/categories_custom.js"></script>
+<script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
+<script src="${contextPath}/js/popper.js"></script>
+<script src="${contextPath}/js/bootstrap.min.js"></script>
+<script src="${contextPath}/plugins/easing/easing.js"></script>
+<script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
+<script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="${contextPath}/js/categories_custom.js"></script>
 </body>
 </html>
