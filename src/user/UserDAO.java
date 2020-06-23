@@ -103,9 +103,100 @@ public class UserDAO {
 			System.out.println("addUser메소드 내부에서 SQL실행 오류 : " + e);
 		}finally {
 			resourceClose();
-		}//addUser메소드
-	}
+		}
+	}//addUser메소드
+	
+	public UserVO findUser(String userId) {
+		//조회한 회원 한사람의 정보를 저장할 용도의 UserVO객체를 담을 변수 선언
+		UserVO userInfo = null;
+		try {
+			conn = dataFactory.getConnection();
+			//매개변수로 전달 받은 id에 해당하는 회원레코드 검색
+			String query = "select * from user where userId=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs.next();
+			//검색한 회원 한줄의 정보를 얻어 UserVO객체의 각 변수에 저장
+			userInfo = new UserVO(rs.getString("userId"),
+					 rs.getString("userPw"),
+					 rs.getString("userName"),
+					 rs.getString("userPhone"),
+					 rs.getString("userEmail"),
+					 rs.getString("userZipcode"),
+					 rs.getString("userAddress1"),
+					 rs.getString("userAddress2"),
+					 rs.getTimestamp("userDate"),
+					 rs.getInt("userUse")); 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
+		return userInfo; //매개변수로 전달받은 회원 ID로 조회한 회원정보를 반환
+	}//findUser 메소드
+	
+	//매개변수로 전달받은 UserVO객체(수정할 정보)를 이용하여 DB에 저장된 회원 레코드 수정
+	public void modUser(UserVO userVO) {
+		
+		try {
+			conn = dataFactory.getConnection();
+			String query = "update user set userPw=?, userName=?, userPhone=?, userEmail=?, userZipcode=?, userAddress1=?, userAddress2=? where userId=?";
+			//?기호에 대응되는 값을 제외한 update전체 문장을 로딩한 객체 얻기
+			pstmt = conn.prepareStatement(query);
+			//?기호에 대응되는 수정할 값을 설정
+			pstmt.setString(1, userVO.getUserPw());
+			pstmt.setString(2, userVO.getUserName());
+			pstmt.setString(3, userVO.getUserPhone());
+			pstmt.setString(4, userVO.getUserEmail());
+			pstmt.setString(5, userVO.getUserZipcode());
+			pstmt.setString(6, userVO.getUserAddress1());
+			pstmt.setString(7, userVO.getUserAddress2());
+			//UPDATE전체 구문 DB에 전송하여 실행
+			pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
+	}//modUser메소드 끝
+	
+	//매개변수로 전달받은 삭제할 회원id를 통해 회원삭제
+	public void delUser(String userId) {
+		
+		try {
+			conn = dataFactory.getConnection();
+			
+			String query = "delete from user where id=?";
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("delUser메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			//자원 해제
+			resourceClose();
+		}
+	}//delUser메소드 
+	
+	
 }//UserDAO클래스 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
