@@ -26,10 +26,8 @@
 	<!-- Menu -->
 	<jsp:include page="../inc/menu.jsp" />
 
-	<!-- Home -->
-
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/categories.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -51,7 +49,7 @@
 	</div>
 
 	<!-- Checkout -->
-
+<form action="${contextPath}/proorder/pay.do" method="post" id="checkout_form">
 	<div class="checkout">
 		<div class="container">
 			<div class="row">
@@ -61,38 +59,30 @@
 					<div class="billing">
 						<div class="checkout_title">billing details</div>
 						<div class="checkout_form_container">
-							<form action="#" id="checkout_form">
+							
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-									<input type="text" class="checkout_input checkout_input_50" placeholder="First Name" required="required">
-									<input type="text" class="checkout_input checkout_input_50" placeholder="Last Name" required="required">
+									<input type="text" class="checkout_input checkout_input_50"  value="${orderList.userName}"placeholder=" 이름" required="required">
+									
 								</div>
-								<input type="text" class="checkout_input" placeholder="Company Name">
-								<input type="text" class="checkout_input" placeholder="E-mail" required="required">
-								<select name="country" id="country" class="country_select checkout_input">
-									<option>Country</option>
-									<option>Country</option>
-									<option>Country</option>
-								</select>
-								<input type="text" class="checkout_input" placeholder="Address" required="required">
-								<input type="text" class="checkout_input" placeholder="Town" required="required">
+								<input type="text" class="checkout_input" value="${orderList.userEmail}" placeholder="이메일" required="required">
+								<!-- 주소 api연동 해쥬세여 -->
+								
+								<input type="text" class="checkout_input"value="${orderList.userAddress1}" placeholder="주소" required="required">
+								<input type="text" class="checkout_input" value="${orderList.userAddress2}" placeholder="상세주소" required="required">
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-									<input type="text" class="checkout_input checkout_input_50" placeholder="Zipcode" required="required">
-									<input type="text" class="checkout_input checkout_input_50" placeholder="Phone No" required="required">
+									<input type="text" class="checkout_input checkout_input_50" value="${orderList.userZipcode}"  placeholder="우편번호" required="required">
+									<input type="text" class="checkout_input checkout_input_50" value="${orderList.userPhone}" placeholder="전화번호" required="required">
 								</div>
-								<textarea name="checkout_comment" id="checkout_comment" class="checkout_comment" placeholder="Leave a comment about your order"></textarea>
+								  <p>요청사항 &nbsp;&nbsp;&nbsp; <select name="userComment"  id="userComment" class="userComment">
+				                           <option>배송전 연락 바랍니다</option>
+				                           <option>부재시 경비실에 맡겨주세요</option>
+				                           <option>부재시 연락 바랍니다</option>
+                                   </select>
+								</p>
 								<div class="billing_options">
-									<div class="billing_account">
-										<input type="checkbox" id="checkbox_account" name="regular_checkbox" class="regular_checkbox checkbox_account">
-										<label for="checkbox_account"><img src="${contextPath}/images/checked.png" alt=""></label>
-										<span>Create an account</span>
-									</div>
-									<div class="billing_shipping">
-										<input type="checkbox" id="checkbox_shipping" name="regular_checkbox" class="regular_checkbox checkbox_shipping">
-										<label for="checkbox_shipping"><img src="${contextPath}/images/checked.png" alt=""></label>
-										<span>Ship to a different address</span>
-									</div>
+									
 								</div>
-							</form>
+							
 						</div>
 					</div>
 				</div>
@@ -105,7 +95,7 @@
 							<ul>
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Product</div>
-									<div class="cart_total_price ml-auto">Total</div>
+									<div class="cart_total_price ml-auto">Total:${ordercount}</div>
 								</li>
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">2 Piece Swimsuit x1</div>
@@ -126,36 +116,39 @@
 							</ul>
 						</div>
 						<div class="payment_options">
+							 
+							
 							<div>
-								<input type="radio" id="radio_payment_1" name="regular_radio" class="regular_radio">
+								<input type="radio" id="radio_payment_1" name="regular_radio" class="regular_radio" >
 								<label for="radio_payment_1">cash on delivery</label>
 							</div>
 							<div>
 								<input type="radio" id="radio_payment_2" name="regular_radio" class="regular_radio" checked>
 								<label for="radio_payment_2">paypal</label>
-								<div class="visa payment_option"><a href="#"><img src="${contextPath}/images/visa.jpg" alt=""></a></div>
-								<div class="master payment_option"><a href="#"><img src="${contextPath}/images/master.jpg" alt=""></a></div>
+								<div class="visa payment_option"><a href="#"><img src="images/visa.jpg" alt=""></a></div>
+								<div class="master payment_option"><a href="#"><img src="images/master.jpg" alt=""></a></div>
 							</div>
 							<button class="cart_total_button">place order</button>
+						
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+</form>
 	<!-- Newsletter -->
 
 	<div class="newsletter">
 		<div class="newsletter_content">
-			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart_nl.jpg" data-speed="0.8"></div>
+			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="images/cart_nl.jpg" data-speed="0.8"></div>
 			<div class="container">
 				<div class="row options">
 
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_1.png" alt=""></div>
+							<div class="option_image"><img src="images/option_1.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">30 Days Returns</div>
 								<div class="option_subtitle">No questions asked</div>
@@ -166,7 +159,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_2.png" alt=""></div>
+							<div class="option_image"><img src="images/option_2.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">Free Delivery</div>
 								<div class="option_subtitle">On all orders</div>
@@ -177,7 +170,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_3.png" alt=""></div>
+							<div class="option_image"><img src="images/option_3.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">Secure Payments</div>
 								<div class="option_subtitle">No need to worry</div>
@@ -188,7 +181,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_4.png" alt=""></div>
+							<div class="option_image"><img src="images/option_4.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">24/7 Support</div>
 								<div class="option_subtitle">Just call us</div>
