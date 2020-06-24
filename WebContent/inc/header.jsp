@@ -12,7 +12,7 @@
 			<ul>
 				<li><a href="${contextPath}/product/productList.jsp">상품 목록</a></li>
 				<li><a href="${contextPath}/product/productInfo.jsp">상품 상세보기</a></li>
-				<li><a href="${contextPath}/order/cart.jsp">장바구니</a></li>
+				<li><a href="${contextPath}/order/productCart.jsp">장바구니</a></li>
 				<li><a href="${contextPath}/order/checkout.jsp">주문하기</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">contact</a></li>
 			</ul>
@@ -26,7 +26,7 @@
 			</div>
 			<div class="shopping">
 				<!-- Cart -->
-				<a href="#">
+				<a href="${contextPath}/order/productCart.jsp">
 					<div class="cart">
 						<img src="${contextPath}/images/shopping-bag.svg" alt="">
 						<div class="cart_num_container">
@@ -48,7 +48,7 @@
 					</div>
 				</a>
 				<!-- Avatar -->
-				<a href="#">
+				<a href="${contextPath}/user/login.jsp">
 					<div class="avatar">
 						<img src="${contextPath}/images/avatar.svg" alt="">
 					</div>
