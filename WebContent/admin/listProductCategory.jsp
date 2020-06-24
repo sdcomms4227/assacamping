@@ -24,7 +24,7 @@
 <c:choose>
 <c:when test="${productCategoryList == null}">
 			<tr>
-				<td class="empty" colspan="2">등록된 상품 카테고리가 없습니다.</td>
+				<td class="empty" colspan="3">등록된 상품 카테고리가 없습니다.</td>
 			</tr>
 </c:when>
 <c:when test="${productCategoryList != null}">

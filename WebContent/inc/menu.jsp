@@ -15,6 +15,7 @@
 	<nav class="menu_nav">
 		<ul class="menu_mm">
 			<li class="menu_mm"><a href="${contextPath}/admin/admin.jsp">관리자모드</a></li>
+			<li class="menu_mm"><a href="${contextPath}/camp/listCamping.do">캠핑정보</a></li>
 		</ul>
 	</nav>
 </div>

@@ -46,78 +46,78 @@ public class BoardCategoryController extends HttpServlet {
 		
 		List<BoardCategoryVO> boardCategoryList = null;
 		
-		if(action != null){
-			if(action.contentEquals("/listBoardCategory.do")) {			
+		if(action == null || action.contentEquals("/listBoardCategory.do")) {			
 				
-				boardCategoryList = boardCategoryService.listBoardCategory();				
-				request.setAttribute("boardCategoryList",  boardCategoryList);				
-				nextPage = "/admin/listBoardCategory.jsp";
-				
-			}else if(action.contentEquals("/addBoardCategory.do")) {
-				
-				String boardCategoryName = request.getParameter("boardCategoryName");
-				boardCategoryVO.setBoardCategoryName(boardCategoryName);
-				int result = boardCategoryService.addBoardCategory(boardCategoryVO);
-				
-				String msg = "";
-				if(result > 0) {
-					msg = "새 카테고리를 추가하였습니다.";
-				}else {
-					msg = "오류가 발생했습니다.";
-				}
-				
-				PrintWriter out = response.getWriter();
-				out.write("<script>");
-				out.write("alert('" + msg + "');");
-				out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
-				out.write("</script>");
-				return;
-				
-			}else if(action.contentEquals("/updateBoardCategory.do")) {
-
-				int boardCategoryNo = Integer.parseInt(request.getParameter("boardCategoryNo"));	
-				String boardCategoryName = request.getParameter("boardCategoryName");				
-				boardCategoryVO.setBoardCategoryNo(boardCategoryNo);
-				boardCategoryVO.setBoardCategoryName(boardCategoryName);
-				int result = boardCategoryService.updateBoardCategory(boardCategoryVO);
-				
-				String msg = "";
-				if(result > 0) {
-					msg = "카테고리 정보가 수정되었습니다.";
-				}else {
-					msg = "오류가 발생했습니다.";
-				}
-				
-				PrintWriter out = response.getWriter();
-				out.write("<script>");
-				out.write("alert('" + msg + "');");
-				out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
-				out.write("</script>");
-				
-				return;
-				
-			}else if(action.contentEquals("/deleteBoardCategory.do")) {
-				
-				int boardCategoryNo = Integer.parseInt(request.getParameter("boardCategoryNo"));				
-				int result = boardCategoryService.deleteBoardCategory(boardCategoryNo);
-
-				String msg = "";
-				if(result > 0) {
-					msg = "카테고리를 삭제하였습니다.";
-				}else {
-					msg = "오류가 발생했습니다.";
-				}
-				
-				PrintWriter out = response.getWriter();
-				out.write("<script>");
-				out.write("alert('" + msg + "');");
-				out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
-				out.write("</script>");
-				
-				return;
-				
+			boardCategoryList = boardCategoryService.listBoardCategory();				
+			request.setAttribute("boardCategoryList",  boardCategoryList);				
+			nextPage = "/admin/listBoardCategory.jsp";
+			
+		}else if(action.contentEquals("/addBoardCategory.do")) {
+			
+			String boardCategoryName = request.getParameter("boardCategoryName");
+			boardCategoryVO.setBoardCategoryName(boardCategoryName);
+			int result = boardCategoryService.addBoardCategory(boardCategoryVO);
+			
+			String msg = "";
+			if(result > 0) {
+				msg = "새 카테고리를 추가하였습니다.";
+			}else {
+				msg = "오류가 발생했습니다.";
 			}
 			
+			PrintWriter out = response.getWriter();
+			out.write("<script>");
+			out.write("alert('" + msg + "');");
+			out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
+			out.write("</script>");
+			return;
+			
+		}else if(action.contentEquals("/updateBoardCategory.do")) {
+
+			int boardCategoryNo = Integer.parseInt(request.getParameter("boardCategoryNo"));	
+			String boardCategoryName = request.getParameter("boardCategoryName");				
+			boardCategoryVO.setBoardCategoryNo(boardCategoryNo);
+			boardCategoryVO.setBoardCategoryName(boardCategoryName);
+			int result = boardCategoryService.updateBoardCategory(boardCategoryVO);
+			
+			String msg = "";
+			if(result > 0) {
+				msg = "카테고리 정보가 수정되었습니다.";
+			}else {
+				msg = "오류가 발생했습니다.";
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.write("<script>");
+			out.write("alert('" + msg + "');");
+			out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
+			out.write("</script>");
+			
+			return;
+			
+		}else if(action.contentEquals("/deleteBoardCategory.do")) {
+			
+			int boardCategoryNo = Integer.parseInt(request.getParameter("boardCategoryNo"));				
+			int result = boardCategoryService.deleteBoardCategory(boardCategoryNo);
+
+			String msg = "";
+			if(result > 0) {
+				msg = "카테고리를 삭제하였습니다.";
+			}else {
+				msg = "오류가 발생했습니다.";
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.write("<script>");
+			out.write("alert('" + msg + "');");
+			out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
+			out.write("</script>");
+			
+			return;
+			
+		}
+		
+		if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);
 		}
@@ -125,25 +125,3 @@ public class BoardCategoryController extends HttpServlet {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
