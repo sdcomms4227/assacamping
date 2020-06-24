@@ -15,6 +15,29 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/product.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/product_responsive.css">
+	   
+	<script type="text/javascript">
+   		
+   		function fn_order_pro(obj, id){
+   			var form = document.createElement("form");
+   		 	form.setAttribute("method", "post");
+   			form.setAttribute("action", url);
+	   	     var IdInput = document.createElement("input");
+	   	     parentNOInput.setAttribute("type","hidden");
+	   	     parentNOInput.setAttribute("name","id");
+	   	     parentNOInput.setAttribute("value", id);
+   		 
+   	     form.appendChild(parentNOInput);
+   	     document.body.appendChild(form);
+   		 form.submit();
+   		}
+   		
+   		function backToList(obj){
+   			obj.action="{contextPath}/pro/proList.do";
+   			obj.submit();
+   		}
+   </script>
+
 </head>
 <body>
 
@@ -65,12 +88,14 @@
 					</div>
 				</div>
 			</div>
+			<form name="frmPro" method="post" action="${contextPath}" enctype="multipart/form-data">
 			<div class="row product_row">
 
 				<!-- Product Image -->
+				
 				<div class="col-lg-7">
 					<div class="product_image">
-						<div class="product_image_large"><img src="${contextPath}/images/product_image_1.jpg" alt=""></div>
+						<div class="product_image_large"><img src="${productImage}" alt=""></div>
 						<div class="product_image_thumbnails d-flex flex-row align-items-start justify-content-start">
 							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_1.jpg)" data-image="${contextPath}/images/product_image_1.jpg"></div>
 							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_2.jpg)" data-image="${contextPath}/images/product_image_2.jpg"></div>
@@ -82,8 +107,8 @@
 				<!-- Product Content -->
 				<div class="col-lg-5">
 					<div class="product_content">
-						<div class="product_name">2 Piece Swimsuit</div>
-						<div class="product_price">$35.00</div>
+						<div class="product_name">${productName}</div>
+						<div class="product_price">${productPrice}</div>
 						<div class="rating rating_4" data-rating="4">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
@@ -108,8 +133,15 @@
 									<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
 									<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
 								</div>
-							</div>
+							</div>				
 						</div>
+						<span>배송비</span>
+							<div>
+								<select name="prodel">
+									<option value="1">주문시 결제(선결제)</option>
+									<option value="2">수령시 결제(착불)</option>
+								</select>
+							</div>
 						<!-- Product Size -->
 						<div class="product_size_container">
 							<span>Size</span>
@@ -137,12 +169,14 @@
 									</li>
 								</ul>
 							</div>
-							<div class="button cart_button"><a href="#">add to cart</a></div>
 						</div>
+						<input type="button" value="주문하기" onClick="fn_order_pro('${contextPath}/cart/addCart.do', ${Session.id})">
+							<input type=button value="목록보기"  
+							onClick="backToList(this.form)">
 					</div>
 				</div>
 			</div>
-
+			</form>
 			<!-- Reviews -->
 
 			<div class="row">
