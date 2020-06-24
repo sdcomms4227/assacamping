@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class productListVO {
 	
-	   private int productNO; //상품번호
+	   private int productNo; //상품번호
 	   private int productPrice; //상품가격
 	   private int cartQuantity; //상품수량
 	   private int productRestQuantity; //상품재고수량
@@ -21,11 +21,11 @@ public class productListVO {
 	}
 
 
-	public productListVO(int productNO, int productPrice, int cartQuantity, int productRestQuantity,
+	public productListVO(int productNo, int productPrice, int cartQuantity, int productRestQuantity,
 			int productDelivery, String productName, String productInformation, String productImage,
 			String productCategory) {
 	
-		this.productNO = productNO;
+		this.productNo = productNo;
 		this.productPrice = productPrice;
 		this.cartQuantity = cartQuantity;
 		this.productRestQuantity = productRestQuantity;
@@ -38,12 +38,12 @@ public class productListVO {
 
 
 	public int getProductNO() {
-		return productNO;
+		return productNo;
 	}
 
 
 	public void setProductNO(int productNO) {
-		this.productNO = productNO;
+		this.productNo = productNO;
 	}
 
 
