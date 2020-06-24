@@ -27,7 +27,7 @@
 	<!-- Home -->
 
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/cart.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -80,7 +80,7 @@
 						<ul>
 							<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
 								<!-- Product Image -->
-								<div class="cart_product_image"><img src="images/cart_product_1.jpg"  name="productImage"></div>
+								<div class="cart_product_image"><img src="${contextPath}/images/cart_product_1.jpg"  name="productImage"></div>
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="product.html">${list.productName}</a></div>
 								<div class="cart_product_info ml-auto">
@@ -107,7 +107,7 @@
 										<div class="cart_product_total">${totalPrice}</div> <!-- 상품한개의 가격*상품수량  -->
 										<!-- Product Cart Trash Button -->
 										<div class="cart_product_button">
-											<button class="cart_prod uct_remove" onclick="location.href='${contextPath}/cart/deleteCart.do?userId=${list.userId}&productNo=${list.productNo}'"><img src="images/trash.png" ></button>
+											<button class="cart_prod uct_remove" onclick="location.href='${contextPath}/cart/deleteCart.do?userId=${list.userId}&productNo=${list.productNo}'"><img src="${contextPath}/images/trash.png" ></button>
 										</div>
 									</div>
 								</div>
@@ -171,14 +171,14 @@
 
 	<div class="newsletter">
 		<div class="newsletter_content">
-			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="images/cart_nl.jpg" data-speed="0.8"></div>
+			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart_nl.jpg" data-speed="0.8"></div>
 			<div class="container">
 				<div class="row options">
 
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_1.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_1.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">30 Days Returns</div>
 								<div class="option_subtitle">No questions asked</div>
@@ -189,7 +189,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_2.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_2.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">Free Delivery</div>
 								<div class="option_subtitle">On all orders</div>
@@ -200,7 +200,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_3.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_3.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">Secure Payments</div>
 								<div class="option_subtitle">No need to worry</div>
@@ -211,7 +211,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_4.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_4.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">24/7 Support</div>
 								<div class="option_subtitle">Just call us</div>
