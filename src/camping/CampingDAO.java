@@ -100,8 +100,6 @@ public class CampingDAO {
 			
 			String sql = "	select * from camping order by boardRe_ref desc, boardRe_seq asc"
 					+ "		limit ?, 10";
-
-			System.out.println(sql);
 						
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startNum);
