@@ -28,52 +28,13 @@ public class OrderDAO {
 	
 	}//freeResource()
 
-	public List<OrderVO> orderList(String userId){
-		   List<OrderVO> list=new ArrayList();
-		try {
-			con=db.getConnection();
-			
-			sql="select * from order where userId=?";
-			
-			
-			pstmt=con.prepareStatement(sql);
-			
-			pstmt.setString(1, userId);
-			
-			rs=pstmt.executeQuery();
-			
-			while(rs.next()) {
-			  OrderVO vo= new OrderVO(
-					  rs.getInt("productNO"),
-					  rs.getInt("cartQuantity"),
-					  rs.getInt("productDelivery"), 
-					  rs.getInt("productPrice"), 
-					  rs.getInt("userZipcode"), 
-					  rs.getString("userAddress1"),
-					  rs.getString("userAddress2"),
-					  rs.getString("productName"), 
-					  rs.getString("userEmail"),
-					  rs.getString("userName"),
-					  rs.getString("userPhone"),
-					  rs.getString("userComment"));	
-			  
-			  list.add(vo);
-			}
-		} catch (Exception e) {
-			System.out.println("orderList에서 오류"+e.getMessage());
-		}finally {
-			freeResource();
-		}
-		
-		return list;
-	}//orderList
 	
-	public int orderCount(String userId) {
+	public int orderCount(String userId) {//장바구니 총 상품개수
 		  int total=0;
 		try {
 			con=db.getConnection();
 			
-			sql="select count(*) from cart where userId=?";
+			sql="select count(*) from productCart where userId=?";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -90,5 +51,18 @@ public class OrderDAO {
 		}
 		
 		return total;
+	}
+	
+	public void insertOrder(OrderVO vo) {
+		
+		try {
+			con=db.getConnection();
+			
+			sql="insert into productOrder(productPrice)";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			freeResource();
+		}
 	}
 }

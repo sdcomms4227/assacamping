@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.fabric.xmlrpc.base.Member;
+
 
 
 
@@ -49,7 +51,7 @@ public class OrderController extends HttpServlet{
 		try {
 			
 			
-			if(action == null ||action.equals("/order.do")) {
+			if(action == null ||action.equals("/order.do")) {//결제주문정보 
 				
 				List<OrderVO> orderList = new ArrayList();
 				
@@ -57,16 +59,24 @@ public class OrderController extends HttpServlet{
 				
 				orderList=orderservice.orderList(userId);
 				int ordercount=orderservice.orderCount(userId);
-				request.setAttribute("ordercount", ordercount);
-				request.setAttribute("orderList", orderList);
+				request.setAttribute("ordercount", ordercount);//주문한 상품 총 개수
+			   
+				MemberVO vo= dao.usercheck(userId); //회원정보DAO에서 정보 얻어오기
+				request.setAttribute("uservo", vo);
 				
 			   	nextPage="/order/checkout.jsp";
 				
-			}
+			}else if(action.equals("/pay.do")) {
+				
+				String userId=request.getParameter("userId");
 			
+				
+			}
+			 if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);
+			 }
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally {

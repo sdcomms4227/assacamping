@@ -1,10 +1,12 @@
 package productOrder;
 
+import java.sql.Date;
+
 public class OrderVO {
 	private int productNO; 
 	private int cartQuantity;  
 	private int productDelivery;   
-	private int productPrice; 
+	private int productPayment; //총결제금액
 	private int orderNo;
 	private int userZipcode;   
 	private String userAddress1;   
@@ -17,7 +19,22 @@ public class OrderVO {
 	private String userName;
 	private String userPhone;
 	private String userComment;
+	private Date orderDate;
 	
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+
+
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+
+
 	public OrderVO() {
 		
 	}
@@ -25,14 +42,14 @@ public class OrderVO {
 	
 
 
-	public OrderVO(int productNO, int cartQuantity, int productDelivery, int productPrice, int userZipcode,
+	public OrderVO(int productNO, int cartQuantity, int productDelivery, int productPayment, int userZipcode,
 			String userAddress1, String userAddress2, String productName, String userEmail, String userName,
 			String userPhone, String userComment) {
 	
 		this.productNO = productNO;
 		this.cartQuantity = cartQuantity;
 		this.productDelivery = productDelivery;
-		this.productPrice = productPrice;
+		this.productPayment = productPayment;
 		this.userZipcode = userZipcode;
 		this.userAddress1 = userAddress1;
 		this.userAddress2 = userAddress2;
@@ -118,13 +135,13 @@ public class OrderVO {
 	}
 
 
-	public int getProductPrice() {
-		return productPrice;
+	public int getProductPayment() {
+		return productPayment;
 	}
 
 
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
+	public void setProductPayment(int productPayment) {
+		this.productPayment = productPayment;
 	}
 
 

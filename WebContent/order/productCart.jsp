@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%String userId=(String)session.getAttribute("userId"); %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -27,7 +28,7 @@
 	<!-- Home -->
 
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/cart.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -80,7 +81,7 @@
 						<ul>
 							<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
 								<!-- Product Image -->
-								<div class="cart_product_image"><img src="images/cart_product_1.jpg"  name="productImage"></div>
+								<div class="cart_product_image"><img src="${contextPathe}/images/cart_product_1.jpg"  name="productImage"></div>
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="product.html">${list.productName}</a></div>
 								<div class="cart_product_info ml-auto">
@@ -90,12 +91,9 @@
 										<!-- Product Quantity -->
 										<div class="product_quantity_container">
 											<div class="product_quantity clearfix">
-											    <form action="${contextPath}/cart/update.do" method="post" name="f">
+											  
 												<input id="quantity_input" type="text" name="cartQuantity" value="${list.cartQuantity}">
-												<input type="hidden" name="userId" value="${list.userId}">
-												<input type="hidden" name="productNo" value="${list.productNo}">
-												<input type="submit" value="변경" >
-												 </form>
+												<input type="button" value="변경"  onclick="location.href='${contextPath}/cart/update.do?userId=${list.userId}&productNo=${list.productNo}&cartQuantity=${list.cartQuantity}'">
 												<div class="quantity_buttons">
 													<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
 													<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
@@ -103,11 +101,12 @@
 											</div>
 										</div>
 										<!-- Products Total Price -->
-										<c:set var="totalPrice" value="${list.productPrice*list.cartQuantity}" />
-										<div class="cart_product_total">${totalPrice}</div> <!-- 상품한개의 가격*상품수량  -->
+										
+										<div class="cart_product_total">${list.productTotalPrice}</div> <!-- 상품한개의 가격*상품수량  -->
+										
 										<!-- Product Cart Trash Button -->
 										<div class="cart_product_button">
-											<button class="cart_prod uct_remove" onclick="location.href='${contextPath}/cart/deleteCart.do?userId=${list.userId}&productNo=${list.productNo}'"><img src="images/trash.png" ></button>
+											<button class="cart_prod uct_remove" onclick="location.href='${contextPath}/cart/deleteCart.do?userId=${list.userId}&productNo=${list.productNo}'"><img src="${contextPath}/images/trash.png" ></button>
 										</div>
 									</div>
 								</div>
@@ -143,26 +142,28 @@
 					</div>
 				</div>
 				<!-- Cart Total -->
+				<form action="${contextPath}/order/order.do" method="post">
 				<div class="col-lg-5 offset-lg-1">
 					<div class="cart_total">
 						<div class="cart_title">cart total</div>
 						<ul>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Subtotal</div>
-								<div class="cart_total_price ml-auto">$35.00</div>
+								<div class="cart_total_price ml-auto">${totalPrice}</div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Shipping</div>
-								<div class="cart_total_price ml-auto">$5.00</div>
+								<div class="cart_total_price ml-auto">${list.productDelivery }</div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Total</div>
-								<div class="cart_total_price ml-auto">$40.00</div>
+								<div class="cart_total_price ml-auto">${totalPrice+list.productDelivery}</div>
 							</li>
 						</ul>
-						<button class="cart_total_button" onclick="location.href='${contextPath}/order/order.do'">proceed to checkout</button>
+						<input type="submit" class="cart_total_button" value="결제하기">
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -171,14 +172,14 @@
 
 	<div class="newsletter">
 		<div class="newsletter_content">
-			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="images/cart_nl.jpg" data-speed="0.8"></div>
+			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart_nl.jpg" data-speed="0.8"></div>
 			<div class="container">
 				<div class="row options">
 
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_1.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_1.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">30 Days Returns</div>
 								<div class="option_subtitle">No questions asked</div>
@@ -189,7 +190,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_2.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_2.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">Free Delivery</div>
 								<div class="option_subtitle">On all orders</div>
@@ -200,7 +201,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_3.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_3.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">Secure Payments</div>
 								<div class="option_subtitle">No need to worry</div>
@@ -211,7 +212,7 @@
 					<!-- Options Item -->
 					<div class="col-lg-3">
 						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="images/option_4.png" alt=""></div>
+							<div class="option_image"><img src="${contextPath}/images/option_4.png" alt=""></div>
 							<div class="option_content">
 								<div class="option_title">24/7 Support</div>
 								<div class="option_subtitle">Just call us</div>

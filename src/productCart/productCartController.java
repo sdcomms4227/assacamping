@@ -66,10 +66,11 @@ public class productCartController extends HttpServlet {
 					
 					List<productCartVO> list=cartService.allcartList(userId);
 					
-					
+					 int totalPrice=cartService.TotalPrice(userId);
+					 
 					request.setAttribute("list", list);
-					
-					nextPage="order/productCart.jsp";
+					request.setAttribute("totalPrice", totalPrice);
+					nextPage="/order/productCart.jsp";
 					
 				}else if(action.equals("/allDelte.do")) {
 					
@@ -91,8 +92,12 @@ public class productCartController extends HttpServlet {
 					
 				}else if(action.equals("/update.do")) {
 					String userId=request.getParameter("userId"); 
+					
 					int productNo=Integer.parseInt(request.getParameter("productNo"));
-				    int cartQuantity=Integer.parseInt(request.getParameter("cartQuantity"));
+					int productPrice=Integer.parseInt(request.getParameter("productPrice"));
+					
+				    int cartQuantity=productNo*productPrice;
+				    
 				    
 				    cartVO.setCartQuantity(cartQuantity);
 				    cartVO.setProductNo(productNo);
@@ -142,22 +147,28 @@ public class productCartController extends HttpServlet {
 					
 					String productImage = cartMap.get("productImage");
 					String productNo = cartMap.get("productNo");
-					String productPrice = cartMap.get("productPrice");
+					String productPrice1 = cartMap.get("productPrice");
 					String productDelivery=cartMap.get(" productDelivery");
-					String cartQuantity=cartMap.get("cartQuantity");
+					String cartQuantity1=cartMap.get("cartQuantity");
+					int cartQuantity=Integer.parseInt(cartQuantity1);
 					String productName=cartMap.get("productName");
 					String productCategory=cartMap.get("productCategory");
 					String userId=cartMap.get("userId");
+					int productPrice=Integer.parseInt(productPrice1);
+				
+					int productTotalPrice=cartQuantity*productPrice;
 					
 					cartVO=new productCartVO(
-							Integer.parseInt(productNo),
-							Integer.parseInt(productPrice), 
-							Integer.parseInt(cartQuantity),
+							Integer.parseInt(productNo), 
+							productPrice, 
+							cartQuantity, 
 							Integer.parseInt(productDelivery), 
-							productName, 
-							productImage,
-							productCategory, 
+							productTotalPrice, 
+							productName,
+							productImage, 
+							productCategory,
 							userId);
+					
 					
 					cartService.addcart(cartVO);
 					

@@ -33,9 +33,7 @@ public class productCartService {
 	   dao.addCartList(vo);
    }
    
-	/*
-	 * public Map<String, Integer> totalPrice(String userId) {
-	 * 
-	 * return dao.totalPrice(userId); }
-	 */
+  public int TotalPrice(String userId) {
+	  return dao.TotalPrice(userId);
+  }
 }
