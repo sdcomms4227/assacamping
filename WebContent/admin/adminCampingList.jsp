@@ -6,7 +6,7 @@
 		<h2>캠핑정보</h2>
 	</div>
 	<div class="col-6 text-right">
-		<a href="${contextPath}/brdCategory/listBoardCategory.do" class="btn btn-secondary btn-sm">카테고리 관리</a>
+		<a href="${contextPath}/campCategory/listCampingCategory.do" class="btn btn-secondary btn-sm">카테고리 관리</a>
 	</div>
 </div>
 <div class="table-responsive">

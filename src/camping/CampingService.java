@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import campingCategory.CampingCategoryVO;
+
 public class CampingService {
 	
 	CampingDAO campingDAO;
@@ -12,21 +14,50 @@ public class CampingService {
 		campingDAO = new CampingDAO();
 	}
 
-	public Map listCamping(Map pagingMap) {
+	public Map<String, Object> listCamping(Map<String, Integer> pagingMap) {
 		
-		Map campingMap = new HashMap();
+		Map<String, Object> campingListMap = new HashMap<String, Object>();
 		
-		List<CampingVO> campingList = campingDAO.selectAllCamping(pagingMap);
+		List<Map<String,Object>> campingList = campingDAO.getCampingList(pagingMap);
 		
-		int total = campingDAO.selectTotalCamping();
+		int total = campingDAO.getCampingListCount();
 		
-		campingMap.put("campingList", campingList);
-		campingMap.put("total", total);
+		campingListMap.put("campingList", campingList);		
+		campingListMap.put("total", total);
 		
-		return campingMap;
+		return campingListMap;
 	}
 
-	public List<CampingVO> listCamping() {
-		return campingDAO.selectAllCamping();
+	public Map<String, Object> readCamping(int campingNo) {
+		
+		Map<String, Object> campingItemMap = new HashMap<String, Object>();
+		
+		campingDAO.incrementCampingReadCount(campingNo);
+		
+		CampingVO campingVO = campingDAO.getCampingItem(campingNo);
+		
+		int categoryNo = campingVO.getCampingCategoryNo();		
+		String categoryName = campingDAO.getCategoryName(categoryNo);
+		
+		campingItemMap.put("campingVO", campingVO);
+		campingItemMap.put("categoryName", categoryName);
+		
+		return campingItemMap;
+	}
+
+	public int insertCamping(CampingVO campingVO) {
+
+		int maxNo = campingDAO.getCampingMaxNo();
+		campingDAO.insertCamping(campingVO, maxNo);
+		
+		return maxNo;
+	}
+
+	public void updateCamping(CampingVO campingVO, int campingNo) {		
+		campingDAO.updateCamping(campingVO, campingNo);		
+	}
+
+	public void deleteCamping(int campingNo) {
+		campingDAO.deleteCamping(campingNo);
 	}
 }

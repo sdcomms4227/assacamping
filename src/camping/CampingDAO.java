@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import camping.CampingVO;
 
 public class CampingDAO {
 	
@@ -26,80 +26,24 @@ public class CampingDAO {
 		}
 	}
 
-	public List<CampingVO> selectAllCamping() {
-		List<CampingVO> campingList = new ArrayList<CampingVO>();
+	public List<Map<String,Object>> getCampingList(Map<String, Integer> pagingMap) {
 
-		try {
-			conn = dbUtil.DBConnection.getConnection();
-			
-			String sql = "select * from camping order by boardRe_ref desc, boardRe_seq asc";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				CampingVO campingVO = new CampingVO();
-				
-				campingVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
-				campingVO.setBoardContent(rs.getString("boardContent"));
-				campingVO.setBoardFileName(rs.getString("boardFileName"));
-				campingVO.setBoardNo(rs.getInt("boardNo"));
-				campingVO.setBoardRe_lev(rs.getInt("boardRe_lev"));
-				campingVO.setBoardRe_ref(rs.getInt("boardRe_ref"));
-				campingVO.setBoardRe_seq(rs.getInt("boardRe_seq"));
-				campingVO.setBoardReadCount(rs.getInt("boardReadCount"));
-				campingVO.setBoardTitle(rs.getString("boardTitle"));
-				campingVO.setBoardWriteDate(rs.getTimestamp("boardWriteDate"));
-				campingVO.setUserId(rs.getString("userId"));
-								
-				campingList.add(campingVO);
-			}
-			
-		} catch(Exception e) {
-			System.out.println("selectAllCamping()메소드 내부에서 오류 : " + e.toString());
-		} finally {
-			freeResource();
-		}
-				
-		return campingList;
-		
-	}//selectAllCamping()
-
-	public int selectTotalCamping() {
-
-		try {
-			conn = dbUtil.DBConnection.getConnection();
-			
-			String sql = "select count(boardNo) from camping";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				return rs.getInt(1);
-			}
-		} catch(Exception e) {
-			System.out.println("selectTotalCamping()메소드 내부에서 오류 : " + e.toString());
-		} finally {
-			freeResource();
-		}
-		
-		return 0;
-		
-	}//selectTotalCamping()
-
-	public List<CampingVO> selectAllCamping(Map pagingMap) {
-
-		List campingList = new ArrayList();
+		List<Map<String,Object>> campingList = new ArrayList<Map<String,Object>>();
 		
 		int section = (Integer)pagingMap.get("section");
-		int pageNum = (Integer)pagingMap.get("pageNum");
-		int startNum = (section - 1)*100 + (pageNum - 1)*10;
+		int pageNo = (Integer)pagingMap.get("pageNo");
+		int startNum = (section - 1)*100 + (pageNo - 1)*10;
 
 		try {
 			
 			conn = dbUtil.DBConnection.getConnection();
 			
-			String sql = "	select * from camping order by boardRe_ref desc, boardRe_seq asc"
-					+ "		limit ?, 10";
+			String sql = "	select *"
+					+ " from camping cp"
+					+ " join campingCategory ct"
+					+ " on cp.campingCategoryNo = ct.campingCategoryNo"
+					+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
+					+ "	limit ?, 10";
 						
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startNum);
@@ -107,33 +51,222 @@ public class CampingDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				Map<String, Object> campingMap = new HashMap<String, Object>();
 				CampingVO campingVO = new CampingVO();
 				
-				campingVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
-				campingVO.setBoardContent(rs.getString("boardContent"));
-				campingVO.setBoardFileName(rs.getString("boardFileName"));
-				campingVO.setBoardNo(rs.getInt("boardNo"));
-				campingVO.setBoardRe_lev(rs.getInt("boardRe_lev"));
-				campingVO.setBoardRe_ref(rs.getInt("boardRe_ref"));
-				campingVO.setBoardRe_seq(rs.getInt("boardRe_seq"));
-				campingVO.setBoardReadCount(rs.getInt("boardReadCount"));
-				campingVO.setBoardTitle(rs.getString("boardTitle"));
-				campingVO.setBoardWriteDate(rs.getTimestamp("boardWriteDate"));
+				campingVO.setCampingCategoryNo(rs.getInt("campingCategoryNo"));
+				campingVO.setCampingContent(rs.getString("campingContent"));
+				campingVO.setCampingFileName(rs.getString("campingFileName"));
+				campingVO.setCampingNo(rs.getInt("campingNo"));
+				campingVO.setCampingRe_lev(rs.getInt("campingRe_lev"));
+				campingVO.setCampingRe_ref(rs.getInt("campingRe_ref"));
+				campingVO.setCampingRe_seq(rs.getInt("campingRe_seq"));
+				campingVO.setCampingReadCount(rs.getInt("campingReadCount"));
+				campingVO.setCampingTitle(rs.getString("campingTitle"));
+				campingVO.setCampingWriteDate(rs.getTimestamp("campingWriteDate"));
 				campingVO.setUserId(rs.getString("userId"));
+				
+				String categoryName = rs.getString("campingCategoryName");
+				
+				campingMap.put("campingVO", campingVO);
+				campingMap.put("categoryName", categoryName);
 								
-				campingList.add(campingVO);
-			}
-			
+				campingList.add(campingMap);
+			}			
 			
 		} catch(Exception e) {
-			System.out.println("selectAllCamping(Map)메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getCampingList(Map)메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
 		
-		return campingList;
-	}//selectAllCamping(Map)
+		return campingList;		
+	}
 
+
+	public int getCampingListCount() {
+
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			String sql = "select count(campingNo) from camping";
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch(Exception e) {
+			System.out.println("getCampingListCount()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return 0;		
+	}
+	
+	public CampingVO getCampingItem(int campingNo) {
+		
+		CampingVO campingVO = new CampingVO();
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "select * from camping where campingNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, campingNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				campingVO.setCampingCategoryNo(rs.getInt("campingCategoryNo"));
+				campingVO.setCampingContent(rs.getString("campingContent"));
+				campingVO.setCampingFileName(rs.getString("campingFileName"));
+				campingVO.setCampingNo(rs.getInt("campingNo"));
+				campingVO.setCampingRe_lev(rs.getInt("campingRe_lev"));
+				campingVO.setCampingRe_ref(rs.getInt("campingRe_ref"));
+				campingVO.setCampingRe_seq(rs.getInt("campingRe_seq"));
+				campingVO.setCampingReadCount(rs.getInt("campingReadCount"));
+				campingVO.setCampingTitle(rs.getString("campingTitle"));
+				campingVO.setCampingWriteDate(rs.getTimestamp("campingWriteDate"));
+				campingVO.setUserId(rs.getString("userId"));
+			}			
+			
+		} catch(Exception e) {
+			System.out.println("getCampingItem()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return campingVO;
+	}
+
+	public String getCategoryName(int categoryNo) {
+		
+		String CategoryName = null;
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "select * from campingCategory where campingCategoryNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				CategoryName = rs.getString("campingCategoryName");
+			}			
+			
+		} catch(Exception e) {
+			System.out.println("getCategoryName()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return CategoryName;
+	}
+
+	public void incrementCampingReadCount(int campingNo) {
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "update camping set campingReadCount=campingReadCount+1 where campingNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, campingNo);
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("incrementCampingReadCount()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+	}
+
+	public int getCampingMaxNo() {
+		
+		int maxNo = 0;
+
+		try {
+			conn = dbUtil.DBConnection.getConnection();			
+			String sql = "select max(campingNo) from camping";
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				maxNo = rs.getInt(1) + 1;
+			}else {
+				maxNo = 1;
+			}
+			
+		} catch(Exception e) {
+			System.out.println("getCampingMaxNo()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+
+		return maxNo;
+	}
+	
+	public void insertCamping(CampingVO campingVO, int maxNo) {
+				
+		try {			
+			conn = dbUtil.DBConnection.getConnection();			
+			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingWriteDate, campingReadCount, campingCategoryNo)"
+					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, maxNo);
+			pstmt.setString(2, campingVO.getCampingTitle());
+			pstmt.setString(3, campingVO.getCampingContent());
+			pstmt.setString(4, null);
+			pstmt.setString(5, campingVO.getUserId());
+			pstmt.setInt(6, maxNo);
+			pstmt.setInt(7, 0);
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9, 0);
+			pstmt.setInt(10, campingVO.getCampingCategoryNo());
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("insertCamping()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+	}
+
+	public void updateCamping(CampingVO campingVO, int campingNo) {
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "update camping set campingTitle=?, campingContent=?, campingCategoryNo=? where campingNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, campingVO.getCampingTitle());
+			pstmt.setString(2, campingVO.getCampingContent());
+			pstmt.setInt(3, campingVO.getCampingCategoryNo());
+			pstmt.setInt(4, campingNo);
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("insertCamping()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+	}
+
+	public void deleteCamping(int campingNo) {
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "delete from camping where campingNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, campingNo);
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("deleteCamping()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+	}
+	
 }
 
 

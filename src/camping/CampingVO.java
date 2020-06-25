@@ -4,65 +4,65 @@ import java.sql.Timestamp;
 
 public class CampingVO {
 	
-	private int boardNo;
-	private String boardTitle;
-	private String boardContent;
-	private String boardFileName;
+	private int campingNo;
+	private String campingTitle;
+	private String campingContent;
+	private String campingFileName;
 	private String userId;
-	private int boardRe_ref;
-	private int boardRe_lev;
-	private int boardRe_seq;
-	private Timestamp boardWriteDate;
-	private int boardReadCount;
-	private int boardCategoryNo;
+	private int campingRe_ref;
+	private int campingRe_lev;
+	private int campingRe_seq;
+	private Timestamp campingWriteDate;
+	private int campingReadCount;
+	private int campingCategoryNo;
 		
 	public CampingVO() {}
 
-	public CampingVO(int boardNo, String boardTitle, String boardContent, String boardFileName, String userId, int boardRe_ref, int boardRe_lev, int boardRe_seq, Timestamp boardWriteDate,
-			int boardReadCount, int boardCategoryNo) {
-		this.boardNo = boardNo;
-		this.boardTitle = boardTitle;
-		this.boardContent = boardContent;
-		this.boardFileName = boardFileName;
+	public CampingVO(int campingNo, String campingTitle, String campingContent, String campingFileName, String userId, int campingRe_ref, int campingRe_lev, int campingRe_seq, Timestamp campingWriteDate,
+			int campingReadCount, int campingCategoryNo) {
+		this.campingNo = campingNo;
+		this.campingTitle = campingTitle;
+		this.campingContent = campingContent;
+		this.campingFileName = campingFileName;
 		this.userId = userId;
-		this.boardRe_ref = boardRe_ref;
-		this.boardRe_lev = boardRe_lev;
-		this.boardRe_seq = boardRe_seq;
-		this.boardWriteDate = boardWriteDate;
-		this.boardReadCount = boardReadCount;
-		this.boardCategoryNo = boardCategoryNo;
+		this.campingRe_ref = campingRe_ref;
+		this.campingRe_lev = campingRe_lev;
+		this.campingRe_seq = campingRe_seq;
+		this.campingWriteDate = campingWriteDate;
+		this.campingReadCount = campingReadCount;
+		this.campingCategoryNo = campingCategoryNo;
 	}
 
-	public int getBoardNo() {
-		return boardNo;
+	public int getCampingNo() {
+		return campingNo;
 	}
 
-	public void setBoardNo(int boardNo) {
-		this.boardNo = boardNo;
+	public void setCampingNo(int campingNo) {
+		this.campingNo = campingNo;
 	}
 
-	public String getBoardTitle() {
-		return boardTitle;
+	public String getCampingTitle() {
+		return campingTitle;
 	}
 
-	public void setBoardTitle(String boardTitle) {
-		this.boardTitle = boardTitle;
+	public void setCampingTitle(String campingTitle) {
+		this.campingTitle = campingTitle;
 	}
 
-	public String getBoardContent() {
-		return boardContent;
+	public String getCampingContent() {
+		return campingContent;
 	}
 
-	public void setBoardContent(String boardContent) {
-		this.boardContent = boardContent;
+	public void setCampingContent(String campingContent) {
+		this.campingContent = campingContent;
 	}
 
-	public String getBoardFileName() {
-		return boardFileName;
+	public String getCampingFileName() {
+		return campingFileName;
 	}
 
-	public void setBoardFileName(String boardFileName) {
-		this.boardFileName = boardFileName;
+	public void setCampingFileName(String campingFileName) {
+		this.campingFileName = campingFileName;
 	}
 
 	public String getUserId() {
@@ -73,52 +73,52 @@ public class CampingVO {
 		this.userId = userId;
 	}
 
-	public int getBoardRe_ref() {
-		return boardRe_ref;
+	public int getCampingRe_ref() {
+		return campingRe_ref;
 	}
 
-	public void setBoardRe_ref(int boardRe_ref) {
-		this.boardRe_ref = boardRe_ref;
+	public void setCampingRe_ref(int campingRe_ref) {
+		this.campingRe_ref = campingRe_ref;
 	}
 
-	public int getBoardRe_lev() {
-		return boardRe_lev;
+	public int getCampingRe_lev() {
+		return campingRe_lev;
 	}
 
-	public void setBoardRe_lev(int boardRe_lev) {
-		this.boardRe_lev = boardRe_lev;
+	public void setCampingRe_lev(int campingRe_lev) {
+		this.campingRe_lev = campingRe_lev;
 	}
 
-	public int getBoardRe_seq() {
-		return boardRe_seq;
+	public int getCampingRe_seq() {
+		return campingRe_seq;
 	}
 
-	public void setBoardRe_seq(int boardRe_seq) {
-		this.boardRe_seq = boardRe_seq;
+	public void setCampingRe_seq(int campingRe_seq) {
+		this.campingRe_seq = campingRe_seq;
 	}
 
-	public Timestamp getBoardWriteDate() {
-		return boardWriteDate;
+	public Timestamp getCampingWriteDate() {
+		return campingWriteDate;
 	}
 
-	public void setBoardWriteDate(Timestamp boardWriteDate) {
-		this.boardWriteDate = boardWriteDate;
+	public void setCampingWriteDate(Timestamp campingWriteDate) {
+		this.campingWriteDate = campingWriteDate;
 	}
 
-	public int getBoardReadCount() {
-		return boardReadCount;
+	public int getCampingReadCount() {
+		return campingReadCount;
 	}
 
-	public void setBoardReadCount(int boardReadCount) {
-		this.boardReadCount = boardReadCount;
+	public void setCampingReadCount(int campingReadCount) {
+		this.campingReadCount = campingReadCount;
 	}
 
-	public int getBoardCategoryNo() {
-		return boardCategoryNo;
+	public int getCampingCategoryNo() {
+		return campingCategoryNo;
 	}
 
-	public void setBoardCategoryNo(int boardCategoryNo) {
-		this.boardCategoryNo = boardCategoryNo;
+	public void setCampingCategoryNo(int campingCategoryNo) {
+		this.campingCategoryNo = campingCategoryNo;
 	}
 	
 }

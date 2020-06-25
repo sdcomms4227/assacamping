@@ -1,4 +1,4 @@
-package boardCategory;
+package campingCategory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/brdCategory/*")
-public class BoardCategoryController extends HttpServlet {
+@WebServlet("/campCategory/*")
+public class CampingCategoryController extends HttpServlet {
 	
-	BoardCategoryService boardCategoryService;
-	BoardCategoryVO boardCategoryVO;
+	CampingCategoryService campingCategoryService;
+	CampingCategoryVO campingCategoryVO;
 
 	@Override
 	public void init() throws ServletException {
-		boardCategoryService = new BoardCategoryService();
-		boardCategoryVO = new BoardCategoryVO();
+		campingCategoryService = new CampingCategoryService();
+		campingCategoryVO = new CampingCategoryVO();
 	}
 
 	@Override
@@ -44,19 +44,19 @@ public class BoardCategoryController extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action: " + action);
 		
-		List<BoardCategoryVO> boardCategoryList = null;
+		List<CampingCategoryVO> campingCategoryList = null;
 		
-		if(action == null || action.contentEquals("/listBoardCategory.do")) {			
+		if(action == null || action.contentEquals("/listCampingCategory.do")) {			
 				
-			boardCategoryList = boardCategoryService.listBoardCategory();				
-			request.setAttribute("boardCategoryList",  boardCategoryList);				
-			nextPage = "/admin/listBoardCategory.jsp";
+			campingCategoryList = campingCategoryService.listCampingCategory();				
+			request.setAttribute("campingCategoryList",  campingCategoryList);				
+			nextPage = "/admin/listCampingCategory.jsp";
 			
-		}else if(action.contentEquals("/addBoardCategory.do")) {
+		}else if(action.contentEquals("/insertCampingCategory.do")) {
 			
-			String boardCategoryName = request.getParameter("boardCategoryName");
-			boardCategoryVO.setBoardCategoryName(boardCategoryName);
-			int result = boardCategoryService.addBoardCategory(boardCategoryVO);
+			String campingCategoryName = request.getParameter("campingCategoryName");
+			campingCategoryVO.setCampingCategoryName(campingCategoryName);
+			int result = campingCategoryService.insertCampingCategory(campingCategoryVO);
 			
 			String msg = "";
 			if(result > 0) {
@@ -68,17 +68,17 @@ public class BoardCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/campCategory/listCampingCategory.do';");
 			out.write("</script>");
 			return;
 			
-		}else if(action.contentEquals("/updateBoardCategory.do")) {
+		}else if(action.contentEquals("/updateCampingCategory.do")) {
 
-			int boardCategoryNo = Integer.parseInt(request.getParameter("boardCategoryNo"));	
-			String boardCategoryName = request.getParameter("boardCategoryName");				
-			boardCategoryVO.setBoardCategoryNo(boardCategoryNo);
-			boardCategoryVO.setBoardCategoryName(boardCategoryName);
-			int result = boardCategoryService.updateBoardCategory(boardCategoryVO);
+			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));	
+			String campingCategoryName = request.getParameter("campingCategoryName");				
+			campingCategoryVO.setCampingCategoryNo(campingCategoryNo);
+			campingCategoryVO.setCampingCategoryName(campingCategoryName);
+			int result = campingCategoryService.updateCampingCategory(campingCategoryVO);
 			
 			String msg = "";
 			if(result > 0) {
@@ -90,15 +90,15 @@ public class BoardCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/campCategory/listCampingCategory.do';");
 			out.write("</script>");
 			
 			return;
 			
-		}else if(action.contentEquals("/deleteBoardCategory.do")) {
+		}else if(action.contentEquals("/deleteCampingCategory.do")) {
 			
-			int boardCategoryNo = Integer.parseInt(request.getParameter("boardCategoryNo"));				
-			int result = boardCategoryService.deleteBoardCategory(boardCategoryNo);
+			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));				
+			int result = campingCategoryService.deleteCampingCategory(campingCategoryNo);
 
 			String msg = "";
 			if(result > 0) {
@@ -110,7 +110,7 @@ public class BoardCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/brdCategory/listBoardCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/campCategory/listCampingCategory.do';");
 			out.write("</script>");
 			
 			return;

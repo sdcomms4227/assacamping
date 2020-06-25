@@ -12,17 +12,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import campingCategory.CampingCategoryService;
+import campingCategory.CampingCategoryVO;
+
 @SuppressWarnings("serial")
 @WebServlet("/camp/*")
 public class CampingController extends HttpServlet {
 	
 	CampingService campingService;
-	CampingVO campingVO;
+	CampingVO campingVO;	
+	CampingCategoryService campingCategoryService;
+	CampingCategoryVO campingCategoryVO;
 
 	@Override
 	public void init() throws ServletException {
 		campingService = new CampingService();
 		campingVO = new CampingVO();
+		campingCategoryService = new CampingCategoryService();
+		campingCategoryVO = new CampingCategoryVO();
 	}
 	
 	@Override
@@ -45,92 +52,180 @@ public class CampingController extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action: " + action);
 		
-		List<CampingVO> campingList = null;
-		
-		if(action == null || action.contentEquals("/listCamping.do")) {			
+		if(action == null || action.equals("/listCamping.do")) {			
 
 			String _section = request.getParameter("section");
-			String _pageNum = request.getParameter("pageNum");
+			String _pageNo = request.getParameter("pageNo");
 
 			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNum = Integer.parseInt((_pageNum == null) ? "1" : _pageNum);
+			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
 
-			Map pagingMap = new HashMap();
+			if(request.getAttribute("section")==null) {
+				request.setAttribute("section", section);
+			}
+			if(request.getAttribute("pageNo")==null) {
+				request.setAttribute("pageNo", pageNo);
+			}
+
+			Map<String, Integer> pagingMap = new HashMap<String, Integer>();
 			pagingMap.put("section", section);
-			pagingMap.put("pageNum", pageNum);
+			pagingMap.put("pageNo", pageNo);
 
-			Map campingMap = campingService.listCamping(pagingMap);
-
-			campingMap.put("section", section);
-			campingMap.put("pageNum", pageNum);
-
-			request.setAttribute("campingMap", campingMap);
+			Map<String, Object> campingListMap = campingService.listCamping(pagingMap);
+			
+			request.setAttribute("campingListMap", campingListMap);
 						
 			nextPage = "/camping/listCamping.jsp";
 			
-//		}else if(action.contentEquals("/addCamping.do")) {
-//			
-//			String campingName = request.getParameter("campingName");
-//			campingVO.setCampingName(campingName);
-//			int result = campingService.addCamping(campingVO);
-//			
-//			String msg = "";
-//			if(result > 0) {
-//				msg = "새 카테고리를 추가하였습니다.";
-//			}else {
-//				msg = "오류가 발생했습니다.";
-//			}
-//			
-//			PrintWriter out = response.getWriter();
-//			out.write("<script>");
-//			out.write("alert('" + msg + "');");
-//			out.write("location.href='" + request.getContextPath() + "/brdCategory/listCamping.do';");
-//			out.write("</script>");
-//			return;
-//			
-//		}else if(action.contentEquals("/updateCamping.do")) {
-//
-//			int campingNo = Integer.parseInt(request.getParameter("campingNo"));	
-//			String campingName = request.getParameter("campingName");				
-//			campingVO.setCampingNo(campingNo);
-//			campingVO.setCampingName(campingName);
-//			int result = campingService.updateCamping(campingVO);
-//			
-//			String msg = "";
-//			if(result > 0) {
-//				msg = "카테고리 정보가 수정되었습니다.";
-//			}else {
-//				msg = "오류가 발생했습니다.";
-//			}
-//			
-//			PrintWriter out = response.getWriter();
-//			out.write("<script>");
-//			out.write("alert('" + msg + "');");
-//			out.write("location.href='" + request.getContextPath() + "/brdCategory/listCamping.do';");
-//			out.write("</script>");
-//			
-//			return;
-//			
-//		}else if(action.contentEquals("/deleteCamping.do")) {
-//			
-//			int campingNo = Integer.parseInt(request.getParameter("campingNo"));				
-//			int result = campingService.deleteCamping(campingNo);
-//
-//			String msg = "";
-//			if(result > 0) {
-//				msg = "카테고리를 삭제하였습니다.";
-//			}else {
-//				msg = "오류가 발생했습니다.";
-//			}
-//			
-//			PrintWriter out = response.getWriter();
-//			out.write("<script>");
-//			out.write("alert('" + msg + "');");
-//			out.write("location.href='" + request.getContextPath() + "/brdCategory/listCamping.do';");
-//			out.write("</script>");
-//			
-//			return;
+		}else if(action.equals("/readCamping.do")) {
 			
+			String _section = request.getParameter("section");
+			String _pageNo = request.getParameter("pageNo");
+
+			int section = Integer.parseInt((_section == null) ? "1" : _section);
+			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
+
+			request.setAttribute("section", section);
+			request.setAttribute("pageNo", pageNo);
+			
+			int campingNo = 0;
+			
+			if(request.getAttribute("campingNo")!=null) {
+				campingNo = (int)request.getAttribute("campingNo");
+			}else {
+				campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			}
+			
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+
+			request.setAttribute("campingItemMap", campingItemMap);
+			
+			nextPage = "/camping/readCamping.jsp";
+			
+		}else if(action.contentEquals("/writeCamping.do")) {
+			
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();
+			
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			
+			nextPage = "/camping/writeCamping.jsp";
+			
+		}else if(action.equals("/insertCamping.do")) {
+			
+			CampingVO campingVO = new CampingVO();
+			
+			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));
+			String campingContent = request.getParameter("campingContent");
+			String campingTitle = request.getParameter("campingTitle");
+			String userId = request.getParameter("userId");
+			
+			campingVO.setCampingCategoryNo(campingCategoryNo);
+			campingVO.setCampingContent(campingContent);
+			campingVO.setCampingTitle(campingTitle);
+			campingVO.setUserId(userId);
+			
+			int campingNo = campingService.insertCamping(campingVO);
+			
+			request.setAttribute("campingNo", campingNo);
+			
+			nextPage = "/camp/readCamping.do";
+			
+		}else if(action.equals("/modifyCamping.do")) {
+			
+			String _section = request.getParameter("section");
+			String _pageNo = request.getParameter("pageNo");
+
+			int section = Integer.parseInt((_section == null) ? "1" : _section);
+			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
+
+			request.setAttribute("section", section);
+			request.setAttribute("pageNo", pageNo);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);			
+			CampingVO campingVO = (CampingVO)campingItemMap.get("campingVO");			
+
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();
+			
+			request.setAttribute("campingVO", campingVO);
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			request.setAttribute("campingNo", campingNo);			
+			
+			nextPage = "/camping/modifyCamping.jsp";
+			
+		}else if(action.equals("/updateCamping.do")) {
+			
+			String _section = request.getParameter("section");
+			String _pageNo = request.getParameter("pageNo");
+
+			int section = Integer.parseInt((_section == null) ? "1" : _section);
+			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
+
+			request.setAttribute("section", section);
+			request.setAttribute("pageNo", pageNo);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			
+			CampingVO campingVO = new CampingVO();
+			
+			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));
+			String campingContent = request.getParameter("campingContent");
+			String campingTitle = request.getParameter("campingTitle");
+			String userId = request.getParameter("userId");
+			
+			campingVO.setCampingCategoryNo(campingCategoryNo);
+			campingVO.setCampingContent(campingContent);
+			campingVO.setCampingTitle(campingTitle);
+			campingVO.setUserId(userId);
+			
+			campingService.updateCamping(campingVO, campingNo);
+			
+			request.setAttribute("campingNo", campingNo);
+			
+			nextPage = "/camp/readCamping.do";
+			
+		}else if(action.equals("/deleteCamping.do")) {
+			
+			String _section = request.getParameter("section");
+			String _pageNo = request.getParameter("pageNo");
+
+			int section = Integer.parseInt((_section == null) ? "1" : _section);
+			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
+			
+			request.setAttribute("section", section);
+			request.setAttribute("pageNo", pageNo);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			
+			campingService.deleteCamping(campingNo);
+			
+			nextPage = "/camp/listCamping.do";
+			
+		}else if(action.equals("/replyCamping.do")) {
+			
+			String _section = request.getParameter("section");
+			String _pageNo = request.getParameter("pageNo");
+
+			int section = Integer.parseInt((_section == null) ? "1" : _section);
+			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
+
+			request.setAttribute("section", section);
+			request.setAttribute("pageNo", pageNo);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);			
+			CampingVO campingVO = (CampingVO)campingItemMap.get("campingVO");
+			String campingTitle = campingVO.getCampingTitle();
+
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();
+			
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			request.setAttribute("campingNo", campingNo);			
+			request.setAttribute("campingTitle", campingTitle);
+			
+			nextPage = "/camping/replyCamping.jsp";
 		}
 		
 		if(!nextPage.equals("")) {
