@@ -111,7 +111,7 @@
 												<small class="text-muted">[${list.boardReadCount}]</small>
 											</c:if>						
 											<small class="d-block d-lg-none text-right mt-1 text-muted">
-												${list.userId} | ${list.boardWriteDate} | ${list.boardReadCount}
+												${list.userId} | <fmt:formatDate value="${list.boardWriteDate}" pattern="yy-MM-dd"/> | ${list.boardReadCount}
 											</small>
 										</td>
 										<td class="d-none d-lg-table-cell">${list.userId}</td>
