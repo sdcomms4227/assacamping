@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
-import boardCategory.BoardCategoryService;
-import boardCategory.BoardCategoryVO;
+import org.json.simple.parser.ParseException;
 
 @SuppressWarnings("serial")
 @WebServlet("/reply/*")
@@ -47,49 +45,74 @@ public class ReplyController extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		
 		JSONParser jsonParser = new JSONParser();
+		JSONObject replyObject = null;
 		String action = req.getPathInfo();
+		String info = null;
 		
 		if(action != null) {
-			if(action.equals("/reply.do")) {
-				String replyInfo = req.getParameter("replyInfo");
-				JSONObject replyObject = (JSONObject)jsonParser.parse(replyInfo);
-				
-				int boardNo = Integer.parseInt((String)replyObject.get("boardNo"));
-				String userId = (String)replyObject.get("userId");
-				String replyContent = (String)replyObject.get("replyContent");
-				
-				replyVO.setBoardNo(boardNo);
-				replyVO.setUserId(userId);
-				replyVO.setReplyContent(replyContent);
-				
-				int result = replyService.insertReply(replyVO);
-				
-				if(result==1) {
-					ReplyVO replyVO2 = new ReplyVO();
+			if(action.equals("/insertReply.do")) {
+				info = req.getParameter("replyInfo");
+				try {
+					replyObject = (JSONObject)jsonParser.parse(info);
+					int boardCategoryNo = Integer.parseInt((String)replyObject.get("boardCategoryNo"));
+					int boardNo = Integer.parseInt((String)replyObject.get("boardNo"));
+					String userId = (String)replyObject.get("userId");
+					String userName = (String)replyObject.get("userName");
+					String replyContent = (String)replyObject.get("replyContent");
 					
-					replyVO2 = replyService.getLastReply();
+					replyVO.setBoardCategoryNo(boardCategoryNo);
+					replyVO.setBoardNo(boardNo);
+					replyVO.setUserId(userId);
+					replyVO.setUserName(userName);
+					replyVO.setReplyContent(replyContent);
+					
+					int result = replyService.insertReply(replyVO);
+					
+					if(result == 1) {
+						ReplyVO replyVO2 = new ReplyVO();
+						
+						replyVO2 = replyService.getLastReply();
 
-					int returnNo = replyVO2.getReplyNo();
+						int returnNo = replyVO2.getReplyNo();
+						String returnName = replyVO2.getUserName();
+						String returnContent = replyVO2.getReplyContent();
+						Timestamp returnDate = replyVO2.getReplyWriteDate();
+						
+						SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+						String formattedDate = sdf.format(returnDate);
+						
+						JSONObject returnObject = new JSONObject();
+						
+						returnObject.put("replyNo", returnNo);
+						returnObject.put("userName", returnName);
+						returnObject.put("replyContent", returnContent);
+						returnObject.put("replyDate", formattedDate);			
+						
+						out.print(returnObject.toString());
+					}
+				} catch (ParseException e) {
+					System.out.println("doHandle()메소드 reply.do 에서 예외발생 : " + e.toString());
+				}	
+			} else if(action.equals("/deleteReply.do")) {
+				info = req.getParameter("replyDeleteInfo");
+				try {
+					replyObject = (JSONObject)jsonParser.parse(info);
 					
-					String returnContent = replyVO2.getReplyContent();
-					Timestamp returnDate = replyVO2.getReplyWriteDate();
+					int replyNo = Integer.parseInt((String)replyObject.get("replyNo"));
+					String userId = (String)replyObject.get("userId");			
+
+					int result = replyService.deleteReply(replyNo, userId);
 					
-					SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-					String formattedDate = sdf.format(returnDate);
-					
-					JSONObject returnObject = new JSONObject();
-					
-					returnObject.put("replyNo", returnNo);
-					returnObject.put("replyContent", returnContent);
-					returnObject.put("replyDate", formattedDate);			
-					
-					out.print(returnObject.toString());
-				
-			} else if(action.equals("/deleteR eply.do")) {
-				
+					if(result==1) {				
+						out.print("success");
+					}else{
+						out.print("fail");				
+					}
+				} catch (Exception e) {
+					System.out.println("doHandle() 메소드 deleteReply.do 에서 예외발생 : " + e.toString());
+				}
 			}
 		}
-		
 	}
-
 }
+

@@ -4,9 +4,9 @@ import java.sql.Timestamp;
 
 public class ReplyVO {
 
+	private int boardCategoryNo;
 	private int boardNo;
 	private int replyNo;
-	private String replyTitle;
 	private String replyContent;
 	private String userId;
 	private String userName;
@@ -15,6 +15,12 @@ public class ReplyVO {
 	private int replyRe_seq;
 	private Timestamp replyWriteDate;
 		
+	public int getBoardCategoryNo() {
+		return boardCategoryNo;
+	}
+	public void setBoardCategoryNo(int boardCategoryNo) {
+		this.boardCategoryNo = boardCategoryNo;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -32,12 +38,6 @@ public class ReplyVO {
 	}
 	public void setReplyNo(int replyNo) {
 		this.replyNo = replyNo;
-	}
-	public String getReplyTitle() {
-		return replyTitle;
-	}
-	public void setReplyTitle(String replyTitle) {
-		this.replyTitle = replyTitle;
 	}
 	public String getReplyContent() {
 		return replyContent;

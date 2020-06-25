@@ -10,8 +10,8 @@ public class ReplyService {
 		replyDAO = new ReplyDAO();
 	}
 	
-	public List<ReplyVO> getReplyList(){
-		return replyDAO.getReplyList();
+	public List<ReplyVO> getReplyList(int boardCategoryNo, int boardNo){
+		return replyDAO.getReplyList(boardCategoryNo, boardNo);
 	}
 
 	public int insertReply(ReplyVO replyVO) {
@@ -26,8 +26,8 @@ public class ReplyService {
 	}
 	 */
 	
-	public int deleteReply(int replyNo) {
-		return replyDAO.deleteReply(replyNo);		
+	public int deleteReply(int replyNo, String userId) {
+		return replyDAO.deleteReply(replyNo, userId);		
 	}
 
 	public ReplyVO getLastReply() {
