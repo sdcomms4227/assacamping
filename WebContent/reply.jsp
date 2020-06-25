@@ -192,7 +192,7 @@
 			$.ajax({
 				type : "post",
 				async : "false",
-				url : "<%=contextPath%>/reply/insertReply",
+				url : "<%=contextPath%>/reply/insertReply.do",
 				data : {replyInfo : _replyInfo},
 				success : function(data, status){
 					var jsonInfo = JSON.parse(data);
@@ -246,7 +246,7 @@
 				$.ajax({
 					type : "post",
 					async : "false",
-					url : "<%=contextPath%>/reply/deleteReply",
+					url : "<%=contextPath%>/reply/deleteReply.do",
 					data : {replyDeleteInfo : _replyDeleteInfo},
 					success : function(data, status){
 						if(data == "success"){
