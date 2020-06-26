@@ -1,34 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.sql.Timestamp"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="reply.ReplyVO"%>
-<%@page import="reply.ReplyDAO"%>
-<%@page import="reply.ReplyService"%>
+<%@page import="comment.CommentVO"%>
+<%@page import="comment.CommentDAO"%>
+<%@page import="comment.CommentService"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<% request.setCharacterEncoding("UTF-8"); %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="boardCategoryNo" value="${sessionScope.userId}" />
 
 <%
 	// String pageName = (String) session.getAttribute("boardName");
 	String contextPath = request.getContextPath();
 	request.setCharacterEncoding("UTF-8");
 	
-/* 	int boardCategoryNo = Integer.parseInt((String) session.getAttribute("boardCategoryNo"));
+ 	int boardCategoryNo = Integer.parseInt((String) session.getAttribute("boardCategoryNo"));
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	String userId = (String) session.getAttribute("userId");
 	String userName = (String) session.getAttribute("userName");
 	String pageNum = request.getParameter("pageNum");
-	List<ReplyVO> replyList = new ReplyService().getReplyList(boardCategoryNo, boardNo); */
- 	int boardCategoryNo = 1;
+	List<CommentVO> replyList = new CommentService().getCommentList(boardCategoryNo, boardNo);
+ 	/* int boardCategoryNo = 1;
 	int boardNo = 1;
 	String userId = "hong";
 	String userName = "hong";
 
-	List<ReplyVO> replyList = new ArrayList<>();
+	List<CommentVO> replyList = new ArrayList<>();
 	
-		ReplyVO replyVO1 = new ReplyVO();
+		CommentVO replyVO1 = new CommentVO();
 		replyVO1.setBoardCategoryNo(1);
 		replyVO1.setBoardNo(1);
 		replyVO1.setReplyNo(1);
@@ -40,7 +46,7 @@
 		replyVO1.setReplyRe_seq(0);
 		replyVO1.setReplyWriteDate(Timestamp.valueOf(LocalDateTime.now()));
 		
-		ReplyVO replyVO2 = new ReplyVO();
+		CommentVO replyVO2 = new CommentVO();
 		replyVO2.setBoardCategoryNo(2);
 		replyVO2.setBoardNo(1);
 		replyVO2.setReplyNo(2);
@@ -52,7 +58,7 @@
 		replyVO2.setReplyRe_seq(0);
 		replyVO2.setReplyWriteDate(Timestamp.valueOf(LocalDateTime.now()));
 		
-		ReplyVO replyVO3 = new ReplyVO();
+		CommentVO replyVO3 = new CommentVO();
 		replyVO3.setBoardCategoryNo(1);
 		replyVO3.setBoardNo(1);
 		replyVO3.setReplyNo(3);
@@ -66,12 +72,10 @@
 		
 		replyList.add(replyVO1);
 		replyList.add(replyVO2);
-		replyList.add(replyVO3);
+		replyList.add(replyVO3); */
 	
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-	
-	
 %>
 
 <!DOCTYPE html>
@@ -95,13 +99,13 @@
 			</colgroup>
 			<%
 				if (replyList.size() > 0) {
-					for (int i = 0; i < replyList.size(); i++) {
-						ReplyVO replyVO = replyList.get(i);
-						int beanNo = replyVO.getReplyNo();
-						String beanId = replyVO.getUserId();
-						String beanName = replyVO.getUserName();
-						String beanContent = replyVO.getReplyContent();
-						String beanDate = sdf.format(replyVO.getReplyWriteDate());
+						for (int i = 0; i < replyList.size(); i++) {
+							CommentVO replyVO = replyList.get(i);
+							int beanNo = replyVO.getReplyNo();
+							String beanId = replyVO.getUserId();
+							String beanName = replyVO.getUserName();
+							String beanContent = replyVO.getReplyContent();
+							String beanDate = sdf.format(replyVO.getReplyWriteDate());
 			%>
 			<tr id="reply<%=beanNo%>">
 				<td class="d-none d-lg-table-cell align-middle"><%=beanName%></td>
