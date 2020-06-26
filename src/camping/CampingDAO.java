@@ -66,10 +66,10 @@ public class CampingDAO {
 				campingVO.setCampingWriteDate(rs.getTimestamp("campingWriteDate"));
 				campingVO.setUserId(rs.getString("userId"));
 				
-				String categoryName = rs.getString("campingCategoryName");
+				String campingCategoryName = rs.getString("campingCategoryName");
 				
 				campingMap.put("campingVO", campingVO);
-				campingMap.put("categoryName", categoryName);
+				campingMap.put("campingCategoryName", campingCategoryName);
 								
 				campingList.add(campingMap);
 			}			
@@ -143,7 +143,7 @@ public class CampingDAO {
 
 	public String getCategoryName(int categoryNo) {
 		
-		String CategoryName = null;
+		String campingCategoryName = null;
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
@@ -154,7 +154,7 @@ public class CampingDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				CategoryName = rs.getString("campingCategoryName");
+				campingCategoryName = rs.getString("campingCategoryName");
 			}			
 			
 		} catch(Exception e) {
@@ -163,7 +163,7 @@ public class CampingDAO {
 			freeResource();
 		}
 		
-		return CategoryName;
+		return campingCategoryName;
 	}
 
 	public void incrementCampingReadCount(int campingNo) {
@@ -179,7 +179,6 @@ public class CampingDAO {
 		} finally {
 			freeResource();
 		}
-		
 	}
 
 	public int getCampingMaxNo() {
@@ -230,11 +229,12 @@ public class CampingDAO {
 			System.out.println("insertCamping()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
-		}
-		
+		}		
 	}
 
-	public void updateCamping(CampingVO campingVO, int campingNo) {
+	public void updateCamping(CampingVO campingVO) {
+		
+		int campingNo = campingVO.getCampingNo();
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
@@ -263,8 +263,47 @@ public class CampingDAO {
 			System.out.println("deleteCamping()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
-		}
+		}		
+	}
+
+	public void updateCampingSequence(CampingVO campingVO) {		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "update camping set campingRe_seq=campingRe_seq+1 where campingRe_ref=? and campingRe_seq>?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, campingVO.getCampingRe_ref());
+			pstmt.setInt(2, campingVO.getCampingRe_seq());
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("updateCampingSequence()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}		
+	}
+
+	public void insertReplyCamping(CampingVO campingVO, int maxNo) {
 		
+		try {			
+			conn = dbUtil.DBConnection.getConnection();			
+			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingWriteDate, campingReadCount, campingCategoryNo)"
+					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, maxNo);
+			pstmt.setString(2, campingVO.getCampingTitle());
+			pstmt.setString(3, campingVO.getCampingContent());
+			pstmt.setString(4, null);
+			pstmt.setString(5, campingVO.getUserId());
+			pstmt.setInt(6, campingVO.getCampingRe_ref());
+			pstmt.setInt(7, campingVO.getCampingRe_lev() + 1);
+			pstmt.setInt(8, campingVO.getCampingRe_seq() + 1);
+			pstmt.setInt(9, 0);
+			pstmt.setInt(10, campingVO.getCampingCategoryNo());
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("insertReplyCamping()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}		
 	}
 	
 }

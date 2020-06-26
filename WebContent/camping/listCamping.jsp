@@ -95,16 +95,16 @@
 							<c:when test="${campingList!=null}">
 								<c:forEach var="campingMap" items="${campingList}">
 									<c:set var="campingVO" value="${campingMap.campingVO}" />
-									<c:set var="categoryName" value="${campingMap.categoryName}" />
+									<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 									<tr onclick="location.href='${contextPath}/camp/readCamping.do?campingNo=${campingVO.campingNo}&section=${section}&pageNo=${pageNo}'" style="cursor:pointer">
 										<td class="d-none d-lg-table-cell align-middle">${campingVO.campingNo}</td>
-										<td class="d-none d-lg-table-cell align-middle wbka">${categoryName}</td>
+										<td class="d-none d-lg-table-cell align-middle wbka">${campingCategoryName}</td>
 										<td class="text-left">
 											<c:if test="${campingVO.campingRe_lev > 0}">
-												<img src="${contextPath}/images/re.gif" style="margin-left:${campingVO.campingRe_lev*10}px" class="mr-2" />
+												<img src="${contextPath}/images/re.gif" style="margin-left:${campingVO.campingRe_lev*16}px" class="mr-2" />
 											</c:if>
 											${campingVO.campingTitle}
-											<small class="d-lg-none text-muted">[${categoryName}]</small>
+											<small class="d-lg-none text-muted">[${campingCategoryName}]</small>
 											<c:if test="${campingVO.campingFileName!=null}">
 												<svg class="bi bi-download ml-2" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 												  <path fill-rule="evenodd" d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z"/>

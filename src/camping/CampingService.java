@@ -36,11 +36,11 @@ public class CampingService {
 		
 		CampingVO campingVO = campingDAO.getCampingItem(campingNo);
 		
-		int categoryNo = campingVO.getCampingCategoryNo();		
-		String categoryName = campingDAO.getCategoryName(categoryNo);
+		int campingCategoryNo = campingVO.getCampingCategoryNo();		
+		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);
 		
 		campingItemMap.put("campingVO", campingVO);
-		campingItemMap.put("categoryName", categoryName);
+		campingItemMap.put("campingCategoryName", campingCategoryName);
 		
 		return campingItemMap;
 	}
@@ -53,11 +53,21 @@ public class CampingService {
 		return maxNo;
 	}
 
-	public void updateCamping(CampingVO campingVO, int campingNo) {		
-		campingDAO.updateCamping(campingVO, campingNo);		
+	public void updateCamping(CampingVO campingVO) {		
+		campingDAO.updateCamping(campingVO);		
 	}
 
 	public void deleteCamping(int campingNo) {
 		campingDAO.deleteCamping(campingNo);
+	}
+
+	public int insertReplyCamping(CampingVO campingVO) {
+				
+		campingDAO.updateCampingSequence(campingVO);
+
+		int maxNo = campingDAO.getCampingMaxNo();
+		campingDAO.insertReplyCamping(campingVO, maxNo);
+		
+		return maxNo;
 	}
 }

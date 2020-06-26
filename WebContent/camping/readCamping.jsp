@@ -5,14 +5,14 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="readNo" value="${campingItemMap.campingVO.campingNo}" />
-<c:set var="readTitle" value="${campingItemMap.campingVO.campingTitle}" />
-<c:set var="readContent" value="${campingItemMap.campingVO.campingContent}" />
-<c:set var="readFileName" value="${campingItemMap.campingVO.campingFileName}" />
-<c:set var="readName" value="${campingItemMap.campingVO.userId}" />
-<c:set var="readDate" value="${campingItemMap.campingVO.campingWriteDate}" />
-<c:set var="readCount" value="${campingItemMap.campingVO.campingReadCount}" />
-<c:set var="readCategoryName" value="${campingItemMap.categoryName}" />
+<c:set var="campingNo" value="${campingItemMap.campingVO.campingNo}" />
+<c:set var="campingTitle" value="${campingItemMap.campingVO.campingTitle}" />
+<c:set var="campingContent" value="${campingItemMap.campingVO.campingContent}" />
+<c:set var="campingFileName" value="${campingItemMap.campingVO.campingFileName}" />
+<c:set var="userName" value="${campingItemMap.campingVO.userId}" />
+<c:set var="campingWriteDate" value="${campingItemMap.campingVO.campingWriteDate}" />
+<c:set var="campingReadCount" value="${campingItemMap.campingVO.campingReadCount}" />
+<c:set var="campingCategoryName" value="${campingItemMap.campingCategoryName}" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -82,27 +82,27 @@
 							</colgroup>
 							<tr>
 								<td colspan="6" class="h4 p-3 readsubject">
-									${readTitle}
+									${campingTitle}
 									
-									<c:if test="${readCategoryName!=null}">
-										<small class="text-muted">[${readCategoryName}]</small>									
+									<c:if test="${campingCategoryName!=null}">
+										<small class="text-muted">[${campingCategoryName}]</small>									
 									</c:if>
 									
 									<div class="h6 mt-3 mb-0 d-lg-none text-right">
-										<small class="text-muted">${readName} | <fmt:formatDate value="${readDate}" pattern="yy-MM-dd HH:mm"/> | ${readCount}</small>
+										<small class="text-muted">${userName} | <fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/> | ${campingReadCount}</small>
 									</div>
 								</td>
 							</tr>
 							<tr class="d-none d-lg-table-row">
 								<th class="align-middle">작성자</th>
-								<td>${readName}</td>
+								<td>${userName}</td>
 								<th class="align-middle">작성일</th>
-								<td><fmt:formatDate value="${readDate}" pattern="yy-MM-dd HH:mm"/></td>
+								<td><fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/></td>
 								<th class="align-middle">조회수</th>
-								<td>${readCount}</td>
+								<td>${campingReadCount}</td>
 							</tr>
 							<tr>
-								<td colspan="6" class="py-5"> ${readContent} </td>
+								<td colspan="6" class="py-5"> ${campingContent} </td>
 							</tr>							
 						</table>
 
@@ -176,7 +176,7 @@ function modifyCamping(){
 	var input3 = document.createElement("input");
 	input3.type = "hidden";
 	input3.name = "campingNo";
-	input3.value = ${readNo};
+	input3.value = ${campingNo};
 	form.appendChild(input3);
 	
 	document.getElementsByTagName("body")[0].appendChild(form);
@@ -207,7 +207,7 @@ function deleteCamping(){
 		var input3 = document.createElement("input");
 		input3.type = "hidden";
 		input3.name = "campingNo";
-		input3.value = ${readNo};
+		input3.value = ${campingNo};
 		form.appendChild(input3);
 		
 		document.getElementsByTagName("body")[0].appendChild(form);
@@ -236,7 +236,7 @@ function replyCamping(){
 	var input3 = document.createElement("input");
 	input3.type = "hidden";
 	input3.name = "campingNo";
-	input3.value = ${readNo};
+	input3.value = ${campingNo};
 	form.appendChild(input3);
 	
 	document.getElementsByTagName("body")[0].appendChild(form);

@@ -5,6 +5,13 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="campingNo" value="${campingItemMap.campingVO.campingNo}" />
+<c:set var="campingTitle" value="${campingItemMap.campingVO.campingTitle}" />
+<c:set var="campingRe_ref" value="${campingItemMap.campingVO.campingRe_ref}" />
+<c:set var="campingRe_lev" value="${campingItemMap.campingVO.campingRe_lev}" />
+<c:set var="campingRe_seq" value="${campingItemMap.campingVO.campingRe_seq}" />
+<c:set var="campingCategoryNo" value="${campingItemMap.campingVO.campingCategoryNo}" />
+<c:set var="campingCategoryName" value="${campingItemMap.campingCategoryName}" />
 <c:set var="userId" value="hong" />
 <c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
@@ -65,10 +72,14 @@
 				
 					<!-- 게시판 -->
 					<article class="mt-3">
-						<form action="${contextPath}/camp/insertCamping.do" method="post">
+						<form action="${contextPath}/camp/insertReplyCamping.do" method="post">
 							<input type="hidden" name="section" value="${section}" />
 							<input type="hidden" name="pageNo" value="${pageNo}" />
 							<input type="hidden" name="userId" value="${userId}" />
+							<input type="hidden" name="campingNo" value="${campingNo}" />
+							<input type="hidden" name="campingRe_ref" value="${campingRe_ref}" />
+							<input type="hidden" name="campingRe_lev" value="${campingRe_lev}" />
+							<input type="hidden" name="campingRe_seq" value="${campingRe_seq}" />
 							<table class="table">
 								<colgroup>
 									<col style="max-width: 15%" />
@@ -87,12 +98,8 @@
 										<label for="campingCategoryNo" class="m-0">카테고리</label>
 									</th>
 									<td>
-										<select class="form-control" name="campingCategoryNo" id="campingCategoryNo" required>
-											<option value="">선택하세요</option>
-											<c:forEach var="category" items="${campingCategoryList}">
-												<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>									
-											</c:forEach>								
-										</select>
+										<input type="hidden" name="campingCategoryNo" id="campingCategoryNo" value="${campingCategoryNo}" required />
+										<input class="form-control" type="text" value="${campingCategoryName}" readonly />
 									</td>
 								</tr>
 								<tr>

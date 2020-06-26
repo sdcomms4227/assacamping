@@ -54,22 +54,11 @@ public class CampingController extends HttpServlet {
 		
 		if(action == null || action.equals("/listCamping.do")) {			
 
-			String _section = request.getParameter("section");
-			String _pageNo = request.getParameter("pageNo");
-
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-
-			if(request.getAttribute("section")==null) {
-				request.setAttribute("section", section);
-			}
-			if(request.getAttribute("pageNo")==null) {
-				request.setAttribute("pageNo", pageNo);
-			}
+			setPagination(request, response);
 
 			Map<String, Integer> pagingMap = new HashMap<String, Integer>();
-			pagingMap.put("section", section);
-			pagingMap.put("pageNo", pageNo);
+			pagingMap.put("section", (int)request.getAttribute("section"));
+			pagingMap.put("pageNo", (int)request.getAttribute("pageNo"));
 
 			Map<String, Object> campingListMap = campingService.listCamping(pagingMap);
 			
@@ -78,15 +67,8 @@ public class CampingController extends HttpServlet {
 			nextPage = "/camping/listCamping.jsp";
 			
 		}else if(action.equals("/readCamping.do")) {
-			
-			String _section = request.getParameter("section");
-			String _pageNo = request.getParameter("pageNo");
 
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-
-			request.setAttribute("section", section);
-			request.setAttribute("pageNo", pageNo);
+			setPagination(request, response);
 			
 			int campingNo = 0;
 			
@@ -124,77 +106,54 @@ public class CampingController extends HttpServlet {
 			campingVO.setCampingTitle(campingTitle);
 			campingVO.setUserId(userId);
 			
-			int campingNo = campingService.insertCamping(campingVO);
+			int readNo = campingService.insertCamping(campingVO);
 			
-			request.setAttribute("campingNo", campingNo);
+			request.setAttribute("campingNo", readNo);
 			
 			nextPage = "/camp/readCamping.do";
 			
 		}else if(action.equals("/modifyCamping.do")) {
-			
-			String _section = request.getParameter("section");
-			String _pageNo = request.getParameter("pageNo");
 
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-
-			request.setAttribute("section", section);
-			request.setAttribute("pageNo", pageNo);
+			setPagination(request, response);
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);			
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
 			CampingVO campingVO = (CampingVO)campingItemMap.get("campingVO");			
-
-			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();
-			
 			request.setAttribute("campingVO", campingVO);
+
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
-			request.setAttribute("campingNo", campingNo);			
 			
 			nextPage = "/camping/modifyCamping.jsp";
 			
 		}else if(action.equals("/updateCamping.do")) {
-			
-			String _section = request.getParameter("section");
-			String _pageNo = request.getParameter("pageNo");
 
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-
-			request.setAttribute("section", section);
-			request.setAttribute("pageNo", pageNo);
-			
-			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			setPagination(request, response);
 			
 			CampingVO campingVO = new CampingVO();
 			
-			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));
-			String campingContent = request.getParameter("campingContent");
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			String campingTitle = request.getParameter("campingTitle");
+			String campingContent = request.getParameter("campingContent");
 			String userId = request.getParameter("userId");
+			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));
 			
-			campingVO.setCampingCategoryNo(campingCategoryNo);
-			campingVO.setCampingContent(campingContent);
+			campingVO.setCampingNo(campingNo);
 			campingVO.setCampingTitle(campingTitle);
+			campingVO.setCampingContent(campingContent);
 			campingVO.setUserId(userId);
+			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
-			campingService.updateCamping(campingVO, campingNo);
+			campingService.updateCamping(campingVO);
 			
 			request.setAttribute("campingNo", campingNo);
 			
 			nextPage = "/camp/readCamping.do";
 			
 		}else if(action.equals("/deleteCamping.do")) {
-			
-			String _section = request.getParameter("section");
-			String _pageNo = request.getParameter("pageNo");
 
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-			
-			request.setAttribute("section", section);
-			request.setAttribute("pageNo", pageNo);
+			setPagination(request, response);
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			
@@ -204,28 +163,44 @@ public class CampingController extends HttpServlet {
 			
 		}else if(action.equals("/replyCamping.do")) {
 			
-			String _section = request.getParameter("section");
-			String _pageNo = request.getParameter("pageNo");
-
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-
-			request.setAttribute("section", section);
-			request.setAttribute("pageNo", pageNo);
+			setPagination(request, response);
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);			
-			CampingVO campingVO = (CampingVO)campingItemMap.get("campingVO");
-			String campingTitle = campingVO.getCampingTitle();
-
-			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
 			
-			request.setAttribute("campingCategoryList", campingCategoryList);
-			request.setAttribute("campingNo", campingNo);			
-			request.setAttribute("campingTitle", campingTitle);
+			request.setAttribute("campingItemMap", campingItemMap);
 			
 			nextPage = "/camping/replyCamping.jsp";
+			
+		}else if(action.equals("/insertReplyCamping.do")) {
+			
+			CampingVO campingVO = new CampingVO();
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			String campingTitle = request.getParameter("campingTitle");
+			String campingContent = request.getParameter("campingContent");
+			String userId = request.getParameter("userId");
+			int campingRe_ref = Integer.parseInt(request.getParameter("campingRe_ref"));
+			int campingRe_lev = Integer.parseInt(request.getParameter("campingRe_lev"));
+			int campingRe_seq = Integer.parseInt(request.getParameter("campingRe_seq"));
+			int campingCategoryNo = Integer.parseInt(request.getParameter("campingCategoryNo"));
+			
+			campingVO.setCampingNo(campingNo);
+			campingVO.setCampingTitle(campingTitle);
+			campingVO.setCampingContent(campingContent);
+			campingVO.setUserId(userId);
+			campingVO.setCampingRe_ref(campingRe_ref);
+			campingVO.setCampingRe_lev(campingRe_lev);
+			campingVO.setCampingRe_seq(campingRe_seq);
+			campingVO.setCampingCategoryNo(campingCategoryNo);
+			
+			int readNo = campingService.insertReplyCamping(campingVO);
+			
+			request.setAttribute("campingNo", readNo);
+			
+			nextPage = "/camp/readCamping.do";
+			
 		}
 		
 		if(!nextPage.equals("")) {
@@ -233,6 +208,21 @@ public class CampingController extends HttpServlet {
 			dispatch.forward(request, response);
 		}
 		
+	}
+	
+	public void setPagination(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String _section = request.getParameter("section");
+		String _pageNo = request.getParameter("pageNo");
+
+		int section = Integer.parseInt((_section == null) ? "1" : _section);
+		int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
+
+		if(request.getAttribute("section")==null) {
+			request.setAttribute("section", section);
+		}
+		if(request.getAttribute("pageNo")==null) {
+			request.setAttribute("pageNo", pageNo);
+		}
 	}
 	
 }

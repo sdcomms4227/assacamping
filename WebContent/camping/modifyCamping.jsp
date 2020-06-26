@@ -66,7 +66,7 @@
 					<!-- 게시판 -->
 					<article class="mt-3">
 						<form action="${contextPath}/camp/updateCamping.do" method="post">
-							<input type="hidden" name="campingNo" value="${campingNo}" />
+							<input type="hidden" name="campingNo" value="${campingVO.campingNo}" />
 							<input type="hidden" name="section" value="${section}" />
 							<input type="hidden" name="pageNo" value="${pageNo}" />
 							<input type="hidden" name="userId" value="${userId}" />
@@ -98,8 +98,7 @@
 													<c:otherwise>
 														<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>	
 													</c:otherwise>
-												</c:choose>
-																				
+												</c:choose>																				
 											</c:forEach>								
 										</select>
 									</td>
@@ -117,7 +116,7 @@
 										<label for="campingContent" class="m-0">내용</label>
 									</th>
 									<td>			
-										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required>${campingVO.campingTitle}</textarea>
+										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required>${campingVO.campingContent}</textarea>
 									</td>
 								</tr>
 								<!-- <tr>

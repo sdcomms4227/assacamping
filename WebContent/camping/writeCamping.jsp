@@ -89,7 +89,7 @@
 											<option value="">선택하세요</option>
 											<c:forEach var="category" items="${campingCategoryList}">
 												<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>									
-											</c:forEach>								
+											</c:forEach>
 										</select>
 									</td>
 								</tr>
