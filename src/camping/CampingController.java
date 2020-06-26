@@ -56,23 +56,11 @@ public class CampingController extends HttpServlet {
 
 			setPagination(request, response);
 			
-			String searchKeyword = "";
-			if(request.getParameter("searchKeyword")!=null) {
-				searchKeyword = request.getParameter("searchKeyword");
-			}
-			request.setAttribute("searchKeyword", searchKeyword);
-
-			int searchCategoryNo = 0;
-			if(request.getParameter("searchCategoryNo")!=null) {
-				searchCategoryNo = Integer.parseInt(request.getParameter("searchCategoryNo"));
-			}
-			request.setAttribute("searchCategoryNo", searchCategoryNo);
-			
 			Map<String, Object> pagingMap = new HashMap<String, Object>();
-			pagingMap.put("section", (int)request.getAttribute("section"));
-			pagingMap.put("pageNo", (int)request.getAttribute("pageNo"));
-			pagingMap.put("searchKeyword", searchKeyword);
-			pagingMap.put("searchCategoryNo", searchCategoryNo);
+			pagingMap.put("section", request.getAttribute("section"));
+			pagingMap.put("pageNo", request.getAttribute("pageNo"));
+			pagingMap.put("searchKeyword", request.getAttribute("searchKeyword"));
+			pagingMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
 			Map<String, Object> campingListMap = campingService.listCamping(pagingMap);			
 			request.setAttribute("campingListMap", campingListMap);
@@ -227,17 +215,36 @@ public class CampingController extends HttpServlet {
 	}
 	
 	public void setPagination(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String _section = request.getParameter("section");
-		String _pageNo = request.getParameter("pageNo");
-
-		int section = Integer.parseInt((_section == null) ? "1" : _section);
-		int pageNo = Integer.parseInt((_pageNo == null) ? "1" : _pageNo);
-
+		int section = 1;
+		if(request.getParameter("section")!=null) {
+			section = Integer.parseInt(request.getParameter("section"));
+		}
 		if(request.getAttribute("section")==null) {
 			request.setAttribute("section", section);
 		}
+		
+		int pageNo = 1;
+		if(request.getParameter("pageNo")!=null) {
+			pageNo = Integer.parseInt(request.getParameter("pageNo"));
+		}
 		if(request.getAttribute("pageNo")==null) {
 			request.setAttribute("pageNo", pageNo);
+		}
+		
+		String searchKeyword = "";
+		if(request.getParameter("searchKeyword")!=null) {
+			searchKeyword = request.getParameter("searchKeyword");
+		}
+		if(request.getAttribute("searchKeyword")==null) {
+			request.setAttribute("searchKeyword", searchKeyword);
+		}
+
+		int searchCategoryNo = 0;
+		if(request.getParameter("searchCategoryNo")!=null) {
+			searchCategoryNo = Integer.parseInt(request.getParameter("searchCategoryNo"));
+		}
+		if(request.getAttribute("searchCategoryNo")==null) {
+			request.setAttribute("searchCategoryNo", searchCategoryNo);
 		}
 	}
 	

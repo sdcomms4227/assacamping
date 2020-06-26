@@ -96,7 +96,7 @@
 								<c:forEach var="campingMap" items="${campingList}">
 									<c:set var="campingVO" value="${campingMap.campingVO}" />
 									<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-									<tr onclick="location.href='${contextPath}/camp/readCamping.do?campingNo=${campingVO.campingNo}&section=${section}&pageNo=${pageNo}'" style="cursor:pointer">
+									<tr onclick="readCamping(${campingVO.campingNo}, '${searchKeyword}')" style="cursor:pointer">
 										<td class="d-none d-lg-table-cell align-middle">${campingVO.campingNo}</td>
 										<td class="d-none d-lg-table-cell align-middle wbka">${campingCategoryName}</td>
 										<td class="text-left">
@@ -217,5 +217,48 @@
 <script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
+
+<script>
+
+function readCamping(campingNo, searchKeyword){
+	var form = document.createElement("form");
+	form.action = "${contextPath}/camp/readCamping.do";
+	form.method = "post";
+	
+	var input1 = document.createElement("input");
+	input1.type = "hidden";
+	input1.name = "section";
+	input1.value = ${section};
+	form.appendChild(input1);
+	
+	var input2 = document.createElement("input");
+	input2.type = "hidden";
+	input2.name = "pageNo";
+	input2.value = ${pageNo};
+	form.appendChild(input2);
+	
+	var input3 = document.createElement("input");
+	input3.type = "hidden";
+	input3.name = "searchKeyword";
+	input3.value = searchKeyword;
+	form.appendChild(input3);
+	
+	var input4 = document.createElement("input");
+	input4.type = "hidden";
+	input4.name = "searchCategoryNo";
+	input4.value = ${searchCategoryNo};
+	form.appendChild(input4);
+	
+	var input5 = document.createElement("input");
+	input5.type = "hidden";
+	input5.name = "campingNo";
+	input5.value = campingNo;
+	form.appendChild(input5);
+	
+	document.getElementsByTagName("body")[0].appendChild(form);
+	
+	form.submit();
+}
+</script>
 </body>
 </html>
