@@ -87,12 +87,12 @@
 							<tbody>
 								
 						<c:choose>
-							<c:when test="${campingList==null}">			
+							<c:when test="${total==0}">			
 									<tr>
 										<td colspan="6">등록된 게시글이 없습니다.</td>
 									</tr>
 							</c:when>	
-							<c:when test="${campingList!=null}">
+							<c:otherwise>
 								<c:forEach var="campingMap" items="${campingList}">
 									<c:set var="campingVO" value="${campingMap.campingVO}" />
 									<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
@@ -121,7 +121,7 @@
 										<td class="d-none d-lg-table-cell align-middle">${campingVO.campingReadCount}</td>
 									</tr>
 								</c:forEach>
-							</c:when>
+							</c:otherwise>
 						</c:choose>
 					
 							</tbody>
@@ -130,9 +130,25 @@
 						<div class="row my-5">
 							<div class="col-12 col-lg-8">
 								<form action="${contextPath}/camp/listCamping.do" class="form-inline justify-content-center justify-content-lg-start">
-									<input type="hidden" name="campingCategoryNo" value="" />
+									<div class="input-group mb-2 mb-sm-0 mr-sm-2">
+										<select class="form-control" name="searchCategoryNo" onchange="this.form.submit()">
+											<option value="0">전체보기</option>
+											<c:forEach var="category" items="${campingCategoryList}">	
+												<c:choose>
+													<c:when test="${category.campingCategoryNo==searchCategoryNo}">
+														<option value="${category.campingCategoryNo}" selected>${category.campingCategoryName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>
+													</c:otherwise>
+												</c:choose>
+															
+												
+											</c:forEach>
+										</select>
+									</div>
 									<div class="input-group">
-										<input type="text" name="search" size="24" maxlength="24" class="form-control">
+										<input type="text" name="searchKeyword" size="24" maxlength="24" class="form-control">
 										<div class="input-group-append">
 											<button type="submit" class="btn btn-secondary">검색</button>
 										</div>
@@ -152,20 +168,20 @@
 							<c:if test="${total != null}">
 								<c:if test="${section > 1}">						
 								   	<li class="page-item">
-										<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section-1}&pageNo=1">이전</a>
+										<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section-1}&pageNo=1&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">이전</a>
 									</li>
 								</c:if>									
 						<c:forEach var="page" begin="1" end="10" step="1">
 							<c:if test="${page <= Math.ceil((total - (section-1)*100) /10)}">
-								<c:choose>						
+								<c:choose>	
 									<c:when test="${page==pageNo}">
 										<li class="page-item active">
-											<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section}&pageNo=${page}">${(section-1)*10 + page}</a>							
+											<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section}&pageNo=${page}&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">${(section-1)*10 + page}</a>							
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li class="page-item">
-											<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section}&pageNo=${page}">${(section-1)*10 + page}</a>							
+											<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section}&pageNo=${page}&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">${(section-1)*10 + page}</a>							
 										</li>
 									</c:otherwise>
 								</c:choose>
@@ -173,7 +189,7 @@
 						</c:forEach>								
 								<c:if test="${Math.ceil(total/100) > section}">						
 								   	<li class="page-item">
-										<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section+1}&pageNo=1">다음</a>
+										<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section+1}&pageNo=1&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">다음</a>
 									</li>
 								</c:if>
 							</c:if>

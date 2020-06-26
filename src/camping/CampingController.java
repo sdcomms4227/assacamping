@@ -55,15 +55,31 @@ public class CampingController extends HttpServlet {
 		if(action == null || action.equals("/listCamping.do")) {			
 
 			setPagination(request, response);
+			
+			String searchKeyword = "";
+			if(request.getParameter("searchKeyword")!=null) {
+				searchKeyword = request.getParameter("searchKeyword");
+			}
+			request.setAttribute("searchKeyword", searchKeyword);
 
-			Map<String, Integer> pagingMap = new HashMap<String, Integer>();
+			int searchCategoryNo = 0;
+			if(request.getParameter("searchCategoryNo")!=null) {
+				searchCategoryNo = Integer.parseInt(request.getParameter("searchCategoryNo"));
+			}
+			request.setAttribute("searchCategoryNo", searchCategoryNo);
+			
+			Map<String, Object> pagingMap = new HashMap<String, Object>();
 			pagingMap.put("section", (int)request.getAttribute("section"));
 			pagingMap.put("pageNo", (int)request.getAttribute("pageNo"));
+			pagingMap.put("searchKeyword", searchKeyword);
+			pagingMap.put("searchCategoryNo", searchCategoryNo);
 
-			Map<String, Object> campingListMap = campingService.listCamping(pagingMap);
-			
+			Map<String, Object> campingListMap = campingService.listCamping(pagingMap);			
 			request.setAttribute("campingListMap", campingListMap);
-						
+			
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			
 			nextPage = "/camping/listCamping.jsp";
 			
 		}else if(action.equals("/readCamping.do")) {

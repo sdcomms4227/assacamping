@@ -14,13 +14,13 @@ public class CampingService {
 		campingDAO = new CampingDAO();
 	}
 
-	public Map<String, Object> listCamping(Map<String, Integer> pagingMap) {
+	public Map<String, Object> listCamping(Map<String, Object> pagingMap) {
 		
 		Map<String, Object> campingListMap = new HashMap<String, Object>();
 		
 		List<Map<String,Object>> campingList = campingDAO.getCampingList(pagingMap);
 		
-		int total = campingDAO.getCampingListCount();
+		int total = campingDAO.getCampingListCount(pagingMap);
 		
 		campingListMap.put("campingList", campingList);		
 		campingListMap.put("total", total);

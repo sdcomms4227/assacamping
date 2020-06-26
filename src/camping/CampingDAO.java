@@ -26,27 +26,48 @@ public class CampingDAO {
 		}
 	}
 
-	public List<Map<String,Object>> getCampingList(Map<String, Integer> pagingMap) {
+	public List<Map<String,Object>> getCampingList(Map<String, Object> pagingMap) {
 
 		List<Map<String,Object>> campingList = new ArrayList<Map<String,Object>>();
 		
-		int section = (Integer)pagingMap.get("section");
-		int pageNo = (Integer)pagingMap.get("pageNo");
+		int section = (int)pagingMap.get("section");
+		int pageNo = (int)pagingMap.get("pageNo");
 		int startNum = (section - 1)*100 + (pageNo - 1)*10;
-
+		String searchKeyword = (String)pagingMap.get("searchKeyword");
+		int searchCategoryNo = (int)pagingMap.get("searchCategoryNo");
+		String sql = "";
+		
 		try {
 			
 			conn = dbUtil.DBConnection.getConnection();
 			
-			String sql = "	select *"
-					+ " from camping cp"
-					+ " join campingCategory ct"
-					+ " on cp.campingCategoryNo = ct.campingCategoryNo"
-					+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
-					+ "	limit ?, 10";
-						
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, startNum);
+			if(searchCategoryNo==0) {
+				sql = "	select *"
+						+ " from camping cp"
+						+ " join campingCategory ct"
+						+ " on cp.campingCategoryNo = ct.campingCategoryNo"
+						+ " where cp.campingTitle like ?"
+						+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
+						+ "	limit ?, 10";		
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, '%' + searchKeyword + '%');
+				pstmt.setInt(2, startNum);
+			}else {
+				sql = "	select *"
+						+ " from camping cp"
+						+ " join campingCategory ct"
+						+ " on cp.campingCategoryNo = ct.campingCategoryNo"
+						+ " where cp.campingTitle like ?"
+						+ " and cp.campingCategoryNo = ?"
+						+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
+						+ "	limit ?, 10";		
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, '%' + searchKeyword + '%');
+				pstmt.setInt(2, searchCategoryNo);
+				pstmt.setInt(3, startNum);
+			}
 			
 			rs = pstmt.executeQuery();
 			
@@ -84,13 +105,30 @@ public class CampingDAO {
 	}
 
 
-	public int getCampingListCount() {
+	public int getCampingListCount(Map<String, Object> pagingMap) {
 
+		String searchKeyword = (String)pagingMap.get("searchKeyword");
+		int searchCategoryNo = (int)pagingMap.get("searchCategoryNo");
+		String sql = "";
+		
 		try {
-			conn = dbUtil.DBConnection.getConnection();
-			
-			String sql = "select count(campingNo) from camping";
-			pstmt = conn.prepareStatement(sql);
+			conn = dbUtil.DBConnection.getConnection();			
+
+			if(searchCategoryNo==0) {
+				sql = "select count(campingNo) from camping"
+						+ " where campingTitle like ?";
+						
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, '%' + searchKeyword + '%');
+			}else {
+				sql = "select count(campingNo) from camping"
+						+ " where campingTitle like ?"
+						+ " and campingCategoryNo = ?";
+						
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, '%' + searchKeyword + '%');
+				pstmt.setInt(2, searchCategoryNo);
+			}			
 			
 			rs = pstmt.executeQuery();
 			
