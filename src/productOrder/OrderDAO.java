@@ -53,12 +53,12 @@ public class OrderDAO {
 		return total;
 	}
 	
-	public void insertOrder(OrderVO vo) {
+	public void insertOrder(OrderVO vo) {//주문
 		
 		try {
 			con=db.getConnection();
-			
-			sql="insert into productOrder(productPrice)";
+			                                
+			sql="insert into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate)";
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally {

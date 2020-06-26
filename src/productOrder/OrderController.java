@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mysql.fabric.xmlrpc.base.Member;
 
+import productCart.productCartService;
+import productCart.productCartVO;
+
 
 
 
@@ -52,16 +55,21 @@ public class OrderController extends HttpServlet{
 			
 			
 			if(action == null ||action.equals("/order.do")) {//결제주문정보 
-				
-				List<OrderVO> orderList = new ArrayList();
+				productCartService procartservice=new productCartService();
+				List<productCartVO> orderList = new ArrayList();
 				
 				String userId=request.getParameter("userId");
 				
-				orderList=orderservice.orderList(userId);
+				orderList=procartservice.allcartList(userId);
+				        int totalPrice =procartservice.TotalPrice(userId);
 				int ordercount=orderservice.orderCount(userId);
+				
+				request.setAttribute("orderList", orderList);
+				
 				request.setAttribute("ordercount", ordercount);//주문한 상품 총 개수
-			   
+			    request.setAttribute("totalPrice", totalPrice);
 				MemberVO vo= dao.usercheck(userId); //회원정보DAO에서 정보 얻어오기
+				
 				request.setAttribute("uservo", vo);
 				
 			   	nextPage="/order/checkout.jsp";
@@ -69,8 +77,16 @@ public class OrderController extends HttpServlet{
 			}else if(action.equals("/pay.do")) {
 				
 				String userId=request.getParameter("userId");
-			
-				
+			    int productPayment=Integer.parseInt(request.getParameter("totalPrice"));
+			    String userZipcode=request.getParameter("userZipcode");
+			    String address1=request.getParameter("address1");
+			    String address2=request.getParameter("address2");
+			    String productName=request.getParameter("productName");
+			    String userName=request.getParameter("userName");
+			    String userPhone=request.getParameter("userPhone");
+			    String userComment=request.getParameter("userComment");
+			    String productDelivery=request.getParameter("productDelivery");
+			    
 			}
 			 if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 

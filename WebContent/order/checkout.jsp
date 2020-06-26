@@ -96,22 +96,30 @@
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Product</div>
 									<div class="cart_total_price ml-auto">Total:${ordercount}</div>
+								
 								</li>
-								<li class="d-flex flex-row align-items-center justify-content-start">
-									<div class="cart_total_title">2 Piece Swimsuit x1</div>
-									<div class="cart_total_price ml-auto">$35.00</div>
-								</li>
+								<c:choose>
+								    <c:forEach var="order" items="${orderList}">
+								
+										<li class="d-flex flex-row align-items-center justify-content-start">
+										    	
+											<div class="cart_total_title">2 Piece Swimsuit x1 ${orderList.productName}x${orderList.cartQuantity}</div>
+											<div class="cart_total_price ml-auto">$35.00 ${productTotalPrice}</div>
+										</li>
+								    </c:forEach>
+								</c:choose>
+								
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Subtotal</div>
-									<div class="cart_total_price ml-auto">$35.00</div>
+									<div class="cart_total_price ml-auto">$35.00 ${totalPrice}</div>
 								</li>
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Shipping</div>
-									<div class="cart_total_price ml-auto">$5.00</div>
+									<div class="cart_total_price ml-auto">${orderList.productDelivery }</div>
 								</li>
 								<li class="d-flex flex-row align-items-start justify-content-start total_row">
 									<div class="cart_total_title">Total</div>
-									<div class="cart_total_price ml-auto">$40.00</div>
+									<div class="cart_total_price ml-auto">$40.00${totalPrice+list.productDelivery}</div>
 								</li>
 							</ul>
 						</div>

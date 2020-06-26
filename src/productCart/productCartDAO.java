@@ -35,7 +35,8 @@ public class productCartDAO {
    
   
 	public List<productCartVO> allcartList(String userId){//장바구니목록조회
-		 List<productCartVO> list=null;
+		  System.out.println(userId+"DAO");
+		 List<productCartVO> list=new ArrayList();
 		
 		try {
 			 con=db.getConnection();
@@ -47,11 +48,12 @@ public class productCartDAO {
 			 pstmt.setString(1, userId);
 			 
 			 rs=pstmt.executeQuery();
+			 
 			 while(rs.next()) {
 			 productCartVO vo= new productCartVO(
 											     rs.getInt("productNo"),
 												 rs.getInt("productPrice"),
-												 rs.getInt("productPrice"),
+												 rs.getInt("cartQuantity"),
 												 rs.getInt("productDelivery"),
 												 rs.getInt("productTotalPrice"), 
 												 rs.getString("productName"), 
@@ -63,6 +65,8 @@ public class productCartDAO {
 			 }
 		} catch (Exception e) {
 		System.out.println("allCartList에서오류"+e.getMessage());
+		
+		
 		}finally {
 			freeResource();
 		}
@@ -101,17 +105,17 @@ public class productCartDAO {
 		try {
 			con=db.getConnection();
 			
-			sql="update productcart set cartQuantity=? ,productTotalPrice=? where userId=? and productNo=?  ";
+			sql="update productcart set cartQuantity=? ,productTotalPrice=? where userId=? and productName=?  ";
 			
 			pstmt=con.prepareStatement(sql);
-			int cartQuantity =vo.getCartQuantity();
-			int productPrice= vo.getProductPrice();
-			int productTotalPrice=cartQuantity*productPrice;
 			
-			pstmt.setInt(1,cartQuantity);
-			pstmt.setInt(2, productTotalPrice);
+			
+			
+			
+			pstmt.setInt(1,vo.getCartQuantity());
+			pstmt.setInt(2, vo.getProductTotalPrice());
 			pstmt.setString(3, vo.getUserId());
-			pstmt.setInt(4, vo.getProductNo());
+			pstmt.setString(4, vo.getProductName());
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -189,13 +193,15 @@ public class productCartDAO {
 			freeResource();
 		}
    }//deleteCart
-	
-	public int TotalPrice(String userId) {
+
+	public Map<String,Integer> TotalPrice(String userId) {
+		Map<String,Integer> map=new HashMap<String, Integer>();
 		int totalPrice=0;
+		int totalDelivery=0;
 		try {
 			con=db.getConnection();
 			
-			sql="select sum(productTotalPrice) from productcart where userId=?";
+			sql="select sum(productTotalPrice) ,sum(productDelivery) from productcart where userId=?";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -205,12 +211,20 @@ public class productCartDAO {
 			
 			if(rs.next()) {
 				totalPrice=rs.getInt(1);
+				totalDelivery=rs.getInt(2);
+				
+				 if(totalDelivery>2500) { totalDelivery=2500; }
+				
+				
+				map.put("totalPrice", totalPrice);
+				map.put("totalDelivery", totalDelivery);
+				System.out.println(totalDelivery);
 			}
 			
 		} catch (Exception e) {
 			System.out.println("TotalPrice에서 오류"+e.getMessage());
 		}
 		
-		return totalPrice;
+		return map;
 	}
 }
