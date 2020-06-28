@@ -36,7 +36,7 @@ public class CommentDAO {
 		} else {
 			try {
 				conn = dbUtil.DBConnection.getConnection();
-				sql = "select max(commentNum) from comment";
+				sql = "select max(commentNo) from comment";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 
@@ -96,6 +96,7 @@ public class CommentDAO {
 		return 0;
 	} // deleteComment
 
+	// 댓글 리스트
 	public List<CommentVO> getCommentList(int boardCategoryNo, int boardNo) {
 		String sql = "";
 		List<CommentVO> commentList = new ArrayList<CommentVO>();
@@ -132,7 +133,7 @@ public class CommentDAO {
 		}
 
 		return commentList;
-	}
+	} // getCommentList
 
 	public CommentVO getLastComment() {
 		String sql = "";
@@ -149,7 +150,7 @@ public class CommentDAO {
 			} else {
 				num = 1;
 			}
-			sql = "select * from comment where commentNum = ?";
+			sql = "select * from comment where commentNo = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 

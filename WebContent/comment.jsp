@@ -1,82 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.sql.Date"%>
-<%@page import="java.sql.Timestamp"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="comment.CommentVO"%>
-<%@page import="comment.CommentDAO"%>
-<%@page import="comment.CommentService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <% request.setCharacterEncoding("UTF-8"); %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="boardCategoryNo" value="${sessionScope.userId}" />
-
-<%
-	// String pageName = (String) session.getAttribute("boardName");
-	String contextPath = request.getContextPath();
-	request.setCharacterEncoding("UTF-8");
-	
- 	int boardCategoryNo = Integer.parseInt((String) session.getAttribute("boardCategoryNo"));
-	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-	String userId = (String) session.getAttribute("userId");
-	String userName = (String) session.getAttribute("userName");
-	String pageNum = request.getParameter("pageNum");
-	List<CommentVO> replyList = new CommentService().getCommentList(boardCategoryNo, boardNo);
- 	/* int boardCategoryNo = 1;
-	int boardNo = 1;
-	String userId = "hong";
-	String userName = "hong";
-
-	List<CommentVO> replyList = new ArrayList<>();
-	
-		CommentVO replyVO1 = new CommentVO();
-		replyVO1.setBoardCategoryNo(1);
-		replyVO1.setBoardNo(1);
-		replyVO1.setReplyNo(1);
-		replyVO1.setReplyContent("test");
-		replyVO1.setUserId("hong");
-		replyVO1.setUserName("홍길동");
-		replyVO1.setReplyRe_ref(0);
-		replyVO1.setReplyRe_lev(0);
-		replyVO1.setReplyRe_seq(0);
-		replyVO1.setReplyWriteDate(Timestamp.valueOf(LocalDateTime.now()));
-		
-		CommentVO replyVO2 = new CommentVO();
-		replyVO2.setBoardCategoryNo(2);
-		replyVO2.setBoardNo(1);
-		replyVO2.setReplyNo(2);
-		replyVO2.setReplyContent("test");
-		replyVO2.setUserId("kim");
-		replyVO2.setUserName("김강열");
-		replyVO2.setReplyRe_ref(0);
-		replyVO2.setReplyRe_lev(0);
-		replyVO2.setReplyRe_seq(0);
-		replyVO2.setReplyWriteDate(Timestamp.valueOf(LocalDateTime.now()));
-		
-		CommentVO replyVO3 = new CommentVO();
-		replyVO3.setBoardCategoryNo(1);
-		replyVO3.setBoardNo(1);
-		replyVO3.setReplyNo(3);
-		replyVO3.setReplyContent("test");
-		replyVO3.setUserId("chun");
-		replyVO3.setUserName("천인우");
-		replyVO3.setReplyRe_ref(0);
-		replyVO3.setReplyRe_lev(0);
-		replyVO3.setReplyRe_seq(0);
-		replyVO3.setReplyWriteDate(Timestamp.valueOf(LocalDateTime.now()));
-		
-		replyList.add(replyVO1);
-		replyList.add(replyVO2);
-		replyList.add(replyVO3); */
-	
-	
-	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-%>
+<c:set var="boardCategoryNo" value="${sessionScope.boardCategoryNo}" />
+<c:set var="boardNo" value="${requestScope.boardNo}" />
+<%--
+<c:set var="userId" value="${sessionScope.userId}" />
+<c:set var="userName" value="${requestScope.userName}" />
+--%>
+<c:set var="commentList" value="${requestScope.commentList}" />
+ 
+<c:set var="userId" value="${'hong'}" />
+<c:set var="userName" value="${'홍길동'}" />
 
 <!DOCTYPE html>
 <html>
@@ -91,63 +30,49 @@
 				<h3>댓글</h3>
 			</div>
 		</div>
-		<table class="table reply-list-table">
+		<table class="table comment-list-table">
 			<colgroup>
 				<col style="width:80px" />
 				<col />
 				<col style="width:120px" />
 			</colgroup>
-			<%
-				if (replyList.size() > 0) {
-						for (int i = 0; i < replyList.size(); i++) {
-							CommentVO replyVO = replyList.get(i);
-							int beanNo = replyVO.getReplyNo();
-							String beanId = replyVO.getUserId();
-							String beanName = replyVO.getUserName();
-							String beanContent = replyVO.getReplyContent();
-							String beanDate = sdf.format(replyVO.getReplyWriteDate());
-			%>
-			<tr id="reply<%=beanNo%>">
-				<td class="d-none d-lg-table-cell align-middle"><%=beanName%></td>
-				<td class="text-left align-middle">
-					<%=beanContent%>					
-					<%
-						if(userId!=null && userId.equals(beanId)){
-					%>
-						<button type="button" class="btn btn-sm btn-danger ml-2" onclick="replyDelete('<%=beanNo%>')">삭제</button>
-					<%
-						}
-					%>
-					<small class="d-block d-lg-none text-right mb-1 text-muted">
-						<%=beanName%> | <%=beanDate%>
-					</small>
-				</td>
-				<td class="d-none d-lg-table-cell text-center align-middle">
-					<small><%=beanDate%></small>
-				</td>
-			</tr>
-			<%
-					}
-				} else {
-			%>
-			<tr id="replyEmpty">
+			
+			<c:if test="${requestScope.commentList != null}">
+				<c:forEach var="commentVO" items="${requestScope.commentList}">
+					<tr id="comment${commentVO.commentNo }">
+						<td class="d-none d-lg-table-cell align-middle">${commentVO.userName}</td>
+						<td class="text-left align-middle">
+							${commentVO.commentContent}		
+							<c:if test="${sessionScope.userId == comment.userId}">
+								<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('${commentVO.commentNo}')">삭제</button>
+							</c:if>
+							<small class="d-block d-lg-none text-right mb-1 text-muted">
+								${commentVO.userName} | ${commentVO.commentWriteDate}
+							</small>
+						</td>
+						<td class="d-none d-lg-table-cell text-center align-middle">
+							<small>${commentVO.commentWriteDate}</small>
+						</td>
+					</tr>		
+				</c:forEach>
+			</c:if>
+			<c:if test="${requestScope.commentList == null}">
+				<tr id="commentEmpty">
 				<td class="py-5 text-center" colspan="3">등록된 댓글이 없습니다.</td>
-			</tr>
-			<%
-				}
-			%>
+			</tr>	
+			</c:if>
 		</table>
-		<form name="replyform">
-			<table class="table reply-form-table bg-light">
-				<%
-					if(userId==null){
-				%>
+		
+		<form name="commentform">
+			<table class="table comment-form-table bg-light">
+				
+				<c:if test="${userId == null}">
 					<tr>
 						<td class="py-5 text-center bg-light">로그인 한 사용자만 댓글을 작성할 수 있습니다.</td>
 					</tr>
-				<%
-					}else{
-				%>
+				</c:if>
+				
+				<c:if test="${userId != null}">
 					<colgroup class="d-lg-none">
 						<col />
 						<col style="width:112px" />
@@ -159,60 +84,58 @@
 					</colgroup>
 					<tr>
 						<td class="d-none d-lg-table-cell align-middle">
-							<p class="m-0"><%=userName%></p>
+							<p class="m-0">${userName}</p>
 						</td>
 						<td class="pr-0">
-							<p class="d-block d-lg-none text-left mb-1 text-muted"><%=userName%></p>
-							<label for="replyContent" class="d-none">내용</label>
-							<input class="form-control" type="text" name="replyContent" id="replyContent" required />
+							<p class="d-block d-lg-none text-left mb-1 text-muted">${userName}</p>
+							<label for="commentContent" class="d-none">내용</label>
+							<input class="form-control" type="text" name="commentContent" id="commentContent" required />
 						</td>
 						<td class="align-bottom">
-							<button type="button" class="btn btn-primary" onclick="replySubmit()">댓글쓰기</button>
+							<button type="button" class="btn btn-primary" onclick="commentSubmit()">댓글쓰기</button>
 						</td>
 					</tr>
-				<%
-					}
-				%>
+				</c:if>
 			</table>
 		</form>
 	</article>
 	<script>
-		function replySubmit(){
+		function commentSubmit(){
 			
-			var boardCategoryNo = "<%=boardCategoryNo%>";
-			var boardNo = "<%=boardNo%>";
-			var userId = "<%=userId%>";
-			var userName = "<%=userName%>";
-			var replyContent = document.replyform.replyContent.value; 
+			var boardCategoryNo = ${boardCategoryNo};
+			var boardNo = ${boardNo};
+			var userId = ${userId};
+			var userName = ${userName};
+			var commentContent = document.commentform.commentContent.value; 
 			
-			if(replyContent.length == 0){
+			if(commentContent.length == 0){
 				alert("댓글 내용을 입력해주세요.");
-				document.replyform.replyContent.focus();
+				document.commentform.commentContent.focus();
 				return;
 			}
 			
-			var _replyInfo = '{"boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","replyContent":"'+replyContent+'"}';
+			var _commentInfo = '{"boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","commentContent":"'+commentContent+'"}';
 						
 			$.ajax({
 				type : "post",
 				async : "false",
-				url : "<%=contextPath%>/reply/insertReply.do",
-				data : {replyInfo : _replyInfo},
+				url : "${contextPath}/comment/insertComment.do",
+				data : {commentInfo : _commentInfo},
 				success : function(data, status){
 					var jsonInfo = JSON.parse(data);
 					
-					var ajaxNo = jsonInfo.replyNo;
+					var ajaxNo = jsonInfo.commentNo;
 					var ajaxName = jsonInfo.userName;
-					var ajaxContent = jsonInfo.replyContent;
-					var ajaxDate = jsonInfo.replyWriteDate;
+					var ajaxContent = jsonInfo.commentContent;
+					var ajaxDate = jsonInfo.commentWriteDate;
 					
 					var str = "";					
 					
-					str += '<tr id="reply' + ajaxNo + '">';
+					str += '<tr id="comment' + ajaxNo + '">';
 					str += '	<td class="d-none d-lg-table-cell align-middle">' + ajaxName + '</td>';
 					str += '	<td class="text-left align-middle">';
 					str += 			ajaxContent;				
-					str += '		<button type="button" class="btn btn-sm btn-danger ml-2" onclick="replyDelete(\'' + ajaxNo + '\')">삭제</button>';
+					str += '		<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete(\'' + ajaxNo + '\')">삭제</button>';
 					str += '		<small class="d-block d-lg-none text-right mb-1 text-muted">';
 					str += 				ajaxName + ' | ' + ajaxDate;
 					str += '		</small>';
@@ -222,12 +145,12 @@
 					str += '	</td>';
 					str += '</tr>';
 					
-					$(".reply-list-table").append(str);
+					$(".comment-list-table").append(str);
 					
-					$("#replyContent").val("");
+					$("#commentContent").val("");
 					
-					if($("#replyEmpty")){
-						$("#replyEmpty").remove();
+					if($("#commentEmpty")){
+						$("#commentEmpty").remove();
 					}
 						
 				},
@@ -237,35 +160,35 @@
 			});
 		}
 		
-		function replyDelete(replyNo){
+		function commentDelete(commentNo){
 			
 			var result = confirm("댓글을 삭제하시겠습니까?");
 			
 			if(result){	
 
-				var userId = "<%=userId%>";
+				var userId = ${userId};
 				
-				var _replyDeleteInfo = '{"userId":"'+userId+'","replyNo":"'+replyNo+'"}';
+				var _commentDeleteInfo = '{"userId":"'+userId+'","commentNo":"'+commentNo+'"}';
 							
 				$.ajax({
 					type : "post",
 					async : "false",
-					url : "<%=contextPath%>/reply/deleteReply.do",
-					data : {replyDeleteInfo : _replyDeleteInfo},
+					url : "${contextPath}/comment/deleteComment.do",
+					data : {commentDeleteInfo : _commentDeleteInfo},
 					success : function(data, status){
 						if(data == "success"){
 							var str = "<td class='alert alert-danger text-center' colspan='3'>댓글이 삭제되었습니다.</td>";						
-							$("#reply" + replyNo).html(str).fadeOut(1000, function(){
+							$("#comment" + commentNo).html(str).fadeOut(1000, function(){
 								$(this).remove();
-								if($(".reply-list-table").find("tr").length == 0){
+								if($(".comment-list-table").find("tr").length == 0){
 									
 									var emptyStr = "";
 									
-									emptyStr += '<tr id="replyEmpty">';
+									emptyStr += '<tr id="commentEmpty">';
 									emptyStr += '	<td class="py-5 text-center" colspan="3">등록된 댓글이 없습니다.</td>';
 									emptyStr += '</tr>';
 									
-									$(".reply-list-table").append(emptyStr);
+									$(".comment-list-table").append(emptyStr);
 								}
 							});
 						}else{

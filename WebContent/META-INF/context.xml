@@ -7,6 +7,6 @@
     driverClassName="com.mysql.jdbc.Driver"
     url="jdbc:mysql://localhost:3306/assa"
     username="root"
-    password="1234"
+    password="dnlseh036"
   />
 </Context>
