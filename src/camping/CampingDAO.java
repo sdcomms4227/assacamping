@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,15 +25,14 @@ public class CampingDAO {
 		}
 	}
 
-	public List<Map<String,Object>> getCampingList(Map<String, Object> pagingMap) {
+	public List<Map<String,Object>> getCampingList(Map<String, Object> searchMap) {
 
 		List<Map<String,Object>> campingList = new ArrayList<Map<String,Object>>();
 		
-		int section = (int)pagingMap.get("section");
-		int pageNo = (int)pagingMap.get("pageNo");
-		int startNum = (section - 1)*100 + (pageNo - 1)*10;
-		String searchKeyword = (String)pagingMap.get("searchKeyword");
-		int searchCategoryNo = (int)pagingMap.get("searchCategoryNo");
+		int pageNo = (int)searchMap.get("pageNo");
+		int offset = (pageNo - 1)*10;
+		String searchKeyword = (String)searchMap.get("searchKeyword");
+		int searchCategoryNo = (int)searchMap.get("searchCategoryNo");
 		String sql = "";
 		
 		try {
@@ -48,11 +46,11 @@ public class CampingDAO {
 						+ " on cp.campingCategoryNo = ct.campingCategoryNo"
 						+ " where cp.campingTitle like ?"
 						+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
-						+ "	limit ?, 10";		
+						+ "	limit ?, 10";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, '%' + searchKeyword + '%');
-				pstmt.setInt(2, startNum);
+				pstmt.setInt(2, offset);
 			}else {
 				sql = "	select *"
 						+ " from camping cp"
@@ -66,7 +64,7 @@ public class CampingDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, '%' + searchKeyword + '%');
 				pstmt.setInt(2, searchCategoryNo);
-				pstmt.setInt(3, startNum);
+				pstmt.setInt(3, offset);
 			}
 			
 			rs = pstmt.executeQuery();
@@ -105,10 +103,10 @@ public class CampingDAO {
 	}
 
 
-	public int getCampingListCount(Map<String, Object> pagingMap) {
+	public int getCampingListCount(Map<String, Object> searchMap) {
 
-		String searchKeyword = (String)pagingMap.get("searchKeyword");
-		int searchCategoryNo = (int)pagingMap.get("searchCategoryNo");
+		String searchKeyword = (String)searchMap.get("searchKeyword");
+		int searchCategoryNo = (int)searchMap.get("searchCategoryNo");
 		String sql = "";
 		
 		try {

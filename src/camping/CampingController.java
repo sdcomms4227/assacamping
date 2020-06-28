@@ -56,13 +56,12 @@ public class CampingController extends HttpServlet {
 
 			setPagination(request, response);
 			
-			Map<String, Object> pagingMap = new HashMap<String, Object>();
-			pagingMap.put("section", request.getAttribute("section"));
-			pagingMap.put("pageNo", request.getAttribute("pageNo"));
-			pagingMap.put("searchKeyword", request.getAttribute("searchKeyword"));
-			pagingMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
+			Map<String, Object> searchMap = new HashMap<String, Object>();
+			searchMap.put("pageNo", request.getAttribute("pageNo"));
+			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
+			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
-			Map<String, Object> campingListMap = campingService.listCamping(pagingMap);			
+			Map<String, Object> campingListMap = campingService.listCamping(searchMap);			
 			request.setAttribute("campingListMap", campingListMap);
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
@@ -214,15 +213,7 @@ public class CampingController extends HttpServlet {
 		
 	}
 	
-	public void setPagination(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int section = 1;
-		if(request.getParameter("section")!=null) {
-			section = Integer.parseInt(request.getParameter("section"));
-		}
-		if(request.getAttribute("section")==null) {
-			request.setAttribute("section", section);
-		}
-		
+	public void setPagination(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		int pageNo = 1;
 		if(request.getParameter("pageNo")!=null) {
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));

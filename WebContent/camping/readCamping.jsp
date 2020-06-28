@@ -108,9 +108,9 @@
 
 						<div class="text-center my-5">
 							<button type="button" class="btn btn-secondary" onclick="listCamping()">목록</button>							
-							<button type="button" class="btn btn-warning" onclick="modifyCamping()">수정</button>
-							<button type="button" class="btn btn-danger" onclick="deleteCamping()">삭제</button>
-							<button type="button" class="btn btn-primary" onclick="replyCamping()">답글쓰기</button>
+							<button type="button" class="btn btn-warning" onclick="modifyCamping(${campingNo})">수정</button>
+							<button type="button" class="btn btn-danger" onclick="deleteCamping(${campingNo})">삭제</button>
+							<button type="button" class="btn btn-primary" onclick="replyCamping(${campingNo})">답글쓰기</button>
 						</div>			
 					</article>
 					<!-- // 게시판 -->
@@ -124,6 +124,12 @@
 	<jsp:include page="../inc/footer.jsp" />
 </div>
 
+<form method="post" name="pagingForm">
+	<input type="hidden" name="pageNo" value="${pageNo}" />
+	<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
+	<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
+</form>
+
 <script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
 <script src="${contextPath}/js/popper.js"></script>
 <script src="${contextPath}/js/bootstrap.min.js"></script>
@@ -136,111 +142,29 @@
 
 <script>
 function listCamping(){
-	var form = document.createElement("form");
-	form.action = "${contextPath}/camp/listCamping.do";
-	form.method = "post";
-	
-	var input1 = document.createElement("input");
-	input1.type = "hidden";
-	input1.name = "section";
-	input1.value = ${section};
-	form.appendChild(input1);
-	
-	var input2 = document.createElement("input");
-	input2.type = "hidden";
-	input2.name = "pageNo";
-	input2.value = ${pageNo};
-	form.appendChild(input2);
-	
-	document.getElementsByTagName("body")[0].appendChild(form);
-	
-	form.submit();
-}
-function modifyCamping(){
-	var form = document.createElement("form");
-	form.action = "${contextPath}/camp/modifyCamping.do";
-	form.method = "post";
-	
-	var input1 = document.createElement("input");
-	input1.type = "hidden";
-	input1.name = "section";
-	input1.value = ${section};
-	form.appendChild(input1);
-	
-	var input2 = document.createElement("input");
-	input2.type = "hidden";
-	input2.name = "pageNo";
-	input2.value = ${pageNo};
-	form.appendChild(input2);
-	
-	var input3 = document.createElement("input");
-	input3.type = "hidden";
-	input3.name = "campingNo";
-	input3.value = ${campingNo};
-	form.appendChild(input3);
-	
-	document.getElementsByTagName("body")[0].appendChild(form);
-	
+	var form = document.pagingForm;
+	form.action = "${contextPath}/camp/listCamping.do";	
 	form.submit();
 }
 
-function deleteCamping(){
-	var result = confirm("정말로 삭제하시겠습니까?");
-	
+function modifyCamping(campingNo){
+	var form = document.pagingForm;
+	form.action = "${contextPath}/camp/modifyCamping.do?campingNo=" + campingNo;
+	form.submit();
+}
+
+function deleteCamping(campingNo){
+	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
-		var form = document.createElement("form");
-		form.action = "${contextPath}/camp/deleteCamping.do";
-		form.method = "post";
-		
-		var input1 = document.createElement("input");
-		input1.type = "hidden";
-		input1.name = "section";
-		input1.value = ${section};
-		form.appendChild(input1);
-		
-		var input2 = document.createElement("input");
-		input2.type = "hidden";
-		input2.name = "pageNo";
-		input2.value = ${pageNo};
-		form.appendChild(input2);
-		
-		var input3 = document.createElement("input");
-		input3.type = "hidden";
-		input3.name = "campingNo";
-		input3.value = ${campingNo};
-		form.appendChild(input3);
-		
-		document.getElementsByTagName("body")[0].appendChild(form);
-		
+		var form = document.pagingForm;
+		form.action = "${contextPath}/camp/deleteCamping.do?campingNo=" + campingNo;
 		form.submit();
 	}
 }
 
-function replyCamping(){
-	var form = document.createElement("form");
-	form.action = "${contextPath}/camp/replyCamping.do";
-	form.method = "post";
-	
-	var input1 = document.createElement("input");
-	input1.type = "hidden";
-	input1.name = "section";
-	input1.value = ${section};
-	form.appendChild(input1);
-	
-	var input2 = document.createElement("input");
-	input2.type = "hidden";
-	input2.name = "pageNo";
-	input2.value = ${pageNo};
-	form.appendChild(input2);
-	
-	var input3 = document.createElement("input");
-	input3.type = "hidden";
-	input3.name = "campingNo";
-	input3.value = ${campingNo};
-	form.appendChild(input3);
-	
-	document.getElementsByTagName("body")[0].appendChild(form);
-	
+function replyCamping(campingNo){
+	var form = document.pagingForm;
+	form.action = "${contextPath}/camp/replyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 </script>

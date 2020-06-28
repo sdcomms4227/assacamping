@@ -105,8 +105,7 @@
 									<th class="align-middle">
 										<label for="campingContent" class="m-0">내용</label>
 									</th>
-									<td>
-			
+									<td>			
 										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required></textarea>
 									</td>
 								</tr>

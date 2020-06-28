@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import campingCategory.CampingCategoryVO;
-
 public class CampingService {
 	
 	CampingDAO campingDAO;
@@ -14,16 +12,16 @@ public class CampingService {
 		campingDAO = new CampingDAO();
 	}
 
-	public Map<String, Object> listCamping(Map<String, Object> pagingMap) {
+	public Map<String, Object> listCamping(Map<String, Object> searchMap) {
 		
 		Map<String, Object> campingListMap = new HashMap<String, Object>();
 		
-		List<Map<String,Object>> campingList = campingDAO.getCampingList(pagingMap);
+		List<Map<String,Object>> campingList = campingDAO.getCampingList(searchMap);
 		
-		int total = campingDAO.getCampingListCount(pagingMap);
+		int totalCount = campingDAO.getCampingListCount(searchMap);
 		
 		campingListMap.put("campingList", campingList);		
-		campingListMap.put("total", total);
+		campingListMap.put("totalCount", totalCount);
 		
 		return campingListMap;
 	}

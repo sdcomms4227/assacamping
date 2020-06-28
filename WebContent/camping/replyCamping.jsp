@@ -73,10 +73,11 @@
 					<!-- 게시판 -->
 					<article class="mt-3">
 						<form action="${contextPath}/camp/insertReplyCamping.do" method="post">
-							<input type="hidden" name="section" value="${section}" />
 							<input type="hidden" name="pageNo" value="${pageNo}" />
-							<input type="hidden" name="userId" value="${userId}" />
+							<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
+							<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
 							<input type="hidden" name="campingNo" value="${campingNo}" />
+							<input type="hidden" name="userId" value="${userId}" />
 							<input type="hidden" name="campingRe_ref" value="${campingRe_ref}" />
 							<input type="hidden" name="campingRe_lev" value="${campingRe_lev}" />
 							<input type="hidden" name="campingRe_seq" value="${campingRe_seq}" />
@@ -114,8 +115,7 @@
 									<th class="align-middle">
 										<label for="campingContent" class="m-0">내용</label>
 									</th>
-									<td>
-			
+									<td>			
 										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required></textarea>
 									</td>
 								</tr>

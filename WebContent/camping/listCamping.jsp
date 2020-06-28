@@ -6,7 +6,9 @@
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="campingList" value="${campingListMap.campingList}" />
-<c:set var="total" value="${campingListMap.total}" />
+<c:set var="totalCount" value="${campingListMap.totalCount}" />
+<c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
+<c:set var="endNo" value="${beginNo + 9}" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -87,7 +89,7 @@
 							<tbody>
 								
 						<c:choose>
-							<c:when test="${total==0}">			
+							<c:when test="${totalCount==0}">			
 									<tr>
 										<td colspan="6">등록된 게시글이 없습니다.</td>
 									</tr>
@@ -96,7 +98,7 @@
 								<c:forEach var="campingMap" items="${campingList}">
 									<c:set var="campingVO" value="${campingMap.campingVO}" />
 									<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-									<tr onclick="readCamping(${campingVO.campingNo}, '${searchKeyword}')" style="cursor:pointer">
+									<tr onclick="readCamping(${campingVO.campingNo})" style="cursor:pointer">
 										<td class="d-none d-lg-table-cell align-middle">${campingVO.campingNo}</td>
 										<td class="d-none d-lg-table-cell align-middle wbka">${campingCategoryName}</td>
 										<td class="text-left">
@@ -106,11 +108,7 @@
 											${campingVO.campingTitle}
 											<small class="d-lg-none text-muted">[${campingCategoryName}]</small>
 											<c:if test="${campingVO.campingFileName!=null}">
-												<svg class="bi bi-download ml-2" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-												  <path fill-rule="evenodd" d="M.5 8a.5.5 0 0 1 .5.5V12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5a.5.5 0 0 1 1 0V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8.5A.5.5 0 0 1 .5 8z"/>
-												  <path fill-rule="evenodd" d="M5 7.5a.5.5 0 0 1 .707 0L8 9.793 10.293 7.5a.5.5 0 1 1 .707.707l-2.646 2.647a.5.5 0 0 1-.708 0L5 8.207A.5.5 0 0 1 5 7.5z"/>
-												  <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 1z"/>
-												</svg>
+												<img class="ml-2" style="width:14px;height:14px" src="${contextPath}/images/download.svg" />
 											</c:if>
 											<small class="d-block d-lg-none text-right mt-1 text-muted">
 												${campingVO.userId} | <fmt:formatDate value="${campingVO.campingWriteDate}" pattern="yy-MM-dd"/> | ${campingVO.campingReadCount}
@@ -142,13 +140,11 @@
 														<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>
 													</c:otherwise>
 												</c:choose>
-															
-												
 											</c:forEach>
 										</select>
 									</div>
 									<div class="input-group">
-										<input type="text" name="searchKeyword" size="24" maxlength="24" class="form-control">
+										<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control">
 										<div class="input-group-append">
 											<button type="submit" class="btn btn-secondary">검색</button>
 										</div>
@@ -162,40 +158,40 @@
 							</div>
 						</div>
 					
-						<div class="row">
-							<div class="col-12">
-								<ul class="pagination justify-content-center">
-							<c:if test="${total != null}">
-								<c:if test="${section > 1}">						
-								   	<li class="page-item">
-										<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section-1}&pageNo=1&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">이전</a>
-									</li>
-								</c:if>									
-						<c:forEach var="page" begin="1" end="10" step="1">
-							<c:if test="${page <= Math.ceil((total - (section-1)*100) /10)}">
-								<c:choose>	
-									<c:when test="${page==pageNo}">
-										<li class="page-item active">
-											<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section}&pageNo=${page}&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">${(section-1)*10 + page}</a>							
+						<c:if test="${totalCount != null}">
+							<div class="row">
+								<div class="col-12">
+									<ul class="pagination justify-content-center">
+									<c:if test="${pageNo > 10}">	
+									   	<li class="page-item">
+											<button type="button" class="page-link" onclick="listCamping(${beginNo-10})">이전</button>
 										</li>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item">
-											<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section}&pageNo=${page}&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">${(section-1)*10 + page}</a>							
+									</c:if>
+									<c:forEach var="page" begin="${beginNo}" end="${endNo}" step="1">
+										<c:if test="${page <= Math.ceil(totalCount/10)}">
+											<c:choose>	
+												<c:when test="${page==pageNo}">
+													<li class="page-item active">
+														<button type="button" class="page-link" onclick="listCamping(${page})">${page}</button>						
+													</li>
+												</c:when>
+												<c:otherwise>
+													<li class="page-item">
+														<button type="button" class="page-link" onclick="listCamping(${page})">${page}</button>							
+													</li>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+									</c:forEach>								
+									<c:if test="${totalCount > endNo*10}">						
+									   	<li class="page-item">
+											<button type="button" class="page-link" onclick="listCamping(${beginNo+10})">이전</button>
 										</li>
-									</c:otherwise>
-								</c:choose>
-							</c:if>
-						</c:forEach>								
-								<c:if test="${Math.ceil(total/100) > section}">						
-								   	<li class="page-item">
-										<a class="page-link" href="${contextPath}/camp/listCamping.do?section=${section+1}&pageNo=1&searchKeyword=${searchKeyword}&searchCategoryNo=${searchCategoryNo}">다음</a>
-									</li>
-								</c:if>
-							</c:if>
-								</ul>
+									</c:if>
+									</ul>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</article>		
 					<!-- //게시판 -->
 					
@@ -208,6 +204,12 @@
 	<jsp:include page="../inc/footer.jsp" />
 </div>
 
+<form method="post" name="pagingForm">
+	<input type="hidden" name="pageNo" value="${pageNo}" />
+	<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
+	<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
+</form>
+
 <script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
 <script src="${contextPath}/js/popper.js"></script>
 <script src="${contextPath}/js/bootstrap.min.js"></script>
@@ -219,44 +221,16 @@
 <script src="${contextPath}/js/camping_custom.js"></script>
 
 <script>
+function listCamping(pageNo){
+	var form = document.pagingForm;
+	form.action = "${contextPath}/camp/listCamping.do";	
+	form.pageNo.value = pageNo;
+	form.submit();
+}
 
-function readCamping(campingNo, searchKeyword){
-	var form = document.createElement("form");
-	form.action = "${contextPath}/camp/readCamping.do";
-	form.method = "post";
-	
-	var input1 = document.createElement("input");
-	input1.type = "hidden";
-	input1.name = "section";
-	input1.value = ${section};
-	form.appendChild(input1);
-	
-	var input2 = document.createElement("input");
-	input2.type = "hidden";
-	input2.name = "pageNo";
-	input2.value = ${pageNo};
-	form.appendChild(input2);
-	
-	var input3 = document.createElement("input");
-	input3.type = "hidden";
-	input3.name = "searchKeyword";
-	input3.value = searchKeyword;
-	form.appendChild(input3);
-	
-	var input4 = document.createElement("input");
-	input4.type = "hidden";
-	input4.name = "searchCategoryNo";
-	input4.value = ${searchCategoryNo};
-	form.appendChild(input4);
-	
-	var input5 = document.createElement("input");
-	input5.type = "hidden";
-	input5.name = "campingNo";
-	input5.value = campingNo;
-	form.appendChild(input5);
-	
-	document.getElementsByTagName("body")[0].appendChild(form);
-	
+function readCamping(campingNo){
+	var form = document.pagingForm;
+	form.action = "${contextPath}/camp/readCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 </script>

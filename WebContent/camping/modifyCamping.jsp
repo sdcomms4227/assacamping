@@ -66,9 +66,10 @@
 					<!-- 게시판 -->
 					<article class="mt-3">
 						<form action="${contextPath}/camp/updateCamping.do" method="post">
-							<input type="hidden" name="campingNo" value="${campingVO.campingNo}" />
-							<input type="hidden" name="section" value="${section}" />
 							<input type="hidden" name="pageNo" value="${pageNo}" />
+							<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
+							<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
+							<input type="hidden" name="campingNo" value="${campingVO.campingNo}" />	
 							<input type="hidden" name="userId" value="${userId}" />
 							<table class="table">
 								<colgroup>
