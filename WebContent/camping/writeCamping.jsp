@@ -65,7 +65,7 @@
 				
 					<!-- 게시판 -->
 					<article class="mt-3">
-						<form action="${contextPath}/camp/insertCamping.do" method="post">
+						<form action="${contextPath}/camp/insertCamping.do" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="userId" value="${userId}" />
 							<table class="table">
 								<colgroup>
@@ -109,17 +109,17 @@
 										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required></textarea>
 									</td>
 								</tr>
-								<!-- <tr>
+								<tr>
 									<th class="align-middle">
-										<label class="m-0">파일첨부</label>
+										<label class="m-0">첨부파일</label>
 									</th>
 									<td>
 										<div class="custom-file">
-											<input class="custom-file-input" type="file" name="campingFile" id="campingFile" onchange="imgPreview(this)" />
-											<label class="custom-file-label" for="campingFile">Choose file</label>
+											<input class="custom-file-input" type="file" name="campingFileName" id="campingFileName" onchange="showPreview(this)" />
+											<label class="custom-file-label" for="campingFileName">선택된 파일 없음</label>
 										</div>
 									</td>
-								</tr> -->
+								</tr>
 							</table>
 							<div class="text-center my-5">
 								<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
@@ -147,5 +147,101 @@
 <script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
+<script src="${contextPath}/js/bs-custom-file-input.js"></script>
+
+<script>
+	$(document).ready(function() {
+		bsCustomFileInput.init()
+	});
+	
+	function showPreview(obj, allowType){
+		var $preview  = $(obj).parent().siblings(".preview");
+
+		if($preview.length){
+			$preview.remove();
+		}
+		
+		if(obj.files && obj.files[0]){
+			var fileType = obj.files[0].type.split("/")[0];
+			
+			if(fileType=="image"){
+				$preview = $("<div class='preview mt-2' />");
+				$preview.appendTo($(obj).parent().parent());
+				
+				var reader = new FileReader();				
+				reader.readAsDataURL(obj.files[0]);
+				
+				reader.onload = function(ProgressEvent){
+					$preview.css("background-image", "url(" + ProgressEvent.target.result + ")");
+				}
+			}else{
+				if(allowType=="image"){
+					alert("이미지 파일만 첨부하실 수 있습니다.");
+					obj.value = "";
+				}
+			}
+		}
+	}
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

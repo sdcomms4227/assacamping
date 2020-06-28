@@ -9,10 +9,12 @@
 <c:set var="campingTitle" value="${campingItemMap.campingVO.campingTitle}" />
 <c:set var="campingContent" value="${campingItemMap.campingVO.campingContent}" />
 <c:set var="campingFileName" value="${campingItemMap.campingVO.campingFileName}" />
-<c:set var="userName" value="${campingItemMap.campingVO.userId}" />
+<c:set var="userId" value="${campingItemMap.campingVO.userId}" />
 <c:set var="campingWriteDate" value="${campingItemMap.campingVO.campingWriteDate}" />
 <c:set var="campingReadCount" value="${campingItemMap.campingVO.campingReadCount}" />
 <c:set var="campingCategoryName" value="${campingItemMap.campingCategoryName}" />
+<c:set var="campingFileType" value="${campingItemMap.campingFileType}" />
+<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -89,13 +91,13 @@
 									</c:if>
 									
 									<div class="h6 mt-3 mb-0 d-lg-none text-right">
-										<small class="text-muted">${userName} | <fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/> | ${campingReadCount}</small>
+										<small class="text-muted">${userId} | <fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/> | ${campingReadCount}</small>
 									</div>
 								</td>
 							</tr>
 							<tr class="d-none d-lg-table-row">
 								<th class="align-middle">작성자</th>
-								<td>${userName}</td>
+								<td>${userId}</td>
 								<th class="align-middle">작성일</th>
 								<td><fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/></td>
 								<th class="align-middle">조회수</th>
@@ -103,7 +105,21 @@
 							</tr>
 							<tr>
 								<td colspan="6" class="py-5"> ${campingContent} </td>
-							</tr>							
+							</tr>
+							<c:if test="${campingFileName != null}">
+								<tr>
+									<th class="align-middle">첨부파일</th>
+									<td colspan="5">
+										<div class="d-flex align-items-center">
+											<c:if test="${campingFileType.equals('image')}">
+												<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
+											</c:if>
+											<p class="ml-2 mb-0">${campingFileName}</p>
+											<button type="button" class="btn btn-sm btn-info ml-2" onclick="downloadCamping(${campingNo}, '${campingFileName}')">다운로드</button>
+										</div>
+									</td>
+								</tr>				
+							</c:if>
 						</table>
 
 						<div class="text-center my-5">
@@ -146,13 +162,11 @@ function listCamping(){
 	form.action = "${contextPath}/camp/listCamping.do";	
 	form.submit();
 }
-
 function modifyCamping(campingNo){
 	var form = document.pagingForm;
 	form.action = "${contextPath}/camp/modifyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
-
 function deleteCamping(campingNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
@@ -161,10 +175,14 @@ function deleteCamping(campingNo){
 		form.submit();
 	}
 }
-
 function replyCamping(campingNo){
 	var form = document.pagingForm;
 	form.action = "${contextPath}/camp/replyCamping.do?campingNo=" + campingNo;
+	form.submit();
+}
+function downloadCamping(campingNo, campingFileName){
+	var form = document.pagingForm;
+	form.action = "${contextPath}/camp/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
 	form.submit();
 }
 </script>

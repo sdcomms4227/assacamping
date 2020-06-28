@@ -5,7 +5,16 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="userId" value="hong" />
+<c:set var="campingNo" value="${campingItemMap.campingVO.campingNo}" />
+<c:set var="campingTitle" value="${campingItemMap.campingVO.campingTitle}" />
+<c:set var="campingContent" value="${campingItemMap.campingVO.campingContent}" />
+<c:set var="campingFileName" value="${campingItemMap.campingVO.campingFileName}" />
+<c:set var="userId" value="${campingItemMap.campingVO.userId}" />
+<c:set var="campingWriteDate" value="${campingItemMap.campingVO.campingWriteDate}" />
+<c:set var="campingReadCount" value="${campingItemMap.campingVO.campingReadCount}" />
+<c:set var="campingCategoryNo" value="${campingItemMap.campingVO.campingCategoryNo}" />
+<c:set var="campingCategoryName" value="${campingItemMap.campingCategoryName}" />
+<c:set var="campingFileType" value="${campingItemMap.campingFileType}" />
 <c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
@@ -65,11 +74,11 @@
 				
 					<!-- 게시판 -->
 					<article class="mt-3">
-						<form action="${contextPath}/camp/updateCamping.do" method="post">
+						<form action="${contextPath}/camp/updateCamping.do" method="post" enctype="multipart/form-data" >
 							<input type="hidden" name="pageNo" value="${pageNo}" />
 							<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 							<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
-							<input type="hidden" name="campingNo" value="${campingVO.campingNo}" />	
+							<input type="hidden" name="campingNo" value="${campingNo}" />	
 							<input type="hidden" name="userId" value="${userId}" />
 							<table class="table">
 								<colgroup>
@@ -93,7 +102,7 @@
 											<option value="">선택하세요</option>
 											<c:forEach var="category" items="${campingCategoryList}">											
 												<c:choose>
-													<c:when test="${category.campingCategoryNo == campingVO.campingCategoryNo}">
+													<c:when test="${category.campingCategoryNo == campingCategoryNo}">
 														<option value="${category.campingCategoryNo}" selected>${category.campingCategoryName}</option>	
 													</c:when>
 													<c:otherwise>
@@ -109,7 +118,7 @@
 										<label for="campingTitle" class="m-0">제목</label>
 									</th>
 									<td>
-										<input class="form-control" type="text" name="campingTitle" id="campingTitle" value="${campingVO.campingTitle}" required />
+										<input class="form-control" type="text" name="campingTitle" id="campingTitle" value="${campingTitle}" required />
 									</td>
 								</tr>
 								<tr>
@@ -117,20 +126,34 @@
 										<label for="campingContent" class="m-0">내용</label>
 									</th>
 									<td>			
-										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required>${campingVO.campingContent}</textarea>
+										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required>${campingContent}</textarea>
 									</td>
 								</tr>
-								<!-- <tr>
+								<tr>
 									<th class="align-middle">
-										<label class="m-0">파일첨부</label>
+										<label class="m-0">첨부파일</label>
 									</th>
 									<td>
+										<c:if test="${not empty campingFileName}">
+											<div class="d-flex align-items-center mb-2">
+												<input type="hidden" name="oldFileName" value="${campingFileName}" />
+												<c:if test="${campingFileType.equals('image')}">
+													<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
+												</c:if>
+											<p class="ml-2 mb-0">${campingFileName}</p>
+												<div class="custom-control custom-checkbox ml-2">
+													<input type="checkbox" class="custom-control-input" name="deleteFile" id="deleteFile">
+													<label class="custom-control-label text-danger" for="deleteFile">첨부된 파일 삭제하기</label>
+												</div>
+											</div>
+											<p class="alert alert-danger" style="display:none">파일첨부 시 기존 첨부파일 정보가 삭제됩니다.</p>
+										</c:if>
 										<div class="custom-file">
-											<input class="custom-file-input" type="file" name="campingFile" id="campingFile" onchange="imgPreview(this)" />
-											<label class="custom-file-label" for="campingFile">Choose file</label>
+											<input class="custom-file-input" type="file" name="campingFileName" id="campingFileName" onchange="checkFile(this);showPreview(this)" />
+											<label class="custom-file-label" for="campingFileName">선택된 파일 없음</label>
 										</div>
 									</td>
-								</tr> -->
+								</tr>
 							</table>
 							<div class="text-center my-5">
 								<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
@@ -158,5 +181,51 @@
 <script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
+<script src="${contextPath}/js/bs-custom-file-input.js"></script>
+
+<script>
+	$(document).ready(function() {
+		bsCustomFileInput.init()
+	});
+
+	function checkFile(obj){
+		if($(obj).parent().siblings(".alert")){
+			if($(obj).val().length > 0){
+				$(obj).parent().siblings(".alert").fadeIn();
+			}else{
+				$(obj).parent().siblings(".alert").hide();
+			}
+		}
+	}
+	
+	function showPreview(obj, allowType){
+		var $preview  = $(obj).parent().siblings(".preview");
+
+		if($preview.length){
+			$preview.remove();
+		}
+		
+		if(obj.files && obj.files[0]){
+			var fileType = obj.files[0].type.split("/")[0];
+			
+			if(fileType=="image"){
+				$preview = $("<div class='preview mt-2' />");
+				$preview.appendTo($(obj).parent().parent());
+				
+				var reader = new FileReader();				
+				reader.readAsDataURL(obj.files[0]);
+				
+				reader.onload = function(ProgressEvent){
+					$preview.css("background-image", "url(" + ProgressEvent.target.result + ")");
+				}
+			}else{
+				if(allowType=="image"){
+					alert("이미지 파일만 첨부하실 수 있습니다.");
+					obj.value = "";
+				}
+			}
+		}
+	}
+</script>
 </body>
 </html>

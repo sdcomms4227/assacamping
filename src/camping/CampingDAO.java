@@ -253,7 +253,7 @@ public class CampingDAO {
 			pstmt.setInt(1, maxNo);
 			pstmt.setString(2, campingVO.getCampingTitle());
 			pstmt.setString(3, campingVO.getCampingContent());
-			pstmt.setString(4, null);
+			pstmt.setString(4, campingVO.getCampingFileName());
 			pstmt.setString(5, campingVO.getUserId());
 			pstmt.setInt(6, maxNo);
 			pstmt.setInt(7, 0);
@@ -268,27 +268,47 @@ public class CampingDAO {
 		}		
 	}
 
-	public void updateCamping(CampingVO campingVO) {
+	public void updateCamping(CampingVO campingVO, String deleteFile) {
 		
-		int campingNo = campingVO.getCampingNo();
-		
+		String campingFileName = campingVO.getCampingFileName();
+				
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			String sql = "update camping set campingTitle=?, campingContent=?, campingCategoryNo=? where campingNo=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, campingVO.getCampingTitle());
-			pstmt.setString(2, campingVO.getCampingContent());
-			pstmt.setInt(3, campingVO.getCampingCategoryNo());
-			pstmt.setInt(4, campingNo);
+			
+			if(campingFileName!=null) {				
+				String sql = "update camping set campingTitle=?, campingContent=?, campingFileName=?, campingCategoryNo=? where campingNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, campingVO.getCampingTitle());
+				pstmt.setString(2, campingVO.getCampingContent());
+				pstmt.setString(3, campingFileName);
+				pstmt.setInt(4, campingVO.getCampingCategoryNo());
+				pstmt.setInt(5, campingVO.getCampingNo());				
+			}else if(deleteFile!=null){				
+				String sql = "update camping set campingTitle=?, campingContent=?, campingFileName=?, campingCategoryNo=? where campingNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, campingVO.getCampingTitle());
+				pstmt.setString(2, campingVO.getCampingContent());
+				pstmt.setString(3, null);
+				pstmt.setInt(4, campingVO.getCampingCategoryNo());
+				pstmt.setInt(5, campingVO.getCampingNo());
+			}else{
+				String sql = "update camping set campingTitle=?, campingContent=?, campingCategoryNo=? where campingNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, campingVO.getCampingTitle());
+				pstmt.setString(2, campingVO.getCampingContent());
+				pstmt.setInt(3, campingVO.getCampingCategoryNo());
+				pstmt.setInt(4, campingVO.getCampingNo());
+			}
 			pstmt.executeUpdate();			
 		} catch(Exception e) {
-			System.out.println("insertCamping()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("updateCamping()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
 	}
 
 	public void deleteCamping(int campingNo) {
+		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			String sql = "delete from camping where campingNo=?";
@@ -302,7 +322,8 @@ public class CampingDAO {
 		}		
 	}
 
-	public void updateCampingSequence(CampingVO campingVO) {		
+	public void updateCampingSequence(CampingVO campingVO) {
+		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			String sql = "update camping set campingRe_seq=campingRe_seq+1 where campingRe_ref=? and campingRe_seq>?";
@@ -327,7 +348,7 @@ public class CampingDAO {
 			pstmt.setInt(1, maxNo);
 			pstmt.setString(2, campingVO.getCampingTitle());
 			pstmt.setString(3, campingVO.getCampingContent());
-			pstmt.setString(4, null);
+			pstmt.setString(4, campingVO.getCampingFileName());
 			pstmt.setString(5, campingVO.getUserId());
 			pstmt.setInt(6, campingVO.getCampingRe_ref());
 			pstmt.setInt(7, campingVO.getCampingRe_lev() + 1);
@@ -343,12 +364,3 @@ public class CampingDAO {
 	}
 	
 }
-
-
-
-
-
-
-
-
-

@@ -108,7 +108,7 @@
 											${campingVO.campingTitle}
 											<small class="d-lg-none text-muted">[${campingCategoryName}]</small>
 											<c:if test="${campingVO.campingFileName!=null}">
-												<img class="ml-2" style="width:14px;height:14px" src="${contextPath}/images/download.svg" />
+												<img class="ml-2" style="width:16px;height:16px" src="${contextPath}/images/download.svg" />
 											</c:if>
 											<small class="d-block d-lg-none text-right mt-1 text-muted">
 												${campingVO.userId} | <fmt:formatDate value="${campingVO.campingWriteDate}" pattern="yy-MM-dd"/> | ${campingVO.campingReadCount}

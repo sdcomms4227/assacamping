@@ -17,10 +17,9 @@ public class CampingService {
 		Map<String, Object> campingListMap = new HashMap<String, Object>();
 		
 		List<Map<String,Object>> campingList = campingDAO.getCampingList(searchMap);
+		campingListMap.put("campingList", campingList);
 		
-		int totalCount = campingDAO.getCampingListCount(searchMap);
-		
-		campingListMap.put("campingList", campingList);		
+		int totalCount = campingDAO.getCampingListCount(searchMap);		
 		campingListMap.put("totalCount", totalCount);
 		
 		return campingListMap;
@@ -33,11 +32,10 @@ public class CampingService {
 		campingDAO.incrementCampingReadCount(campingNo);
 		
 		CampingVO campingVO = campingDAO.getCampingItem(campingNo);
+		campingItemMap.put("campingVO", campingVO);
 		
 		int campingCategoryNo = campingVO.getCampingCategoryNo();		
-		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);
-		
-		campingItemMap.put("campingVO", campingVO);
+		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);		
 		campingItemMap.put("campingCategoryName", campingCategoryName);
 		
 		return campingItemMap;
@@ -45,25 +43,25 @@ public class CampingService {
 
 	public int insertCamping(CampingVO campingVO) {
 
-		int maxNo = campingDAO.getCampingMaxNo();
-		campingDAO.insertCamping(campingVO, maxNo);
+		int maxNo = campingDAO.getCampingMaxNo();		
+		campingDAO.insertCamping(campingVO, maxNo);		
 		
 		return maxNo;
 	}
 
-	public void updateCamping(CampingVO campingVO) {		
-		campingDAO.updateCamping(campingVO);		
+	public void updateCamping(CampingVO campingVO, String deleteFile) {		
+		campingDAO.updateCamping(campingVO, deleteFile);
 	}
 
-	public void deleteCamping(int campingNo) {
-		campingDAO.deleteCamping(campingNo);
+	public void deleteCamping(int campingNo) {		
+		campingDAO.deleteCamping(campingNo);		
 	}
 
 	public int insertReplyCamping(CampingVO campingVO) {
 				
 		campingDAO.updateCampingSequence(campingVO);
 
-		int maxNo = campingDAO.getCampingMaxNo();
+		int maxNo = campingDAO.getCampingMaxNo();		
 		campingDAO.insertReplyCamping(campingVO, maxNo);
 		
 		return maxNo;
