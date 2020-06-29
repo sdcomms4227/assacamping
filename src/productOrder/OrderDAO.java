@@ -62,7 +62,6 @@ public class OrderDAO {
 			con=db.getConnection();
 			                                
 			sql="insert all"
-			
 			 +" into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate,orderState)"
 		     +" values(?,?,?,?,?,?,?,?,now(),?)"
 		   +" select *"
@@ -72,6 +71,7 @@ public class OrderDAO {
 			pstmt.executeUpdate();
 			pstmt.setInt(1, vo.getProductPayment());
 			pstmt.setString(2, vo.getUserZipcode());
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally {
