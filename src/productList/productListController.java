@@ -91,9 +91,10 @@ public class productListController extends HttpServlet{
 				
 			}
 			
+			if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);
-			dispatch.forward(request, response);
+			dispatch.forward(request, response);}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

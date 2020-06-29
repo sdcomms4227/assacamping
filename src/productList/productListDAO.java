@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 
 public class productListDAO {
-	private DataSource dataFactory;
+	private DBConnection db;
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
@@ -24,7 +24,7 @@ public class productListDAO {
 	private Connection getConnection() throws Exception{
 		
 		Context init = new InitialContext();
-		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/jspbeginner");
+		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/assa");
 		
 		con = ds.getConnection();
 		return con;
