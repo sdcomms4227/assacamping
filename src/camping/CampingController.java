@@ -1,6 +1,11 @@
 package camping;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,17 +17,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+
+import campingCategory.CampingCategoryService;
+import campingCategory.CampingCategoryVO;
+
 @SuppressWarnings("serial")
 @WebServlet("/camp/*")
 public class CampingController extends HttpServlet {
 	
 	CampingService campingService;
-	CampingVO campingVO;
+	CampingVO campingVO;	
+	CampingCategoryService campingCategoryService;
+	CampingCategoryVO campingCategoryVO;
+	String realPath = "";
 
 	@Override
 	public void init() throws ServletException {
 		campingService = new CampingService();
 		campingVO = new CampingVO();
+		campingCategoryService = new CampingCategoryService();
+		campingCategoryVO = new CampingCategoryVO();
 	}
 	
 	@Override
@@ -36,8 +55,8 @@ public class CampingController extends HttpServlet {
 	}
 	
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String nextPage = "";
+		realPath = request.getServletContext().getRealPath("/files/camping");
 		
 		request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=utf-8");
@@ -45,92 +64,195 @@ public class CampingController extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action: " + action);
 		
-		List<CampingVO> campingList = null;
-		
-		if(action == null || action.contentEquals("/listCamping.do")) {			
+		if(action == null || action.equals("/listCamping.do")) {			
 
-			String _section = request.getParameter("section");
-			String _pageNum = request.getParameter("pageNum");
+			setPagination(request);
+			
+			Map<String, Object> searchMap = new HashMap<String, Object>();
+			searchMap.put("pageNo", request.getAttribute("pageNo"));
+			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
+			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
-			int section = Integer.parseInt((_section == null) ? "1" : _section);
-			int pageNum = Integer.parseInt((_pageNum == null) ? "1" : _pageNum);
-
-			Map pagingMap = new HashMap();
-			pagingMap.put("section", section);
-			pagingMap.put("pageNum", pageNum);
-
-			Map campingMap = campingService.listCamping(pagingMap);
-
-			campingMap.put("section", section);
-			campingMap.put("pageNum", pageNum);
-
-			request.setAttribute("campingMap", campingMap);
-						
+			Map<String, Object> campingListMap = campingService.listCamping(searchMap);			
+			request.setAttribute("campingListMap", campingListMap);
+			
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			
 			nextPage = "/camping/listCamping.jsp";
 			
-//		}else if(action.contentEquals("/addCamping.do")) {
-//			
-//			String campingName = request.getParameter("campingName");
-//			campingVO.setCampingName(campingName);
-//			int result = campingService.addCamping(campingVO);
-//			
-//			String msg = "";
-//			if(result > 0) {
-//				msg = "새 카테고리를 추가하였습니다.";
-//			}else {
-//				msg = "오류가 발생했습니다.";
-//			}
-//			
-//			PrintWriter out = response.getWriter();
-//			out.write("<script>");
-//			out.write("alert('" + msg + "');");
-//			out.write("location.href='" + request.getContextPath() + "/brdCategory/listCamping.do';");
-//			out.write("</script>");
-//			return;
-//			
-//		}else if(action.contentEquals("/updateCamping.do")) {
-//
-//			int campingNo = Integer.parseInt(request.getParameter("campingNo"));	
-//			String campingName = request.getParameter("campingName");				
-//			campingVO.setCampingNo(campingNo);
-//			campingVO.setCampingName(campingName);
-//			int result = campingService.updateCamping(campingVO);
-//			
-//			String msg = "";
-//			if(result > 0) {
-//				msg = "카테고리 정보가 수정되었습니다.";
-//			}else {
-//				msg = "오류가 발생했습니다.";
-//			}
-//			
-//			PrintWriter out = response.getWriter();
-//			out.write("<script>");
-//			out.write("alert('" + msg + "');");
-//			out.write("location.href='" + request.getContextPath() + "/brdCategory/listCamping.do';");
-//			out.write("</script>");
-//			
-//			return;
-//			
-//		}else if(action.contentEquals("/deleteCamping.do")) {
-//			
-//			int campingNo = Integer.parseInt(request.getParameter("campingNo"));				
-//			int result = campingService.deleteCamping(campingNo);
-//
-//			String msg = "";
-//			if(result > 0) {
-//				msg = "카테고리를 삭제하였습니다.";
-//			}else {
-//				msg = "오류가 발생했습니다.";
-//			}
-//			
-//			PrintWriter out = response.getWriter();
-//			out.write("<script>");
-//			out.write("alert('" + msg + "');");
-//			out.write("location.href='" + request.getContextPath() + "/brdCategory/listCamping.do';");
-//			out.write("</script>");
-//			
-//			return;
+		}else if(action.equals("/readCamping.do")) {
+
+			setPagination(request);
 			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+
+			campingVO = (CampingVO)campingItemMap.get("campingVO");
+			String campingFileName = campingVO.getCampingFileName();
+
+			if(campingFileName!=null && !campingFileName.equals("")) {
+				String campingFileType = getFileType(campingNo, campingFileName);
+				campingItemMap.put("campingFileType", campingFileType);
+			}
+			
+			request.setAttribute("campingItemMap", campingItemMap);
+			
+			nextPage = "/camping/readCamping.jsp";
+			
+		}else if(action.contentEquals("/writeCamping.do")) {
+			
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			
+			nextPage = "/camping/writeCamping.jsp";
+			
+		}else if(action.equals("/insertCamping.do")) {
+			
+			Map<String, String> multipartMap = uploadFile(request);
+									
+			String campingTitle = multipartMap.get("campingTitle");
+			String campingContent = multipartMap.get("campingContent");
+			String campingFileName = multipartMap.get("campingFileName");
+			String userId = multipartMap.get("userId");
+			int campingCategoryNo = Integer.parseInt(multipartMap.get("campingCategoryNo"));
+			
+			campingVO.setCampingTitle(campingTitle);
+			campingVO.setCampingContent(campingContent);
+			campingVO.setCampingFileName(campingFileName);
+			campingVO.setUserId(userId);
+			campingVO.setCampingCategoryNo(campingCategoryNo);
+			
+			int readNo = campingService.insertCamping(campingVO);			
+
+			if(campingFileName!=null) {
+				moveFile(readNo, campingFileName);
+			}
+						
+			nextPage = "/camp/readCamping.do?campingNo=" + readNo;
+			
+		}else if(action.equals("/modifyCamping.do")) {
+
+			setPagination(request);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			
+			campingVO = (CampingVO)campingItemMap.get("campingVO");
+			String campingFileName = campingVO.getCampingFileName();
+
+			if(campingFileName!=null && !campingFileName.equals("")) {
+				String campingFileType = getFileType(campingNo, campingFileName);
+				campingItemMap.put("campingFileType", campingFileType);
+			}
+
+			request.setAttribute("campingItemMap", campingItemMap);
+			
+			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
+			request.setAttribute("campingCategoryList", campingCategoryList);
+			
+			nextPage = "/camping/modifyCamping.jsp";
+			
+		}else if(action.equals("/updateCamping.do")) {
+
+			setPagination(request);
+			
+			Map<String, String> multipartMap = uploadFile(request);
+			
+			int campingNo = Integer.parseInt(multipartMap.get("campingNo"));
+			String campingTitle = multipartMap.get("campingTitle");
+			String campingContent = multipartMap.get("campingContent");
+			String campingFileName = multipartMap.get("campingFileName");
+			String userId = multipartMap.get("userId");
+			int campingCategoryNo = Integer.parseInt(multipartMap.get("campingCategoryNo"));
+			String deleteFile = multipartMap.get("deleteFile");
+			String oldFileName = multipartMap.get("oldFileName");
+						
+			campingVO.setCampingNo(campingNo);
+			campingVO.setCampingTitle(campingTitle);
+			campingVO.setCampingContent(campingContent);
+			campingVO.setCampingFileName(campingFileName);
+			campingVO.setUserId(userId);
+			campingVO.setCampingCategoryNo(campingCategoryNo);
+			
+			campingService.updateCamping(campingVO, deleteFile);
+			
+			if(deleteFile!=null || campingFileName!=null) {
+				deleteFile(campingNo, oldFileName);
+			}
+			if(campingFileName!=null) {
+				moveFile(campingNo, campingFileName);
+			}
+			
+			nextPage = "/camp/readCamping.do?campingNo=" + campingNo;
+			
+		}else if(action.equals("/deleteCamping.do")) {
+
+			setPagination(request);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			
+			campingService.deleteCamping(campingNo);
+			
+			deleteDirectory(campingNo);
+			
+			nextPage = "/camp/listCamping.do";
+			
+		}else if(action.equals("/replyCamping.do")) {
+			
+			setPagination(request);
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+
+			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			
+			request.setAttribute("campingItemMap", campingItemMap);
+			
+			nextPage = "/camping/replyCamping.jsp";
+			
+		}else if(action.equals("/insertReplyCamping.do")) {
+
+			setPagination(request);
+			
+			Map<String, String> multipartMap = uploadFile(request);
+			
+			int campingNo = Integer.parseInt(multipartMap.get("campingNo"));
+			String campingTitle = multipartMap.get("campingTitle");
+			String campingContent = multipartMap.get("campingContent");
+			String campingFileName = multipartMap.get("campingFileName");
+			String userId = multipartMap.get("userId");
+			int campingRe_ref = Integer.parseInt(multipartMap.get("campingRe_ref"));
+			int campingRe_lev = Integer.parseInt(multipartMap.get("campingRe_lev"));
+			int campingRe_seq = Integer.parseInt(multipartMap.get("campingRe_seq"));
+			int campingCategoryNo = Integer.parseInt(multipartMap.get("campingCategoryNo"));
+			
+			campingVO.setCampingNo(campingNo);
+			campingVO.setCampingTitle(campingTitle);
+			campingVO.setCampingContent(campingContent);
+			campingVO.setCampingFileName(campingFileName);
+			campingVO.setUserId(userId);
+			campingVO.setCampingRe_ref(campingRe_ref);
+			campingVO.setCampingRe_lev(campingRe_lev);
+			campingVO.setCampingRe_seq(campingRe_seq);
+			campingVO.setCampingCategoryNo(campingCategoryNo);
+			
+			int readNo = campingService.insertReplyCamping(campingVO);
+
+			if(campingFileName!=null) {
+				moveFile(readNo, campingFileName);
+			}
+			
+			nextPage = "/camp/readCamping.do?campingNo=" + readNo;
+			
+		}else if(action.equals("/download.do")) {
+			
+			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
+			String fileName = request.getParameter("fileName");			
+
+			downloadFile(response, campingNo, fileName);
+		
 		}
 		
 		if(!nextPage.equals("")) {
@@ -140,4 +262,229 @@ public class CampingController extends HttpServlet {
 		
 	}
 	
+	private void setPagination(HttpServletRequest request) {
+		try {
+			int pageNo = 1;
+			if(request.getParameter("pageNo")!=null) {
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+			}
+			if(request.getAttribute("pageNo")==null) {
+				request.setAttribute("pageNo", pageNo);
+			}
+			
+			String searchKeyword = "";
+			if(request.getParameter("searchKeyword")!=null) {
+				searchKeyword = request.getParameter("searchKeyword");
+			}
+			if(request.getAttribute("searchKeyword")==null) {
+				request.setAttribute("searchKeyword", searchKeyword);
+			}
+			
+			int searchCategoryNo = 0;
+			if(request.getParameter("searchCategoryNo")!=null) {
+				searchCategoryNo = Integer.parseInt(request.getParameter("searchCategoryNo"));
+			}
+			if(request.getAttribute("searchCategoryNo")==null) {
+				request.setAttribute("searchCategoryNo", searchCategoryNo);
+			}			
+		} catch (Exception e) {
+			System.out.println("setPagination()메소드 내부에서 오류 : " + e.toString());
+		}
+	}
+	
+	private Map<String, String> uploadFile(HttpServletRequest request){
+		Map<String, String> campingMap = null;
+					
+		try {
+			campingMap = new HashMap<String, String>();
+			
+			File repository = new File(realPath);
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			factory.setSizeThreshold(1024*1024*1);
+			factory.setRepository(repository);
+			ServletFileUpload upload = new ServletFileUpload(factory);
+		
+			List<FileItem> items = upload.parseRequest(request);
+			
+			for(int i=0; i<items.size(); i++) {
+				DiskFileItem fileItem = (DiskFileItem)items.get(i);
+				
+				if(fileItem.isFormField()) {
+					campingMap.put(fileItem.getFieldName(), fileItem.getString("UTF-8"));
+					
+				}else {
+					
+					if(fileItem.getSize() > 0) {
+						campingMap.put(fileItem.getFieldName(), fileItem.getName());
+						int idx = fileItem.getName().lastIndexOf("\\");
+						
+						if(idx == -1) {
+							idx = fileItem.getName().lastIndexOf("/");
+						}
+						
+						String fileName = fileItem.getName().substring(idx + 1);
+						String filePath = realPath + "\\temp\\" + fileName;
+						File file = new File(filePath);
+						
+						if(!file.exists()) {
+							fileItem.write(file);
+						}
+						
+					}else {
+						campingMap.put(fileItem.getFieldName(), null);
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("uploadFile()메소드 내부에서 오류 : " + e.toString());
+		}
+		
+		return campingMap;
+	}
+	
+	private void moveFile(int campingNo, String fileName){
+		try {
+			File srcFile = new File(realPath + "\\temp\\" + fileName);
+			File destDir = new File(realPath + "\\" + campingNo);
+			Boolean createDestDir = destDir.mkdir();
+			
+			String filePath = realPath + "\\" + campingNo + "\\" + fileName;
+			File file = new File(filePath);
+			
+			if(!file.exists()) {
+				FileUtils.moveFileToDirectory(srcFile, destDir, createDestDir);
+			}	
+		} catch (Exception e) {
+			System.out.println("moveFile()메소드 내부에서 오류 : " + e.toString());
+		}
+	}
+	
+	private void deleteFile(int campingNo, String fileName){
+		try {
+			String filePath = realPath + "\\" + campingNo + "\\" + fileName;
+			File file = new File(filePath);
+			
+			if(file.exists()) {
+				file.delete();
+			}
+		} catch (Exception e) {
+			System.out.println("deleteFile()메소드 내부에서 오류 : " + e.toString());
+		}
+	}
+	
+	private void downloadFile(HttpServletResponse response, int campingNo, String fileName){
+		try {			
+			String filePath = realPath + "\\" + campingNo + "\\" + fileName;
+			File file = new File(filePath);
+		
+			OutputStream out = response.getOutputStream();			
+			
+			response.setHeader("Cache-Control", "no-chche");
+			response.addHeader("Cache-Control", "no-store");			
+			response.setHeader("Content-disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName,"UTF-8") + "\";");
+			
+			FileInputStream in = new FileInputStream(file);	
+			
+			byte[] buffer = new byte[1024*8];
+			
+			while(true) {
+				int count = in.read(buffer);
+				
+				if(count == -1) {
+					break;
+				}
+				out.write(buffer, 0, count);;
+			}
+			
+			in.close();
+			out.close();
+		} catch (Exception e) {
+			System.out.println("downloadFile()메소드 내부에서 오류 : " + e.toString());
+		}		
+	}
+	
+	private String getFileType(int campingNo, String fileName){
+		String campingFileType = "";
+
+		try {
+			String filePath = realPath + "\\" + campingNo + "\\" + fileName;
+			File file = new File(filePath);
+			
+			String mimeType = Files.probeContentType(file.toPath());
+			campingFileType = mimeType.split("/")[0];
+			
+		} catch (Exception e) {
+			System.out.println("getFileType()메소드 내부에서 오류 : " + e.toString());
+		}
+		
+		return campingFileType;
+	}
+	
+	private void deleteDirectory(int campingNo){
+		try {
+			String directoryPath = realPath + "\\" + campingNo;
+			File directory = new File(directoryPath);
+			
+			if(directory.exists()) {
+				FileUtils.deleteDirectory(directory);
+			}
+		} catch (Exception e) {
+			System.out.println("deleteFile()메소드 내부에서 오류 : " + e.toString());
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

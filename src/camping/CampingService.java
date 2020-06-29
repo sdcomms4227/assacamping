@@ -12,21 +12,58 @@ public class CampingService {
 		campingDAO = new CampingDAO();
 	}
 
-	public Map listCamping(Map pagingMap) {
+	public Map<String, Object> listCamping(Map<String, Object> searchMap) {
 		
-		Map campingMap = new HashMap();
+		Map<String, Object> campingListMap = new HashMap<String, Object>();
 		
-		List<CampingVO> campingList = campingDAO.selectAllCamping(pagingMap);
+		List<Map<String,Object>> campingList = campingDAO.getCampingList(searchMap);
+		campingListMap.put("campingList", campingList);
 		
-		int total = campingDAO.selectTotalCamping();
+		int totalCount = campingDAO.getCampingListCount(searchMap);		
+		campingListMap.put("totalCount", totalCount);
 		
-		campingMap.put("campingList", campingList);
-		campingMap.put("total", total);
-		
-		return campingMap;
+		return campingListMap;
 	}
 
-	public List<CampingVO> listCamping() {
-		return campingDAO.selectAllCamping();
+	public Map<String, Object> readCamping(int campingNo) {
+		
+		Map<String, Object> campingItemMap = new HashMap<String, Object>();
+		
+		campingDAO.incrementCampingReadCount(campingNo);
+		
+		CampingVO campingVO = campingDAO.getCampingItem(campingNo);
+		campingItemMap.put("campingVO", campingVO);
+		
+		int campingCategoryNo = campingVO.getCampingCategoryNo();		
+		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);		
+		campingItemMap.put("campingCategoryName", campingCategoryName);
+		
+		return campingItemMap;
+	}
+
+	public int insertCamping(CampingVO campingVO) {
+
+		int maxNo = campingDAO.getCampingMaxNo();		
+		campingDAO.insertCamping(campingVO, maxNo);		
+		
+		return maxNo;
+	}
+
+	public void updateCamping(CampingVO campingVO, String deleteFile) {		
+		campingDAO.updateCamping(campingVO, deleteFile);
+	}
+
+	public void deleteCamping(int campingNo) {		
+		campingDAO.deleteCamping(campingNo);		
+	}
+
+	public int insertReplyCamping(CampingVO campingVO) {
+				
+		campingDAO.updateCampingSequence(campingVO);
+
+		int maxNo = campingDAO.getCampingMaxNo();		
+		campingDAO.insertReplyCamping(campingVO, maxNo);
+		
+		return maxNo;
 	}
 }
