@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OrderService {
 	
-	OrderDAO dao;
+	OrderDAO dao =new OrderDAO();
 	
 	
    public int orderCount(String userId) {

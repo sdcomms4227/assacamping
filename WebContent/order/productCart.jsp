@@ -5,7 +5,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
  <c:set var="map" value="${map}"/>
 <c:set var="totalDelivery" value="${map.totalDelivery}"/>
-<c:set var="userId" value="${sessionScope.userId}"/>
+ <c:set var="userId" value="${sessionScope.userId}"/>
 <% request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
 <html lang="kr">
@@ -110,6 +110,10 @@ function fn_delete() {
 				<div class="col">
 					<div class="cart_products">
 					<c:choose>
+					 <c:when test="${list == null }">
+                          <br> <div align="center">장바구니가 비어있습니다</div>
+                          <button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>					 
+					 </c:when>
 					  <c:when test="${list != null }">
 					    <c:forEach var="cartList" items="${list}">
 						<ul>
@@ -117,7 +121,7 @@ function fn_delete() {
 								<!-- Product Image -->
 								
 								<div class="cart_product_image">
-								<img src="${contextPathe}/images/cart_product_1.jpg"  name="productImage"></div>
+								<img src="${contextPath}/images/cart_product_1.jpg"  name="productImage"></div>
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="${contextPath}/pro/getOnePro.do?productNo=${cartList.productNo}">${cartList.productName}</a></div>
 								<div class="cart_product_info ml-auto">
@@ -156,11 +160,7 @@ function fn_delete() {
 							</li>
 						</ul>
 						</c:forEach>
-						</c:when>
-					     <c:otherwise>
-						    <br> <div align="center">장바구니가 비어있습니다</div>
-						</c:otherwise>	 
-						</c:choose>
+						
 					</div>
 				</div>
 			</div>
@@ -188,7 +188,7 @@ function fn_delete() {
 					</div>
 				</div>
 				<!-- Cart Total -->
-				<form action="${contextPath}/order/order.do" method="post">
+				<form action="${contextPath}/cartorder/order.do" method="post">
 				
 				<div class="col-lg-5 offset-lg-1">
 					<div class="cart_total">
@@ -220,7 +220,9 @@ function fn_delete() {
 			</div>
 		</div>
 	</div>
-
+       </c:when>
+	</c:choose>
+	
 	<!-- Newsletter -->
 
 	<div class="newsletter">

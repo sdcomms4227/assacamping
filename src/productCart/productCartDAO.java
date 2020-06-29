@@ -125,7 +125,7 @@ public class productCartDAO {
 		}
 	}//cartUpdate
 	
-	public List<Integer> selectRemoveCart(String userId){
+	public List<Integer> selectRemoveCart(String userId){//삭제할 장바구니의 이미지 파일 번호 얻어오기
 		List<Integer> productNoList = new ArrayList<Integer>();
 
 		try {
@@ -194,7 +194,7 @@ public class productCartDAO {
 		}
    }//deleteCart
 
-	public Map<String,Integer> TotalPrice(String userId) {
+	public Map<String,Integer> TotalPrice(String userId) {//결제 할 금액
 		Map<String,Integer> map=new HashMap<String, Integer>();
 		int totalPrice=0;
 		int totalDelivery=0;
