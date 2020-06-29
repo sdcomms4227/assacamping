@@ -6,6 +6,7 @@
     
 <%--컨텍스트 주소 얻기 --%>    
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>   
+
     
 <!DOCTYPE html>
 <html>

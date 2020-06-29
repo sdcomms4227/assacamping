@@ -127,10 +127,13 @@ public class BoardController extends HttpServlet {
 				
 			return;
 		}else if(action.equals("/viewArticle.do")) {
+			BoardDAO boardDAO = new BoardDAO();
 			
 			String boardNo = request.getParameter("boardNo");
 			
 			boardVO = boardService.viewArticle(Integer.parseInt(boardNo));		
+			
+			boardDAO.updateReadCount(Integer.parseInt(boardNo));  
 			
 			request.setAttribute("board", boardVO);
 			
@@ -227,13 +230,10 @@ public class BoardController extends HttpServlet {
 		
 		String encoding="utf-8";
 		
-		//글쓰기를 할때 첨부한 이미지를 저장할 폴더 경로에 대해 접근 하기 위한 파일 객체를 생성
 		File currentDirPath = new File(ARTICLE_IMAGE_REPO);
 		
-		//업로드할 파일 데이터를 임시로 저장할 객체 메모리 생성
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		
-		//파일업로드시 사용할 임시메모리 최대 크기를 1메가 바이트로 지정
 		factory.setSizeThreshold(1024*1024*1);
 		
 		//임시메모리에 파일업로드시~ 지정한 1메가 바이트 크기를 넘길경우

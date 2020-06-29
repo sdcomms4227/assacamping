@@ -33,6 +33,7 @@ public class BoardService {
 		
 		board = boardDAO.selectArticle(boardNo);
 		
+		
 		return board;
 	}
 

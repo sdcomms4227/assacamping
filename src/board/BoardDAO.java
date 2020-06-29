@@ -40,6 +40,9 @@ public List selectAllBoard(){
 			BoardVO board = new BoardVO();
 	
 			 board.setBoardNo(rs.getInt("boardNo"));
+			 board.setBoardRe_ref(rs.getInt("boardRe_ref"));
+			 board.setBoardRe_lev(rs.getInt("boardRe_lev"));
+			 board.setBoardRe_seq(rs.getInt("boardRe_seq"));
 			 board.setBoardTitle(rs.getString("boardTitle"));
 			 board.setBoardContent(rs.getString("boardContent"));
 			 board.setUserId(rs.getString("userId"));
@@ -103,21 +106,25 @@ public int insertNewArticle(BoardVO board) {
 		String boardTitle = board.getBoardTitle();
 		String boardContent= board.getBoardContent();
 		String userId = board.getUserId();
+		int boardRe_lev= board.getBoardRe_lev();
+		int boardRe_seq = board.getBoardRe_seq();
 		String boardImageFileName = board.getBoardImageFileName();
 		
-	String sql = "insert into board(boardNo, boardRe_ref, boardTitle,"
-			   +" boardContent, boardImageFileName, userId)"
-			   +" values(?,?,?,?,?,?)";
+	String sql = "insert into board(boardNo, boardRe_ref,boardRe_lev,boardRe_seq, boardTitle,"
+			   +" boardContent, boardImageFileName, userId,boardReadCount)"
+			   +" values(?,?,?,?,?,?,?,?,0)";
 	
 	pstmt = conn.prepareStatement(sql);
 		
 	pstmt.setInt(1, boardNo);
-	pstmt.setInt(2, boardNo);
-	pstmt.setString(3, boardTitle);
-	pstmt.setString(4, boardContent);
-	pstmt.setString(5, boardImageFileName);
-	pstmt.setString(6, userId);
-	
+	pstmt.setInt(2, boardNo); //boardNo 주글번호 기준 == boardRe_ref 그룹번호
+	pstmt.setInt(3, boardRe_lev);
+	pstmt.setInt(4, boardRe_seq);
+	pstmt.setString(5, boardTitle);
+	pstmt.setString(6, boardContent);
+	pstmt.setString(7, boardImageFileName);
+	pstmt.setString(8, userId);
+
 	pstmt.executeUpdate();//INSERT	
 	
 	closeDB();
@@ -138,7 +145,8 @@ public BoardVO selectArticle(int boardNo) {
 	try {
 		conn = dbUtil.DBConnection.getConnection();
 		
-		String sql = "select boardRe_ref, boardNo, boardTitle,"
+		
+		 String sql = "select boardRe_ref, boardNo, boardTitle,"
 				   +"boardContent, boardImageFileName, userId, boardReadCount, boardWriteDate"
 				   +" from board where boardNo=?";
 		
@@ -156,6 +164,7 @@ public BoardVO selectArticle(int boardNo) {
 		String userId = rs.getString("userId");
 		Timestamp boardWriteDate = rs.getTimestamp("boardWriteDate");	
 		
+		System.out.println(boardReadCount +"조회수");
 		
 		board.setBoardNo(_boardNo);
 		board.setBoardRe_ref(boardRe_ref);
@@ -268,5 +277,21 @@ public void deleteArticle(int boardNo) {
 	}
 	
 }
+public void updateReadCount(int boardNo) {
 
+	try {		
+		conn = dbUtil.DBConnection.getConnection();
+		
+		String sql = "update board set boardReadCount= boardReadCount +1 where boardNo=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, boardNo);
+				
+		pstmt.executeUpdate();	   	
+	
+} catch (Exception e) {
+	System.out.println("updateReadCount 메소드에서 예외 발생 : " + e);
+}
+
+	closeDB();
+ }
 }
