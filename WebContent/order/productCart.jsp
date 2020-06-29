@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+ <c:set var="map" value="${map}"/>
+<c:set var="totalDelivery" value="${map.totalDelivery}"/>
+ <c:set var="userId" value="${sessionScope.userId}"/>
+<% request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -13,6 +19,29 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/cart.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/cart_responsive.css">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script type="text/javascript">
+
+function fn_update(){
+	
+	var cartQuantity = $("#quantity_input").val();
+	var productName = $("#productName").val();
+	var userId = $("#userId").val();
+	var productPrice= $("#productPrice").val();
+	
+	document.update.action="${contextPath}/cart/update.do?userId="+userId+"&cartQuantity="+cartQuantity+"&productName="+productName+"&productPrice="+productPrice ;
+    
+	document.update.submit();
+    
+    }
+
+
+function fn_delete() {
+	var userId=$("#userId").val();
+	location.href="${contextPath}/cart/allDelte.do?userId="+userId;
+}
+</script>
 </head>
 <body>
 
@@ -26,6 +55,12 @@
 
 	<!-- Home -->
 
+	<%
+  // String userId=(String)session.getAttribute("userId");  
+    String userId=request.getParameter("userId"); 
+ 
+    System.out.print(userId+"cart"); 
+     %>
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
 		<div class="container">
@@ -74,45 +109,74 @@
 			<div class="row">
 				<div class="col">
 					<div class="cart_products">
+					<c:choose>
+					 <c:when test="${list == null }">
+                          <br> <div align="center">장바구니가 비어있습니다</div>
+                          <button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>					 
+					 </c:when>
+					  <c:when test="${list != null }">
+					    <c:forEach var="cartList" items="${list}">
 						<ul>
 							<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
 								<!-- Product Image -->
-								<div class="cart_product_image"><img src="${contextPath}/images/cart_product_1.jpg" alt=""></div>
+
+								
+								<div class="cart_product_image">
+								<img src="${contextPath}/images/cart_product_1.jpg"  name="productImage"></div>
+
 								<!-- Product Name -->
-								<div class="cart_product_name"><a href="product.html">2 Piece Swimsuit</a></div>
+								<div class="cart_product_name" name="productName"><a href="${contextPath}/pro/getOnePro.do?productNo=${cartList.productNo}">${cartList.productName}</a></div>
 								<div class="cart_product_info ml-auto">
 									<div class="cart_product_info_inner d-flex flex-row align-items-center justify-content-md-end justify-content-start">
 										<!-- Product Price -->
-										<div class="cart_product_price">$35.00</div>
+										<div class="cart_product_price" name="productPrice">${cartList.productPrice}</div>
 										<!-- Product Quantity -->
+									<form  action="${contextPath}" name="update" id="update" method="post">
 										<div class="product_quantity_container">
 											<div class="product_quantity clearfix">
-												<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+						                           <input type="hidden"  id="userId" value="${cartList.userId}">
+						                           <input type="hidden" id="productName" value="${cartList.productName}">
+						                           <input type="hidden" id="productPrice" value="${cartList.productPrice}">
+												   <input id="quantity_input" type="text" name="cartQuantity" value="${cartList.cartQuantity}" >&nbsp;&nbsp;&nbsp;
+												  
 												<div class="quantity_buttons">
 													<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
 													<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
 												</div>
+												 
 											</div>
+											
 										</div>
+										<input type="button" value="변경" onclick="fn_update();">
+										</form>
 										<!-- Products Total Price -->
-										<div class="cart_product_total">$35.00</div>
+										
+										<div class="cart_product_total">${cartList.productTotalPrice}</div> <!-- 상품한개의 가격*상품수량  -->
+										
 										<!-- Product Cart Trash Button -->
 										<div class="cart_product_button">
-											<button class="cart_product_remove"><img src="${contextPath}/images/trash.png" alt=""></button>
+
+											<button class="cart_prod uct_remove" onclick="location.href='${contextPath}/cart/deleteCart.do?userId=${cartList.userId}&productNo=${cartList.productNo}'"><img src="${contextPath}/images/trash.png" ></button>
+
 										</div>
 									</div>
 								</div>
 							</li>
 						</ul>
+						</c:forEach>
+						
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
 					<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-						<button class="button_clear cart_button" onclick="">clear cart</button>
-						<button class="button_update cart_button">update cart</button>
-						<button class="button_update cart_button_2 ml-md-auto">continue shopping</button>
+					  <form method="post" name="delete">
+					    <input type="hidden" id="userId" value="${userId}">
+						<button class="button_clear cart_button" onclick="fn_delete();">clear cart</button>
+						</form>
+						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>
+					
 					</div>
 				</div>
 			</div>
@@ -128,30 +192,41 @@
 					</div>
 				</div>
 				<!-- Cart Total -->
+				<form action="${contextPath}/cartorder/order.do" method="post">
+				
 				<div class="col-lg-5 offset-lg-1">
 					<div class="cart_total">
 						<div class="cart_title">cart total</div>
 						<ul>
 							<li class="d-flex flex-row align-items-center justify-content-start">
-								<div class="cart_total_title">Subtotal</div>
-								<div class="cart_total_price ml-auto">$35.00</div>
+								<div class="cart_total_title">Subtotal-</div>&nbsp;&nbsp;
+								
+
+								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice}" /></div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
-								<div class="cart_total_title">Shipping</div>
-								<div class="cart_total_price ml-auto">$5.00</div>
+								<div class="cart_total_title">Shipping-</div>&nbsp;&nbsp;
+								<div class="cart_total_price ml-auto">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDelivery}" />
+								</div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
-								<div class="cart_total_title">Total</div>
-								<div class="cart_total_price ml-auto">$40.00</div>
+								<div class="cart_total_title">Total-</div>&nbsp;&nbsp;
+								<div class="cart_total_price ml-auto">
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice+totalDelivery}" />
+								</div>
 							</li>
 						</ul>
-						<button class="cart_total_button">proceed to checkout</button>
+						<input type="submit" class="cart_total_button" value="결제하기">
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
-
+       </c:when>
+	</c:choose>
+	
 	<!-- Newsletter -->
 
 	<div class="newsletter">
@@ -227,6 +302,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<!-- Footer -->
 	<jsp:include page="../inc/footer.jsp" />

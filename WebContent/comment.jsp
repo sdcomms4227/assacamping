@@ -37,30 +37,8 @@
 				<col style="width:120px" />
 			</colgroup>
 			
-			<c:if test="${requestScope.commentList != null}">
-				<c:forEach var="commentVO" items="${requestScope.commentList}">
-					<tr id="comment${commentVO.commentNo }">
-						<td class="d-none d-lg-table-cell align-middle">${commentVO.userName}</td>
-						<td class="text-left align-middle">
-							${commentVO.commentContent}		
-							<c:if test="${sessionScope.userId == comment.userId}">
-								<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('${commentVO.commentNo}')">삭제</button>
-							</c:if>
-							<small class="d-block d-lg-none text-right mb-1 text-muted">
-								${commentVO.userName} | ${commentVO.commentWriteDate}
-							</small>
-						</td>
-						<td class="d-none d-lg-table-cell text-center align-middle">
-							<small>${commentVO.commentWriteDate}</small>
-						</td>
-					</tr>		
-				</c:forEach>
-			</c:if>
-			<c:if test="${requestScope.commentList == null}">
-				<tr id="commentEmpty">
-				<td class="py-5 text-center" colspan="3">등록된 댓글이 없습니다.</td>
-			</tr>	
-			</c:if>
+			
+			
 		</table>
 		
 		<form name="commentform">
@@ -99,7 +77,54 @@
 			</table>
 		</form>
 	</article>
+	
 	<script>
+		$(function(){
+		    
+		    commentList();
+		    
+		});
+		
+		function commentList(){
+		    $.ajax({
+		        url : '${contextPath}/comment/listComment.do',
+		        type : 'get',
+		        data : {'boardCategoryNo':boardCategoryNo, 'boardNo':boardNo},
+		        success : function(data){
+		        	var a = '';
+		        	if(data.length > 0) {
+			            $.each(data, function(key, value){
+			            	
+			            	a += '<tr id="comment${commentVO.commentNo }">';
+							a += '<td class="d-none d-lg-table-cell align-middle">${commentVO.userName}</td>';
+							a += '<td class="text-left align-middle">';
+							a += value.commentContent;
+							if(userId == value.userId){
+								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete(${commentVO.commentNo})">삭제</button>'; 	
+							}
+							a += '<small class="d-block d-lg-none text-right mb-1 text-muted">';
+							a += '${commentVO.userName} | ${commentVO.commentWriteDate}';
+							a += '</small>';
+							a += '</td>';
+							a += '<td class="d-none d-lg-table-cell text-center align-middle">';
+							a += '<small>${commentVO.commentWriteDate}</small>';
+							a += '</td>';	
+							a += '</tr>';
+							
+			            });
+			            
+			            $(".comment-list-table").append(a);	
+		        	} else {
+		        		a += '<tr id="commentEmpty">';
+		        		a += '<td class="py-5 text-center" colspan="3">';
+						a += '등록된 댓글이 없습니다.</td>';
+						$(".comment-list-table").append(a);
+		        	}
+		            
+		        }
+		    });
+		}
+
 		function commentSubmit(){
 			
 			var boardCategoryNo = ${boardCategoryNo};
@@ -201,6 +226,7 @@
 				});
 			}
 		}
+		
 	</script>
 </body>
 </html>

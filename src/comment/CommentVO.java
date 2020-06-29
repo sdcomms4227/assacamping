@@ -14,6 +14,8 @@ public class CommentVO {
 	private int commentRe_lev;
 	private int commentRe_seq;
 	private Timestamp commentWriteDate;
+	
+	
 	public int getBoardCategoryNo() {
 		return boardCategoryNo;
 	}
