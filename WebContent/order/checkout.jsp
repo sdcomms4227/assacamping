@@ -61,17 +61,17 @@
 						<div class="checkout_form_container">
 							
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-									<input type="text" class="checkout_input checkout_input_50"  value="${orderList.userName}"placeholder=" 이름" required="required">
+									<input type="text" class="checkout_input checkout_input_50"  value="${uservo.userName}"placeholder=" 이름" required="required">
 									
 								</div>
-								<input type="text" class="checkout_input" value="${orderList.userEmail}" placeholder="이메일" required="required">
+								<input type="text" class="checkout_input" value="${uservo.userEmail}" placeholder="이메일" required="required">
 								<!-- 주소 api연동 해쥬세여 -->
 								
-								<input type="text" class="checkout_input"value="${orderList.userAddress1}" placeholder="주소" required="required">
-								<input type="text" class="checkout_input" value="${orderList.userAddress2}" placeholder="상세주소" required="required">
+								<input type="text" class="checkout_input"value="${uservo.userAddress1}" placeholder="주소" required="required">
+								<input type="text" class="checkout_input" value="${uservo.userAddress2}" placeholder="상세주소" required="required">
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-									<input type="text" class="checkout_input checkout_input_50" value="${orderList.userZipcode}"  placeholder="우편번호" required="required">
-									<input type="text" class="checkout_input checkout_input_50" value="${orderList.userPhone}" placeholder="전화번호" required="required">
+									<input type="text" class="checkout_input checkout_input_50" value="${uservo.userZipcode}"  placeholder="우편번호" required="required">
+									<input type="text" class="checkout_input checkout_input_50" value="${uservo.userPhone}" placeholder="전화번호" required="required">
 								</div>
 								  <p>요청사항 &nbsp;&nbsp;&nbsp; <select name="userComment"  id="userComment" class="userComment">
 				                           <option>배송전 연락 바랍니다</option>
@@ -96,22 +96,30 @@
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Product</div>
 									<div class="cart_total_price ml-auto">Total:${ordercount}</div>
+								
 								</li>
-								<li class="d-flex flex-row align-items-center justify-content-start">
-									<div class="cart_total_title">2 Piece Swimsuit x1</div>
-									<div class="cart_total_price ml-auto">$35.00</div>
-								</li>
+								<c:choose>
+								    <c:forEach var="order" items="${orderList}">
+								
+										<li class="d-flex flex-row align-items-center justify-content-start">
+										    	
+											<div class="cart_total_title">2 Piece Swimsuit x1 ${orderList.productName}x${orderList.cartQuantity}</div>
+											<div class="cart_total_price ml-auto">$35.00 ${productTotalPrice}</div>
+										</li>
+								    </c:forEach>
+								</c:choose>
+								
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Subtotal</div>
-									<div class="cart_total_price ml-auto">$35.00</div>
+									<div class="cart_total_price ml-auto">$35.00 ${totalPrice}</div>
 								</li>
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Shipping</div>
-									<div class="cart_total_price ml-auto">$5.00</div>
+									<div class="cart_total_price ml-auto">${orderList.productDelivery }</div>
 								</li>
 								<li class="d-flex flex-row align-items-start justify-content-start total_row">
 									<div class="cart_total_title">Total</div>
-									<div class="cart_total_price ml-auto">$40.00</div>
+									<div class="cart_total_price ml-auto">$40.00${totalPrice+list.productDelivery}</div>
 								</li>
 							</ul>
 						</div>

@@ -1,20 +1,22 @@
 package productOrder;
 
 import java.util.List;
+import java.util.Map;
 
 public class OrderService {
 	
-	OrderDAO dao;
+	OrderDAO dao =new OrderDAO();
 	
-	public List<OrderVO> orderList(String userId){
-
-		
-		return dao.orderList(userId);
-		
-	}
-   public int orderCount(String userId) {
+	
+	/*
+	 * public int orderCount(String userId) {
+	 * 
+	 * return dao.orderCount(userId);
+	 * 
+	 * }
+	 */
+   public void addOrder(Map<String, Integer> orderMap,OrderVO vo) {
 	   
-	   return dao.orderCount(userId);
-	   
+	   dao.addOrder(orderMap, vo); 
    }
 }

@@ -33,66 +33,40 @@ public class productCartDAO {
 		}
 	}//freeResource();
    
-    public Map<String, Integer> totalPrice(String userId) {
-    	     Map priceMap=new HashMap();  
-    	try {
-    		
-    		con=db.getConnection();
-			
-			 sql="select productName,cartQuantity, productPrice from productCart where userId=? ";
-			 
-			 pstmt=con.prepareStatement(sql);
-			 
-			 pstmt.setString(1, userId);
-			 
-			 rs=pstmt.executeQuery();
-			 while(rs.next()) {
-				 
-				 int cartQuantity=rs.getInt("cartQuantity");
-				 
-				 int productPrice=rs.getInt("productPrice");
-				 
-				 int total=cartQuantity*productPrice;
-				 
-				 priceMap.put(rs.getString("productName"), total);
-			 
-			 }
-			 
-		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
-			freeResource();
-		}
-    	
-    	return priceMap;
-    } 
+  
 	public List<productCartVO> allcartList(String userId){//장바구니목록조회
-		 List<productCartVO> list=null;
+		  System.out.println(userId+"DAO");
+		 List<productCartVO> list=new ArrayList();
 		
 		try {
 			 con=db.getConnection();
 			
-			 sql="select * from productCart where userId=? order by productCartDate desc";
+			 sql="select * from productcart where userId=? order by productCartDate desc";
 			
 			 pstmt=con.prepareStatement(sql);
 			 
 			 pstmt.setString(1, userId);
 			 
 			 rs=pstmt.executeQuery();
+			 
 			 while(rs.next()) {
-				 productCartVO vo=new productCartVO(
-						rs.getInt("productNo"),
-						rs.getInt("productPrice"),
-						rs.getInt("cartQuantity"),
-						rs.getInt("productDelivery"),
-						rs.getString("productName"), 
-						rs.getString("productImage"),
-						rs.getString("productCategory"),
-						userId);
-				list.add(vo);
+			 productCartVO vo= new productCartVO(
+											     rs.getInt("productNo"),
+												 rs.getInt("productPrice"),
+												 rs.getInt("cartQuantity"),
+												 rs.getInt("productDelivery"),
+												 rs.getInt("productTotalPrice"), 
+												 rs.getString("productName"), 
+												 rs.getString("productImage"),
+												 rs.getString("productCategory"), 
+												      userId);
+					
+				                    list.add(vo);
 			 }
 		} catch (Exception e) {
 		System.out.println("allCartList에서오류"+e.getMessage());
+		
+		
 		}finally {
 			freeResource();
 		}
@@ -103,8 +77,8 @@ public class productCartDAO {
 		try {
 			con=db.getConnection();
 			
-			sql="insert into productCart(productNo, productPrice, cartQuantity, productDelivery, productName, productImage, productCategory ,userId, productCartDate)"
-				+ " values(?,?,?,?,?,?,?,?,now())";
+			sql="insert into productcart(productNo, productPrice, cartQuantity, productDelivery, productName, productImage, productCategory ,userId, productCartDate,productTotalPrice)"
+				+ " values(?,?,?,?,?,?,?,?,now(),?)";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -116,6 +90,7 @@ public class productCartDAO {
 			pstmt.setString(6, vo.getProductImage());
 			pstmt.setString(7, vo.getProductCategory());
 			pstmt.setString(8, vo.getUserId());
+			pstmt.setInt(9, vo.getProductTotalPrice());
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -130,13 +105,17 @@ public class productCartDAO {
 		try {
 			con=db.getConnection();
 			
-			sql="update productCart set cartQuantity=? where userId=? and productNo=?  ";
+			sql="update productcart set cartQuantity=? ,productTotalPrice=? where userId=? and productName=?  ";
 			
 			pstmt=con.prepareStatement(sql);
 			
-			pstmt.setInt(1, vo.getCartQuantity());
-			pstmt.setString(2, vo.getUserId());
-			pstmt.setInt(3, vo.getProductNo());
+			
+			
+			
+			pstmt.setInt(1,vo.getCartQuantity());
+			pstmt.setInt(2, vo.getProductTotalPrice());
+			pstmt.setString(3, vo.getUserId());
+			pstmt.setString(4, vo.getProductName());
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -146,13 +125,13 @@ public class productCartDAO {
 		}
 	}//cartUpdate
 	
-	public List<Integer> selectRemoveCart(String userId){
+	public List<Integer> selectRemoveCart(String userId){//삭제할 장바구니의 이미지 파일 번호 얻어오기
 		List<Integer> productNoList = new ArrayList<Integer>();
 
 		try {
 			con=db.getConnection();
 			
-			sql="select productNo from productCart where userId=?";
+			sql="select productNo from productcart where userId=?";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -165,7 +144,7 @@ public class productCartDAO {
 				productNoList.add(rs.getInt("productNo"));
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("selectRemoveCart에서오류"+e.getMessage());
 		}finally {
 			freeResource();
 		}
@@ -176,7 +155,7 @@ public class productCartDAO {
 		try {
 			con=db.getConnection();
 			
-			sql="delete from productCart where userId=?";
+			sql="delete from productcart where userId=?";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -184,8 +163,6 @@ public class productCartDAO {
 			
 			pstmt.executeUpdate();
 			
-			
-					
 					
 	} catch (Exception e) {
 		System.out.println("allDeleteCart에서오류"+e.getMessage());
@@ -200,7 +177,7 @@ public class productCartDAO {
 		try {
 			con=db.getConnection();
 			
-			sql="delete from productCart where productNo=? and userId=?";
+			sql="delete from productcart where productNo=? and userId=?";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -216,4 +193,38 @@ public class productCartDAO {
 			freeResource();
 		}
    }//deleteCart
+
+	public Map<String,Integer> TotalPrice(String userId) {//결제 할 금액
+		Map<String,Integer> map=new HashMap<String, Integer>();
+		int totalPrice=0;
+		int totalDelivery=0;
+		try {
+			con=db.getConnection();
+			
+			sql="select sum(productTotalPrice) ,sum(productDelivery) from productcart where userId=?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalPrice=rs.getInt(1);
+				totalDelivery=rs.getInt(2);
+				
+				 if(totalDelivery>2500) { totalDelivery=2500; }
+				
+				
+				map.put("totalPrice", totalPrice);
+				map.put("totalDelivery", totalDelivery);
+				System.out.println(totalDelivery);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("TotalPrice에서 오류"+e.getMessage());
+		}
+		
+		return map;
+	}
 }

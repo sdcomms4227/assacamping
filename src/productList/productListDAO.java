@@ -12,6 +12,10 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 
+import dbUtil.DBConnection;
+
+
+
 
 public class productListDAO {
 	private DataSource dataFactory;
@@ -19,16 +23,7 @@ public class productListDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String sql;
-	
-	
-	private Connection getConnection() throws Exception{
-		
-		Context init = new InitialContext();
-		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/jspbeginner");
-		
-		con = ds.getConnection();
-		return con;
-	}
+	private DBConnection db;
 	
 	public void freeResource() {
 		if(rs != null) {try {rs.close();}catch(SQLException e){e.printStackTrace();}}
@@ -43,7 +38,7 @@ public class productListDAO {
 		List<productListVO> proList = new ArrayList<productListVO>();
 		
 		try {
-			con = getConnection();
+			con =db.getConnection();
 		
 			sql = "select * from prolist";
 			pstmt = con.prepareStatement(sql);
@@ -80,7 +75,9 @@ public class productListDAO {
 		productListVO onePro = new productListVO();
 		
 		try {
-			con = getConnection();
+
+			con =db.getConnection();
+
 			
 			sql = "select * from prolist where productNo=?";
 			pstmt = con.prepareStatement(sql);

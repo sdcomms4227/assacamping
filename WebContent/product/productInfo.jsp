@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+<c:set var="userId" value="${request.getSession('userId')}"/>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -17,15 +19,18 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/product_responsive.css">
 	   
 	<script type="text/javascript">
-   		
-   		function fn_order_pro(obj, id){
+
+   		function fn_order_pro(obj, userId){
+
    			var form = document.createElement("form");
    		 	form.setAttribute("method", "post");
    			form.setAttribute("action", url);
 	   	     var IdInput = document.createElement("input");
 	   	     parentNOInput.setAttribute("type","hidden");
-	   	     parentNOInput.setAttribute("name","id");
-	   	     parentNOInput.setAttribute("value", id);
+
+	   	     parentNOInput.setAttribute("name","userId");
+	   	     parentNOInput.setAttribute("value", userId);
+
    		 
    	     form.appendChild(parentNOInput);
    	     document.body.appendChild(form);
@@ -33,7 +38,9 @@
    		}
    		
    		function backToList(obj){
-   			obj.action="{contextPath}/pro/proList.do";
+
+   			obj.action="${contextPath}/pro/proList.do";
+
    			obj.submit();
    		}
    </script>
@@ -144,7 +151,7 @@
 							</div>
 						<!-- Product Size -->
 						<div class="product_size_container">
-							<span>Size</span>
+							<!-- <span>Size</span>
 							<div class="product_size">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
 									<li>
@@ -168,9 +175,12 @@
 										<label for="radio_5">XL</label>
 									</li>
 								</ul>
-							</div>
+
+							</div> -->
+							
 						</div>
-						<input type="button" value="주문하기" onClick="fn_order_pro('${contextPath}/cart/addCart.do', ${Session.id})">
+						<input type="button" value="장바구니" onClick="fn_order_pro('${contextPath}/cart/addCart.do', ${userId})">
+
 							<input type=button value="목록보기"  
 							onClick="backToList(this.form)">
 					</div>
