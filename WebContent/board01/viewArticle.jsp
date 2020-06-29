@@ -36,21 +36,30 @@
 		 obj.submit();
 	 }
 	 
-	 function fn_remove_article(url,articleNO){		 
+	 function fn_remove_article(url,boardNo){		 
 		 var form = document.createElement("form");
 		 form.setAttribute("method", "post");
 		 form.setAttribute("action", url);		 
+// 		 <form action=url method="post"></form>
 		 
 	     var articleNOInput = document.createElement("input");
 	     articleNOInput.setAttribute("type","hidden");
-	     articleNOInput.setAttribute("name","articleNO");
+	     articleNOInput.setAttribute("name","boardNo");
 	     articleNOInput.setAttribute("value",boardNo);
-
+//		<input type="hidden" name="articleNO" value="articleNO"/>
 	     
 	     form.appendChild(articleNOInput);	     
-     
+// 	     <form action=url method="post">
+// 	     	<input type="hidden" name="articleNO" value="articleNO"/>
+// 	     </form>
+	     
 	     document.body.appendChild(form);	     
-
+	//   <body>
+	//	     <form action=url method="post">
+	//	     	<input type="hidden" name="articleNO" value="articleNO"/
+	//	     </form>
+	//   </body>
+	     
 		 form.submit();
 	 
 	 }
@@ -78,12 +87,12 @@
    <td >
     <input type="text"  value="${board.boardNo}"  disabled />
     <%--글 수정시 글번호를 컨트롤러로 전송 하기 위해 미리 hidden태그를 이용해 글번호를 저장 합니다. --%>
-    <input type="hidden" name="articleNO" value="${board.boardNo}"  />
+    <input type="hidden" name="boardNo" value="${board.boardNo}"  />
    </td>
   </tr>
   <tr>
    <td width="150" align="center" bgcolor="#FF9933">
-      작성자 아이디
+      아이디
    </td>
    <td >
     <input type=text value="${board.userId}" name="writer"  disabled />
@@ -94,7 +103,15 @@
       제목 
    </td>
    <td>
-    <input type=text value="${board.boardTitle}"  name="title"  id="i_title" disabled />
+    <input type=text value="${board.boardTitle}"  name="boardTitle"  id="i_title" disabled />
+   </td>   
+  </tr>
+    <tr>
+   <td width="150" align="center" bgcolor="#FF9933">
+      조회수 
+   </td>
+   <td>
+    <input type=text value="${board.boardReadCount}"  name="boardReadCount"  id="i_title" disabled />
    </td>   
   </tr>
   <tr>
@@ -102,7 +119,7 @@
       내용
    </td>
    <td>
-    <textarea rows="20" cols="60"  name="content"  id="i_content"  disabled />
+    <textarea rows="20" cols="60"  name="boardContent"  id="i_content"  disabled />
 	${board.boardContent}
 	</textarea>
    </td>  
@@ -152,7 +169,7 @@
    <td colspan=2 align=center>
 	    <input type=button value="수정하기" onClick="fn_enable(this.form)">
 	    <input type=button value="삭제하기" 
-		onClick="fn_remove_article('${contextPath}/board1/removeArticle.do',${board.boardNo})">
+		onClick="fn_remove_article('${contextPath}/board1/removeArticle.do', ${board.boardNo})">
 	    <input type=button value="리스트로 돌아가기"  
 		onClick="backToList(this.form)">
 	    <input type=button value="답글쓰기"  

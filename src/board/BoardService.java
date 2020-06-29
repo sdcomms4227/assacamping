@@ -37,17 +37,16 @@ public class BoardService {
 	}
 
 	public void modArticle(BoardVO board) {
-	   boardDAO.updateArticle(board);
-	   	
+		boardDAO.updateArticle(board);
+		
 	}
 
 	public List<Integer> removeArticle(int boardNo) {
-
 		List<Integer> boardNoList = boardDAO.selectRemovedArticles(boardNo);
 
-		boardDAO.deleteArticle(boardNo);
+boardDAO.deleteArticle(boardNo);//삭제 요청시 삭제할 글번호 전달
 
-		return boardNoList;
+return boardNoList; //삭제할 글 번호 목록을 컨트롤러로 반환합니다.
 	}	
 	
 	

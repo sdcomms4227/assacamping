@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BoardDAO {
 	
 	private Connection conn;
@@ -138,7 +139,7 @@ public BoardVO selectArticle(int boardNo) {
 		conn = dbUtil.DBConnection.getConnection();
 		
 		String sql = "select boardRe_ref, boardNo, boardTitle,"
-				   +"boardContent, boardImageFileName, userId, boardWriteDate"
+				   +"boardContent, boardImageFileName, userId, boardReadCount, boardWriteDate"
 				   +" from board where boardNo=?";
 		
 		pstmt = conn.prepareStatement(sql);
@@ -150,9 +151,11 @@ public BoardVO selectArticle(int boardNo) {
 		int boardRe_ref = rs.getInt("boardRe_ref");
 		String boardTitle = rs.getString("boardTitle");
 		String boardContent = rs.getString("boardContent");
+		int boardReadCount = rs.getInt("boardReadCount")+1;
 		String boardImageFileName = rs.getString("boardImageFileName");
 		String userId = rs.getString("userId");
 		Timestamp boardWriteDate = rs.getTimestamp("boardWriteDate");	
+		
 		
 		board.setBoardNo(_boardNo);
 		board.setBoardRe_ref(boardRe_ref);
@@ -161,7 +164,7 @@ public BoardVO selectArticle(int boardNo) {
 		board.setBoardImageFileName(boardImageFileName);
 		board.setUserId(userId);
 		board.setBoardWriteDate(boardWriteDate);
-		
+		board.setBoardReadCount(boardReadCount);
 
 		closeDB();	
 		
@@ -172,62 +175,63 @@ public BoardVO selectArticle(int boardNo) {
 	return board;
 	
 }//selectArticle
-
-//update수정데이터를 DB에 반영하는 메소드 
 public void updateArticle(BoardVO board) {
+		int boardNo = board.getBoardNo();
+		String title = board.getBoardTitle();
+		String content = board.getBoardContent();
+		String imageFileName = board.getBoardImageFileName();
+		
+		System.out.println(board.getBoardNo() +"update제목");
+		System.out.println(board.getBoardTitle()+"update파일내용");
+		System.out.println(board.getBoardImageFileName()+"update파일네임");
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "update board  set boardTitle=?, boardContent=?";
+			
+			//수정된 이미지 파일이 있을때만 imageFileNmae을 SQL문에 추가 합니다.
+			if (imageFileName != null && imageFileName.length() != 0) {
+				sql += ",boardImageFileName=?";
+			}
+			//수정된 이미지 파일이 없을때는 뒤에 where절만 붙인다.
+			sql += " where boardNo=?";
+			
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			
+			//이미지 파일을 수정하는 경우 설정
+			if (imageFileName != null && imageFileName.length() != 0) {
+				pstmt.setString(3, imageFileName);
+				pstmt.setInt(4, boardNo);
+			
+			//이미지 파일을 수정하지 않은 경우를 구분해서  설정 
+			} else {
+				pstmt.setInt(3, boardNo);
+			}
+			
+			pstmt.executeUpdate(); //UPDATE구문 실행
+			
+			//자원해제
+			pstmt.close();
+			conn.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	
-	int boardNo = board.getBoardNo();
-	String title = board.getBoardTitle();
-	String content = board.getBoardContent();
-	String imageFileName = board.getBoardImageFileName();
-	try {
-		conn = dbUtil.DBConnection.getConnection();
-		
-		String sql = "update board  set boardTitle=?, boardContent=?";
-		
-		//수정된 이미지 파일이 있을때만 imageFileNmae을 SQL문에 추가 합니다.
-		if (imageFileName != null && imageFileName.length() != 0) {
-			sql += ",boardimageFileName=?";
-		}
-		//수정된 이미지 파일이 없을때는 뒤에 where절만 붙인다.
-		sql += " where boardNo=?";
-		
-		System.out.println(sql);
-		
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, title);
-		pstmt.setString(2, content);
-		
-		//이미지 파일을 수정하는 경우 설정
-		if (imageFileName != null && imageFileName.length() != 0) {
-			pstmt.setString(3, imageFileName);
-			pstmt.setInt(4, boardNo);
-		
-		//이미지 파일을 수정하지 않은 경우를 구분해서  설정 
-		} else {
-			pstmt.setInt(3, boardNo);
-		}
-		
-		pstmt.executeUpdate(); //UPDATE구문 실행
-		
-		closeDB();
-		
-	} catch (Exception e) {
-		System.out.println("updateArticle메소드 예외발생: " + e);
-	}
-	
-}
+    }
 public List<Integer> selectRemovedArticles(int boardNo) {
-	//삭제할 글들의 articleNO를 저장할 용도
+	//삭제할 글들의 boardNo를 저장할 용도
 	List<Integer> boardNoList = new ArrayList<Integer>();
 	
 	try {
 		//커넥션풀로 부터 커넥션 얻기(DB연결)
 		conn = dbUtil.DBConnection.getConnection();
-		//SQL(SELECT)문 : 삭제할 글들의 articleNO를 조회 합니다.
-		String sql = "SELECT articleNO FROM board ";
-			   sql += " where boardNo=?";
-			   
+		
+		String sql = "SELECT * FROM board where boardNo = ?";
+		
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, boardNo);
 		ResultSet rs = pstmt.executeQuery();
@@ -242,30 +246,27 @@ public List<Integer> selectRemovedArticles(int boardNo) {
 		e.printStackTrace();
 	}
 	return boardNoList;
-}
+  }
+
 public void deleteArticle(int boardNo) {
-	
 	try {
-	
+		//커넥션풀로부터 커넥션얻기
 		conn = dbUtil.DBConnection.getConnection();
-		//SQL문 만들기 : 오라클의 계층형 SQL문을 이용해 삭제 글과 관련된 자식글까지 모두 삭제
+		//SQL문 만들기 :  삭제 글과 관련된 자식글까지 모두 삭제
 		String sql = "DELETE FROM board ";
-			   sql += "WHERE boardNo in (";
-			   sql += " SELECT boardNo FROM board ";
-			   sql += " START WITH articleNO=? ";
-			   sql += " CONNECT BY PRIOR boardNo = boardRe_ref)";
+			   sql += "WHERE boardNo=? ;";
+			   
 			   
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, boardNo);
 		pstmt.executeUpdate(); //delete
 		
-		closeDB();
-		
+		pstmt.close();
+		conn.close();
 	} catch (Exception e) {
 		e.printStackTrace();
-	}	
-
-  }	
+	}
 	
+}
 
 }

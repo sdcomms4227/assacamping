@@ -3,9 +3,11 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-       
+    
+
+<%--컨텍스트 주소 얻기 --%>    
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-<c:set var="userId"  value="${sessionScope.id}"/>
+<c:set var="userId" value="${sessionScope.id}"/>
  
 <%
 	//한글처리
@@ -16,6 +18,7 @@
 <head>
 <meta charset="UTF-8">
 <title>글쓰기 화면</title>
+	<%--제이쿼리 최신버전의 js라이브러리를 불러오기 위한 CDN방식의 링크 설정 --%>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
 		
@@ -24,8 +27,9 @@
 	
 	//제이쿼리를 이용해 아래쪽의 <input type="file">태그에서  이미지 파일 첨부시 
 	//미리보기 기능을 구현 하는 함수 
-		function readURL(input){
-
+		function readURL(input){// <---- <input type="file">태그를 매개변수로 전달 받음
+			
+			//크롬 웹브라우저의 F12 개발자 모드로 들어가서  console탭에 띄운 로그 메세지를 확인한다.
 			console.debug(input);
 			console.debug(input.files);
 			
@@ -85,10 +89,10 @@
  			  enctype="multipart/form-data">
  			  
  			  <table border=0 align=center >
-  			  	<tr>
- 			  		<td align="right">작성자 : </td>
- 			  		<td colspan="2"><input type="text" maxlength="500" name="userId" value="${userId}" disabled/></td>
- 			  	</tr>			  
+ 			  	<tr>
+ 			  		<td align="right">작성자 :</td>
+ 			  		<td colspan="2"><input type="text" maxlength="500" name="userId" value="${userId}" disabled"/></td>
+ 			  	</tr> 			  
  			  	<tr>
  			  		<td align="right">글제목 : </td>
  			  		<td colspan="2"><input type="text" maxlength="500" name="boardTitle"/></td>
