@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class productCartVO {
 	
-	   private int productNO; //상품번호
+
+	   private int productNo; //상품번호
 	   private int productPrice; //상품가격
 	   private int cartQuantity; //상품수량
 	   private int productDelivery; //배송비
@@ -13,16 +14,16 @@ public class productCartVO {
 	   private String productCategory; //상품카테고리
 	   private String userId;//사용자아이디
 	   private Date productCartDate; //장바구니등록날짜
+	
 	   
-	   public productCartVO() {
-		
+	  public productCartVO() {
+	
 	}
-	   
-	   
-	public productCartVO(int productNO, int productPrice, int cartQuantity, int productDelivery, String productName,
+	  
+	public productCartVO(int productNo, int productPrice, int cartQuantity, int productDelivery, String productName,
 			String productImage, String productCategory, String userId) {
 		
-		this.productNO = productNO;
+		this.productNo = productNo;
 		this.productPrice = productPrice;
 		this.cartQuantity = cartQuantity;
 		this.productDelivery = productDelivery;
@@ -30,15 +31,13 @@ public class productCartVO {
 		this.productImage = productImage;
 		this.productCategory = productCategory;
 		this.userId = userId;
-		
 	}
-
-
-	public int getProductNO() {
-		return productNO;
+	
+	public int getProductNo() {
+		return productNo;
 	}
-	public void setProductNO(int productNO) {
-		this.productNO = productNO;
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
 	}
 	public int getProductPrice() {
 		return productPrice;
@@ -88,8 +87,4 @@ public class productCartVO {
 	public void setProductCartDate(Date productCartDate) {
 		this.productCartDate = productCartDate;
 	}
-	   
-	   
-	   
-
 }

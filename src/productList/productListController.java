@@ -74,6 +74,7 @@ public class productListController extends HttpServlet{
 			}else if(action.equals("/writeForm.do")) {
 				nextPage="/prolist/writeForm.jsp";
 			
+				
 			}else if(action.equals("/addForm.do")) {
 				//게시판 구현자가 구현 
 				
