@@ -72,7 +72,7 @@
 	
 		 function backToList(obj){ //아래의 <form>요소전체가 매개변수로 넘어온다.
 			 
-			 obj.action = "${contextPath}/board1/listArticles.do";
+			 obj.action = "${contextPath}/board/listArticles.do";
 			 obj.submit(); //<form>태그를 이용해 BoardController서블릿으로 전체글을 검색해줘~요청함.
 		 }
 	
@@ -83,7 +83,7 @@
 		<h1 style="text-align: center;">새글 쓰기</h1>
  		
  		<%-- action속성값을  /addArticle.do로 해서  서블릿으로  새글등록을 요청합니다. --%>
- 		<form action="${contextPath}/board1/addArticle.do"
+ 		<form action="${contextPath}/board/addArticle.do"
  			  name="articleForm"
  			  method="post"
  			  enctype="multipart/form-data">

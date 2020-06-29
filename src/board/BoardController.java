@@ -22,7 +22,7 @@ import org.apache.commons.io.FileUtils;
 
 
 
-@WebServlet("/board1/*")
+@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	
 	//글에 첨부한 이미지 저장 위치
@@ -122,7 +122,7 @@ public class BoardController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
 			out.print("window.alert('새글을 추가 했습니다.');");
-			out.print(" location.href='" + request.getContextPath() +"/board1/listArticles.do';");
+			out.print(" location.href='" + request.getContextPath() +"/board/listArticles.do';");
 			out.print("</script>");
 				
 			return;
@@ -140,17 +140,11 @@ public class BoardController extends HttpServlet {
 			
 			Map<String, String> articleMap = upload(request, response);
 			
-			System.out.println(articleMap.get("boardNo")+ "ㅊㅊㅊ보드넘버");
-			
 			int boardNo = Integer.parseInt(articleMap.get("boardNo"));
 			boardVO.setBoardNo(boardNo);
 			String title = articleMap.get("boardTitle");
 			String content = articleMap.get("boardContent");
 			String imageFileName = articleMap.get("imageFileName");
-			
-//			System.out.println(title + "ㅇ제목");
-//			System.out.println(content+"ㅇ내용");
-//			System.out.println(imageFileName+"ㅇ파일이름");
 			
 			//boardVO.setBoardRe_ref(0);
 			boardVO.setUserId("id");
@@ -181,7 +175,7 @@ public class BoardController extends HttpServlet {
 			pw.print("<script>" 
 					+ "  alert('글을 수정했습니다.');" 
 					+ " location.href='" + request.getContextPath()
-					+ "/board1/viewArticle.do?boardNo=" + boardNo + "';" 
+					+ "/board/viewArticle.do?boardNo=" + boardNo + "';" 
 					+ "</script>");
 			return;
 			
@@ -208,7 +202,7 @@ public class BoardController extends HttpServlet {
 			pw.print("<script>" 
 					+ " alert('글을 삭제 했습니다.');" 
 					+ " location.href='"
-					+ request.getContextPath() +"/board1/listArticles.do';"
+					+ request.getContextPath() +"/board/listArticles.do';"
 					+ "</script>");
 			return;
 		

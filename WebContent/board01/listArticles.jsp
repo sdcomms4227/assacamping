@@ -56,7 +56,7 @@
 					<%--왼쪽으로 30px만큼 여백을 준 후 글제목을 표시할 목적으로 여백을 줌 --%>
 					<span style="padding-right: 30px"></span>        
 							<a class="cls1"  
-							 	href="${contextPath}/board1/viewArticle.do?boardNo=${board.boardNo}">
+							 	href="${contextPath}/board/viewArticle.do?boardNo=${board.boardNo}">
 							 	${board.boardTitle}
 							</a>
 				</td>
@@ -70,7 +70,7 @@
 		
 		<%-- 글쓰기 <a>링크를 클릭했을떄.. 글을 작성할수 있는 화면으로 이동시켜줘~ 라는 요청을? 
 		     BoardController서블릿으로 하게됨 --%>
-		<a class="cls1" href="${contextPath}/board1/articleForm.do">
+		<a class="cls1" href="${contextPath}/board/articleForm.do">
 			<p class="cls2">글쓰기</p>
 		</a>
 </body>
