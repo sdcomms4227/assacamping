@@ -119,9 +119,11 @@ function fn_delete() {
 						<ul>
 							<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
 								<!-- Product Image -->
+
 								
 								<div class="cart_product_image">
 								<img src="${contextPath}/images/cart_product_1.jpg"  name="productImage"></div>
+
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="${contextPath}/pro/getOnePro.do?productNo=${cartList.productNo}">${cartList.productName}</a></div>
 								<div class="cart_product_info ml-auto">
@@ -153,7 +155,9 @@ function fn_delete() {
 										
 										<!-- Product Cart Trash Button -->
 										<div class="cart_product_button">
+
 											<button class="cart_prod uct_remove" onclick="location.href='${contextPath}/cart/deleteCart.do?userId=${cartList.userId}&productNo=${cartList.productNo}'"><img src="${contextPath}/images/trash.png" ></button>
+
 										</div>
 									</div>
 								</div>

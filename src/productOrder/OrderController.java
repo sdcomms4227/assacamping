@@ -55,6 +55,7 @@ public class OrderController extends HttpServlet{
 		List<productCartVO>	orderList=null;
 		productCartService procartservice=null;
 		String action = request.getPathInfo();
+		
 		try {
 			
 			
@@ -71,11 +72,11 @@ public class OrderController extends HttpServlet{
 				System.out.println(orderList);
 				   totalPrice =procartservice.TotalPrice(userId);
 				   System.out.println(totalPrice);
-				int ordercount=orderservice.orderCount(userId);
+				// int ordercount=orderservice.orderCount(userId);
 				
 				request.setAttribute("orderList", orderList);
 				
-				request.setAttribute("ordercount", ordercount);//주문한 상품 총 개수
+				// request.setAttribute("ordercount", ordercount);//주문한 상품 총 개수
 				
 			    request.setAttribute("totalPrice", totalPrice);
 			    
@@ -87,20 +88,57 @@ public class OrderController extends HttpServlet{
 				
 			   	nextPage="/order/checkout.jsp";
 				
-			}else if(action.equals("/pay.do")) {
+			}else if(action.equals("/pay.do")) {//상품정보랑 회원배송지
+			     String userId=request.getParameter("userId");
+				  
+			      int productPayment=Integer.parseInt(request.getParameter("totalPrice"));// 총결제금액
+				  String userZipcode=request.getParameter("userZipcode"); 
+				  String userAddress1=request.getParameter("address1"); 
+				  String userAddress2=request.getParameter("address2"); 
+				  String productName=request.getParameter("productName");
+				  String userName=request.getParameter("userName");
+				  String userPhone=request.getParameter("userPhone");
+				  String userComment=request.getParameter("userComment");
+				  int  productDelivery=Integer.parseInt(request.getParameter("productDelivery"));
 				
+			      
+				
+				 Map<String,Integer> orderMap=new HashMap<String, Integer>(); //상품이름과상품번호,수량
+				
+				 for(int i=0;i<request.getContentLength();i++) {
+				
+					 orderMap.put( request.getParameter("productName"),
+						   Integer.parseInt(request.getParameter("cartQuantity")));
+					 
+				 }
+				
+ 
+				 OrderVO vo=new OrderVO();
+				 vo.setUserAddress1(userAddress1);
+				 vo.setUserAddress2(userAddress2);
+				 vo.setProductName(productName);
+				 vo.setUserName(userName);
+				 vo.setUserPhone(userPhone);
+				 vo.setUserComment(userComment);
+				 vo.setProductDelivery(productDelivery);
+				 
+				 orderservice.addOrder(orderMap,vo);
+				 
+				 request.setAttribute("userId", userId);
+				 
+				 nextPage="/cartorder/paypro.do";
+				 
+			}else if(action.equals("/paypro.do")) {
 				String userId=request.getParameter("userId");
-			    int productPayment=Integer.parseInt(request.getParameter("totalPrice"));
-			    String userZipcode=request.getParameter("userZipcode");
-			    String address1=request.getParameter("address1");
-			    String address2=request.getParameter("address2");
-			    String productName=request.getParameter("productName");
-			    String userName=request.getParameter("userName");
-			    String userPhone=request.getParameter("userPhone");
-			    String userComment=request.getParameter("userComment");
-			    String productDelivery=request.getParameter("productDelivery");
-			    
+				
+				productCartService cartservice=new productCartService();
+				 
+				cartservice.allDeleteCart(userId);
+				
+				nextPage="order/orderInfo.jsp";
 			}
+			
+			
 			 if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);

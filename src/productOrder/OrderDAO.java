@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
+import productCart.productCartVO;
 
 public class OrderDAO {
 
@@ -53,16 +56,27 @@ public class OrderDAO {
 		return total;
 	}
 	
-	public void insertOrder(OrderVO vo) {//주문
-		
-		try {
+	public void addOrder(Map<String, Integer> orderMap,OrderVO vo) {//주문
+		 orderMap=new HashMap<String, Integer>(); 
+		try {//sql구문 작성을 못하겠습니다...;;;;;;;
 			con=db.getConnection();
 			                                
-			sql="insert into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate)";
+			sql="insert all"
+			
+			 +" into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate,orderState)"
+		     +" values(?,?,?,?,?,?,?,?,now(),?)"
+		   +" select *"
+			+ " from DUAL";
+			
+			pstmt=con.prepareStatement(sql);
+			pstmt.executeUpdate();
+			pstmt.setInt(1, vo.getProductPayment());
+			pstmt.setString(2, vo.getUserZipcode());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally {
 			freeResource();
 		}
+		
 	}
 }

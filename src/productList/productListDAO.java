@@ -11,7 +11,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+
 import dbUtil.DBConnection;
+
 
 
 
@@ -22,8 +24,6 @@ public class productListDAO {
 	private ResultSet rs;
 	private String sql;
 	private DBConnection db;
-	
-	
 	
 	public void freeResource() {
 		if(rs != null) {try {rs.close();}catch(SQLException e){e.printStackTrace();}}
@@ -75,7 +75,9 @@ public class productListDAO {
 		productListVO onePro = new productListVO();
 		
 		try {
+
 			con =db.getConnection();
+
 			
 			sql = "select * from prolist where productNo=?";
 			pstmt = con.prepareStatement(sql);

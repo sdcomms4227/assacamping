@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
+=======
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+>>>>>>> 0bd81c9206c1ec7871b036bb38d779ae3fe69cf4
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 
@@ -13,7 +21,9 @@
 			<ul>
 				<li><a href="${contextPath}/product/productList.jsp">상품 목록</a></li>
 				<li><a href="${contextPath}/product/productInfo.jsp">상품 상세보기</a></li>
+
 				<li><a href="${contextPath}/cart/cart.do?userId=psm211">장바구니</a></li>
+
 				<li><a href="${contextPath}/order/checkout.jsp">주문하기</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">contact</a></li>
 			</ul>
@@ -27,7 +37,7 @@
 			</div>
 			<div class="shopping">
 				<!-- Cart -->
-				<a href="#">
+				<a href="${contextPath}/order/productCart.jsp">
 					<div class="cart">
 						<img src="${contextPath}/images/shopping-bag.svg" alt="">
 						<div class="cart_num_container">
@@ -49,7 +59,7 @@
 					</div>
 				</a>
 				<!-- Avatar -->
-				<a href="#">
+				<a href="${contextPath}/user/login.jsp">
 					<div class="avatar">
 						<img src="${contextPath}/images/avatar.svg" alt="">
 					</div>

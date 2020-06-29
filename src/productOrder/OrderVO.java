@@ -8,7 +8,7 @@ public class OrderVO {
 	private int productDelivery;   
 	private int productPayment; //총결제금액
 	private int orderNo;
-	private int userZipcode;   
+	private String userZipcode;   
 	private String userAddress1;   
 	private String userAddress2;
 	private String productName; 
@@ -42,7 +42,7 @@ public class OrderVO {
 	
 
 
-	public OrderVO(int productNO, int cartQuantity, int productDelivery, int productPayment, int userZipcode,
+	public OrderVO(int productNO, int cartQuantity, int productDelivery, int productPayment, String userZipcode,
 			String userAddress1, String userAddress2, String productName, String userEmail, String userName,
 			String userPhone, String userComment) {
 	
@@ -155,12 +155,12 @@ public class OrderVO {
 	}
 
 
-	public int getUserZipcode() {
+	public String getUserZipcode() {
 		return userZipcode;
 	}
 
 
-	public void setUserZipcode(int userZipcode) {
+	public void setUserZipcode(String userZipcode) {
 		this.userZipcode = userZipcode;
 	}
 
