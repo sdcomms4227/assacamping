@@ -29,7 +29,10 @@
 		text-align: center;
 	}
 </style>
-
+<div>
+	<jsp:include page="/user/top.jsp"/>  
+	
+</div>
 
 	<c:choose>
 		<%--회원 삭제에 성공 했다면 --%>
@@ -42,7 +45,7 @@
 		</c:when>
 	
 		<%--회원 추가에 성공 했다면 --%>
-		<c:when test='${requestScope.msg == "addMember"  }'>
+		<c:when test='${requestScope.msg == "addUser"  }'>
 			<script type="text/javascript">
 				window.onload = function(){
 					window.alert("회원을 등록했습니다.");	
@@ -55,7 +58,15 @@
 				window.onload = function(){
 					window.alert("회원정보를 수정했습니다.");	
 				}		
-			</script>
+		</script>
+		</c:when>	
+		
+		<c:when test='${requestScope.msg == "logout" }'>
+			<script type="text/javascript">
+				window.onload = function(){
+					window.alert("로그아웃 되었습니다.");	
+				}		
+		</script>
 		</c:when>	
 	</c:choose>
 
@@ -72,12 +83,13 @@
 			<td width="7%"><b>아이디</b></td>
 			<td width="7%"><b>비밀번호</b></td>
 			<td width="7%"><b>이름</b></td>
-			<td width="7%"><b>이메일</b></td>
 			<td width="7%"><b>전화번호</b></td>
+			<td width="7%"><b>이메일</b></td>
 			<td width="7%"><b>우편번호</b></td>		
 			<td width="7%"><b>주소</b></td>
 			<td width="7%"><b>상세주소</b></td>
 			<td width="7%"><b>가입날짜</b></td>
+			<td width="7%"><b>회원유형</b></td>
 			<td width="7%"><b>수정</b></td>
 			<td width="7%"><b>삭제</b></td>
 		</tr>
@@ -101,18 +113,26 @@
 			<td>${userVO.userAddress1 }</td>
 			<td>${userVO.userAddress2 }</td>
 			<td>${userVO.userDate }</td>
+			<td>${userVO.userUse }</td>
 			
 			<%-- 수정, 삭제를 위해 회원의 ID를 전달해 수정과 삭제 요청을 합니다. --%>
-			<td><a href="${contextPath}/user/modUserForm.do?id=${userVO.id}">수정</a></td>
-			<td><a href="${contextPath}/user/delUser.do?id=${userVO.id}">삭제</a></td>
+			<td><a href="${contextPath}/userCon/modUserForm.do?userId=${userVO.userId}">수정</a></td>
+			<td><a href="${contextPath}/userCon/delUser.do?userId=${userVO.userId}">삭제</a></td> 
 		</tr>
 		</c:forEach>
 	</c:when>
 </c:choose>	
 	</table>
 	
-	<a href="${contextPath}/user/userForm.do">
-		<p class="cls2">회원가입하기</p>
+	<p class="cls2">
+	<a href="${contextPath}/userCon/userForm.do"> 회원가입하기  || </a>
+	<a href="${contextPath}/userCon/login.do"> 로그인</a>
+	</p>	
+		
+	
+	
+		
+		
 	</a>
 </body>
 </html>

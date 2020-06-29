@@ -22,7 +22,7 @@
 <body>
 	<!-- 회원가입창에서 회원정보를 입력한 후  UserController.java서블릿으로 가입 요청 전송하도록  
 	     userForm.html을 작성합니다. -->
-	<form action="${contextPath}/user/addUser.do" method="post">
+	<form action="${contextPath}/userCon/addUser.do" method="post">
 	
 		<h1 style="text-align: center;">회원 가입창</h1>
 	  
