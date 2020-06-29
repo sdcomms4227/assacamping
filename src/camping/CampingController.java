@@ -323,7 +323,14 @@ public class CampingController extends HttpServlet {
 						}
 						
 						String fileName = fileItem.getName().substring(idx + 1);
-						String filePath = realPath + "\\temp\\" + fileName;
+						String tempDirPath = realPath + "\\temp";
+						File tempDir = new File(tempDirPath);
+						
+						if(!tempDir.exists()) {
+							tempDir.mkdir();
+						}
+						
+						String filePath = tempDirPath + "\\" + fileName;
 						File file = new File(filePath);
 						
 						if(!file.exists()) {
@@ -422,11 +429,11 @@ public class CampingController extends HttpServlet {
 	
 	private void deleteDirectory(int campingNo){
 		try {
-			String directoryPath = realPath + "\\" + campingNo;
-			File directory = new File(directoryPath);
+			String realDirPath = realPath + "\\" + campingNo;
+			File realDir = new File(realDirPath);
 			
-			if(directory.exists()) {
-				FileUtils.deleteDirectory(directory);
+			if(realDir.exists()) {
+				FileUtils.deleteDirectory(realDir);
 			}
 		} catch (Exception e) {
 			System.out.println("deleteFile()메소드 내부에서 오류 : " + e.toString());
