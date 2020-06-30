@@ -7,7 +7,7 @@
 		<h2>상품 카테고리</h2>
 	</div>
 	<div class="col-6 text-right">
-		<a href="${contextPath}/admin/adminProductList.jsp" class="btn btn-secondary btn-sm">상품 관리</a>
+		<a href="${contextPath}/proadm/listProduct.do" class="btn btn-secondary btn-sm">상품 관리</a>
 	</div>
 </div>
 
