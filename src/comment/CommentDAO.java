@@ -103,6 +103,7 @@ public class CommentDAO {
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
+			
 			sql = "select * from comment where boardCategoryNo=? and boardNo=? order by commentNo";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardCategoryNo);

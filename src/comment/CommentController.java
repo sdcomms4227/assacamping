@@ -2,6 +2,8 @@ package comment;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,16 +33,19 @@ public class CommentController extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doHandle(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doHandle(request, response);
 	}
 
-	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doHandle(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
@@ -49,27 +55,48 @@ public class CommentController extends HttpServlet {
 		JSONParser jsonParser = new JSONParser();
 		JSONObject commentObject = null;
 		String action = request.getPathInfo();
+		System.out.println("action : " + action);
 		String info = null;
 		String nextPage = "";
-		
-		if(action != null) {
+
+		if (action != null) {
 			if (action.equals("/listComment.do")) {
-				
-				try {
-					commentObject = (JSONObject) jsonParser.parse(info);
-					int boardCategoryNo = Integer.parseInt((String) commentObject.get("boardCategoryNo"));
-					int boardNo = Integer.parseInt((String) commentObject.get("boardNo"));
-					List<CommentVO> commentList = commentService.getCommentList(boardCategoryNo, boardNo);
-					request.setAttribute("commentList", commentList);
-					
-				} catch (ParseException e) {
-					System.out.println("doHandle()메소드 listComment.do 에서 예외발생 : " + e.toString());
+
+				// info = request.getParameter("commentListInfo");
+				// commentObject = (JSONObject) jsonParser.parse(info);
+				// int boardCategoryNo = Integer.parseInt((String)
+				// commentObject.get("boardCategoryNo"));
+				// int boardNo = Integer.parseInt((String) commentObject.get("boardNo"));
+				int boardCategoryNo = 1;
+				int boardNo = 1;
+				List<CommentVO> commentList = commentService.getCommentList(boardCategoryNo, boardNo);
+				String jsonToStr = null;
+
+				if (commentList.size() > 0) {
+					JSONArray jsonArray = new JSONArray();
+					for (int i = 0; i < commentList.size(); i++) {
+						JSONObject returnObject = new JSONObject();
+
+						returnObject.put("commentNo", commentList.get(i).getCommentNo());
+						returnObject.put("userName", commentList.get(i).getUserName());
+						returnObject.put("commentContent", commentList.get(i).getCommentContent());
+						returnObject.put("commentWriteDate", commentList.get(i).getCommentWriteDate());
+
+						jsonArray.add(returnObject);
+					}
+					JSONObject result = new JSONObject();
+					result.put("jsonArray", jsonArray);
+					jsonToStr = result.toString();
+//					request.setAttribute("jsonToStr", jsonToStr);
+					response.getWriter().write(jsonToStr);
 				}
-				 
+
+				nextPage = "/comment.jsp";
+
 			} else if (action.equals("/insertComment.do")) {
-				
-				info = request.getParameter("commentInfo");
+
 				try {
+					info = request.getParameter("commentInfo");
 					commentObject = (JSONObject) jsonParser.parse(info);
 					int boardCategoryNo = Integer.parseInt((String) commentObject.get("boardCategoryNo"));
 					int boardNo = Integer.parseInt((String) commentObject.get("boardNo"));
@@ -108,14 +135,14 @@ public class CommentController extends HttpServlet {
 						out.print(returnObject.toString());
 					}
 					return;
-					
+
 				} catch (ParseException e) {
 					System.out.println("doHandle()메소드 insertComment.do 에서 예외발생 : " + e.toString());
 				}
 			} else if (action.equals("/deleteComment.do")) {
-				
-				info = request.getParameter("commentDeleteInfo");
+
 				try {
+					info = request.getParameter("commentDeleteInfo");
 					commentObject = (JSONObject) jsonParser.parse(info);
 
 					int commentNo = Integer.parseInt((String) commentObject.get("commentNo"));
@@ -129,17 +156,18 @@ public class CommentController extends HttpServlet {
 						out.print("fail");
 					}
 					return;
-					
+
 				} catch (Exception e) {
 					System.out.println("doHandle() 메소드 deleteComment.do 에서 예외발생 : " + e.toString());
 				}
-				
+
 			}
 		}
-		
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
-		dispatch.forward(request, response);
+
+		if (nextPage != null && !nextPage.equals("")) {
+			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
+			dispatch.forward(request, response);
+		}
 
 	}
 }

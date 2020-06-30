@@ -6,14 +6,17 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%--
 <c:set var="boardCategoryNo" value="${sessionScope.boardCategoryNo}" />
 <c:set var="boardNo" value="${requestScope.boardNo}" />
-<%--
+
 <c:set var="userId" value="${sessionScope.userId}" />
 <c:set var="userName" value="${requestScope.userName}" />
 --%>
 <c:set var="commentList" value="${requestScope.commentList}" />
  
+<c:set var="boardCategoryNo" value="1" />
+<c:set var="boardNo" value="1" />
 <c:set var="userId" value="${'hong'}" />
 <c:set var="userName" value="${'홍길동'}" />
 
@@ -21,7 +24,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>comment</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 	<article class="mt-5">
@@ -30,15 +34,13 @@
 				<h3>댓글</h3>
 			</div>
 		</div>
+		
 		<table class="table comment-list-table">
 			<colgroup>
 				<col style="width:80px" />
 				<col />
 				<col style="width:120px" />
 			</colgroup>
-			
-			
-			
 		</table>
 		
 		<form name="commentform">
@@ -79,35 +81,39 @@
 	</article>
 	
 	<script>
-		$(function(){
-		    
-		    commentList();
-		    
+		//페이지 로딩시 댓글 목록 출력 
+		$(document).ready(function(){
+		    commentList(); 
 		});
 		
 		function commentList(){
+			var _url = '${contextPath}/comment/listComment.do'; 
+			var _commentListInfo = '{"boardCategoryNo":'+boardCategoryNo+',"boardNo":'+boardNo'}';
 		    $.ajax({
-		        url : '${contextPath}/comment/listComment.do',
-		        type : 'get',
-		        data : {'boardCategoryNo':boardCategoryNo, 'boardNo':boardNo},
+		        url : _url,
+		        type : 'post',
+		        dataType : 'json',
+		        data : {commentListInfo : _commentListInfo},
 		        success : function(data){
+		        	alert(data);
+		        	console.log(data);
 		        	var a = '';
 		        	if(data.length > 0) {
 			            $.each(data, function(key, value){
 			            	
-			            	a += '<tr id="comment${commentVO.commentNo }">';
-							a += '<td class="d-none d-lg-table-cell align-middle">${commentVO.userName}</td>';
+			            	a += '<tr id="comment'+value.commentNo+'">';
+							a += '<td class="d-none d-lg-table-cell align-middle">'+value.userName+'</td>';
 							a += '<td class="text-left align-middle">';
 							a += value.commentContent;
 							if(userId == value.userId){
-								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete(${commentVO.commentNo})">삭제</button>'; 	
+								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('+value.commentNo+')">삭제</button>'; 	
 							}
 							a += '<small class="d-block d-lg-none text-right mb-1 text-muted">';
-							a += '${commentVO.userName} | ${commentVO.commentWriteDate}';
+							a += value.userName +'|'+value.commentWriteDate;
 							a += '</small>';
 							a += '</td>';
 							a += '<td class="d-none d-lg-table-cell text-center align-middle">';
-							a += '<small>${commentVO.commentWriteDate}</small>';
+							a += '<small>'+value.commentWriteDate+'</small>';
 							a += '</td>';	
 							a += '</tr>';
 							
@@ -120,7 +126,6 @@
 						a += '등록된 댓글이 없습니다.</td>';
 						$(".comment-list-table").append(a);
 		        	}
-		            
 		        }
 		    });
 		}
