@@ -12,6 +12,7 @@ request.setCharacterEncoding("UTF-8");
 			<script type="text/javascript">
 				window.onload = function(){
 					alert("존재하지 않는 ID입니다.");
+					
 				}	
 			</script>
 		</c:when>

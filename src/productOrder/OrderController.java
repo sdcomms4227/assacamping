@@ -12,11 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.fabric.xmlrpc.base.Member;
 
 import productCart.productCartService;
 import productCart.productCartVO;
+import user.UserDAO;
+import user.UserVO;
 
 
 
@@ -47,83 +50,79 @@ public class OrderController extends HttpServlet{
 	
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		OrderVO vo= new OrderVO();
+		HttpSession session = request.getSession();
 		OrderService orderservice = new OrderService();
 		String nextPage = "";
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		Map<String, Integer> totalPrice=null;
-		List<productCartVO>	orderList=null;
-		productCartService procartservice=null;
+		productCartService procartservice=new productCartService();
+		List<productCartVO> orderList = new ArrayList();
 		String action = request.getPathInfo();
-		
+		System.out.println("action"+action);
 		try {
 			
 			
 			if(action == null ||action.equals("/order.do")) {//결제주문정보 
-				 procartservice=new productCartService();
-				
-				 orderList = new ArrayList();
-				
+				 
 				 totalPrice=new HashMap<String, Integer>();
 				
-				String userId=request.getParameter("userId");
+				String userId=(String)session.getAttribute("userId");
 				
 				orderList=procartservice.allcartList(userId);
-				System.out.println(orderList);
+				//System.out.println(orderList);
 				   totalPrice =procartservice.TotalPrice(userId);
-				   System.out.println(totalPrice);
-				// int ordercount=orderservice.orderCount(userId);
+				/* System.out.println(totalPrice); */
+				int ordercount=orderservice.orderCount(userId);
 				
-				request.setAttribute("orderList", orderList);
+			   	request.setAttribute("orderList", orderList);
 				
-				// request.setAttribute("ordercount", ordercount);//주문한 상품 총 개수
+			  request.setAttribute("ordercount", ordercount);//주문한 상품 총 개수
 				
-			    request.setAttribute("totalPrice", totalPrice);
+			    request.setAttribute("map", totalPrice);
 			    
-				/*
-				 * MemberVO vo= dao.usercheck(userId); //회원정보DAO에서 정보 얻어오기
-				 * 
-				 * request.setAttribute("uservo", vo);
-				 */
+			      UserDAO dao=new UserDAO();
+				  UserVO uservo= dao.findUser(userId); //회원정보DAO에서 배송주소 정보 얻어오기
+				  
+				 request.setAttribute("uservo", uservo);
+				 
 				
 			   	nextPage="/order/checkout.jsp";
 				
 			}else if(action.equals("/pay.do")) {//상품정보랑 회원배송지
 			     String userId=request.getParameter("userId");
-				  
-			      int productPayment=Integer.parseInt(request.getParameter("totalPrice"));// 총결제금액
-				  String userZipcode=request.getParameter("userZipcode"); 
-				  String userAddress1=request.getParameter("address1"); 
-				  String userAddress2=request.getParameter("address2"); 
-				  String productName=request.getParameter("productName");
+			     String userEmail=request.getParameter("userEmail");
+				  System.out.println(userId);
+				  System.out.println(userEmail);
+			      int productPayment=Integer.parseInt(request.getParameter("productPayment"));// 총결제금액
+			      System.out.println(productPayment);
+			      String userZipcode=request.getParameter("userZipcode"); 
+				  System.out.println(userZipcode);
+				  String userAddress1=request.getParameter("userAddress1"); 
+				  String userAddress2=request.getParameter("userAddress2"); 
 				  String userName=request.getParameter("userName");
 				  String userPhone=request.getParameter("userPhone");
 				  String userComment=request.getParameter("userComment");
 				  int  productDelivery=Integer.parseInt(request.getParameter("productDelivery"));
-				
-			      
-				
-				 Map<String,Integer> orderMap=new HashMap<String, Integer>(); //상품이름과상품번호,수량
-				
-				 for(int i=0;i<request.getContentLength();i++) {
-				
-					 orderMap.put( request.getParameter("productName"),
-						   Integer.parseInt(request.getParameter("cartQuantity")));
-					 
-				 }
-				
- 
-				 OrderVO vo=new OrderVO();
+				   System.out.println(userComment);
+			     System.out.println(productDelivery);
+			     orderList=procartservice.allcartList(userId);
+			     
+				 
+			     vo.setUserId(userId);
+			     vo.setUserEmail(userEmail);
+				 vo.setUserZipcode(userZipcode);
 				 vo.setUserAddress1(userAddress1);
 				 vo.setUserAddress2(userAddress2);
-				 vo.setProductName(productName);
 				 vo.setUserName(userName);
 				 vo.setUserPhone(userPhone);
 				 vo.setUserComment(userComment);
+				 vo.setProductPayment(productPayment);
 				 vo.setProductDelivery(productDelivery);
 				 
-				 orderservice.addOrder(orderMap,vo);
-				 
+				 orderservice.addOrder(orderList,vo);
+				
 				 request.setAttribute("userId", userId);
 				 
 				 nextPage="/cartorder/paypro.do";
@@ -140,6 +139,7 @@ public class OrderController extends HttpServlet{
 			
 			
 			 if(!nextPage.equals("")) {
+				 
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);

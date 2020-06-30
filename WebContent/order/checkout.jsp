@@ -1,6 +1,11 @@
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="map" value="${map}"/>
+<c:set var="totalDelivery" value="${map.totalDelivery}"/>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -49,7 +54,7 @@
 	</div>
 
 	<!-- Checkout -->
-<form action="${contextPath}/proorder/pay.do" method="post" id="checkout_form">
+<form action="${contextPath}/cartorder/pay.do?userId=psm211" method="post" id="checkout_form">
 	<div class="checkout">
 		<div class="container">
 			<div class="row">
@@ -61,17 +66,17 @@
 						<div class="checkout_form_container">
 							
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-									<input type="text" class="checkout_input checkout_input_50"  value="${uservo.userName}"placeholder=" 이름" required="required">
+									<input type="text" class="checkout_input checkout_input_50"  name="userName"value="${uservo.userName}"placeholder=" 이름" required="required">
 									
 								</div>
-								<input type="text" class="checkout_input" value="${uservo.userEmail}" placeholder="이메일" required="required">
+								<input type="text" class="checkout_input" name="userEmail" value="${uservo.userEmail}" placeholder="이메일" required="required">
 								<!-- 주소 api연동 해쥬세여 -->
 								
-								<input type="text" class="checkout_input"value="${uservo.userAddress1}" placeholder="주소" required="required">
-								<input type="text" class="checkout_input" value="${uservo.userAddress2}" placeholder="상세주소" required="required">
+								<input type="text" class="checkout_input" name="userAddress1"value="${uservo.userAddress1}" placeholder="주소" required="required">
+								<input type="text" class="checkout_input" name="userAddress2" value="${uservo.userAddress2}" placeholder="상세주소" required="required">
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-									<input type="text" class="checkout_input checkout_input_50" value="${uservo.userZipcode}"  placeholder="우편번호" required="required">
-									<input type="text" class="checkout_input checkout_input_50" value="${uservo.userPhone}" placeholder="전화번호" required="required">
+									<input type="text" class="checkout_input checkout_input_50" name="userZipcode" value="${uservo.userZipcode}"  placeholder="우편번호" required="required">
+									<input type="text" class="checkout_input checkout_input_50" name="userPhone" value="${uservo.userPhone}" placeholder="전화번호" required="required">
 								</div>
 								  <p>요청사항 &nbsp;&nbsp;&nbsp; <select name="userComment"  id="userComment" class="userComment">
 				                           <option>배송전 연락 바랍니다</option>
@@ -93,36 +98,47 @@
 						<div class="checkout_title">cart total</div>
 						<div class="cart_total">
 							<ul>
+							
+							
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Product</div>
 									<div class="cart_total_price ml-auto">Total:${ordercount}</div>
 								
 								</li>
+								<li class="d-flex flex-row align-items-center justify-content-start">
 								<c:choose>
-								    <c:forEach var="order" items="${orderList}">
-								
-										<li class="d-flex flex-row align-items-center justify-content-start">
-										    	
-											<div class="cart_total_title">2 Piece Swimsuit x1 ${orderList.productName}x${orderList.cartQuantity}</div>
-											<div class="cart_total_price ml-auto">$35.00 ${productTotalPrice}</div>
-										</li>
-								    </c:forEach>
-								</c:choose>
+								<c:when test="${orderList != null}">
+                                <c:forEach begin="0" end="0" items="${orderList}" var="order">
+		
+								  <div class="cart_total_title" > ${order.productName} 외 ${ordercount}개</div>
+								<div class="cart_total_price ml-auto">${productTotalPrice}</div>
+										
+								     </c:forEach>
+								   </c:when>
+							 </c:choose>
+								 </li>
+							
 								
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Subtotal</div>
-									<div class="cart_total_price ml-auto">$35.00 ${totalPrice}</div>
+									<div class="cart_total_price ml-auto" ><fmt:formatNumber  type="number" maxFractionDigits="3" value="${map.totalPrice}" /></div>
+								   
 								</li>
 								<li class="d-flex flex-row align-items-center justify-content-start">
 									<div class="cart_total_title">Shipping</div>
-									<div class="cart_total_price ml-auto">${orderList.productDelivery }</div>
+									<div class="cart_total_price ml-auto" ><fmt:formatNumber  type="number" maxFractionDigits="3" value="${totalDelivery}" /></div>
+								   <input type="hidden" name="productDelivery" value="${totalDelivery}">
 								</li>
 								<li class="d-flex flex-row align-items-start justify-content-start total_row">
 									<div class="cart_total_title">Total</div>
-									<div class="cart_total_price ml-auto">$40.00${totalPrice+list.productDelivery}</div>
+									<div class="cart_total_price ml-auto">
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice+totalDelivery}" /></div>
+								    <input type="hidden" name="productPayment"  value="${map.totalPrice+totalDelivery}">
 								</li>
+								 
 							</ul>
 						</div>
+						
 						<div class="payment_options">
 							 
 							
@@ -136,14 +152,13 @@
 								<div class="visa payment_option"><a href="#"><img src="images/visa.jpg" alt=""></a></div>
 								<div class="master payment_option"><a href="#"><img src="images/master.jpg" alt=""></a></div>
 							</div>
-							<button class="cart_total_button">place order</button>
-						
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<input type="submit" class="cart_total_button" value="결제하기">
 </form>
 	<!-- Newsletter -->
 
