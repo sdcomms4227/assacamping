@@ -76,7 +76,7 @@ public class BoardController extends HttpServlet {
 			
 		}else if(action.equals("/articleForm.do")) {//새글을 DB에 추가하기위한 폼페이지 요청
 		
-			session.setAttribute("id", "hong"); //임시
+			session.setAttribute("userId", "hong"); //임시
 			
 		 nextPage = "/board01/articleForm.jsp";
 
@@ -150,7 +150,7 @@ public class BoardController extends HttpServlet {
 			String imageFileName = articleMap.get("imageFileName");
 			
 			//boardVO.setBoardRe_ref(0);
-			boardVO.setUserId("id");
+			boardVO.setUserId("hong");
 			boardVO.setBoardTitle(title);
 			boardVO.setBoardContent(content);
 			boardVO.setBoardImageFileName(imageFileName);
@@ -209,6 +209,65 @@ public class BoardController extends HttpServlet {
 					+ "</script>");
 			return;
 		
+		}else if(action.equals("/replyForm.do")) {
+			
+			System.out.println("리플라이폼" + request.getParameter("boardRe_ref"));
+			int boardRe_ref = Integer.parseInt(request.getParameter("boardRe_ref"));
+			session = request.getSession();
+			session.setAttribute("userId", "hong"); //임시
+			session.setAttribute("boardRe_ref", boardRe_ref);
+			
+			nextPage = "/board01/replyForm.jsp";	
+			
+		}else if(action.equals("/addReply.do")) {
+			
+			session = request.getSession();
+			int boardRe_ref = (Integer)session.getAttribute("boardRe_ref");
+					
+			//replyForm.jsp답글쓰기 화면에서 입력한 정보들을 Map에 담아 반환받기
+			Map<String, String> articleMap = upload(request, response);
+			//Map에 저장되어 있는 입력한 정보들을 꺼내오기
+			String title = articleMap.get("boardTitle");
+			String content = articleMap.get("boardContent");
+			String imageFileName = articleMap.get("boardImageFileName");
+			
+			boardVO.setBoardRe_ref(boardRe_ref);
+			
+			boardVO.setUserId("hong"); //임시
+			boardVO.setBoardTitle(title);
+			boardVO.setBoardContent(content);
+			boardVO.setBoardImageFileName(imageFileName);
+			
+			//BoardService객체의 addReply()메소드 호출시 boardVO객체를 인수로 전달하여
+			//입력한 답글 정보를 DB에 추가 하는 명령을 함
+			//답글 내용을 추가한 후 ~ 답글 글번호를 반환 받는다.
+			int boardNo = boardService.addReply(boardVO);
+			
+			//답글에 첨부한 이미지를 temp폴더에서 답글번호 폴더로 이동합니다
+			if(imageFileName != null && imageFileName.length() != 0) {
+				
+				File srcFile = 
+				new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				
+				File destDir = 
+				new File(ARTICLE_IMAGE_REPO + "\\" + boardNo);
+				
+				//답글번호 폴더 생성
+				destDir.mkdirs();
+				
+				//temp폴더의 업로드한 이미지를 답글번호 폴더경로로 이동시킨다
+				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				
+			}
+			//웹브라우저로 응답(출력,내보내기)시 동영상같은 사이즈가 큰파일을 내보낼 출력스트림통로
+//			OutputStream out = response.getOutputStream();
+			
+			//텍스트만~~~~~~내보낼 출력 스트림 통로  -> "답글을 추가 했습니다" 메세지창을 웹브라우저 전송
+			PrintWriter pw = response.getWriter();
+			pw.print("<script>" + "  alert('답글을 추가했습니다.');" 
+					+ " location.href='" + request.getContextPath()
+					+ "/board/listArticles.do';" + "</script>");
+			return;			
 		}
 			
 		

@@ -7,6 +7,7 @@
   request.setCharacterEncoding("UTF-8");
 %> 
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+<c:set var="userId" value="${sessionScope.userId}" />
 <head>
    <meta charset="UTF-8">
    <title>글보기</title>
@@ -18,6 +19,26 @@
    </style>
    <script  src="http://code.jquery.com/jquery-latest.min.js"></script> 
    <script type="text/javascript" >
+   
+   //답글쓰기 버튼 클릭시 호출되는 함수로  
+   //답글을 작성할수 있는 화면으로 이동시켜줘~라는 요청주소와
+   //답글 작성시 부모글의 글번호를 매개변수로 전달 받는다.
+    function fn_reply_form(url, boardRe_ref){
+	   	
+	   console.log(boardRe_ref);
+	   
+		 var form = document.createElement("form");
+		 form.setAttribute("method", "post");
+		 form.setAttribute("action", url);
+	     var parentNOInput = document.createElement("input");
+	     parentNOInput.setAttribute("type","hidden");
+	     parentNOInput.setAttribute("name","boardRe_ref");
+	     parentNOInput.setAttribute("value", boardRe_ref);
+		 
+	     form.appendChild(parentNOInput);
+	     document.body.appendChild(form);
+		 form.submit();
+	 }
      function backToList(obj){
 	    obj.action="${contextPath}/board/listArticles.do";
 	    obj.submit();
@@ -95,7 +116,7 @@
       아이디
    </td>
    <td >
-    <input type=text value="${board.userId}" name="writer"  disabled />
+    <input type=text name="userId"value="${userId}" name="writer"  disabled />
    </td>
   </tr>
   <tr>

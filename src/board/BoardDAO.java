@@ -65,8 +65,7 @@ public List selectAllBoard(){
 public int getNewBoardNo() {
 	 int boardNo=0;
 	
-	try{
-		
+	try{		
 		conn = dbUtil.DBConnection.getConnection();
 		
 		String sql = "select max(boardNo) from board";
@@ -106,8 +105,8 @@ public int insertNewArticle(BoardVO board) {
 		String boardTitle = board.getBoardTitle();
 		String boardContent= board.getBoardContent();
 		String userId = board.getUserId();
-		int boardRe_lev= board.getBoardRe_lev();
-		int boardRe_seq = board.getBoardRe_seq();
+		//int boardRe_lev= board.getBoardRe_lev();
+		//int boardRe_seq = board.getBoardRe_seq();
 		String boardImageFileName = board.getBoardImageFileName();
 		
 	String sql = "insert into board(boardNo, boardRe_ref,boardRe_lev,boardRe_seq, boardTitle,"
@@ -118,8 +117,8 @@ public int insertNewArticle(BoardVO board) {
 		
 	pstmt.setInt(1, boardNo);
 	pstmt.setInt(2, boardNo); //boardNo 주글번호 기준 == boardRe_ref 그룹번호
-	pstmt.setInt(3, boardRe_lev);
-	pstmt.setInt(4, boardRe_seq);
+	pstmt.setInt(3, 0);
+	pstmt.setInt(4, 0);
 	pstmt.setString(5, boardTitle);
 	pstmt.setString(6, boardContent);
 	pstmt.setString(7, boardImageFileName);
@@ -294,4 +293,47 @@ public void updateReadCount(int boardNo) {
 
 	closeDB();
  }
+public int reInsertNewArticle(BoardVO board) {
+	
+	int boardNo = getNewBoardNo(); 
+	
+	try {		
+		conn = dbUtil.DBConnection.getConnection();
+	
+		int boardRe_ref = board.getBoardRe_ref();
+		String boardTitle = board.getBoardTitle();
+		String boardContent= board.getBoardContent();
+		String userId = board.getUserId();
+		int boardRe_lev= board.getBoardRe_lev();
+		int boardRe_seq = board.getBoardRe_seq();
+		String boardImageFileName = board.getBoardImageFileName();
+		
+	String sql = "insert into board(boardNo, boardRe_ref,boardRe_lev,boardRe_seq, boardTitle,"
+			   +" boardContent, boardImageFileName, userId,boardReadCount)"
+			   +" values(?,?,?,?,?,?,?,?,0)";
+	
+	pstmt = conn.prepareStatement(sql);
+		
+	pstmt.setInt(1, boardNo);
+	pstmt.setInt(2, boardRe_ref); //boardNo 주글번호 기준 == boardRe_ref 그룹번호
+	pstmt.setInt(3, boardRe_lev +1); //부모글의 re_lev에 +1을 하여 들여쓰기
+	pstmt.setInt(4, boardRe_seq +1); //부모글의 re_seq에 +1을 하여 답글을 단 순서 정하기
+ 	pstmt.setString(5, boardTitle);
+	pstmt.setString(6, boardContent);
+	pstmt.setString(7, boardImageFileName);
+	pstmt.setString(8, userId);	
+		
+	pstmt.executeUpdate();		
+	
+	} catch (Exception e) {
+		System.out.println("reInsertNewArticle 메소드에서 예외 발생 : " + e);
+	}
+
+		closeDB();		
+	
+	return boardNo;
+   }
+
+
+
 }

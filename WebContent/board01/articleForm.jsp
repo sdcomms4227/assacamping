@@ -7,7 +7,7 @@
 
 <%--컨텍스트 주소 얻기 --%>    
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
-<c:set var="userId" value="${sessionScope.id}"/>
+<c:set var="userId" value="${sessionScope.userId}"/>
  
 <%
 	//한글처리
