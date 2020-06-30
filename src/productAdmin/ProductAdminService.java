@@ -19,24 +19,14 @@ public class ProductAdminService {
 		List<Map<String,Object>> productList = productDAO.getProductList(searchMap);
 		productListMap.put("productList", productList);
 		
-		int totalCount = productDAO.getProductListCount(searchMap);
+		int totalCount = productDAO.getProductCount(searchMap);
 		productListMap.put("totalCount", totalCount);
 		
 		return productListMap;
 	}
 
-	public Map<String, Object> readProduct(int productNo) {
-		
-		Map<String, Object> productItemMap = new HashMap<String, Object>();
-				
-		ProductAdminVO productAdminVO = productDAO.getProductItem(productNo);
-		productItemMap.put("productAdminVO", productAdminVO);
-		
-		int productCategoryNo = productAdminVO.getProductCategoryNo();		
-		String productCategoryName = productDAO.getCategoryName(productCategoryNo);		
-		productItemMap.put("productCategoryName", productCategoryName);
-		
-		return productItemMap;
+	public Map<String, Object> readProduct(int productNo) {						
+		return productDAO.getProductItem(productNo);
 	}
 
 	public int insertProduct(ProductAdminVO productAdminVO) {
@@ -50,11 +40,11 @@ public class ProductAdminService {
 		return readNo;
 	}
 
-	public int updateProduct(ProductAdminVO productAdminVO) {		
-		return productDAO.updateProduct(productAdminVO);
+	public int updateProduct(ProductAdminVO productAdminVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
+		return productDAO.updateProduct(productAdminVO, originalImageNameMap, deleteFileMap);
 	}
 
-	public int deleteProduct(int productNo) {		
+	public int deleteProduct(int productNo) {
 		return productDAO.deleteProduct(productNo);		
 	}
 }

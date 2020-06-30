@@ -1,11 +1,7 @@
 package productAdmin;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +19,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
-import productCategory.ProductCategoryVO;
 import productCategory.ProductCategoryService;
+import productCategory.ProductCategoryVO;
 
 @SuppressWarnings("serial")
 @WebServlet("/proadm/*")
@@ -89,18 +85,8 @@ public class ProductAdminController extends HttpServlet{
 
 			setPagination(request);
 			
-			int productNo = Integer.parseInt(request.getParameter("productNo"));
-			
-			Map<String, Object> productItemMap = productService.readProduct(productNo);
-
-			productAdminVO = (ProductAdminVO)productItemMap.get("productAdminVO");
-			String productImageName = productAdminVO.getProductImageName();
-
-			if(productImageName!=null && !productImageName.equals("")) {
-				String productFileType = getFileType(productNo, productImageName);
-				productItemMap.put("productFileType", productFileType);
-			}
-			
+			int productNo = Integer.parseInt(request.getParameter("productNo"));			
+			Map<String, Object> productItemMap = productService.readProduct(productNo);			
 			request.setAttribute("productItemMap", productItemMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
@@ -122,17 +108,21 @@ public class ProductAdminController extends HttpServlet{
 									
 			String productName = multipartMap.get("productName");
 			String productInformation = multipartMap.get("productInformation");
+			String productImageName1 = multipartMap.get("productImageName1");
+			String productImageName2 = multipartMap.get("productImageName2");
+			String productImageName3 = multipartMap.get("productImageName3");
 			int productPrice = Integer.parseInt(multipartMap.get("productPrice"));
-			String productImageName = multipartMap.get("productImageName");
-			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
 			int productQuantity = Integer.parseInt(multipartMap.get("productQuantity"));
+			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
 			
 			productAdminVO.setProductName(productName);
 			productAdminVO.setProductInformation(productInformation);
+			productAdminVO.setProductImageName1(productImageName1);
+			productAdminVO.setProductImageName2(productImageName2);
+			productAdminVO.setProductImageName3(productImageName3);
 			productAdminVO.setProductPrice(productPrice);
-			productAdminVO.setProductImageName(productImageName);
-			productAdminVO.setProductCategoryNo(productCategoryNo);
 			productAdminVO.setProductQuantity(productQuantity);
+			productAdminVO.setProductCategoryNo(productCategoryNo);
 			
 			int readNo = productService.insertProduct(productAdminVO);
 			
@@ -141,8 +131,14 @@ public class ProductAdminController extends HttpServlet{
 			if(readNo > 0) {
 				alertMsg = "정상적으로 등록되었습니다.";
 				
-				if(productImageName!=null) {
-					moveFile(readNo, productImageName);
+				if(productImageName1!=null) {
+					moveFile(readNo, productImageName1);
+				}
+				if(productImageName2!=null) {
+					moveFile(readNo, productImageName2);
+				}
+				if(productImageName3!=null) {
+					moveFile(readNo, productImageName3);
 				}
 			}else {
 				alertMsg = "오류가 발생했습니다.";
@@ -157,19 +153,9 @@ public class ProductAdminController extends HttpServlet{
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));
-
 			Map<String, Object> productItemMap = productService.readProduct(productNo);
-			
-			productAdminVO = (ProductAdminVO)productItemMap.get("productAdminVO");
-			String productImageName = productAdminVO.getProductImageName();
-
-			if(productImageName!=null && !productImageName.equals("")) {
-				String productFileType = getFileType(productNo, productImageName);
-				productItemMap.put("productFileType", productFileType);
-			}
-
 			request.setAttribute("productItemMap", productItemMap);
-			
+
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 			
@@ -184,29 +170,61 @@ public class ProductAdminController extends HttpServlet{
 			int productNo = Integer.parseInt(multipartMap.get("productNo"));
 			String productName = multipartMap.get("productName");
 			String productInformation = multipartMap.get("productInformation");
+			String productImageName1 = multipartMap.get("productImageName1");
+			String productImageName2 = multipartMap.get("productImageName2");
+			String productImageName3 = multipartMap.get("productImageName3");
 			int productPrice = Integer.parseInt(multipartMap.get("productPrice"));
-			String productImageName = multipartMap.get("productImageName");
-			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
 			int productQuantity = Integer.parseInt(multipartMap.get("productQuantity"));
-			String oldFileName = multipartMap.get("oldFileName");
+			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
 			
 			productAdminVO.setProductNo(productNo);
 			productAdminVO.setProductName(productName);
 			productAdminVO.setProductInformation(productInformation);
+			productAdminVO.setProductImageName1(productImageName1);
+			productAdminVO.setProductImageName2(productImageName2);
+			productAdminVO.setProductImageName3(productImageName3);
 			productAdminVO.setProductPrice(productPrice);
-			productAdminVO.setProductImageName(productImageName);
-			productAdminVO.setProductCategoryNo(productCategoryNo);
 			productAdminVO.setProductQuantity(productQuantity);
+			productAdminVO.setProductCategoryNo(productCategoryNo);
 			
-			int result = productService.updateProduct(productAdminVO);
+			Map<String, String> originalImageNameMap = new HashMap<String, String>();
+			String originalImageName1 = multipartMap.get("originalImageName1");
+			String originalImageName2 = multipartMap.get("originalImageName2");
+			String originalImageName3 = multipartMap.get("originalImageName3");			
+			originalImageNameMap.put("originalImageName1", originalImageName1);
+			originalImageNameMap.put("originalImageName2", originalImageName2);
+			originalImageNameMap.put("originalImageName3", originalImageName3);
+			
+			Map<String, String> deleteFileMap = new HashMap<String, String>();
+			String deleteFile2 = multipartMap.get("deleteFile2");
+			String deleteFile3 = multipartMap.get("deleteFile3");
+			deleteFileMap.put("deleteFile2", deleteFile2);
+			deleteFileMap.put("deleteFile3", deleteFile3);
+			
+			int result = productService.updateProduct(productAdminVO, originalImageNameMap, deleteFileMap);
 			String alertMsg = "";
 			
 			if(result > 0) {
 				alertMsg = "정상적으로 수정되었습니다.";
 				
-				if(productImageName!=null) {
-					deleteFile(productNo, oldFileName);
-					moveFile(productNo, productImageName);
+
+				if(productImageName1!=null) {
+					deleteFile(productNo, originalImageName1);
+					moveFile(productNo, productImageName1);
+				}
+
+				if(deleteFile2!=null || productImageName2!=null) {
+					deleteFile(productNo, originalImageName2);
+				}
+				if(productImageName2!=null) {
+					moveFile(productNo, productImageName2);
+				}
+
+				if(deleteFile3!=null || productImageName3!=null) {
+					deleteFile(productNo, originalImageName3);
+				}
+				if(productImageName3!=null) {
+					moveFile(productNo, productImageName3);
 				}
 			}else {
 				alertMsg = "오류가 발생했습니다.";
@@ -294,18 +312,19 @@ public class ProductAdminController extends HttpServlet{
 				
 				if(fileItem.isFormField()) {
 					productMap.put(fileItem.getFieldName(), fileItem.getString("UTF-8"));
-					
 				}else {
 					
 					if(fileItem.getSize() > 0) {
-						productMap.put(fileItem.getFieldName(), fileItem.getName());
 						int idx = fileItem.getName().lastIndexOf("\\");
 						
 						if(idx == -1) {
 							idx = fileItem.getName().lastIndexOf("/");
 						}
 						
-						String fileName = fileItem.getName().substring(idx + 1);
+						int fieldLength = fileItem.getFieldName().length();						
+						String fieldNum = fileItem.getFieldName().substring(fieldLength-1,fieldLength);					
+						
+						String fileName = fieldNum + "_" + fileItem.getName().substring(idx + 1);
 						String tempDirPath = realPath + "\\temp";
 						File tempDir = new File(tempDirPath);
 						
@@ -315,6 +334,8 @@ public class ProductAdminController extends HttpServlet{
 						
 						String filePath = tempDirPath + "\\" + fileName;
 						File file = new File(filePath);
+						
+						productMap.put(fileItem.getFieldName(), fileName);
 						
 						if(!file.exists()) {
 							fileItem.write(file);
@@ -341,9 +362,10 @@ public class ProductAdminController extends HttpServlet{
 			String filePath = realPath + "\\" + productNo + "\\" + fileName;
 			File file = new File(filePath);
 			
-			if(!file.exists()) {
-				FileUtils.moveFileToDirectory(srcFile, destDir, createDestDir);
+			if(file.exists()) {
+				deleteFile(productNo, fileName);
 			}	
+			FileUtils.moveFileToDirectory(srcFile, destDir, createDestDir);
 		} catch (Exception e) {
 			System.out.println("moveFile()메소드 내부에서 오류 : " + e.toString());
 		}
@@ -362,54 +384,6 @@ public class ProductAdminController extends HttpServlet{
 		}
 	}
 	
-	private void downloadFile(HttpServletResponse response, int productNo, String fileName){
-		try {			
-			String filePath = realPath + "\\" + productNo + "\\" + fileName;
-			File file = new File(filePath);
-		
-			OutputStream out = response.getOutputStream();			
-			
-			response.setHeader("Cache-Control", "no-chche");
-			response.addHeader("Cache-Control", "no-store");			
-			response.setHeader("Content-disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName,"UTF-8") + "\";");
-			
-			FileInputStream in = new FileInputStream(file);	
-			
-			byte[] buffer = new byte[1024*8];
-			
-			while(true) {
-				int count = in.read(buffer);
-				
-				if(count == -1) {
-					break;
-				}
-				out.write(buffer, 0, count);;
-			}
-			
-			in.close();
-			out.close();
-		} catch (Exception e) {
-			System.out.println("downloadFile()메소드 내부에서 오류 : " + e.toString());
-		}		
-	}
-	
-	private String getFileType(int productNo, String fileName){
-		String productFileType = "";
-
-		try {
-			String filePath = realPath + "\\" + productNo + "\\" + fileName;
-			File file = new File(filePath);
-			
-			String mimeType = Files.probeContentType(file.toPath());
-			productFileType = mimeType.split("/")[0];
-			
-		} catch (Exception e) {
-			System.out.println("getFileType()메소드 내부에서 오류 : " + e.toString());
-		}
-		
-		return productFileType;
-	}
-	
 	private void deleteDirectory(int productNo){
 		try {
 			String realDirPath = realPath + "\\" + productNo;
@@ -419,7 +393,7 @@ public class ProductAdminController extends HttpServlet{
 				FileUtils.deleteDirectory(realDir);
 			}
 		} catch (Exception e) {
-			System.out.println("deleteFile()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("deleteDirectory()메소드 내부에서 오류 : " + e.toString());
 		}
 	}
 }

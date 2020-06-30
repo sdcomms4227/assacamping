@@ -2,9 +2,9 @@
 <%@ include file="../inc/adminTop.jsp" %>
 <link rel="stylesheet" href="${contextPath}/css/board.css" />
 
-<div class="row mb-2 align-items-center">
+<div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-9">
-		<h2>상품 카테고리</h2>
+		<h2 class="mb-0">상품 카테고리</h2>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
 		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/proadm/listProduct.do'">상품 관리</button>
@@ -13,10 +13,15 @@
 
 <article>
 	<table class="table table-hover text-center">
+		<colgroup>
+			<col style="width:80px"/>
+			<col />
+			<col style="width:140px"/>
+		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
-				<th>카테고리 번호</th>
-				<th>카테고리 이름</th>
+				<th>번호</th>
+				<th>이름</th>
 				<th>관리</th>
 			</tr>
 		</thead>
@@ -31,8 +36,8 @@
 					<c:forEach var="category" items="${productCategoryList}">
 						<tr>
 							<td class="align-middle">${category.productCategoryNo}</td>
-							<td class="align-middle">${category.productCategoryName}</td>
-							<td>
+							<td class="align-middle text-left">${category.productCategoryName}</td>
+							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="updateCategory(${category.productCategoryNo}, '${category.productCategoryName}')">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteCategory(${category.productCategoryNo})">삭제</button>
 							</td>
