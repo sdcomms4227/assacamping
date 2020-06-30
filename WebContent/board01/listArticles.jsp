@@ -59,10 +59,10 @@
 					
 					<c:choose>
 						<%--조건 : <forEach>태그 반복시 각글의 level 값이 1보다 크다면? 답글(자식글)이므로.. --%>	
-						<c:when test="${board.boardRe_seq > 0}">
+						<c:when test="${board.boardRe_lev > 0}">
 							<%--다시 내부 <forEach>태그를 이용해 1부터 level값까지 반복하면서 
 							        부모글 밑에 공백으로 들여 쓰기하여 답글(자식글)임을 표시합니다. --%>
-							 <c:forEach begin="1" end="${board.boardRe_seq}" step="1">
+							 <c:forEach begin="1" end="${board.boardRe_lev}" step="1">
 							 	 <span style="padding-left: 20px"></span>
 							 </c:forEach>
 							 <%-- 공백 다음에 자식글을 표시합니다. --%>

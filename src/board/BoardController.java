@@ -212,6 +212,7 @@ public class BoardController extends HttpServlet {
 		}else if(action.equals("/replyForm.do")) {
 			
 			System.out.println("리플라이폼" + request.getParameter("boardRe_ref"));
+			
 			int boardRe_ref = Integer.parseInt(request.getParameter("boardRe_ref"));
 			session = request.getSession();
 			session.setAttribute("userId", "hong"); //임시
@@ -220,6 +221,8 @@ public class BoardController extends HttpServlet {
 			nextPage = "/board01/replyForm.jsp";	
 			
 		}else if(action.equals("/addReply.do")) {
+			
+			
 			
 			session = request.getSession();
 			int boardRe_ref = (Integer)session.getAttribute("boardRe_ref");

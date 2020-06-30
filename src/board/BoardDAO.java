@@ -105,8 +105,8 @@ public int insertNewArticle(BoardVO board) {
 		String boardTitle = board.getBoardTitle();
 		String boardContent= board.getBoardContent();
 		String userId = board.getUserId();
-		//int boardRe_lev= board.getBoardRe_lev();
-		//int boardRe_seq = board.getBoardRe_seq();
+		int boardRe_lev= board.getBoardRe_lev();
+		int boardRe_seq = board.getBoardRe_seq();
 		String boardImageFileName = board.getBoardImageFileName();
 		
 	String sql = "insert into board(boardNo, boardRe_ref,boardRe_lev,boardRe_seq, boardTitle,"
@@ -126,10 +126,11 @@ public int insertNewArticle(BoardVO board) {
 
 	pstmt.executeUpdate();//INSERT	
 	
-	closeDB();
 			   
 	}catch (Exception e) {
 		System.out.println("insertNewArticle메소드 내부에서 예외발생: " + e);
+	}finally {
+		closeDB();
 	}
 	
 	return boardNo;
@@ -308,7 +309,14 @@ public int reInsertNewArticle(BoardVO board) {
 		int boardRe_seq = board.getBoardRe_seq();
 		String boardImageFileName = board.getBoardImageFileName();
 		
-	String sql = "insert into board(boardNo, boardRe_ref,boardRe_lev,boardRe_seq, boardTitle,"
+		/* re_seq 답글순서 재배치 */
+		//부모글 그룹과 같은 그룹이면서..부모글의 seq값보다 큰 답변글들은 ? seq 값을 1 증가 시킨다
+		String sql = "update board set boardRe_seq = boardRe_seq+1 where boardRe_seq > ?";
+		pstmt= conn.prepareStatement(sql);
+		pstmt.setInt(1, boardRe_seq); //부모글의 글 입력 순서
+		pstmt.executeUpdate();	
+		
+	    sql = "insert into board(boardNo, boardRe_ref, boardRe_lev,boardRe_seq, boardTitle,"
 			   +" boardContent, boardImageFileName, userId,boardReadCount)"
 			   +" values(?,?,?,?,?,?,?,?,0)";
 	
