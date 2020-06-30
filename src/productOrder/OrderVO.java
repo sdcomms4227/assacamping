@@ -3,7 +3,7 @@ package productOrder;
 import java.sql.Date;
 
 public class OrderVO {
-	private int productNO; 
+	private int productNo; 
 	private int cartQuantity;  
 	private int productDelivery;   
 	private int productPayment; //총결제금액
@@ -42,11 +42,11 @@ public class OrderVO {
 	
 
 
-	public OrderVO(int productNO, int cartQuantity, int productDelivery, int productPayment, String userZipcode,
+	public OrderVO(int productNo, int cartQuantity, int productDelivery, int productPayment, String userZipcode,
 			String userAddress1, String userAddress2, String productName, String userEmail, String userName,
 			String userPhone, String userComment) {
 	
-		this.productNO = productNO;
+		this.productNo = productNo;
 		this.cartQuantity = cartQuantity;
 		this.productDelivery = productDelivery;
 		this.productPayment = productPayment;
@@ -105,13 +105,13 @@ public class OrderVO {
 
 
 
-	public int getProductNO() {
-		return productNO;
+	public int getProductNo() {
+		return productNo;
 	}
 
 
-	public void setProductNO(int productNO) {
-		this.productNO = productNO;
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
 	}
 
 

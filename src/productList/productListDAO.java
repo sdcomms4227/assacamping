@@ -18,7 +18,7 @@ import dbUtil.DBConnection;
 
 
 public class productListDAO {
-	private DataSource dataFactory;
+	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;

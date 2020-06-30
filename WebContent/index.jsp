@@ -36,10 +36,7 @@
 
 	<div class="home">
 
-	<% String userId=(String)session.getAttribute("userId"); 
- 
-   System.out.print(userId+"index");
-%>	
+	
 		<!-- Home Slider -->
 
 		<div class="home_slider_container">

@@ -56,27 +56,75 @@ public class OrderDAO {
 		return total;
 	}
 	
-	public void addOrder(Map<String, Integer> orderMap,OrderVO vo) {//주문
-		 orderMap=new HashMap<String, Integer>(); 
-		try {//sql구문 작성을 못하겠습니다...;;;;;;;
+	public void addOrder(List<productCartVO> orderList,OrderVO vo) {//주문
+		 orderList=new ArrayList<productCartVO>();
+	try {
 			con=db.getConnection();
-			                                
-			sql="insert all"
-			 +" into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate,orderState)"
-		     +" values(?,?,?,?,?,?,?,?,now(),?)"
-		   +" select *"
-			+ " from DUAL";
+	        
 			
-			pstmt=con.prepareStatement(sql);
-			pstmt.executeUpdate();
-			pstmt.setInt(1, vo.getProductPayment());
-			pstmt.setString(2, vo.getUserZipcode());
+	  for(int i=0 ;i<orderList.size();i++) { 	                                
+		  
+		       sql=" insert into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate,orderState,productNo)"
+				 +" values(?,?,?,?,?,?,?,?,now(),?,?)";
+				
+				pstmt=con.prepareStatement(sql);
+				
+				pstmt.executeUpdate();
+				
+				
+				pstmt.setInt(1, vo.getProductPayment());
+				pstmt.setString(2, vo.getUserZipcode());
+				pstmt.setString(3, vo.getUserAddress1());
+				pstmt.setString(4, vo.getUserAddress2());
+				pstmt.setString(5, vo.getProductName());
+				pstmt.setString(6, vo.getUserName());
+				pstmt.setString(7, vo.getUserPhone());
+				pstmt.setString(8, vo.getUserComment());
+				pstmt.setString(9, vo.getOrderState());
+				pstmt.setInt(10, vo.getProductNo());
+				
+				pstmt.executeUpdate();
+			
+			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("addOredr에서 오류"+e.getMessage());
 		}finally {
 			freeResource();
 		}
 		
+	}
+	
+	public OrderVO orderList(String userId) {
+		try {
+			con=db.getConnection();
+			
+			sql="selsect * from productorder where userId=?";
+			
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				OrderVO vo=new OrderVO( rs.getInt("productNo"),
+						                rs.getInt("cartQuantity"), 
+						                rs.getInt("productDelivery"),
+						                rs.getInt("productPayment"),
+										rs.getString("userZipcode"),
+										rs.getString("userAddress1"), 
+										rs.getString("userAddress2"), 
+									    rs.getString("productName"),
+										rs.getString("userEmail"), 
+										rs.getString("userName"), 
+										rs.getString("userPhone"), 
+										rs.getString("userComment"));
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return null;
 	}
 }

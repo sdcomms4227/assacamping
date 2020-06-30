@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -54,15 +57,15 @@ public class productCartController extends HttpServlet {
 	  	    String nextPage="";
 	  	    request.setCharacterEncoding("UTF-8");
 	  		response.setContentType("text/html;charset=utf-8");
-	  		
+	  		HttpSession session = request.getSession();
 	  		String action = request.getPathInfo();
 	  		System.out.println("action:" + action);
 	  		
 	  		
 	  		try {
 				if(action == null || action.equals("/cart.do")) {
-					
-					String userId=request.getParameter("userId"); 
+				
+					String userId=(String)session.getAttribute("userId"); 
 					
 					
 					
@@ -77,12 +80,12 @@ public class productCartController extends HttpServlet {
 					request.setAttribute("list", list);
 					
 					request.setAttribute("map", map);
-					
+					session.setAttribute("userId", userId);
 					nextPage="/order/productCart.jsp";
 					
 				}else if(action.equals("/allDelte.do")) {
 					
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
 					
 					List<Integer> productNoList=cartService.allDeleteCart(userId);
 					
@@ -95,11 +98,11 @@ public class productCartController extends HttpServlet {
 							 FileUtils.deleteDirectory(imgDir);
 						 }			
 					}
-					
+					session.setAttribute("userId", userId);
 					nextPage="/order/productCart.jsp";
 					
 				}else if(action.equals("/update.do")) {
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
 					
 					String productName=request.getParameter("productName"); 
 					
@@ -123,12 +126,12 @@ public class productCartController extends HttpServlet {
 				    
 				    
 				    cartService.update(cartVO);
-				    
+				    session.setAttribute("userId", userId);
 				    nextPage="/cart/cart.do";
 				    
 				}else if(action.equals("/allDelete.do")) {
 					
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
 					
 					List<Integer> list=cartService.allDeleteCart(userId);
 					
@@ -144,10 +147,11 @@ public class productCartController extends HttpServlet {
 					}
 						
 				}
+					session.setAttribute("userId", userId);					
 					nextPage="/cart/cart.do";
 				}else if(action.equals("/deleteCart.do")) {
 					
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
 					
 					int productNo=Integer.parseInt(request.getParameter("productNo"));
 					
