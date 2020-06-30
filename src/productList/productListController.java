@@ -59,7 +59,7 @@ public class productListController extends HttpServlet{
 		response.setContentType("text/html;charset=utf-8");
 		
 		String action = request.getPathInfo();
-		
+		System.out.println("action:"+action);
 		try {
 			List<productListVO> proList = new ArrayList<productListVO>();
 			
@@ -94,10 +94,10 @@ public class productListController extends HttpServlet{
 			}else if(action.equals("/selectNewProduct")) {
 				
 			}
-			
+			if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);
-			dispatch.forward(request, response);
+			dispatch.forward(request, response);}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -40,7 +40,7 @@ public class productListDAO {
 		try {
 			con =db.getConnection();
 		
-			sql = "select * from prolist";
+			sql = "select * from productlist";
 			pstmt = con.prepareStatement(sql);
 		
 			rs = pstmt.executeQuery();
@@ -79,7 +79,7 @@ public class productListDAO {
 			con =db.getConnection();
 
 			
-			sql = "select * from prolist where productNo=?";
+			sql = "select * from productlist where productNo=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, productNo);
 			
