@@ -30,7 +30,7 @@ public class CampingService {
 		Map<String, Object> campingItemMap = new HashMap<String, Object>();
 		
 		campingDAO.incrementCampingReadCount(campingNo);
-		
+				
 		CampingVO campingVO = campingDAO.getCampingItem(campingNo);
 		campingItemMap.put("campingVO", campingVO);
 		
@@ -49,12 +49,12 @@ public class CampingService {
 		return maxNo;
 	}
 
-	public void updateCamping(CampingVO campingVO, String deleteFile) {		
-		campingDAO.updateCamping(campingVO, deleteFile);
+	public int updateCamping(CampingVO campingVO, String deleteFile) {		
+		return campingDAO.updateCamping(campingVO, deleteFile);
 	}
 
-	public void deleteCamping(int campingNo) {		
-		campingDAO.deleteCamping(campingNo);		
+	public int deleteCamping(int campingNo) {		
+		return campingDAO.deleteCamping(campingNo);		
 	}
 
 	public int insertReplyCamping(CampingVO campingVO) {

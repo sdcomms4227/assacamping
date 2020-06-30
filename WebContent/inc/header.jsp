@@ -1,19 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<% request.setCharacterEncoding("UTF-8"); %>
-
-=======
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
->>>>>>> 0bd81c9206c1ec7871b036bb38d779ae3fe69cf4
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
-
 <header class="header">
 	<div class="header_inner d-flex flex-row align-items-center justify-content-start">
 		<div class="logo"><a href="${contextPath}">ASSA</a></div>

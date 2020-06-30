@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -78,6 +79,10 @@ public class CampingController extends HttpServlet {
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
+
+			if(request.getAttribute("alertMsg")!=null) {
+				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+			}
 			
 			nextPage = "/camping/listCamping.jsp";
 			
@@ -98,6 +103,10 @@ public class CampingController extends HttpServlet {
 			}
 			
 			request.setAttribute("campingItemMap", campingItemMap);
+			
+			if(request.getAttribute("alertMsg")!=null) {
+				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+			}
 			
 			nextPage = "/camping/readCamping.jsp";
 			
@@ -177,14 +186,23 @@ public class CampingController extends HttpServlet {
 			campingVO.setUserId(userId);
 			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
-			campingService.updateCamping(campingVO, deleteFile);
+			int result = campingService.updateCamping(campingVO, deleteFile);
+			String alertMsg = "";
 			
-			if(deleteFile!=null || campingFileName!=null) {
-				deleteFile(campingNo, oldFileName);
+			if(result > 0) {
+				alertMsg = "정상적으로 수정되었습니다.";
+				
+				if(deleteFile!=null || campingFileName!=null) {
+					deleteFile(campingNo, oldFileName);
+				}
+				if(campingFileName!=null) {
+					moveFile(campingNo, campingFileName);
+				}
+			}else {
+				alertMsg = "오류가 발생했습니다.";
 			}
-			if(campingFileName!=null) {
-				moveFile(campingNo, campingFileName);
-			}
+			
+			request.setAttribute("alertMsg", alertMsg);
 			
 			nextPage = "/camp/readCamping.do?campingNo=" + campingNo;
 			
@@ -194,9 +212,18 @@ public class CampingController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			
-			campingService.deleteCamping(campingNo);
+			int result = campingService.deleteCamping(campingNo);
+			String alertMsg = "";
+
+			if(result > 0) {
+				alertMsg = "정상적으로 삭제되었습니다.";
+				
+				deleteDirectory(campingNo);
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+			}
 			
-			deleteDirectory(campingNo);
+			request.setAttribute("alertMsg", alertMsg);
 			
 			nextPage = "/camp/listCamping.do";
 			
@@ -440,6 +467,12 @@ public class CampingController extends HttpServlet {
 		}
 	}
 	
+	private void alertMsg(HttpServletResponse response, String msg) throws IOException {
+		PrintWriter pw = response.getWriter();
+		pw.print("<script>");
+		pw.print("alert('" + msg + "');");
+		pw.print("</script>");		
+	}
 }
 
 
