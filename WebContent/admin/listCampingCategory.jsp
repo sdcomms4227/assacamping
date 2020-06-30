@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-
 <link rel="stylesheet" href="${contextPath}/css/board.css" />
-<div class="row mb-2">
-	<div class="col-6">
+
+<div class="row mb-2 align-items-center">
+	<div class="col-9">
 		<h2>캠핑정보 카테고리</h2>
 	</div>
-	<div class="col-6 text-right">
+	<div class="col-3 text-right">
 		<a href="${contextPath}/admin/adminCampingList.jsp" class="btn btn-secondary btn-sm">캠핑정보</a>
 	</div>
 </div>
 
-<article class="mt-3">
+<article>
 	<table class="table table-hover text-center">
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>

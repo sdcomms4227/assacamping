@@ -10,14 +10,18 @@
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="ASSA Camping - 관리자모드">
-<meta name="format-detection" content="no">
-<meta name="format-detection" content="telephone=no, email=no, address=no">
-<title>ASSA Camping - 관리자모드</title>
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/admin.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="ASSA Camping - 관리자모드">
+	<meta name="format-detection" content="no">
+	<meta name="format-detection" content="telephone=no, email=no, address=no">
+	<title>ASSA Camping - 관리자모드</title>
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/admin.css">
+	<script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
+	<script src="${contextPath}/js/popper.js"></script>
+	<script src="${contextPath}/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">

@@ -25,45 +25,36 @@ public class ProductAdminService {
 		return productListMap;
 	}
 
-//	public Map<String, Object> readProduct(int productNo) {
-//		
-//		Map<String, Object> productItemMap = new HashMap<String, Object>();
-//		
-//		productDAO.incrementProductReadCount(productNo);
-//		
-//		ProductVO productVO = productDAO.getProductItem(productNo);
-//		productItemMap.put("productVO", productVO);
-//		
-//		int productCategoryNo = productVO.getProductCategoryNo();		
-//		String productCategoryName = productDAO.getCategoryName(productCategoryNo);		
-//		productItemMap.put("productCategoryName", productCategoryName);
-//		
-//		return productItemMap;
-//	}
-//
-//	public int insertProduct(ProductVO productVO) {
-//
-//		int maxNo = productDAO.getProductMaxNo();		
-//		productDAO.insertProduct(productVO, maxNo);		
-//		
-//		return maxNo;
-//	}
-//
-//	public int updateProduct(ProductVO productVO, String deleteFile) {		
-//		return productDAO.updateProduct(productVO, deleteFile);
-//	}
-//
-//	public int deleteProduct(int productNo) {		
-//		return productDAO.deleteProduct(productNo);		
-//	}
-//
-//	public int insertReplyProduct(ProductVO productVO) {
-//				
-//		productDAO.updateProductSequence(productVO);
-//
-//		int maxNo = productDAO.getProductMaxNo();		
-//		productDAO.insertReplyProduct(productVO, maxNo);
-//		
-//		return maxNo;
-//	}
+	public Map<String, Object> readProduct(int productNo) {
+		
+		Map<String, Object> productItemMap = new HashMap<String, Object>();
+				
+		ProductAdminVO productAdminVO = productDAO.getProductItem(productNo);
+		productItemMap.put("productAdminVO", productAdminVO);
+		
+		int productCategoryNo = productAdminVO.getProductCategoryNo();		
+		String productCategoryName = productDAO.getCategoryName(productCategoryNo);		
+		productItemMap.put("productCategoryName", productCategoryName);
+		
+		return productItemMap;
+	}
+
+	public int insertProduct(ProductAdminVO productAdminVO) {
+		
+		int readNo = 0;
+		int result = productDAO.insertProduct(productAdminVO);
+		if(result>0) {
+			readNo = productDAO.getProductLastNo();
+		}
+		
+		return readNo;
+	}
+
+	public int updateProduct(ProductAdminVO productAdminVO) {		
+		return productDAO.updateProduct(productAdminVO);
+	}
+
+	public int deleteProduct(int productNo) {		
+		return productDAO.deleteProduct(productNo);		
+	}
 }

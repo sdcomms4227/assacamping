@@ -31,7 +31,7 @@ import productCategory.ProductCategoryService;
 public class ProductAdminController extends HttpServlet{
 	
 	ProductAdminService productService;
-	ProductAdminVO productVO;	
+	ProductAdminVO productAdminVO;	
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
 	String realPath = "";
@@ -39,7 +39,7 @@ public class ProductAdminController extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		productService = new ProductAdminService();
-		productVO = new ProductAdminVO();
+		productAdminVO = new ProductAdminVO();
 		productCategoryService = new ProductCategoryService();
 		productCategoryVO = new ProductCategoryVO();
 	}	
@@ -78,32 +78,164 @@ public class ProductAdminController extends HttpServlet{
 			
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
+
+			if(request.getAttribute("alertMsg")!=null) {
+				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+			}
 			
 			nextPage = "/productAdmin/listProduct.jsp";
 			
 		}else if(action.equals("/readProduct.do")) {
 
-//			nextPage = "/productAdmin/readProduct.jsp";
+			setPagination(request);
+			
+			int productNo = Integer.parseInt(request.getParameter("productNo"));
+			
+			Map<String, Object> productItemMap = productService.readProduct(productNo);
+
+			productAdminVO = (ProductAdminVO)productItemMap.get("productAdminVO");
+			String productImageName = productAdminVO.getProductImageName();
+
+			if(productImageName!=null && !productImageName.equals("")) {
+				String productFileType = getFileType(productNo, productImageName);
+				productItemMap.put("productFileType", productFileType);
+			}
+			
+			request.setAttribute("productItemMap", productItemMap);
+			
+			if(request.getAttribute("alertMsg")!=null) {
+				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+			}
+			
+			nextPage = "/productAdmin/readProduct.jsp";
 			
 		}else if(action.contentEquals("/writeProduct.do")) {
 
-//			nextPage = "/productAdmin/writeProduct.jsp";
+			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
+			request.setAttribute("productCategoryList", productCategoryList);
+			
+			nextPage = "/productAdmin/writeProduct.jsp";
 			
 		}else if(action.equals("/insertProduct.do")) {
 
-//			nextPage = "/camp/readProduct.do?productNo=" + readNo;
+			Map<String, String> multipartMap = uploadFile(request);
+									
+			String productName = multipartMap.get("productName");
+			String productInformation = multipartMap.get("productInformation");
+			int productPrice = Integer.parseInt(multipartMap.get("productPrice"));
+			String productImageName = multipartMap.get("productImageName");
+			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
+			int productQuantity = Integer.parseInt(multipartMap.get("productQuantity"));
+			
+			productAdminVO.setProductName(productName);
+			productAdminVO.setProductInformation(productInformation);
+			productAdminVO.setProductPrice(productPrice);
+			productAdminVO.setProductImageName(productImageName);
+			productAdminVO.setProductCategoryNo(productCategoryNo);
+			productAdminVO.setProductQuantity(productQuantity);
+			
+			int readNo = productService.insertProduct(productAdminVO);
+			
+			String alertMsg = "";
+			
+			if(readNo > 0) {
+				alertMsg = "정상적으로 등록되었습니다.";
+				
+				if(productImageName!=null) {
+					moveFile(readNo, productImageName);
+				}
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+			}
+			
+			request.setAttribute("alertMsg", alertMsg);
+			
+			nextPage = "/proadm/readProduct.do?productNo=" + readNo;
 			
 		}else if(action.equals("/modifyProduct.do")) {
 
-//			nextPage = "/productAdmin/modifyProduct.jsp";
+			setPagination(request);
+			
+			int productNo = Integer.parseInt(request.getParameter("productNo"));
+
+			Map<String, Object> productItemMap = productService.readProduct(productNo);
+			
+			productAdminVO = (ProductAdminVO)productItemMap.get("productAdminVO");
+			String productImageName = productAdminVO.getProductImageName();
+
+			if(productImageName!=null && !productImageName.equals("")) {
+				String productFileType = getFileType(productNo, productImageName);
+				productItemMap.put("productFileType", productFileType);
+			}
+
+			request.setAttribute("productItemMap", productItemMap);
+			
+			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
+			request.setAttribute("productCategoryList", productCategoryList);
+			
+			nextPage = "/productAdmin/modifyProduct.jsp";
 			
 		}else if(action.equals("/updateProduct.do")) {
 
-//			nextPage = "/camp/readProduct.do?productNo=" + productNo;
+			setPagination(request);
+			
+			Map<String, String> multipartMap = uploadFile(request);
+						
+			int productNo = Integer.parseInt(multipartMap.get("productNo"));
+			String productName = multipartMap.get("productName");
+			String productInformation = multipartMap.get("productInformation");
+			int productPrice = Integer.parseInt(multipartMap.get("productPrice"));
+			String productImageName = multipartMap.get("productImageName");
+			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
+			int productQuantity = Integer.parseInt(multipartMap.get("productQuantity"));
+			String oldFileName = multipartMap.get("oldFileName");
+			
+			productAdminVO.setProductNo(productNo);
+			productAdminVO.setProductName(productName);
+			productAdminVO.setProductInformation(productInformation);
+			productAdminVO.setProductPrice(productPrice);
+			productAdminVO.setProductImageName(productImageName);
+			productAdminVO.setProductCategoryNo(productCategoryNo);
+			productAdminVO.setProductQuantity(productQuantity);
+			
+			int result = productService.updateProduct(productAdminVO);
+			String alertMsg = "";
+			
+			if(result > 0) {
+				alertMsg = "정상적으로 수정되었습니다.";
+				
+				if(productImageName!=null) {
+					deleteFile(productNo, oldFileName);
+					moveFile(productNo, productImageName);
+				}
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+			}
+			
+			request.setAttribute("alertMsg", alertMsg);
+			
+			nextPage = "/proadm/readProduct.do?productNo=" + productNo;
 			
 		}else if(action.equals("/deleteProduct.do")) {
 
-//			nextPage = "/camp/listProduct.do";
+			setPagination(request);
+			
+			int productNo = Integer.parseInt(request.getParameter("productNo"));
+			
+			int result = productService.deleteProduct(productNo);
+			String alertMsg = "";
+
+			if(result > 0) {
+				alertMsg = "정상적으로 삭제되었습니다.";
+				
+				deleteDirectory(productNo);
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+			}
+			
+			request.setAttribute("alertMsg", alertMsg);
+			
+			nextPage = "/proadm/listProduct.do";
 			
 		}
 		

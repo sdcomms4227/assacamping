@@ -71,20 +71,20 @@ public class ProductAdminDAO {
 			
 			while(rs.next()) {
 				Map<String, Object> productMap = new HashMap<String, Object>();
-				ProductAdminVO productVO = new ProductAdminVO();
+				ProductAdminVO productAdminVO = new ProductAdminVO();
 				
-				productVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
-				productVO.setProductDate(rs.getTimestamp("productDate"));
-				productVO.setProductImageName(rs.getString("productImageName"));
-				productVO.setProductInformation(rs.getString("productInformation"));
-				productVO.setProductName(rs.getString("productName"));
-				productVO.setProductNo(rs.getInt("productNo"));
-				productVO.setProductPrice(rs.getInt("productPrice"));
-				productVO.setProductQuantity(rs.getInt("productQuantity"));
+				productAdminVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
+				productAdminVO.setProductDate(rs.getTimestamp("productDate"));
+				productAdminVO.setProductImageName(rs.getString("productImageName"));
+				productAdminVO.setProductInformation(rs.getString("productInformation"));
+				productAdminVO.setProductName(rs.getString("productName"));
+				productAdminVO.setProductNo(rs.getInt("productNo"));
+				productAdminVO.setProductPrice(rs.getInt("productPrice"));
+				productAdminVO.setProductQuantity(rs.getInt("productQuantity"));
 				
 				String productCategoryName = rs.getString("productCategoryName");
 				
-				productMap.put("productVO", productVO);
+				productMap.put("productAdminVO", productAdminVO);
 				productMap.put("productCategoryName", productCategoryName);
 								
 				productList.add(productMap);
@@ -139,231 +139,166 @@ public class ProductAdminDAO {
 		return 0;		
 	}
 	
-//	public ProductVO getProductItem(int productNo) {
-//		
-//		ProductVO productVO = new ProductVO();
-//		
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "select * from product where productNo = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, productNo);
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			if(rs.next()) {
-//				productVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
-//				productVO.setProductContent(rs.getString("productContent"));
-//				productVO.setProductFileName(rs.getString("productFileName"));
-//				productVO.setProductNo(rs.getInt("productNo"));
-//				productVO.setProductRe_lev(rs.getInt("productRe_lev"));
-//				productVO.setProductRe_ref(rs.getInt("productRe_ref"));
-//				productVO.setProductRe_seq(rs.getInt("productRe_seq"));
-//				productVO.setProductReadCount(rs.getInt("productReadCount"));
-//				productVO.setProductTitle(rs.getString("productName"));
-//				productVO.setProductWriteDate(rs.getTimestamp("productWriteDate"));
-//				productVO.setUserId(rs.getString("userId"));
-//			}			
-//			
-//		} catch(Exception e) {
-//			System.out.println("getProductItem()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//		
-//		return productVO;
-//	}
-//
-//	public String getCategoryName(int categoryNo) {
-//		
-//		String productCategoryName = null;
-//		
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "select * from productCategory where productCategoryNo = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, categoryNo);
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			if(rs.next()) {
-//				productCategoryName = rs.getString("productCategoryName");
-//			}			
-//			
-//		} catch(Exception e) {
-//			System.out.println("getCategoryName()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//		
-//		return productCategoryName;
-//	}
-//
-//	public void incrementProductReadCount(int productNo) {
-//		
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "update product set productReadCount=productReadCount+1 where productNo = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, productNo);
-//			pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("incrementProductReadCount()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//	}
-//
-//	public int getProductMaxNo() {
-//		
-//		int maxNo = 0;
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();			
-//			String sql = "select max(productNo) from product";
-//			pstmt = conn.prepareStatement(sql);
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			if(rs.next()) {
-//				maxNo = rs.getInt(1) + 1;
-//			}else {
-//				maxNo = 1;
-//			}
-//			
-//		} catch(Exception e) {
-//			System.out.println("getProductMaxNo()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return maxNo;
-//	}
-//	
-//	public void insertProduct(ProductVO productVO, int maxNo) {
-//				
-//		try {			
-//			conn = dbUtil.DBConnection.getConnection();			
-//			String sql = "insert into product(productNo, productName, productContent, productFileName, userId, productRe_ref, productRe_lev, productRe_seq, productWriteDate, productReadCount, productCategoryNo)"
-//					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, maxNo);
-//			pstmt.setString(2, productVO.getProductTitle());
-//			pstmt.setString(3, productVO.getProductContent());
-//			pstmt.setString(4, productVO.getProductFileName());
-//			pstmt.setString(5, productVO.getUserId());
-//			pstmt.setInt(6, maxNo);
-//			pstmt.setInt(7, 0);
-//			pstmt.setInt(8, 0);
-//			pstmt.setInt(9, 0);
-//			pstmt.setInt(10, productVO.getProductCategoryNo());
-//			pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("insertProduct()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}		
-//	}
-//
-//	public int updateProduct(ProductVO productVO, String deleteFile) {
-//		
-//		String productFileName = productVO.getProductFileName();
-//				
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			
-//			if(productFileName!=null) {				
-//				String sql = "update product set productName=?, productContent=?, productFileName=?, productCategoryNo=? where productNo=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, productVO.getProductTitle());
-//				pstmt.setString(2, productVO.getProductContent());
-//				pstmt.setString(3, productFileName);
-//				pstmt.setInt(4, productVO.getProductCategoryNo());
-//				pstmt.setInt(5, productVO.getProductNo());				
-//			}else if(deleteFile!=null){				
-//				String sql = "update product set productName=?, productContent=?, productFileName=?, productCategoryNo=? where productNo=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, productVO.getProductTitle());
-//				pstmt.setString(2, productVO.getProductContent());
-//				pstmt.setString(3, null);
-//				pstmt.setInt(4, productVO.getProductCategoryNo());
-//				pstmt.setInt(5, productVO.getProductNo());
-//			}else{
-//				String sql = "update product set productName=?, productContent=?, productCategoryNo=? where productNo=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, productVO.getProductTitle());
-//				pstmt.setString(2, productVO.getProductContent());
-//				pstmt.setInt(3, productVO.getProductCategoryNo());
-//				pstmt.setInt(4, productVO.getProductNo());
-//			}
-//	
-//			return pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("updateProduct()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//	
-//		return 0;
-//	}
-//
-//	public int deleteProduct(int productNo) {
-//		
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "delete from product where productNo=?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, productNo);
-//	
-//			return pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("deleteProduct()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//	
-//	return 0;
-//	}
-//
-//	public void updateProductSequence(ProductVO productVO) {
-//		
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "update product set productRe_seq=productRe_seq+1 where productRe_ref=? and productRe_seq>?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, productVO.getProductRe_ref());
-//			pstmt.setInt(2, productVO.getProductRe_seq());
-//			pstmt.executeUpdate();
-//		} catch(Exception e) {
-//			System.out.println("updateProductSequence()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}		
-//	}
-//
-//	public void insertReplyProduct(ProductVO productVO, int maxNo) {
-//		
-//		try {			
-//			conn = dbUtil.DBConnection.getConnection();			
-//			String sql = "insert into product(productNo, productName, productContent, productFileName, userId, productRe_ref, productRe_lev, productRe_seq, productWriteDate, productReadCount, productCategoryNo)"
-//					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, maxNo);
-//			pstmt.setString(2, productVO.getProductTitle());
-//			pstmt.setString(3, productVO.getProductContent());
-//			pstmt.setString(4, productVO.getProductFileName());
-//			pstmt.setString(5, productVO.getUserId());
-//			pstmt.setInt(6, productVO.getProductRe_ref());
-//			pstmt.setInt(7, productVO.getProductRe_lev() + 1);
-//			pstmt.setInt(8, productVO.getProductRe_seq() + 1);
-//			pstmt.setInt(9, 0);
-//			pstmt.setInt(10, productVO.getProductCategoryNo());
-//			pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("insertReplyProduct()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}		
-//	}
+	public ProductAdminVO getProductItem(int productNo) {
+		
+		ProductAdminVO productAdminVO = new ProductAdminVO();
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "select * from product where productNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				productAdminVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
+				productAdminVO.setProductDate(rs.getTimestamp("productDate"));
+				productAdminVO.setProductImageName(rs.getString("productImageName"));
+				productAdminVO.setProductInformation(rs.getString("productInformation"));
+				productAdminVO.setProductName(rs.getString("productName"));
+				productAdminVO.setProductNo(rs.getInt("productNo"));
+				productAdminVO.setProductPrice(rs.getInt("productPrice"));
+				productAdminVO.setProductQuantity(rs.getInt("productQuantity"));
+			}			
+			
+		} catch(Exception e) {
+			System.out.println("getProductItem()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return productAdminVO;
+	}
+
+	public String getCategoryName(int categoryNo) {
+		
+		String productCategoryName = null;
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "select * from productCategory where productCategoryNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				productCategoryName = rs.getString("productCategoryName");
+			}			
+			
+		} catch(Exception e) {
+			System.out.println("getCategoryName()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return productCategoryName;
+	}
+
+	public int getProductLastNo() {
+		
+		int lastNo = 0;
+
+		try {
+			conn = dbUtil.DBConnection.getConnection();			
+			String sql = "select max(productNo) from product";
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				lastNo = rs.getInt(1);
+			}else {
+				lastNo = 0;
+			}
+			
+		} catch(Exception e) {
+			System.out.println("getProductMaxNo()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+
+		return lastNo;
+	}
 	
+	public int insertProduct(ProductAdminVO productAdminVO) {
+				
+		try {			
+			conn = dbUtil.DBConnection.getConnection();			
+			String sql = "insert into product(productName, productInformation, productPrice, productImageName, productCategoryNo, productQuantity)"
+					+ "values(?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productAdminVO.getProductName());
+			pstmt.setString(2, productAdminVO.getProductInformation());
+			pstmt.setInt(3, productAdminVO.getProductPrice());
+			pstmt.setString(4, productAdminVO.getProductImageName());
+			pstmt.setInt(5, productAdminVO.getProductCategoryNo());
+			pstmt.setInt(6, productAdminVO.getProductQuantity());
+			
+			return pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("insertProduct()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}	
+		
+		return 0;
+	}
+
+	public int updateProduct(ProductAdminVO productAdminVO) {
+		
+		String productImageName = productAdminVO.getProductImageName();
+				
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			if(productImageName!=null) {				
+				String sql = "update product set productName=?, productInformation=?, productPrice=?, productImageName=?, productCategoryNo=?, productQuantity=? where productNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, productAdminVO.getProductName());
+				pstmt.setString(2, productAdminVO.getProductInformation());
+				pstmt.setInt(3, productAdminVO.getProductPrice());
+				pstmt.setString(4, productImageName);
+				pstmt.setInt(5, productAdminVO.getProductCategoryNo());
+				pstmt.setInt(6, productAdminVO.getProductQuantity());
+				pstmt.setInt(7, productAdminVO.getProductNo());
+			}else{
+				String sql = "update product set productName=?, productInformation=?, productPrice=?, productCategoryNo=?, productQuantity=? where productNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, productAdminVO.getProductName());
+				pstmt.setString(2, productAdminVO.getProductInformation());
+				pstmt.setInt(3, productAdminVO.getProductPrice());
+				pstmt.setInt(4, productAdminVO.getProductCategoryNo());
+				pstmt.setInt(5, productAdminVO.getProductQuantity());
+				pstmt.setInt(6, productAdminVO.getProductNo());
+			}
+	
+			return pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("updateProduct()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+	
+		return 0;
+	}
+
+	public int deleteProduct(int productNo) {
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "delete from product where productNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productNo);
+	
+			return pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("deleteProduct()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+	
+		return 0;
+	}	
 }

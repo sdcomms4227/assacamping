@@ -1,143 +1,84 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="campingNo" value="${campingItemMap.campingVO.campingNo}" />
-<c:set var="campingTitle" value="${campingItemMap.campingVO.campingTitle}" />
-<c:set var="campingContent" value="${campingItemMap.campingVO.campingContent}" />
-<c:set var="campingFileName" value="${campingItemMap.campingVO.campingFileName}" />
-<c:set var="userId" value="${campingItemMap.campingVO.userId}" />
-<c:set var="campingWriteDate" value="${campingItemMap.campingVO.campingWriteDate}" />
-<c:set var="campingReadCount" value="${campingItemMap.campingVO.campingReadCount}" />
-<c:set var="campingCategoryName" value="${campingItemMap.campingCategoryName}" />
-<c:set var="campingFileType" value="${campingItemMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
-<!DOCTYPE html>
-<html lang="kr">
-<head>
-<title>ASSA Camping - 나혼자간다</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="ASSA Camping - 나혼자간다">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<%@ include file="../inc/adminTop.jsp" %>
+<c:set var="productNo" value="${productItemMap.productAdminVO.productNo}" />
+<c:set var="productName" value="${productItemMap.productAdminVO.productName}" />
+<c:set var="productInformation" value="${productItemMap.productAdminVO.productInformation}" />
+<c:set var="productPrice" value="${productItemMap.productAdminVO.productPrice}" />
+<c:set var="productImageName" value="${productItemMap.productAdminVO.productImageName}" />
+<c:set var="productDate" value="${productItemMap.productAdminVO.productDate}" />
+<c:set var="productCategoryName" value="${productItemMap.productCategoryName}" />
+<c:set var="productQuantity" value="${productItemMap.productAdminVO.productQuantity}" />
+<c:set var="productFileType" value="${productItemMap.productFileType}" />
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/camping.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/camping_responsive.css">
-</head>
-<body>
 
-<div class="super_container">
+<div class="row mb-2 align-items-center">
+	<div class="col-12">
+		<h2>상품 정보</h2>
+	</div>
+</div>
 
-	<!-- Header -->
-	<jsp:include page="../inc/header.jsp" />
-
-	<!-- Menu -->
-	<jsp:include page="../inc/menu.jsp" />
+<div class="row">
+	<div class="col-12">
 	
-	<!-- Home -->
-	
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
-		<div class="container">
+		<!-- 게시판 -->
+		<article>
 			<div class="row">
-				<div class="col">
-					<div class="home_container">
-						<div class="home_content">
-							<div class="home_title">Woman</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Woman</li>
-									<li>Accessories</li>
-								</ul>
-							</div>
-						</div>
+				<div class="col-8">
+					<table class="table read-table table-layout-fixed">
+						<colgroup>
+							<col style="width:120px" />
+							<col />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>상품 번호</th>
+								<td class="text-danger">${productNo}</td>
+							</tr>
+							<tr>
+								<th>카테고리</th>
+								<td>${productCategoryName}</td>
+							</tr>
+							<tr>
+								<th>상품 이름</th>
+								<td>${productName}</td>
+							</tr>
+							<tr>
+								<th>상품 가격</th>
+								<td><fmt:formatNumber value="${productPrice}" pattern="#,###"/></td>
+							</tr>
+							<tr>
+								<th>상품 수량</th>
+								<td><fmt:formatNumber value="${productQuantity}" pattern="#,###"/></td>
+							</tr>
+							<tr>
+								<th>상품 상세정보</th>
+								<td>${productInformation}</td>
+							</tr>
+							<tr>
+								<th>상품 등록일</th>
+								<td><fmt:formatDate value="${productDate}" pattern="yy-MM-dd HH:mm" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-4">
+					<div class="border">
+						<img src="${contextPath}/files/product/${productNo}/${productImageName}" alt="${productName}"/>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+			
+			<hr />
+			
+			<div class="text-center my-5">
+				<button type="button" class="btn btn-secondary" onclick="listProduct()">목록</button>							
+				<button type="button" class="btn btn-warning" onclick="modifyProduct(${productNo})">수정</button>
+				<button type="button" class="btn btn-danger" onclick="deleteProduct(${productNo})">삭제</button>
+			</div>			
+		</article>
+		<!-- // 게시판 -->
 	
-	<!-- Camping -->
-
-	<div class="camping">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-				
-					<!-- 게시판 -->
-					<article class="mt-3">
-						<table class="table read-table">
-							<colgroup>
-								<col style="width: 70px" />
-								<col />
-								<col style="width: 70px" />
-								<col style="width: 210px" />
-								<col style="width: 70px" />
-								<col style="width: 70px" />
-							</colgroup>
-							<tr>
-								<td colspan="6" class="h4 p-3 readsubject">
-									${campingTitle}
-									
-									<c:if test="${campingCategoryName!=null}">
-										<small class="text-muted">[${campingCategoryName}]</small>									
-									</c:if>
-									
-									<div class="h6 mt-3 mb-0 d-lg-none text-right">
-										<small class="text-muted">${userId} | <fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/> | ${campingReadCount}</small>
-									</div>
-								</td>
-							</tr>
-							<tr class="d-none d-lg-table-row">
-								<th class="align-middle">작성자</th>
-								<td>${userId}</td>
-								<th class="align-middle">작성일</th>
-								<td><fmt:formatDate value="${campingWriteDate}" pattern="yy-MM-dd HH:mm"/></td>
-								<th class="align-middle">조회수</th>
-								<td>${campingReadCount}</td>
-							</tr>
-							<tr>
-								<td colspan="6" class="py-5"> ${campingContent} </td>
-							</tr>
-							<c:if test="${campingFileName != null}">
-								<tr>
-									<th class="align-middle">첨부파일</th>
-									<td colspan="5">
-										<div class="d-flex align-items-center">
-											<c:if test="${campingFileType.equals('image')}">
-												<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
-											</c:if>
-											<p class="ml-2 mb-0">${campingFileName}</p>
-											<button type="button" class="btn btn-sm btn-info ml-2" onclick="downloadCamping(${campingNo}, '${campingFileName}')">다운로드</button>
-										</div>
-									</td>
-								</tr>				
-							</c:if>
-						</table>
-
-						<div class="text-center my-5">
-							<button type="button" class="btn btn-secondary" onclick="listCamping()">목록</button>							
-							<button type="button" class="btn btn-warning" onclick="modifyCamping(${campingNo})">수정</button>
-							<button type="button" class="btn btn-danger" onclick="deleteCamping(${campingNo})">삭제</button>
-							<button type="button" class="btn btn-primary" onclick="replyCamping(${campingNo})">답글쓰기</button>
-						</div>			
-					</article>
-					<!-- // 게시판 -->
-				
-				</div>
-			</div>
-		</div>
 	</div>
-	
-	<!-- Footer -->
-	<jsp:include page="../inc/footer.jsp" />
 </div>
 
 <form method="post" name="pagingForm">
@@ -146,45 +87,30 @@
 	<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
 </form>
 
-<script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
-<script src="${contextPath}/js/popper.js"></script>
-<script src="${contextPath}/js/bootstrap.min.js"></script>
-<script src="${contextPath}/plugins/easing/easing.js"></script>
-<script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
-<script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="${contextPath}/js/camping_custom.js"></script>
-
 <script>
-function listCamping(){
+function listProduct(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/listCamping.do";	
+	form.action = "${contextPath}/proadm/listProduct.do";	
 	form.submit();
 }
-function modifyCamping(campingNo){
+function modifyProduct(productNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/modifyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/proadm/modifyProduct.do?productNo=" + productNo;
 	form.submit();
 }
-function deleteCamping(campingNo){
+function deleteProduct(productNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/camp/deleteCamping.do?campingNo=" + campingNo;
+		form.action = "${contextPath}/proadm/deleteProduct.do?productNo=" + productNo;
 		form.submit();
 	}
 }
-function replyCamping(campingNo){
+function downloadProduct(productNo, productImageName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/replyCamping.do?campingNo=" + campingNo;
-	form.submit();
-}
-function downloadCamping(campingNo, campingFileName){
-	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
+	form.action = "${contextPath}/proadm/download.do?productNo=" + productNo + "&fileName=" + productImageName;
 	form.submit();
 }
 </script>
-</body>
-</html>
+
+<%@ include file="../inc/adminBottom.jsp" %>
