@@ -41,7 +41,7 @@ public class UserController extends HttpServlet{
 		UserDAO userDAO = new UserDAO();
 		String action = request.getPathInfo();
 		String nextPage = null;
-		
+		System.out.println(action);
 		if(action == null || action.equals("/listUsers.do")) {
 			String userId=request.getParameter("userId");
 			List<UserVO> usersList = userDAO.listUsers();
@@ -107,7 +107,10 @@ public class UserController extends HttpServlet{
 				
 				String userId = request.getParameter("userId");
 				String userPw = request.getParameter("userPw");
+				
+				System.out.println(userId+userPw);
 				int check = userDAO.login(userId,userPw);
+				
 				String msg ="";
 				if(check==0) {
 					//msg="존재하지 않는 ID입니다.";

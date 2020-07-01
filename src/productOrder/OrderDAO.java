@@ -63,6 +63,11 @@ public class OrderDAO {
 	        
 			
 	  for(int i=0 ;i<orderList.size();i++) { 	                                
+		        
+		sql="insert into productorder(productNo,cartQuantity,productDelivery,userZipcode,userAddress1,userAddress2,userId,"
+				                   + "productCategory,userEmail,productName,productCategory,userName,userPhone)"
+        + " (select d.userId,d.productNo,d.productDelivery,d.productCategory, d.productPrice,d.cartQuantity,d.productDelivery,d.productName,u.userZipcode,u.userAddress1,u.userEmail,u.userName,u.userPhone from  productcart as d join user as u on d.userId=u.userId where d.userId='psm211')";
+		  
 		  
 		       sql=" insert into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate,orderState,productNo)"
 				 +" values(?,?,?,?,?,?,?,?,now(),?,?)";
