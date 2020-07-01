@@ -23,6 +23,7 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/camping.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/camping_responsive.css">
+<jsp:include page="../inc/alert.jsp" />
 </head>
 <body>
 

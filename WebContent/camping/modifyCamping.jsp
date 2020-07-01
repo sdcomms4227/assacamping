@@ -80,6 +80,7 @@
 							<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
 							<input type="hidden" name="campingNo" value="${campingNo}" />	
 							<input type="hidden" name="userId" value="${userId}" />
+							<input type="hidden" name="oldFileName" value="${campingFileName}" />
 							<table class="table">
 								<colgroup>
 									<col style="max-width: 15%" />
@@ -136,11 +137,10 @@
 									<td>
 										<c:if test="${not empty campingFileName}">
 											<div class="d-flex align-items-center mb-2">
-												<input type="hidden" name="oldFileName" value="${campingFileName}" />
 												<c:if test="${campingFileType.equals('image')}">
 													<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
 												</c:if>
-											<p class="ml-2 mb-0">${campingFileName}</p>
+												<p class="ml-2 mb-0">${campingFileName}</p>
 												<div class="custom-control custom-checkbox ml-2">
 													<input type="checkbox" class="custom-control-input" name="deleteFile" id="deleteFile">
 													<label class="custom-control-label text-danger" for="deleteFile">첨부된 파일 삭제하기</label>
