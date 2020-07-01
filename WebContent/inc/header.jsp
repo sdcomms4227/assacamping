@@ -54,7 +54,7 @@
 					</div>
 				</a>				
 				<c:if test="${userId!=null}">
-					<h5>${userId}님 로그인중</h5>
+					<h5 class="d-inline-block">${userId}님 로그인중</h5>
 				</c:if>
 			</div>
 		</div>
