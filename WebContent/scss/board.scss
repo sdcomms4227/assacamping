@@ -2,6 +2,10 @@
 
 $borderColor : #dee2e6;
 
+img {
+	max-width: 100%;
+}
+
 .deleteform {
 	width: 100%;
 	max-width: 510px;
@@ -43,6 +47,9 @@ $borderColor : #dee2e6;
 			background-color: $borderColor;
 		}
 	}
+}
+.table-layout-fixed {
+	table-layout: fixed;
 }
 
 .reply-list-table {

@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<%-- <c:set var="userId" value="${sessionScope.userId }" /> --%>
-
 <header class="header">
-<h5>${userId }님 로그인중</h5>
 	<div class="header_inner d-flex flex-row align-items-center justify-content-start">
 		<div class="logo"><a href="${contextPath}">ASSA</a></div>
 		<nav class="main_nav">
@@ -56,7 +52,10 @@
 					<div class="avatar">
 						<img src="${contextPath}/images/avatar.svg" alt="">
 					</div>
-				</a>
+				</a>				
+				<c:if test="${userId!=null}">
+					<h5 class="d-inline-block">${userId}님 로그인중</h5>
+				</c:if>
 			</div>
 		</div>
 

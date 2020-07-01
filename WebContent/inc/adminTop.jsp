@@ -10,14 +10,18 @@
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="ASSA Camping - 관리자모드">
-<meta name="format-detection" content="no">
-<meta name="format-detection" content="telephone=no, email=no, address=no">
-<title>ASSA Camping - 관리자모드</title>
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/admin.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="ASSA Camping - 관리자모드">
+	<meta name="format-detection" content="no">
+	<meta name="format-detection" content="telephone=no, email=no, address=no">
+	<title>ASSA Camping - 관리자모드</title>
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/admin.css">
+	<script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
+	<script src="${contextPath}/js/popper.js"></script>
+	<script src="${contextPath}/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -42,7 +46,7 @@
 				<ul class="nav flex-column">
 					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminUserList")) out.print("active");%>" href="${contextPath}/admin/adminUserList.jsp"> <span data-feather="users"></span> 회원 관리 </a></li>
 					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminOrderList")) out.print("active");%>" href="${contextPath}/admin/adminOrderList.jsp"> <span data-feather="file"></span> 주문 관리 </a></li>
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminProductList")) out.print("active");%>" href="${contextPath}/admin/adminProductList.jsp"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li>
+					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminProductList")) out.print("active");%>" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
