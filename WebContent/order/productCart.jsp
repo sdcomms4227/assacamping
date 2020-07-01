@@ -54,12 +54,12 @@ function fn_delete() {
 	<jsp:include page="../inc/menu.jsp" />
 
 	<!-- Home -->
-
+<c:set var="userId" value="${sessionScope.userId }"/>
 	<%
   // String userId=(String)session.getAttribute("userId");  
-    String userId=request.getParameter("userId"); 
+  //  String userId=request.getParameter("userId"); 
  
-    System.out.print(userId+"cart"); 
+  //  System.out.print(userId+"cart"); 
      %>
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
@@ -200,24 +200,24 @@ function fn_delete() {
 						<ul>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Subtotal-</div>&nbsp;&nbsp;
-								
-
 								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice}" /></div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Shipping-</div>&nbsp;&nbsp;
 								<div class="cart_total_price ml-auto">
-								<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDelivery}" />
+								<fmt:formatNumber type="number" maxFractionDigits="3"  value="${totalDelivery}" />
+							     
 								</div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Total-</div>&nbsp;&nbsp;
 								<div class="cart_total_price ml-auto">
 								<fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice+totalDelivery}" />
+								
 								</div>
 							</li>
 						</ul>
-						<input type="submit" class="cart_total_button" value="결제하기">
+						<input type="submit" class="cart_total_button" value="주문하기">
 					</div>
 				</div>
 				</form>

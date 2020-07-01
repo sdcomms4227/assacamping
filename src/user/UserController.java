@@ -43,9 +43,12 @@ public class UserController extends HttpServlet{
 		String nextPage = null;
 		
 		if(action == null || action.equals("/listUsers.do")) {
+			String userId=request.getParameter("userId");
 			List<UserVO> usersList = userDAO.listUsers();
 			request.setAttribute("usersList", usersList);
-			nextPage = "/user/listUsers.jsp";
+			session.setAttribute("userId", userId);
+			
+			nextPage = "/index.jsp";
 
 		}else if(action.equals("/addUser.do")) {
 			
@@ -115,9 +118,12 @@ public class UserController extends HttpServlet{
 					nextPage = "/user/login.jsp";
 				}else {
 					session.setAttribute("userId", userId);
+					
 					nextPage = "/userCon/listUsers.do";
+					
 				}
 				request.setAttribute("msg",	msg);
+				
 			}else if(action.equals("/logout.do")) {
 				session.invalidate();
 				request.setAttribute("msg", "logout");

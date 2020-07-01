@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<% request.setCharacterEncoding("UTF-8"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <header class="header">
 	<div class="header_inner d-flex flex-row align-items-center justify-content-start">
@@ -13,9 +11,9 @@
 				<li><a href="${contextPath}/product/productList.jsp">상품 목록</a></li>
 				<li><a href="${contextPath}/product/productInfo.jsp">상품 상세보기</a></li>
 
-				<li><a href="${contextPath}/cart/cart.do?userId=psm211">장바구니</a></li>
+				<li><a href="${contextPath}/cart/cart.do">장바구니</a></li>
 
-				<li><a href="${contextPath}/order/checkout.jsp">주문하기</a></li>
+				<li><a href="${contextPath}/cartorder/order.do">주문하기</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">contact</a></li>
 			</ul>
 		</nav>
