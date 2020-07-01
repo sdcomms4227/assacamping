@@ -52,7 +52,10 @@
 					<div class="avatar">
 						<img src="${contextPath}/images/avatar.svg" alt="">
 					</div>
-				</a>
+				</a>				
+				<c:if test="${userId!=null}">
+					<h5 class="d-inline-block">${userId}님 로그인중</h5>
+				</c:if>
 			</div>
 		</div>
 
