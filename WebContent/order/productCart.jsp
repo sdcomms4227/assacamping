@@ -16,7 +16,9 @@
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap_custom.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/common.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/cart.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/cart_responsive.css">
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -314,6 +316,7 @@ function fn_delete() {
 <script src="${contextPath}/js/bootstrap.min.js"></script>
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/cart_custom.js"></script>
 </body>
 </html>

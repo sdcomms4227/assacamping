@@ -24,11 +24,13 @@
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap_custom.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/common.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/camping.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/camping_responsive.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
 <jsp:include page="../inc/alert.jsp" />
 </head>
 <body>
@@ -155,6 +157,7 @@
 <script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
 <script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
 
 <script>

@@ -47,15 +47,19 @@
 						</div>
 					</div>
 				</a>
-				<!-- Avatar -->
 				<c:choose>
-					<c:when test="${userId!=null}">
-						<a href="${contextPath}/userCon/logout.do">
-							<div class="avatar">
-								<img src="${contextPath}/images/avatar.svg" alt="">
+					<c:when test="${userId!=null}">					
+						<div class="d-inline-block dropdown">
+							<a class="nav-link dropdown-toggle" id="loggedDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span>${userId} 님</span><span class="caret"></span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">
+								<a class="dropdown-item" href="${contextPath}/userCon/modUserForm.do?userId=${userId}">회원정보수정</a>
+								<a class="dropdown-item" href="javascript:alert('준비중입니다.')">비밀번호변경</a>
+								<a class="dropdown-item" href="javascript:alert('준비중입니다.')">회원탈퇴</a>
+								<a class="dropdown-item" href="${contextPath}/userCon/logout.do">로그아웃</a>
 							</div>
-						</a>
-						<h5 class="d-inline-block">${userId}님 로그인중</h5>
+						</div>
 					</c:when>
 					<c:otherwise>
 						<a href="${contextPath}/userCon/login.do">

@@ -14,13 +14,15 @@
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap_custom.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/plugins/colorbox/colorbox.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/main_styles.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/responsive.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/common.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/index.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/index_responsive.css">
 </head>
 <body>
 
@@ -450,5 +452,6 @@
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="${contextPath}/plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
+<script src="${contextPath}/js/index_custom.js"></script>
 </body>
 </html>
