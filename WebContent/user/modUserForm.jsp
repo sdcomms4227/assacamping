@@ -1,122 +1,109 @@
-<%@page import="user.UserVO"%>    
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-<%--JSTL의 core, formatting 라이브러리 태그들을 사용하기 위한 선언 --%>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>    
-    
-<%-- http://localhost:8090/pro13/test03/modMemberForm.jsp  요청주소중에...
-	 
-	/pro13 컨텍스트 주소를 얻어 저장 
---%>    
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>  
- 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-	//UserController서블릿으로부터 전달받은 request내장객체 메모리 영역의 데이터(MemberVO)
-	//한글처리
 	request.setCharacterEncoding("UTF-8");
-%> 
-      
+%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
+<html lang="kr">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-	
-	<style type="text/css">
-		.cls1{
-			font-size: 40px;
-			text-align: center;	
-		}
-	</style>
+<title>ASSA Camping - 나혼자간다</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="ASSA Camping - 나혼자간다">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap_custom.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/common.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/user.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/user_responsive.css">
 </head>
 <body>
-		<h1 class="cls1">회원정보 수정창</h1>
-		
-	<%--
-		회원정보 수정창에서 수정할 회원 정보를 입력하고 수정하기 버튼을 클릭하면
-		<form>태그의 action속성에 설정한 요청주소 /userCon/modUser.do와 수정할 회원 ID를 
-		MemberController서블릿으로 전달해 수정을 요청 하도록 구현함.
-	 --%>	
-	<form action="${contextPath}/userCon/modUser.do?userId=${userInfo.userId}" method="post">
+
+<div class="super_container">
+
+	<!-- Header -->
+	<jsp:include page="../inc/header.jsp" />
+
+	<!-- Menu -->
+	<jsp:include page="../inc/menu.jsp" />
 	
-		<table align="center" >
-			<tr>
-				<td width="200"><p align="right">아이디</p></td>
-				<td width="400">
-					<input type="text" name="userId" value="${userInfo.userId}" disabled>
-				</td>			
-			</tr>
-			<tr>
-				<td width="200"><p align="right">비밀번호</p></td>
-				<td width="400">
-					<input type="password" name="userPw" value="${userInfo.userPw}">
-				</td>	
-			<tr>
-				<td width="200"><p align="right">비밀번호확인</p></td>
-				<td width="400">
-					<input type="password" name="userPw2" value="${userInfo.userPw}">
-				</td>				
-			</tr>
-			<tr>
-				<td width="200"><p align="right">이름</p></td>
-				<td width="400">
-					<input type="text" name="userName" value="${userInfo.userName}">
-				</td>			
-			</tr>					
-			<tr>
-				<td width="200"><p align="right">전화번호</p></td>
-				<td width="400">
-					<input type="text" name="userPhone" value="${userInfo.userPhone}">
-				</td>			
-			</tr>		
-			<tr>
-				<td width="200"><p align="right">이메일</p></td>
-				<td width="400">
-					<input type="email" name="userEmail" value="${userInfo.userEmail}">
-				</td>			
-			</tr>	
-			<tr>
-				<td width="200"><p align="right">우편번호</p></td>
-				<td width="400">
-					<input type="text" name="userZipcode" value="${userInfo.userZipcode}">
-				</td>			
-			</tr>	
-			<tr>
-				<td width="200"><p align="right">주소</p></td>
-				<td width="400">
-					<input type="text" name="userAddress1" value="${userInfo.userAddress1}">
-				</td>			
-			</tr>	
-			<tr>
-				<td width="200"><p align="right">상세주소</p></td>
-				<td width="400">
-					<input type="text" name="userAddress2" value="${userInfo.userAddress2}">
-				</td>			
-			</tr>	
-			<tr>
-				<td width="200"><p align="right">가입일</p></td>
-				<td width="400">
-					<input type="text" name="userDate" value="${userInfo.userDate}" disabled >
-				</td>
-			<tr>
-				<td width="200"><p align="right">회원유형</p></td>
-				<td width="400">
-					<input type="text" name="userUse" value="${userInfo.userUse}" disabled >
-				</td>				
-			</tr>			
-			<tr align="center">
-				<td colspan="2" width="400">
-					<input type="submit" value="수정하기">
-					<input type="reset" value="다시입력">
-				</td>
-			</tr>
-		</table>
-	</form>	
+	<!-- Home -->	
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="home_container">
+						<div class="home_content">
+							<div class="home_title">Join</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- user-->
+	<section class="section-user">
+		<div class="container body-container my-5 py-5">
+			<form class="userForm" action="${contextPath}/userCon/modUser.do?userId=${userInfo.userId}" method="post">
+				<div class="form-group mb-3">
+					<label class="font-weight-bold" for="userId">아이디</label>
+					<input type="text" class="form-control form-control-lg" name="userId" id="userId" value="${userInfo.userId}" disabled>
+				</div>
+				<div class="form-group mb-3">
+					<label class="font-weight-bold" for="userPw">비밀번호</label>
+					<input type="password" class="form-control form-control-lg" name="userPw" id="userPw" value="${userInfo.userPw}" required>
+				</div>
+				<div class="form-group mb-3">					
+					<label class="font-weight-bold" for="userName">이름</label>
+					<input type="text" class="form-control form-control-lg" name="userName" id="userName" value="${userInfo.userName}" required>
+				</div>
+				<div class="form-group mb-3">					
+					<label class="font-weight-bold" for="userPhone">전화번호</label>
+					<input type="text" class="form-control form-control-lg" name="userPhone" id="userPhone" value="${userInfo.userPhone}" required>
+				</div>
+				<div class="form-group mb-3">					
+					<label class="font-weight-bold" for="userEmail">이메일</label>
+					<input type="text" class="form-control form-control-lg" name="userEmail" id="userEmail" value="${userInfo.userEmail}" required>
+				</div>
+				<div class="form-group mb-3">					
+					<label class="font-weight-bold" for="userZipcode">우편번호</label>
+					<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" value="${userInfo.userZipcode}" required>
+				</div>
+				<div class="form-group mb-3">					
+					<label class="font-weight-bold" for="userAddress1">주소</label>
+					<input type="text" class="form-control form-control-lg" name="userAddress1" id="userAddress1" value="${userInfo.userAddress1}" required>
+				</div>
+				<div class="form-group mb-3">					
+					<label class="font-weight-bold" for="userAddress2">상세주소</label>
+					<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" value="${userInfo.userAddress2}" required>
+				</div>
+				<button type="submit" class="btn btn-xl btn-primary btn-block">수정하기</button>
+			</form>
+		</div>
+	</section>
+	
+	<!-- Footer -->
+	<jsp:include page="../inc/footer.jsp" />
+</div>
+
+<script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
+<script src="${contextPath}/js/popper.js"></script>
+<script src="${contextPath}/js/bootstrap.min.js"></script>
+<script src="${contextPath}/plugins/easing/easing.js"></script>
+<script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
+<script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="${contextPath}/js/custom.js"></script>
+<script src="${contextPath}/js/user_custom.js"></script>
 </body>
 </html>
-
 
 
 
