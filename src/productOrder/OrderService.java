@@ -21,4 +21,9 @@ public int orderCount(String userId) {
 	   
 	   dao.addOrder(orderList, vo); 
    }
+   
+   public List<OrderVO> orderList(String userId){
+	   
+	   return dao.orderList(userId);
+   }
 }

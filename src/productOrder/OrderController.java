@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.fabric.xmlrpc.base.Member;
+
 
 import productCart.productCartService;
 import productCart.productCartVO;
+import productList.productListService;
+import productList.productListVO;
 import user.UserDAO;
 import user.UserVO;
 
@@ -91,12 +93,21 @@ public class OrderController extends HttpServlet{
 			   	nextPage="/order/checkout.jsp";
 				
 			}else if(action.equals("/pay.do")) {//상품정보랑 회원배송지
-			     String userId=request.getParameter("userId");
+			      
+			     
+			    
+			     String userId=(String)session.getAttribute("userId");
 			     String userEmail=request.getParameter("userEmail");
 				  System.out.println(userId);
 				  System.out.println(userEmail);
-			      int productPayment=Integer.parseInt(request.getParameter("productPayment"));// 총결제금액
-			      System.out.println(productPayment);
+			    
+			    	 String productPayment1=request.getParameter("productPayment");// 총결제금액
+			    	 
+			    	 int productPayment=Integer.parseInt(productPayment1.split(",")[0]);
+			    	 System.out.println(productPayment);
+			    	
+			    	
+			     
 			      String userZipcode=request.getParameter("userZipcode"); 
 				  System.out.println(userZipcode);
 				  String userAddress1=request.getParameter("userAddress1"); 
@@ -107,9 +118,11 @@ public class OrderController extends HttpServlet{
 				  int  productDelivery=Integer.parseInt(request.getParameter("productDelivery"));
 				   System.out.println(userComment);
 			     System.out.println(productDelivery);
-			     orderList=procartservice.allcartList(userId);
+			     String orderState="구매완료";
+			    
+			
 			     
-				 
+			     vo.setProductPayment(productPayment);
 			     vo.setUserId(userId);
 			     vo.setUserEmail(userEmail);
 				 vo.setUserZipcode(userZipcode);
@@ -118,23 +131,50 @@ public class OrderController extends HttpServlet{
 				 vo.setUserName(userName);
 				 vo.setUserPhone(userPhone);
 				 vo.setUserComment(userComment);
-				 vo.setProductPayment(productPayment);
+				vo.setOrderState(orderState);
 				 vo.setProductDelivery(productDelivery);
-				 
-				 orderservice.addOrder(orderList,vo);
 				
+				 
+	 List<productCartVO> orderList1=(List<productCartVO>)session.getAttribute("orderList");
+				
+				  orderservice.addOrder(orderList1,vo);
+			      
 				 request.setAttribute("userId", userId);
 				 
 				 nextPage="/cartorder/paypro.do";
 				 
 			}else if(action.equals("/paypro.do")) {
-				String userId=request.getParameter("userId");
-				
+				  String userId=(String)session.getAttribute("userId");
+				System.out.println(userId);
 				productCartService cartservice=new productCartService();
 				 
-				cartservice.allDeleteCart(userId);
+				//cartservice.allDeleteCart(userId);
+			       
+				List<OrderVO> orderlist= orderservice.orderList(userId);
+				System.out.println(orderlist);
+				for(int i=0;i<orderlist.size();i++) {
+					OrderVO vo1=orderlist.get(i);
+					
+					int e=vo1.getProductPayment();
+					
+					
+				}
+			     request.setAttribute("orderlist", orderlist);
+			     
+			     session.setAttribute("userId", userId);
+			     
+				nextPage="/order/orderInfo.jsp";
+			}else if(action.equals("/orderDetail.do")) {
 				
-				nextPage="order/orderInfo.jsp";
+				int productNo=Integer.parseInt(request.getParameter("prodcutNo"));
+				
+				productListService listservice= new productListService();
+				
+				productListVO onepro=listservice.getOnePro(productNo);
+				
+				request.setAttribute("onepro", onepro);
+				
+				nextPage="/product/prodcutInfo.jsp";
 			}
 			
 			

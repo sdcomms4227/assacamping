@@ -1,5 +1,6 @@
 package productOrder;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +14,10 @@ import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
 import productCart.productCartVO;
+import productList.productListVO;
+import user.UserVO;
 
-public class OrderDAO {
+public class OrderDAO implements Serializable{
 
 	private DataSource dataFactory;
 	private Connection con;
@@ -56,40 +59,66 @@ public class OrderDAO {
 		return total;
 	}
 	
-	public void addOrder(List<productCartVO> orderList,OrderVO vo) {//주문
-		 orderList=new ArrayList<productCartVO>();
+	public void addOrder(List<productCartVO> orderList,OrderVO vo)  {//주문
+		
+		
 	try {
 			con=db.getConnection();
 	        
 			
-	  for(int i=0 ;i<orderList.size();i++) { 	                                
-		        
-		sql="insert into productorder(productNo,cartQuantity,productDelivery,userZipcode,userAddress1,userAddress2,userId,"
-				                   + "productCategory,userEmail,productName,productCategory,userName,userPhone)"
-        + " (select d.userId,d.productNo,d.productDelivery,d.productCategory, d.productPrice,d.cartQuantity,d.productDelivery,d.productName,u.userZipcode,u.userAddress1,u.userEmail,u.userName,u.userPhone from  productcart as d join user as u on d.userId=u.userId where d.userId='psm211')";
+	  for(int i=0 ;i<orderList.size();i++) { 
 		  
-		  
-		       sql=" insert into productorder(productPayment,userZipcode,userAddress1,userAddress2,productName,userName,userPhone,userComment,orderDate,orderState,productNo)"
-				 +" values(?,?,?,?,?,?,?,?,now(),?,?)";
+		  productCartVO vo1=orderList.get(i);
+				/*
+				 * System.out.println(vo.getProductPayment());
+				 * System.out.println(vo.getUserZipcode());
+				 * System.out.println(vo.getUserAddress1());
+				 * System.out.println(vo.getUserAddress2());
+				 * System.out.println(vo1.getProductName());
+				 * System.out.println(vo.getUserName()); System.out.println(vo.getUserPhone());
+				 * System.out.println(vo.getUserComment());
+				 * System.out.println(vo.getOrderState());
+				 * System.out.println(vo1.getProductNo());
+				 * System.out.println(vo1.getCartQuantity());
+				 * System.out.println(vo.getUserId()); System.out.println(vo.getUserEmail());
+				 * System.out.println( vo.getProductDelivery());
+				 */
+		       sql=" insert into productorder(productPayment,userZipcode,"
+		       		+ "userAddress1,userAddress2,"
+		       		+ "productName,userName,"
+		       		+ "userPhone,userComment,"
+		       		+ "orderDate,orderState,"
+		       		+ "productNo,cartQuantity,"
+		       		+ "userId,userEmail,"
+		       		+ "productDelivery,productPrice,"
+		       		+ "productCategory)"
+				 +" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?)";
 				
 				pstmt=con.prepareStatement(sql);
 				
-				pstmt.executeUpdate();
+				
 				
 				
 				pstmt.setInt(1, vo.getProductPayment());
 				pstmt.setString(2, vo.getUserZipcode());
 				pstmt.setString(3, vo.getUserAddress1());
 				pstmt.setString(4, vo.getUserAddress2());
-				pstmt.setString(5, vo.getProductName());
+				pstmt.setString(5, vo1.getProductName());
 				pstmt.setString(6, vo.getUserName());
 				pstmt.setString(7, vo.getUserPhone());
 				pstmt.setString(8, vo.getUserComment());
 				pstmt.setString(9, vo.getOrderState());
-				pstmt.setInt(10, vo.getProductNo());
+				pstmt.setInt(10, vo1.getProductNo());
+				pstmt.setInt(11, vo1.getCartQuantity());
+				pstmt.setString(12, vo.getUserId());
+				pstmt.setString(13, vo.getUserEmail());
+				pstmt.setInt(14, vo.getProductDelivery());
+				pstmt.setInt(15, vo1.getProductPrice());
+				pstmt.setString(16, vo1.getProductCategory());
 				
 				pstmt.executeUpdate();
-			
+				
+			  System.out.println("insert완료");
 			}
 			
 		} catch (Exception e) {
@@ -100,36 +129,35 @@ public class OrderDAO {
 		
 	}
 	
-	public OrderVO orderList(String userId) {
+	public List<OrderVO> orderList(String userId) {
+		  List list=new ArrayList();
 		try {
 			con=db.getConnection();
 			
-			sql="selsect * from productorder where userId=?";
+			sql="select * from productorder where userId=?";
 			
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				OrderVO vo=new OrderVO( rs.getInt("productNo"),
-						                rs.getInt("cartQuantity"), 
-						                rs.getInt("productDelivery"),
-						                rs.getInt("productPayment"),
-										rs.getString("userZipcode"),
-										rs.getString("userAddress1"), 
-										rs.getString("userAddress2"), 
-									    rs.getString("productName"),
-										rs.getString("userEmail"), 
-										rs.getString("userName"), 
-										rs.getString("userPhone"), 
-										rs.getString("userComment"));
-				
+				OrderVO vo=new OrderVO(rs.getInt("productNo"), rs.getInt("cartQuantity"), rs.getInt("productDelivery"),
+						            rs.getInt("productPayment"), rs.getString("userZipcode"), rs.getString("userAddress1"),
+						             rs.getString("userAddress2"), rs.getString("productName"),
+						       userId, 
+						       rs.getString("productCategory"), rs.getString("orderState"),
+						       rs.getString("userEmail"), rs.getString("userName"), rs.getString("userPhone"), rs.getString("userComment"));
+						
+						
+						
+				 
+				list.add(vo);
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+         System.out.println("orderList에서오류"+e.getMessage());
 		}
 		
-		return null;
+		return list;
 	}
 }
