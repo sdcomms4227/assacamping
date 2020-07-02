@@ -1,8 +1,8 @@
 package board;
 
+import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.Map;
 
 
 public class BoardService {
@@ -13,9 +13,7 @@ public class BoardService {
 		boardDAO = new BoardDAO();
 	}
 
-	//BoardController서블릿 클래스에서 호출 당하는 메소드로
-	//BoardDAO객체의 selectAllBoard()메소드를 호출해 전체 글을 검색해서 가져와서 
-	//BoardController서블릿으로 리턴(반환)해주는 메소드 
+	//전체 글 조회
 	public List<BoardVO> listBoard() {
 		List<BoardVO> boardList = boardDAO.selectAllBoard(); 
 		return boardList;
@@ -45,15 +43,28 @@ public class BoardService {
 	public List<Integer> removeArticle(int boardNo) {
 		List<Integer> boardNoList = boardDAO.selectRemovedArticles(boardNo);
 
-boardDAO.deleteArticle(boardNo);//삭제 요청시 삭제할 글번호 전달
+		boardDAO.deleteArticle(boardNo);
 
-return boardNoList; //삭제할 글 번호 목록을 컨트롤러로 반환합니다.
+return boardNoList; 
 	}
 
 	public int addReply(BoardVO boardVO) {
 		
 		return boardDAO.reInsertNewArticle(boardVO);
+	} 
+
+	public Map listBoard(Map pagingMap) {
+		
+		Map boardMap = new HashMap();
+
+		List<BoardVO> boardList = boardDAO.selectAllArticles(pagingMap);
+		int totArticles = boardDAO.selectToArticles();
+		
+		boardMap.put("boardList", boardList);
+		boardMap.put("totArticles", totArticles);
+		
+		return boardMap;
 	}	
-	
-	
 }
+	
+	

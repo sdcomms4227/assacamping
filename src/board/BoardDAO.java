@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import camping.CampingVO;
 
 
 public class BoardDAO {
@@ -20,8 +23,8 @@ public class BoardDAO {
 	   if(pstmt != null) try { pstmt.close(); } catch(Exception e) {}
 	   if(rs != null) try { rs.close(); } catch(Exception e) {}
     }
+   
 //전체 글 조회 
-//selectAllBoard(각페이지마다 맨위에 첫번째로 보여질 시작 글번호, 한페이지당 보여줄 글개수)   
 public List selectAllBoard(){
 
 	String sql = "";	
@@ -75,19 +78,17 @@ public int getNewBoardNo() {
 		
 		if(rs.next()) {
 			
-			boardNo =(rs.getInt(1) + 1); //가장 큰 글번호에 1를 더한 번호 반환
+			boardNo =(rs.getInt(1) + 1);
 		}else {
 			boardNo = 1;
-		}
-		
-		
+		}		
 		
 	}catch (Exception e) {
 		System.out.println("getNewBoardNo메소드 에서 예외 : " + e);
 	}finally {
 		closeDB();
 	}
-	return boardNo; //아래의 insertNewArticle메소드로 반환
+	return boardNo; 
 	
 	
 }//getNewBoardNo()메소드
@@ -124,7 +125,7 @@ public int insertNewArticle(BoardVO board) {
 	pstmt.setString(7, boardImageFileName);
 	pstmt.setString(8, userId);
 
-	pstmt.executeUpdate();//INSERT	
+	pstmt.executeUpdate();
 	
 			   
 	}catch (Exception e) {
@@ -137,7 +138,7 @@ public int insertNewArticle(BoardVO board) {
 	
 }//insertNewArticle()메소드 
 
-//글번호를 이용해 하나의 글정보 조회후 반환할 메소드
+//글번호를 이용해 하나의 글정보 조회후 반환
 public BoardVO selectArticle(int boardNo) {
 	
 	BoardVO board = new BoardVO();
@@ -164,7 +165,7 @@ public BoardVO selectArticle(int boardNo) {
 		String userId = rs.getString("userId");
 		Timestamp boardWriteDate = rs.getTimestamp("boardWriteDate");	
 		
-		System.out.println(boardReadCount +"조회수");
+		//System.out.println(boardReadCount +"조회수");
 		
 		board.setBoardNo(_boardNo);
 		board.setBoardRe_ref(boardRe_ref);
@@ -220,23 +221,21 @@ public void updateArticle(BoardVO board) {
 				pstmt.setInt(3, boardNo);
 			}
 			
-			pstmt.executeUpdate(); //UPDATE구문 실행
+			pstmt.executeUpdate(); 
 			
-			//자원해제
-			pstmt.close();
-			conn.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			closeDB();
 		}	
 	
     }
 public List<Integer> selectRemovedArticles(int boardNo) {
-	//삭제할 글들의 boardNo를 저장할 용도
+	
 	List<Integer> boardNoList = new ArrayList<Integer>();
 	
 	try {
-		//커넥션풀로 부터 커넥션 얻기(DB연결)
 		conn = dbUtil.DBConnection.getConnection();
 		
 		String sql = "SELECT * FROM board where boardNo = ?";
@@ -259,9 +258,8 @@ public List<Integer> selectRemovedArticles(int boardNo) {
 
 public void deleteArticle(int boardNo) {
 	try {
-		//커넥션풀로부터 커넥션얻기
 		conn = dbUtil.DBConnection.getConnection();
-		//SQL문 만들기 :  삭제 글과 관련된 자식글까지 모두 삭제
+		//SQL문 만들기??? :  삭제 글과 관련된 자식글까지 모두 삭제
 		String sql = "DELETE FROM board ";
 			   sql += "WHERE boardNo=? ;";
 			   
@@ -310,7 +308,6 @@ public int reInsertNewArticle(BoardVO board) {
 		String boardImageFileName = board.getBoardImageFileName();
 		
 		/* re_seq 답글순서 재배치 */
-		//부모글 그룹과 같은 그룹이면서..부모글의 seq값보다 큰 답변글들은 ? seq 값을 1 증가 시킨다
 		String sql = "update board set boardRe_seq = boardRe_seq+1 where boardRe_seq > ?";
 		pstmt= conn.prepareStatement(sql);
 		pstmt.setInt(1, boardRe_seq); //부모글의 글 입력 순서
@@ -323,7 +320,7 @@ public int reInsertNewArticle(BoardVO board) {
 	pstmt = conn.prepareStatement(sql);
 		
 	pstmt.setInt(1, boardNo);
-	pstmt.setInt(2, boardRe_ref); //boardNo 주글번호 기준 == boardRe_ref 그룹번호
+	pstmt.setInt(2, boardRe_ref); 
 	pstmt.setInt(3, boardRe_lev +1); //부모글의 re_lev에 +1을 하여 들여쓰기
 	pstmt.setInt(4, boardRe_seq +1); //부모글의 re_seq에 +1을 하여 답글을 단 순서 정하기
  	pstmt.setString(5, boardTitle);
@@ -341,6 +338,72 @@ public int reInsertNewArticle(BoardVO board) {
 	
 	return boardNo;
    }
+
+public List selectAllArticles(Map pagingMap) {
+	List boardList = new ArrayList();
+	
+	int section = (Integer)pagingMap.get("section");
+	int pageNum = (Integer)pagingMap.get("pageNum"); 
+	int startNum = (section - 1)*100 + (pageNum - 1)*10;
+
+	try {
+		
+		conn = dbUtil.DBConnection.getConnection();
+		
+		String sql = "select * from board order by boardRe_ref desc, boardRe_seq asc"
+					+ " limit ?, 10";
+
+		System.out.println(sql);
+					
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, startNum);
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {			
+			BoardVO board = new BoardVO();
+			
+			 board.setBoardNo(rs.getInt("boardNo"));
+			 board.setBoardRe_ref(rs.getInt("boardRe_ref"));
+			 board.setBoardRe_lev(rs.getInt("boardRe_lev"));
+			 board.setBoardRe_seq(rs.getInt("boardRe_seq"));
+			 board.setBoardTitle(rs.getString("boardTitle"));
+			 board.setBoardContent(rs.getString("boardContent"));
+			 board.setUserId(rs.getString("userId"));
+			 board.setBoardReadCount(rs.getInt("boardReadCount"));
+			 board.setBoardWriteDate(rs.getTimestamp("boardWriteDate"));
+			
+			boardList.add(board);	
+		}		
+			
+	}catch (Exception e) {
+		e.printStackTrace();
+	}finally {
+	 closeDB();
+	}
+	
+	return boardList;
+}//selectAllArticles(Map pagingMap)
+
+
+public int selectToArticles() {
+	try {
+		conn = dbUtil.DBConnection.getConnection();
+		
+		String sql = "select count(boardNo) from board";
+		pstmt = conn.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			return rs.getInt(1);
+		}
+	} catch(Exception e) {
+		System.out.println("selectToArticles 메소드 내부에서 오류 : " + e);
+	} finally {
+		closeDB();
+	}
+	return 0;
+}//selectToArticles() 
 
 
 

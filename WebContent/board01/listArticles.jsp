@@ -3,11 +3,17 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-    
-<%--컨텍스트 주소 얻기 --%>    
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>   
+      
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/> 
+<c:set var="boardList" value="${boardMap.boardList}"/>
+<c:set var="totArticles" value="${boardMap.totArticles}"/>
+<c:set var="section" value="${boardMap.section}"/>
+<c:set var="pageNum" value="${boardMap.pageNum}"/>  
 
-    
+<%
+	request.setCharacterEncoding("UTF-8");
+%> 
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +23,11 @@
 	<style type="text/css">
 		.cls1{ text-decoration: none;}
 		.cls2{ text-align: center; font-size: 30px;}
+		
+		.no-unline{text-decoration: none;}
+		/* 선택된 페이지 번호를 밑줄 없이 빨간색으로 표시 */
+		.sel-page{text-decoration: none; color: red;}		
 	</style>
-
-
 </head>
 <body>
 		<table align="center" border="1" with="80%" >
@@ -30,49 +38,36 @@
 				<td>작성일</td>
 				<td>조회수</td>
 			</tr>
-<c:choose>
-	<%--BoardController.java서블릿으로 부터 전달 받은 
-	    request영역에 boardList속성(키)이름으로 바인딩된 ArryList객체가 저장되어 있지 않다면? --%>
-	<c:when test="${requestScope.boardList == null }">
+	<c:choose>
+		<c:when test="${boardList == null }">
 			<tr height="10">
 				<td colspan="5">
 					<p align="center"><b>등록된 글이 없습니다.</b></p>
 				</td>
 			</tr>
-	</c:when>
+		</c:when>
 	
-	<c:when test="${requestScope.boardList != null}">
-		<%--ArrayList객체의 크기(검색한 글의 갯수(ArticleVO객체의 갯수))만큼 반복하여
-			검색한 글정보(ArticleVO객체)들을 ArrayList배열 내부의 각인덱스 위치로부터 차례대로 꺼내와
-			검색한 글목록을 표시합니다.
-		 --%>
-		<c:forEach var="board" items="${boardList}">
-			<tr align="center">
-				<%--varStatus의 count속성을 이용해 글번호를 1부터 자동으로 표시함 --%>
-				<td width="5%">${board.boardNo}</td>
-				<%--ArticleVO객체의 id변수값 얻어 출력 --%>
-				<td width="10%">${board.userId}</td>
-							
-				<td width="35%" align="left">
-					<%--왼쪽으로 30px만큼 여백을 준 후 글제목을 표시할 목적으로 여백을 줌 --%>
+		<c:when test="${boardList != null}">
+		
+			<c:forEach var="board" items="${boardList}">
+				<tr align="center">
+					<td width="5%">${board.boardNo}</td>			
+					<td width="10%">${board.userId}</td>						
+					<td width="35%" align="left">
 					<span style="padding-right: 30px"></span>  
 					
-					<c:choose>
-						<%--조건 : <forEach>태그 반복시 각글의 level 값이 1보다 크다면? 답글(자식글)이므로.. --%>	
+						<c:choose>
 						<c:when test="${board.boardRe_lev > 0}">
-							<%--다시 내부 <forEach>태그를 이용해 1부터 level값까지 반복하면서 
-							        부모글 밑에 공백으로 들여 쓰기하여 답글(자식글)임을 표시합니다. --%>
 							 <c:forEach begin="1" end="${board.boardRe_lev}" step="1">
 							 	 <span style="padding-left: 20px"></span>
 							 </c:forEach>
-							 <%-- 공백 다음에 자식글을 표시합니다. --%>
+							 <%-- 공백 다음에 자식글을 표시 --%>
 							 <span style="font-size: 12px;">[답글]</span>
-							 <a class="cls1"  
-							 	href="${contextPath}/board/viewArticle.do?boardNo=${board.boardNo}">
-							 	${board.boardTitle}  
-							 </a>
+							 	<a class="cls1"  
+							 		href="${contextPath}/board/viewArticle.do?boardNo=${board.boardNo}">
+							 				${board.boardTitle}  
+							 	</a>
 						</c:when>
-						<%-- 조건 : 이때 level값이 1보다 크지 않으면 부모글이므로 공백 없이 표시함.--%>
 						<c:otherwise>					
 								<a class="cls1"  
 							 	href="${contextPath}/board/viewArticle.do?boardNo=${board.boardNo}">
@@ -80,7 +75,6 @@
 							</a>
 						</c:otherwise>
 					</c:choose>				
-
 				</td>
 				<td width="10%"><fmt:formatDate value="${board.boardWriteDate}"/></td>
 				<td width="10%">${board.boardReadCount}</td>
@@ -88,13 +82,60 @@
 		</c:forEach>
 	</c:when>
 </c:choose>				
-		</table>
-		
-		<%-- 글쓰기 <a>링크를 클릭했을떄.. 글을 작성할수 있는 화면으로 이동시켜줘~ 라는 요청을? 
-		     BoardController서블릿으로 하게됨 --%>
+		</table>	
+	  <div class="cls2">
+			<c:if test="${totArticles != null}">
+				<c:choose>
+					<%--전체 글수가 100보다 클때(검색한 글개수가 100초과인 경우) 페이징번호 표시  --%>
+					<c:when test="${totArticles > 100}">
+						
+						<c:forEach var="page" begin="1" end="10" step="1">
+							<%--섹션값 2부터는 앞 섹션으로 이동할 수 있는 pre문구를 표시 --%>
+							<c:if test="${section > 1 && page=1}">
+								<a href="${contextPath}/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10+1}">
+								&nbsp;pre</a>
+							</c:if>	
+							
+							<a href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10}</a>
+														
+							<%-- 페이지 번호 10 오른쪽에는 다음 섹션으로 이동할 수 있는 next를 표시 --%>
+							<c:if test="${page==10}">
+								<a href="${contextPath}/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}">
+								&nbsp;next</a>
+							</c:if>												
+						</c:forEach>		
+					</c:when>
+					<%--전체 글수가 100개 일때는 ? 첫 번째 section의 10개의 페이지만 표시하면 됩니다. --%>
+					<c:when test="${totArticles ==100}">
+						<c:forEach var="page" begin="1" end="10" step="1">
+							<a href="#">${page}</a>
+						</c:forEach>										
+					</c:when>			
+					<%--전체 글 수가 100개보다 적을때 페이징을 표시함 --%>
+					<c:when test="${totArticles < 100 }">
+													 <%-- 글수가 100개 되지 않으므로  표시되는 페이지는 10개가 되지 않고, 전체 글수를 10으로 나누어 구한 몫에 1을 더한 페이지까지 표시됩니다.--%>
+						<c:forEach var="page" begin="1" end="${totArticles/10+1}" step="1">
+							<c:choose>
+					   <c:when test="${page==pageNum}">		       
+							  <a class="sel-page" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">
+							  ${page}
+							  </a>
+						</c:when>	
+						<c:otherwise>	  	     
+							  <a class="no-unline" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">
+							  ${page}
+							  </a>	
+						</c:otherwise>
+							</c:choose>												
+						</c:forEach>					
+					</c:when>
+				</c:choose>			
+			</c:if>
+			
+		</div>
 		<a class="cls1" href="${contextPath}/board/articleForm.do">
-			<p class="cls2">글쓰기</p>
-		</a>
+		<p class="cls2">글쓰기</p>
+		</a>				
 </body>
 </html>
 
