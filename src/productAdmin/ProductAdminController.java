@@ -53,7 +53,7 @@ public class ProductAdminController extends HttpServlet{
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextPage = "";
 		realPath = request.getServletContext().getRealPath("/files/product");
-		
+				
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		

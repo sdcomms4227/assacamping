@@ -48,13 +48,24 @@
 					</div>
 				</a>
 				<!-- Avatar -->
-				<a href="${contextPath}/user/login.jsp">
-					<div class="avatar">
-						<img src="${contextPath}/images/avatar.svg" alt="">
-					</div>
-				</a>				
+				<c:choose>
+					<c:when test="${userId!=null}">
+						<a href="${contextPath}/userCon/logout.do">
+							<div class="avatar">
+								<img src="${contextPath}/images/avatar.svg" alt="">
+							</div>
+						</a>
+						<h5 class="d-inline-block">${userId}님 로그인중</h5>
+					</c:when>
+					<c:otherwise>
+						<a href="${contextPath}/userCon/login.do">
+							<div class="avatar">
+								<img src="${contextPath}/images/avatar.svg" alt="">
+							</div>
+						</a>
+					</c:otherwise>
+				</c:choose>
 				<c:if test="${userId!=null}">
-					<h5 class="d-inline-block">${userId}님 로그인중</h5>
 				</c:if>
 			</div>
 		</div>

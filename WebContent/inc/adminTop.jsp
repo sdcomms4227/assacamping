@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String uri = request.getRequestURI();
-	String pageCode = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf("."));
-%>
+<%request.setCharacterEncoding("UTF-8");%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="kr">
@@ -15,6 +11,7 @@
 	<meta name="description" content="ASSA Camping - 관리자모드">
 	<meta name="format-detection" content="no">
 	<meta name="format-detection" content="telephone=no, email=no, address=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ASSA Camping - 관리자모드</title>
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/admin.css">
@@ -40,24 +37,24 @@
 		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 			<div class="sidebar-sticky pt-3">
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("admin")) out.print("active");%>" href="${contextPath}/admin/admin.jsp"> <span data-feather="home"></span> Dashboard <span class="sr-only">(current)</span> </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/admin.jsp"> <span data-feather="home"></span> Dashboard <span class="sr-only">(current)</span> </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminUserList")) out.print("active");%>" href="${contextPath}/admin/adminUserList.jsp"> <span data-feather="users"></span> 회원 관리 </a></li>
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminOrderList")) out.print("active");%>" href="${contextPath}/admin/adminOrderList.jsp"> <span data-feather="file"></span> 주문 관리 </a></li>
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminProductList")) out.print("active");%>" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminUserList.jsp"> <span data-feather="users"></span> 회원 관리 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminOrderList.jsp"> <span data-feather="file"></span> 주문 관리 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminQnaList")) out.print("active");%>" href="${contextPath}/admin/adminQnaList.jsp"> <span data-feather="file-text"></span> 상품 문의 </a></li>
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminReviewList")) out.print("active");%>" href="${contextPath}/admin/adminReviewList.jsp"> <span data-feather="file-text"></span> 상품 후기 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminQnaList.jsp"> <span data-feather="file-text"></span> 상품 문의 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminReviewList.jsp"> <span data-feather="file-text"></span> 상품 후기 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminFaqList")) out.print("active");%>" href="${contextPath}/admin/adminFaqList.jsp"> <span data-feather="file-text"></span> 자주하는 질문 </a></li>
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminCampingList")) out.print("active");%>" href="${contextPath}/admin/adminCampingList.jsp"> <span data-feather="file-text"></span> 캠핑정보 </a></li>
-					<li class="nav-item"><a class="nav-link <%if(pageCode.equals("adminEventList")) out.print("active");%>" href="${contextPath}/admin/adminEventList.jsp"> <span data-feather="file-text"></span> 이벤트 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminFaqList.jsp"> <span data-feather="file-text"></span> 자주하는 질문 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminCampingList.jsp"> <span data-feather="file-text"></span> 캠핑정보 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminEventList.jsp"> <span data-feather="file-text"></span> 이벤트 </a></li>
 				</ul>
 				<hr />
 			</div>

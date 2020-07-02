@@ -5,7 +5,9 @@
 <c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
 <c:set var="endNo" value="${beginNo + 9}" />
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
+
 <jsp:include page="../inc/alert.jsp" />
+
 <div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-3 mb-2 mb-lg-0">
 		<h2 class="mb-0">상품 관리</h2>
