@@ -466,13 +466,6 @@ public class CampingController extends HttpServlet {
 			System.out.println("deleteFile()메소드 내부에서 오류 : " + e.toString());
 		}
 	}
-	
-	private void alertMsg(HttpServletResponse response, String msg) throws IOException {
-		PrintWriter pw = response.getWriter();
-		pw.print("<script>");
-		pw.print("alert('" + msg + "');");
-		pw.print("</script>");		
-	}
 }
 
 
