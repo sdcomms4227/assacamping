@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class CommentDAO {
 					num = 1;
 				}
 
-				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentDate, commentRe_ref, commentRe_lev, commentRe_seq)"
+				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_lev, commentRe_seq)"
 						+ "values(?,?,?,?,?,?,now(), 0, 0, 0)";
 
 				pstmt = conn.prepareStatement(sql);
@@ -103,7 +104,7 @@ public class CommentDAO {
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			
+
 			sql = "select * from comment where boardCategoryNo=? and boardNo=? order by commentNo";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardCategoryNo);
@@ -123,7 +124,7 @@ public class CommentDAO {
 				commentVO.setCommentRe_ref(rs.getInt("commentRe_ref"));
 				commentVO.setCommentRe_lev(rs.getInt("commentRe_lev"));
 				commentVO.setCommentRe_seq(rs.getInt("commentRe_seq"));
-				
+
 				commentList.add(commentVO);
 			}
 
@@ -136,6 +137,7 @@ public class CommentDAO {
 		return commentList;
 	} // getCommentList
 
+	
 	public CommentVO getLastComment() {
 		String sql = "";
 		int num = 0;
@@ -156,8 +158,8 @@ public class CommentDAO {
 			pstmt.setInt(1, num);
 
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				CommentVO commentVO = new CommentVO();
 				commentVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
 				commentVO.setBoardNo(rs.getInt("boardNo"));
@@ -165,7 +167,7 @@ public class CommentDAO {
 				commentVO.setCommentWriteDate(rs.getTimestamp("commentWriteDate"));
 				commentVO.setCommentNo(rs.getInt("commentNo"));
 				commentVO.setUserId(rs.getString("userId"));
-				commentVO.setUserName(rs.getString("userName"));	
+				commentVO.setUserName(rs.getString("userName"));
 				commentVO.setCommentRe_ref(rs.getInt("commentRe_ref"));
 				commentVO.setCommentRe_lev(rs.getInt("commentRe_lev"));
 				commentVO.setCommentRe_seq(rs.getInt("commentRe_seq"));
@@ -179,4 +181,33 @@ public class CommentDAO {
 
 		return null;
 	}
+
+	
+	// 댓글 수정
+	public int updateComment(int commentNo, String userId, String updateContent) {
+		String sql = "select userId from comment where commentNo=?";
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, commentNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (userId.equals(rs.getString("userId"))) {
+					sql = "update comment set commentContent=?, commentWriteDate=curdate() where commentNo=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, updateContent);
+					pstmt.setInt(2, commentNo);
+					return pstmt.executeUpdate();
+				}
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			System.out.println("updateComment()메소드 내부에서 예외발생 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return 0;
+	} // updateComment
 }

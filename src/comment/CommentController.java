@@ -58,7 +58,8 @@ public class CommentController extends HttpServlet {
 		System.out.println("action : " + action);
 		String info = null;
 		String nextPage = "";
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		
 		if (action != null) {
 			if (action.equals("/listComment.do")) {
 
@@ -67,32 +68,40 @@ public class CommentController extends HttpServlet {
 					commentObject = (JSONObject) jsonParser.parse(info);
 					int boardCategoryNo = Integer.parseInt((String) commentObject.get("boardCategoryNo"));
 					int boardNo = Integer.parseInt((String) commentObject.get("boardNo"));
+
 					List<CommentVO> commentList = commentService.getCommentList(boardCategoryNo, boardNo);
 					
-
+				
 					if (commentList.size() > 0) {
 						JSONArray jsonArray = new JSONArray();
 						for (int i = 0; i < commentList.size(); i++) {
 							JSONObject returnObject = new JSONObject();
-
+							
 							returnObject.put("commentNo", Integer.toString(commentList.get(i).getCommentNo()));
-							returnObject.put("userId", commentList.get(i).getUserId());
+							returnObject.put("userId",commentList.get(i).getUserId());
 							returnObject.put("userName", commentList.get(i).getUserName());
 							returnObject.put("commentContent", commentList.get(i).getCommentContent());
-							returnObject.put("commentWriteDate", new SimpleDateFormat("yyyy/MM/dd").format(commentList.get(i).getCommentWriteDate()));
+							
+							
+							String formattedDate = sdf.format(commentList.get(i).getCommentWriteDate());
+							returnObject.put("commentWriteDate", formattedDate);
 
 							jsonArray.add(returnObject);
 						}
 						JSONObject result = new JSONObject();
 						result.put("jsonArray", jsonArray);
+						
+//						request.setAttribute("jsonToStr", jsonToStr);
 						response.setContentType("text/html; charset=utf-8");
 						out.print(result.toString());
 						out.flush();
-						out.close();
+						out.close();						
 					}
+
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
+
 
 			} else if (action.equals("/insertComment.do")) {
 
@@ -122,8 +131,6 @@ public class CommentController extends HttpServlet {
 						String returnName = commentVO2.getUserName();
 						String returnContent = commentVO2.getCommentContent();
 						Timestamp returnDate = commentVO2.getCommentWriteDate();
-
-						SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 						String formattedDate = sdf.format(returnDate);
 
 						JSONObject returnObject = new JSONObject();
@@ -131,8 +138,9 @@ public class CommentController extends HttpServlet {
 						returnObject.put("commentNo", returnNo);
 						returnObject.put("userName", returnName);
 						returnObject.put("commentContent", returnContent);
-						returnObject.put("commentDate", formattedDate);
-
+						returnObject.put("commentWriteDate", formattedDate);
+						
+						
 						out.print(returnObject.toString());
 					}
 					return;
@@ -161,9 +169,32 @@ public class CommentController extends HttpServlet {
 				} catch (Exception e) {
 					System.out.println("doHandle() 메소드 deleteComment.do 에서 예외발생 : " + e.toString());
 				}
-
+			} else if (action.equals("/updateComment.do")) {
+				
+				try {
+				
+					info = request.getParameter("commentUpdateInfo");
+					commentObject = (JSONObject) jsonParser.parse(info);
+					
+					int commentNo = Integer.parseInt((String) commentObject.get("commentNo"));
+					String userId = (String) commentObject.get("userId");
+					String updateContent = (String) commentObject.get("updateContent");
+					
+					int result = commentService.updateComment(commentNo, userId, updateContent);
+					
+					if (result == 1) {
+						out.print("success");
+					} else {
+						out.print("fail");
+					}
+					
+				} catch (Exception e) {
+					System.out.println("doHandle() 메소드 updateComment.do 에서 예외발생 : " + e.toString());
+				}
+			} else if (action.equals("/commentReply.do")) {
+				
 			}
-		}
+		} 
 
 		if (nextPage != null && !nextPage.equals("")) {
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);

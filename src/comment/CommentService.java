@@ -19,12 +19,9 @@ public class CommentService {
 		
 	}
 
-	/*
-	 * update는 보류
-	public int updateBoardCategory(BoardCategoryVO boardCategoryVO) {
-		return boardCategoryDAO.updateBoardCategory(boardCategoryVO);
+	public int updateComment(int commentNo, String userId, String updateContent) {
+		return commentDAO.updateComment(commentNo, userId, updateContent);
 	}
-	 */
 	
 	public int deleteComment(int commentNo, String userId) {
 		return commentDAO.deleteComment(commentNo, userId);		
