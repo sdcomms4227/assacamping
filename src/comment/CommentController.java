@@ -62,36 +62,37 @@ public class CommentController extends HttpServlet {
 		if (action != null) {
 			if (action.equals("/listComment.do")) {
 
-				// info = request.getParameter("commentListInfo");
-				// commentObject = (JSONObject) jsonParser.parse(info);
-				// int boardCategoryNo = Integer.parseInt((String)
-				// commentObject.get("boardCategoryNo"));
-				// int boardNo = Integer.parseInt((String) commentObject.get("boardNo"));
-				int boardCategoryNo = 1;
-				int boardNo = 1;
-				List<CommentVO> commentList = commentService.getCommentList(boardCategoryNo, boardNo);
-				String jsonToStr = null;
+				info = request.getParameter("commentListInfo");
+				try {
+					commentObject = (JSONObject) jsonParser.parse(info);
+					int boardCategoryNo = Integer.parseInt((String) commentObject.get("boardCategoryNo"));
+					int boardNo = Integer.parseInt((String) commentObject.get("boardNo"));
+					List<CommentVO> commentList = commentService.getCommentList(boardCategoryNo, boardNo);
+					
 
-				if (commentList.size() > 0) {
-					JSONArray jsonArray = new JSONArray();
-					for (int i = 0; i < commentList.size(); i++) {
-						JSONObject returnObject = new JSONObject();
+					if (commentList.size() > 0) {
+						JSONArray jsonArray = new JSONArray();
+						for (int i = 0; i < commentList.size(); i++) {
+							JSONObject returnObject = new JSONObject();
 
-						returnObject.put("commentNo", commentList.get(i).getCommentNo());
-						returnObject.put("userName", commentList.get(i).getUserName());
-						returnObject.put("commentContent", commentList.get(i).getCommentContent());
-						returnObject.put("commentWriteDate", commentList.get(i).getCommentWriteDate());
+							returnObject.put("commentNo", Integer.toString(commentList.get(i).getCommentNo()));
+							returnObject.put("userId", commentList.get(i).getUserId());
+							returnObject.put("userName", commentList.get(i).getUserName());
+							returnObject.put("commentContent", commentList.get(i).getCommentContent());
+							returnObject.put("commentWriteDate", new SimpleDateFormat("yyyy/MM/dd").format(commentList.get(i).getCommentWriteDate()));
 
-						jsonArray.add(returnObject);
+							jsonArray.add(returnObject);
+						}
+						JSONObject result = new JSONObject();
+						result.put("jsonArray", jsonArray);
+						response.setContentType("text/html; charset=utf-8");
+						out.print(result.toString());
+						out.flush();
+						out.close();
 					}
-					JSONObject result = new JSONObject();
-					result.put("jsonArray", jsonArray);
-					jsonToStr = result.toString();
-//					request.setAttribute("jsonToStr", jsonToStr);
-					response.getWriter().write(jsonToStr);
+				} catch (ParseException e) {
+					e.printStackTrace();
 				}
-
-				nextPage = "/comment.jsp";
 
 			} else if (action.equals("/insertComment.do")) {
 

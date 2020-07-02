@@ -81,52 +81,57 @@
 	</article>
 	
 	<script>
-		//페이지 로딩시 댓글 목록 출력 
+		// 페이지 로딩시 댓글 목록 출력 
 		$(document).ready(function(){
 		    commentList(); 
 		});
 		
+		// 댓글 목록 가져와서 출력
 		function commentList(){
 			var _url = '${contextPath}/comment/listComment.do'; 
-			var _commentListInfo = '{"boardCategoryNo":'+boardCategoryNo+',"boardNo":'+boardNo'}';
-		    $.ajax({
+			var _commentListInfo = '{"boardCategoryNo":"'+${boardCategoryNo}+'","boardNo":"'+${boardNo}+'"}';
+
+			$.ajax({
 		        url : _url,
 		        type : 'post',
-		        dataType : 'json',
 		        data : {commentListInfo : _commentListInfo},
 		        success : function(data){
-		        	alert(data);
-		        	console.log(data);
 		        	var a = '';
-		        	if(data.length > 0) {
-			            $.each(data, function(key, value){
-			            	
-			            	a += '<tr id="comment'+value.commentNo+'">';
-							a += '<td class="d-none d-lg-table-cell align-middle">'+value.userName+'</td>';
-							a += '<td class="text-left align-middle">';
-							a += value.commentContent;
-							if(userId == value.userId){
-								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('+value.commentNo+')">삭제</button>'; 	
-							}
-							a += '<small class="d-block d-lg-none text-right mb-1 text-muted">';
-							a += value.userName +'|'+value.commentWriteDate;
-							a += '</small>';
-							a += '</td>';
-							a += '<td class="d-none d-lg-table-cell text-center align-middle">';
-							a += '<small>'+value.commentWriteDate+'</small>';
-							a += '</td>';	
-							a += '</tr>';
-							
-			            });
-			            
-			            $(".comment-list-table").append(a);	
-		        	} else {
+		        	if(data == null || data == '') {
 		        		a += '<tr id="commentEmpty">';
 		        		a += '<td class="py-5 text-center" colspan="3">';
 						a += '등록된 댓글이 없습니다.</td>';
-						$(".comment-list-table").append(a);
+						$(".comment-list-table").html(a);
+						return;
 		        	}
-		        }
+		        	var jsonInfo = JSON.parse(data);
+			        $.each(jsonInfo, function(index, entry){
+			            $.each(entry, function(key, value){
+			            	var no = value.commentNo;
+			            	var name = value.userName;
+			            	var content = value.commentContent;
+			            	var date = value.commentWriteDate;
+			            	var id = value.userId;
+			            	
+			            	a += '<tr id="comment'+no+'">';
+							a += '<td class="d-none d-lg-table-cell align-middle">'+name+'</td>';
+							a += '<td class="text-left align-middle">';
+							a += content;
+							if('${userId}' == id){
+								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('+no+')">삭제</button>'; 	
+							}
+							a += '</td>';
+							a += '<td class="d-none d-lg-table-cell text-center align-middle">';
+							a += '<small>'+date+'</small>';
+							a += '</td>';	
+							a += '</tr>';
+						    $(".comment-list-table").html(a);	
+			            });
+			        });
+		        },
+		        error : function(){
+					alert("통신에러가 발생했습니다.");	
+				}
 		    });
 		}
 
