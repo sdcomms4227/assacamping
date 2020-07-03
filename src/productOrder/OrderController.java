@@ -92,35 +92,27 @@ public class OrderController extends HttpServlet{
 				
 			   	nextPage="/order/checkout.jsp";
 				
-			}else if(action.equals("/pay.do")) {//상품정보랑 회원배송지
+			}else if(action.equals("/pay.do")) {//상품정보랑 회원배송지 뿌려주는창
 			      
 			     
-			    
+			
 			     String userId=(String)session.getAttribute("userId");
 			     String userEmail=request.getParameter("userEmail");
-				  System.out.println(userId);
-				  System.out.println(userEmail);
-			    
-			    	 String productPayment1=request.getParameter("productPayment");// 총결제금액
-			    	 
-			    	 int productPayment=Integer.parseInt(productPayment1.split(",")[0]);
-			    	 System.out.println(productPayment);
-			    	
-			    	
-			     
-			      String userZipcode=request.getParameter("userZipcode"); 
-				  System.out.println(userZipcode);
-				  String userAddress1=request.getParameter("userAddress1"); 
-				  String userAddress2=request.getParameter("userAddress2"); 
-				  String userName=request.getParameter("userName");
-				  String userPhone=request.getParameter("userPhone");
-				  String userComment=request.getParameter("userComment");
-				  int  productDelivery=Integer.parseInt(request.getParameter("productDelivery"));
-				   System.out.println(userComment);
+			     String productPayment1=request.getParameter("productPayment");// 총결제금액 
+			     int productPayment=Integer.parseInt(productPayment1.split(",")[0]);
+			     System.out.println(productPayment);
+			     String userZipcode=request.getParameter("userZipcode"); 
+				 System.out.println(userZipcode);
+				 String userAddress1=request.getParameter("userAddress1"); 
+				 String userAddress2=request.getParameter("userAddress2"); 
+				 String userName=request.getParameter("userName");
+				 String userPhone=request.getParameter("userPhone");
+				 String userComment=request.getParameter("userComment");
+				 int  productDelivery=Integer.parseInt(request.getParameter("productDelivery"));
+				 System.out.println(userComment);
 			     System.out.println(productDelivery);
 			     String orderState="구매완료";
-			    
-			
+			     int orderNo=orderservice.orderNoCount();
 			     
 			     vo.setProductPayment(productPayment);
 			     vo.setUserId(userId);
@@ -131,39 +123,38 @@ public class OrderController extends HttpServlet{
 				 vo.setUserName(userName);
 				 vo.setUserPhone(userPhone);
 				 vo.setUserComment(userComment);
-				vo.setOrderState(orderState);
+				 vo.setOrderState(orderState);
 				 vo.setProductDelivery(productDelivery);
-				
+				 vo.setOrderNo(orderNo);
 				 
-	 List<productCartVO> orderList1=(List<productCartVO>)session.getAttribute("orderList");
-				
+	            List<productCartVO> orderList1=(List<productCartVO>)session.getAttribute("orderList");
+	              
 				  orderservice.addOrder(orderList1,vo);
-			      
-				 request.setAttribute("userId", userId);
+			    
+				 session.setAttribute("userId", userId); 
+				 session.setAttribute("orderNo", orderNo);
+				 System.out.println(orderNo);
 				 
 				 nextPage="/cartorder/paypro.do";
 				 
-			}else if(action.equals("/paypro.do")) {
-				  String userId=(String)session.getAttribute("userId");
+			}else if(action.equals("/paypro.do")) {//실제 결제가되고 결제확인창으로 넘어감
+				
+				String userId=(String)session.getAttribute("userId");
 				System.out.println(userId);
+				int orderNo=(Integer)session.getAttribute("orderNo");
+				System.out.println(orderNo);
 				productCartService cartservice=new productCartService();
 				 
-				//cartservice.allDeleteCart(userId);
+				//cartservice.allDeleteCart(userId); 
 			       
-				List<OrderVO> orderlist= orderservice.orderList(userId);
-				System.out.println(orderlist);
-				for(int i=0;i<orderlist.size();i++) {
-					OrderVO vo1=orderlist.get(i);
-					
-					int e=vo1.getProductPayment();
-					
-					
-				}
+				List<OrderVO> orderlist= orderservice.orderList(userId,orderNo);
+				
 			     request.setAttribute("orderlist", orderlist);
 			     
 			     session.setAttribute("userId", userId);
 			     
 				nextPage="/order/orderInfo.jsp";
+				
 			}else if(action.equals("/orderDetail.do")) {
 				
 				int productNo=Integer.parseInt(request.getParameter("prodcutNo"));
@@ -175,10 +166,47 @@ public class OrderController extends HttpServlet{
 				request.setAttribute("onepro", onepro);
 				
 				nextPage="/product/prodcutInfo.jsp";
+				
+			}else if(action.equals("/orderList.do")) {
+				
+			    String userId=(String)session.getAttribute("userId");
+				
+			    System.out.println(userId);
+				
+				List<OrderVO> payList=orderservice.payList(userId);
+				List<OrderVO> orderNo=orderservice.orderNo(userId);
+				
+				System.out.println(payList);
+				
+				request.setAttribute("orderNo", orderNo);
+				request.setAttribute("payList", payList);
+				
+				nextPage="/mypage/myOrderList.jsp";
+			}else if(action.equals("/orderInfo.do")) {
+				String userId=(String)session.getAttribute("userId");
+				System.out.println(userId);
+				int orderNo= Integer.parseInt(request.getParameter("orderNo"));
+				System.out.println(orderNo);
+				
+				List<OrderVO> orderInfo=orderservice.orderInfo(userId, orderNo);
+				
+				request.setAttribute("orderInfo", orderInfo);
+				
+				nextPage="/mypage/myOrderInfo.jsp";
+			}else if(action.equals("/orderDelete.do")) {
+			
+				int orderNo=Integer.parseInt(request.getParameter("orderNo"));
+				String userId=(String)session.getAttribute("userId");
+				
+				orderservice.orderDelete(userId, orderNo);
+				 session.setAttribute("userId", userId); 
+				nextPage="/mypage/myOrderList.jsp";
+		
 			}
 			
 			
 			 if(!nextPage.equals("")) {
+				 
 				 
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);

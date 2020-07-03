@@ -39,11 +39,13 @@
 						   <c:when test="${orderlist != null }">
 		                      <c:forEach items="${orderlist}" var="order" begin="0" end="0">
 							<th>총가격</th>
-							<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${order.productPayment}" /></td>
+							<td colspan="3"><fmt:formatNumber type="number" maxFractionDigits="3" value="${order.productPayment}" /></td>
 							</c:forEach>
 							</c:when>
 					  </c:choose>
+					 
 						</tr>
+						
 
 		</table>
 	</form>

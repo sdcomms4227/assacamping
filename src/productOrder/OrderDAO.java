@@ -57,14 +57,14 @@ public class OrderDAO implements Serializable{
 		}
 		
 		return total;
-	}
+	}//orderCount()
+	
 	
 	public void addOrder(List<productCartVO> orderList,OrderVO vo)  {//주문
-		
-		
+        
 	try {
+		
 			con=db.getConnection();
-	        
 			
 	  for(int i=0 ;i<orderList.size();i++) { 
 		  
@@ -91,8 +91,8 @@ public class OrderDAO implements Serializable{
 		       		+ "productNo,cartQuantity,"
 		       		+ "userId,userEmail,"
 		       		+ "productDelivery,productPrice,"
-		       		+ "productCategory)"
-				 +" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?)";
+		       		+ "productCategory,orderNo)"
+				 +" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?)";
 				
 				pstmt=con.prepareStatement(sql);
 				
@@ -115,6 +115,7 @@ public class OrderDAO implements Serializable{
 				pstmt.setInt(14, vo.getProductDelivery());
 				pstmt.setInt(15, vo1.getProductPrice());
 				pstmt.setString(16, vo1.getProductCategory());
+				pstmt.setInt(17, vo.getOrderNo());
 				
 				pstmt.executeUpdate();
 				
@@ -127,26 +128,52 @@ public class OrderDAO implements Serializable{
 			freeResource();
 		}
 		
-	}
+	}//addOrder()
 	
-	public List<OrderVO> orderList(String userId) {
+	public int orderNoCount() {
+		int orderNo=0;
+		try {
+			con=db.getConnection();
+			
+            sql =" select max(orderNo) from productorder";
+			
+			pstmt = con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()){
+				orderNo = rs.getInt(1) + 1;
+			}else{
+				orderNo = 1;
+			}		
+			
+			
+		} catch (Exception e) {
+			System.out.println("orderNoCount에서 오류"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+		
+		return  orderNo;
+	}//orderNoCount
+	
+	public List<OrderVO> orderList(String userId , int orderNo) {//주문내역
 		  List list=new ArrayList();
 		try {
 			con=db.getConnection();
 			
-			sql="select * from productorder where userId=?";
+			sql="select * from productorder where userId=? and orderNo=?";
 			
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, userId);
-			
+			pstmt.setInt(2, orderNo);
 			rs=pstmt.executeQuery();
+			
 			while(rs.next()) {
 				OrderVO vo=new OrderVO(rs.getInt("productNo"), rs.getInt("cartQuantity"), rs.getInt("productDelivery"),
-						            rs.getInt("productPayment"), rs.getString("userZipcode"), rs.getString("userAddress1"),
-						             rs.getString("userAddress2"), rs.getString("productName"),
-						       userId, 
-						       rs.getString("productCategory"), rs.getString("orderState"),
-						       rs.getString("userEmail"), rs.getString("userName"), rs.getString("userPhone"), rs.getString("userComment"));
+						               rs.getInt("productPayment"), rs.getString("userZipcode"), rs.getString("userAddress1"),
+						               rs.getString("userAddress2"), rs.getString("productName"), userId, 
+						               rs.getString("productCategory"), rs.getString("orderState"), rs.getString("userEmail"), 
+						               rs.getString("userName"), rs.getString("userPhone"), rs.getString("userComment"));
 						
 						
 						
@@ -156,8 +183,211 @@ public class OrderDAO implements Serializable{
 			
 		} catch (Exception e) {
          System.out.println("orderList에서오류"+e.getMessage());
+		}finally {
+			freeResource();
 		}
 		
 		return list;
+	}//orderList()
+	
+	
+	public void orderDelete (String userId , int orderNo) {//주문취소
+		try {
+			
+			con=db.getConnection();
+			
+			sql="delete from productorder where userId=?  and orderNo=?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, orderNo);
+			
+			pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			System.out.println("orderDelete에서오류"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+	}//orderDelete()
+	
+	
+	public OrderVO selectOrderState(String userId, int orderNo) {//배송상태 조회
+		 OrderVO vo=new OrderVO();
+		try {
+			con=db.getConnection();
+			
+			sql="select orderState from productorder where userId=? and orderNo=?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, orderNo);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo.setOrderState(rs.getString("orderState"));
+				vo.setOrderNo(rs.getInt("orderNo"));
+				vo.setOrderDate(rs.getDate("orderDate"));
+				vo.setUserName(rs.getString("userName"));
+				
+			}
+		} catch (Exception e) {
+			System.out.println("selectOrderState"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+		return vo;
+	}//selectOrderState()
+	
+	
+	public void updateOrderState(String userId , int orderNo,String orderState) {//배송상태업데이트
+		try {
+			con=db.getConnection();
+			
+			sql="update productorder set orderState=? where userId=? and orderNo=?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, orderState);
+			pstmt.setString(2, userId);
+			pstmt.setInt(3, orderNo);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("updateOrderState"+e.getMessage());
+		}
+	}//updateOrderState()
+	
+	public List<OrderVO> selectAllOrderList(){//관리자 모드에서 주문목록 보여주는거
+		List<OrderVO> list= new ArrayList<OrderVO>();
+		try {
+			con=db.getConnection();
+			
+			sql="select * from productorder";
+			
+			pstmt= con.prepareStatement(sql);
+			
+		   rs=pstmt.executeQuery();
+		
+		   while(rs.next()) {
+			       OrderVO vo = new OrderVO(rs.getInt("productNo"), rs.getInt("cartQuantity"), rs.getInt("productDelivery"), 
+			    		                    rs.getInt("productPayment"),rs.getInt("orderNo"), rs.getString("userZipcode"), 
+			    		                    rs.getString("userAddress1"),  rs.getString("userAddress2"), rs.getString("productName"), 
+			    		                    rs.getString("userId"), rs.getString("productCategory"), rs.getString("orderState"), 
+			    		                    rs.getString("userEmail"),  rs.getString("userName"), rs.getString("userPhone"), 
+			    		                    rs.getString("userComment"), rs.getDate("orderDate"));
+			         	list.add(vo);
+			}
+		} catch (Exception e) {
+			System.out.println("selectAllOrderList에서오류"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+		return list;
+	}//selectAllOrderList
+	
+	public List<OrderVO> payList(String userId){//결제내역
+		List<OrderVO> list=new ArrayList<OrderVO>();
+		try {
+			con=db.getConnection();
+			
+			sql="select * from productorder where userId=? order by orderNo ";
+			
+			pstmt= con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+			       OrderVO vo = new OrderVO();
+			           vo.setOrderDate(rs.getDate("orderDate"));
+			           vo.setProductName(rs.getString("productName"));
+			           vo.setOrderNo(rs.getInt("orderNo"));
+			           vo.setProductPayment(rs.getInt("productPayment"));
+			           vo.setProductDelivery(rs.getInt("productDelivery"));
+			         	list.add(vo);
+			}
+			 
+			 
+		} catch (Exception e) {
+			System.out.println("payList에서 오류"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+		
+		return list;
+	}//payList
+	
+	
+	public List<OrderVO> orderNo(String userId){
+		List<OrderVO> list=new ArrayList<OrderVO>();
+		try {
+			con=db.getConnection();
+			
+			sql="select distinct orderNo from productorder where userId=?";
+			
+			pstmt= con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+			       OrderVO vo = new OrderVO();
+			           
+			           vo.setOrderNo(rs.getInt("orderNo"));
+			           
+			         	list.add(vo);
+			}
+			 
+			 
+		} catch (Exception e) {
+			System.out.println("orderNo에서 오류"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+		
+		return list;
+		
 	}
+	
+	
+	
+	public List<OrderVO> oderInfo(String userId , int orderNo){
+		List<OrderVO> list=new ArrayList<OrderVO>();
+		try {
+			con=db.getConnection();
+			
+			sql="select * from productorder where userId=? and orderNo=?";
+			
+			pstmt= con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, orderNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+			       OrderVO vo = new OrderVO(rs.getInt("productNo"), rs.getInt("cartQuantity"), rs.getInt("productDelivery"), 
+			    		                    rs.getInt("productPayment"),rs.getInt("orderNo"), rs.getString("userZipcode"), 
+			    		                    rs.getString("userAddress1"),  rs.getString("userAddress2"), rs.getString("productName"), 
+			    		                    rs.getString("userId"), rs.getString("productCategory"), rs.getString("orderState"), 
+			    		                    rs.getString("userEmail"),  rs.getString("userName"), rs.getString("userPhone"), 
+			    		                    rs.getString("userComment"), rs.getDate("orderDate"));
+			         	list.add(vo);
+			 
+			}
+			
+		} catch (Exception e) {
+			System.out.println("oderInfo에서 오류"+e.getMessage());
+		}finally {
+			freeResource();
+		}
+		
+		return list;
+		
+	}
+	
 }

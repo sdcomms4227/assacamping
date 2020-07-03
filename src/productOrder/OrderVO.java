@@ -147,6 +147,32 @@ public class OrderVO {
 	public OrderVO() {
 		
 	}
+	public OrderVO(int productNo, int cartQuantity, int productDelivery, int productPayment, int orderNo,
+			String userZipcode, String userAddress1, String userAddress2, String productName, String userId,
+			String productCategory, String orderState, String userEmail, String userName, String userPhone,
+			String userComment, Date orderDate) {
+
+		this.productNo = productNo;
+		this.cartQuantity = cartQuantity;
+		this.productDelivery = productDelivery;
+		this.productPayment = productPayment;
+		this.orderNo = orderNo;
+		this.userZipcode = userZipcode;
+		this.userAddress1 = userAddress1;
+		this.userAddress2 = userAddress2;
+		this.productName = productName;
+		this.userId = userId;
+		this.productCategory = productCategory;
+		this.orderState = orderState;
+		this.userEmail = userEmail;
+		this.userName = userName;
+		this.userPhone = userPhone;
+		this.userComment = userComment;
+		this.orderDate = orderDate;
+	}
+	
+	
+	
 	
 	
 }
