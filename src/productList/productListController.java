@@ -11,8 +11,6 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -82,9 +80,9 @@ public class productListController extends HttpServlet{
 				
 			}else if(action.equals("/getOnePro.do")) {
 
-				int productNO = Integer.parseInt(request.getParameter("productNo"));
+				int productNo = Integer.parseInt(request.getParameter("productNo"));
 				productListVO onePro = new productListVO();
-				onePro = proService.getOnePro(productNO); 
+				onePro = proService.getOnePro(productNo); 
 				
 				request.setAttribute("onePro", onePro);
 				

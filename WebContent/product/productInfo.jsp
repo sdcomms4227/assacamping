@@ -102,7 +102,7 @@
 				
 				<div class="col-lg-7">
 					<div class="product_image">
-						<div class="product_image_large"><img src="${productImage}" alt=""></div>
+						<div class="product_image_large"><img src="${onePro.productImage}" alt=""></div>
 						<div class="product_image_thumbnails d-flex flex-row align-items-start justify-content-start">
 							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_1.jpg)" data-image="${contextPath}/images/product_image_1.jpg"></div>
 							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_2.jpg)" data-image="${contextPath}/images/product_image_2.jpg"></div>
@@ -114,8 +114,8 @@
 				<!-- Product Content -->
 				<div class="col-lg-5">
 					<div class="product_content">
-						<div class="product_name">${productName}</div>
-						<div class="product_price">${productPrice}</div>
+						<div class="product_name">${onePro.productName}</div>
+						<div class="product_price">${onePro.productPrice}</div>
 						<div class="rating rating_4" data-rating="4">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>

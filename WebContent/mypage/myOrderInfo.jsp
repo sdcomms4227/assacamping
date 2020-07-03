@@ -52,7 +52,7 @@
 	</form>
 	<div align="center">
 	<a href="${contextPath}/cartorder/orderDelete.do?orderNo=${orderInfo[0].orderNo}">주문취소</a>
-	<a href="${contextPath}/ }">이전</a>
+	<a href="${contextPath}/index.jsp">홈</a>
 	</div>
 	
 	

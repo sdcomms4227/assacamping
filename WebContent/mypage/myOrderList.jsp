@@ -46,7 +46,7 @@
 	<h2 align="center">주문해주셔서 감사합니다.</h2>
 	<div align="center">
 	<a href="${contextPath}/index.jsp">홈</a>
-	<a href="${contextPath}/ }">마이페이지</a>
+	
 	</div>
 	
 	
