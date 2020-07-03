@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -54,7 +56,7 @@
 	</div>
 
 	<!-- Checkout -->
-<form action="${contextPath}/cartorder/pay.do?userId=psm211" method="post" id="checkout_form">
+<form action="${contextPath}/cartorder/pay.do" method="post" id="checkout_form">
 	<div class="checkout">
 		<div class="container">
 			<div class="row">
@@ -108,8 +110,9 @@
 								<li class="d-flex flex-row align-items-center justify-content-start">
 								<c:choose>
 								<c:when test="${orderList != null}">
+								<c:set  value="${orderList}" scope="session" var="orderList"/>
+								
                                 <c:forEach begin="0" end="0" items="${orderList}" var="order">
-		
 								  <div class="cart_total_title" > ${order.productName} 외 ${ordercount}개</div>
 								<div class="cart_total_price ml-auto">${productTotalPrice}</div>
 										
@@ -132,8 +135,10 @@
 								<li class="d-flex flex-row align-items-start justify-content-start total_row">
 									<div class="cart_total_title">Total</div>
 									<div class="cart_total_price ml-auto">
+									
 									<fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice+totalDelivery}" /></div>
-								    <input type="hidden" name="productPayment"  value="${map.totalPrice+totalDelivery}">
+							    <input type="hidden" name="productPayment"  value="${map.totalPrice+totalDelivery}">
+							    
 								</li>
 								 
 							</ul>

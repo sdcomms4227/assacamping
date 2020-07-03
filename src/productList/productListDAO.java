@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+
 
 
 import dbUtil.DBConnection;
@@ -38,22 +36,22 @@ public class productListDAO {
 		List<productListVO> proList = new ArrayList<productListVO>();
 		
 		try {
-			con =db.getConnection();
+			con = db.getConnection();
 		
 			sql = "select * from productlist";
 			pstmt = con.prepareStatement(sql);
 		
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				productListVO proVO = new productListVO(rs.getInt("productNo"),
+				productListVO proVO = new productListVO(rs.getInt("productNo"), 
 														rs.getInt("productPrice"), 
-														rs.getInt("cartQuantity"), 
 														rs.getInt("productRestQuantity"), 
 														rs.getInt("productDelivery"), 
 														rs.getString("productName"), 
 														rs.getString("productInformation"), 
 														rs.getString("productImage"), 
 														rs.getString("productCategory"));
+						
 						
 						
 		
@@ -87,16 +85,14 @@ public class productListDAO {
 			if(rs.next()) {
 				int _productNo = rs.getInt("productNo");
 				int productPrice = rs.getInt("productPrice");
-				int cartQuantity = rs.getInt("cartQuantity");
 				int productDelivery = rs.getInt("productDelivery");
 				String productName = rs.getString("productName");
 				String productInformation = rs.getString("productInformation");
 				String productImage = rs.getString("productImage");
 				String productCategory = rs.getString("productCategory");
 				
-				onePro.setProductNO(_productNo); 
+				onePro.setProductNo(_productNo); 
 				onePro.setProductPrice(productPrice);
-				onePro.setCartQuantity(cartQuantity);
 				onePro.setProductDelivery(productDelivery);
 				onePro.setProductName(productName);
 				onePro.setProductInformation(productInformation);

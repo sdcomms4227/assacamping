@@ -6,14 +6,12 @@ public class productListVO {
 	
 	   private int productNo; //상품번호
 	   private int productPrice; //상품가격
-	   private int cartQuantity; //상품수량
 	   private int productRestQuantity; //상품재고수량
 	   private int productDelivery; //배송비
 	   private String productName; //상품이름
 	   private String productInformation; //상품설명
 	   private String productImage; //상품이미지
 	   private String productCategory; //상품카테고리
-	   private Date productDate; //상품등록날짜
 
 	   
 	   public productListVO() {
@@ -21,13 +19,11 @@ public class productListVO {
 	}
 
 
-	public productListVO(int productNo, int productPrice, int cartQuantity, int productRestQuantity,
-			int productDelivery, String productName, String productInformation, String productImage,
-			String productCategory) {
-	
+	public productListVO(int productNo, int productPrice, int productRestQuantity, int productDelivery,
+			String productName, String productInformation, String productImage, String productCategory) {
+
 		this.productNo = productNo;
 		this.productPrice = productPrice;
-		this.cartQuantity = cartQuantity;
 		this.productRestQuantity = productRestQuantity;
 		this.productDelivery = productDelivery;
 		this.productName = productName;
@@ -37,13 +33,13 @@ public class productListVO {
 	}
 
 
-	public int getProductNO() {
+	public int getProductNo() {
 		return productNo;
 	}
 
 
-	public void setProductNO(int productNO) {
-		this.productNo = productNO;
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
 	}
 
 
@@ -54,16 +50,6 @@ public class productListVO {
 
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
-	}
-
-
-	public int getCartQuantity() {
-		return cartQuantity;
-	}
-
-
-	public void setCartQuantity(int cartQuantity) {
-		this.cartQuantity = cartQuantity;
 	}
 
 
@@ -126,15 +112,8 @@ public class productListVO {
 		this.productCategory = productCategory;
 	}
 
-
-	public Date getProductDate() {
-		return productDate;
-	}
-
-
-	public void setProductDate(Date productDate) {
-		this.productDate = productDate;
-	}
+	
+	
 	   
 	
 	

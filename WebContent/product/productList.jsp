@@ -258,7 +258,7 @@
 				<tr align="center">
 						</c:if>
 								<td>
-									<a href="${contextPath}/pro/getOnePro.do?proNO=${proList.productNO}">
+									<a href="${contextPath}/pro/getOnePro.do?productNo=${proList.productNo}">
 										<img alt="pro" src="${proList.productImage}" border="0" width="220" height="180">
 									</a>
 									${proList.productName}<br/>
