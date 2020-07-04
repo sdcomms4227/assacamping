@@ -21,4 +21,32 @@ public int orderCount(String userId) {
 	   
 	   dao.addOrder(orderList, vo); 
    }
+   
+   public List<OrderVO> orderList(String userId , int orderNo){
+	   
+	   return dao.orderList(userId,orderNo);
+   }
+   
+   public int orderNoCount() {
+	   
+	   return dao.orderNoCount();
+   }
+   
+   public List<OrderVO> payList(String userId){
+	   
+	   return dao.payList(userId);
+   }
+ public List<OrderVO> orderNo(String userId){
+	   
+	   return dao.orderNo(userId);
+   }
+ 
+ public List<OrderVO> orderInfo(String userId,int orderNo){
+	 return dao.oderInfo(userId, orderNo);
+ }
+ 
+ public void orderDelete(String userId,int orderNo) {
+       dao.orderDelete(userId, orderNo);
+	 
+ }
 }

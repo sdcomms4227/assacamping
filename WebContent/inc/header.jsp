@@ -12,7 +12,7 @@
 				<li><a href="${contextPath}/product/productInfo.jsp">상품 상세보기</a></li>
 
 				<li><a href="${contextPath}/cart/cart.do">장바구니</a></li>
-
+                <li><a href="${contextPath}/cartorder/orderList.do">결제내역</a></li>
 				<li><a href="${contextPath}/cartorder/order.do">주문하기</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">contact</a></li>
 			</ul>

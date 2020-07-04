@@ -207,8 +207,8 @@ function fn_delete() {
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">Shipping-</div>&nbsp;&nbsp;
 								<div class="cart_total_price ml-auto">
-								<fmt:formatNumber type="number" maxFractionDigits="3"  value="${totalDelivery}" />
-							     
+ 								<fmt:formatNumber type="number" maxFractionDigits="3"  value="${totalDelivery}" />
+							    
 								</div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
