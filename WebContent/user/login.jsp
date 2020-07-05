@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ include file="../inc/top.jsp"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -13,12 +8,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap_custom.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/common.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/user.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/user_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap_custom.css">
+<link rel="stylesheet" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/css/common.css">
+<link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/user.css">
+<link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
 <c:if test='${msg=="id"}'>
 	<script type="text/javascript">
 		window.onload = function() {
