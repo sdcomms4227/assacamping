@@ -284,7 +284,6 @@ public class BoardController extends HttpServlet {
 		
 		factory.setSizeThreshold(1024*1024*1);
 		
-
 		factory.setRepository(currentDirPath);
 		
 		ServletFileUpload upload = new ServletFileUpload(factory);

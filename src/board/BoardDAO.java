@@ -370,6 +370,7 @@ public List selectAllArticles(Map pagingMap) {
 			 board.setBoardTitle(rs.getString("boardTitle"));
 			 board.setBoardContent(rs.getString("boardContent"));
 			 board.setUserId(rs.getString("userId"));
+			 board.setBoardImageFileName(rs.getString("boardImageFileName"));
 			 board.setBoardReadCount(rs.getInt("boardReadCount"));
 			 board.setBoardWriteDate(rs.getTimestamp("boardWriteDate"));
 			
