@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -24,6 +23,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import camping.CampingVO;
 import campingCategory.CampingCategoryService;
 import campingCategory.CampingCategoryVO;
 
@@ -32,7 +32,7 @@ import campingCategory.CampingCategoryVO;
 public class CampingAdminController extends HttpServlet {
 	
 	CampingAdminService campingService;
-	CampingAdminVO campingVO;	
+	CampingVO campingVO;	
 	CampingCategoryService campingCategoryService;
 	CampingCategoryVO campingCategoryVO;
 	String realPath = "";
@@ -40,7 +40,7 @@ public class CampingAdminController extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		campingService = new CampingAdminService();
-		campingVO = new CampingAdminVO();
+		campingVO = new CampingVO();
 		campingCategoryService = new CampingCategoryService();
 		campingCategoryVO = new CampingCategoryVO();
 	}
@@ -84,7 +84,7 @@ public class CampingAdminController extends HttpServlet {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/camping/listCamping.jsp";
+			nextPage = "/campingAdmin/listCamping.jsp";
 			
 		}else if(action.equals("/readCamping.do")) {
 
@@ -92,30 +92,30 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingService.readCamping(campingNo);
 
-			campingVO = (CampingAdminVO)campingItemMap.get("campingVO");
+			campingVO = (CampingVO)campingMap.get("campingVO");
 			String campingFileName = campingVO.getCampingFileName();
 
 			if(campingFileName!=null && !campingFileName.equals("")) {
 				String campingFileType = getFileType(campingNo, campingFileName);
-				campingItemMap.put("campingFileType", campingFileType);
+				campingMap.put("campingFileType", campingFileType);
 			}
 			
-			request.setAttribute("campingItemMap", campingItemMap);
+			request.setAttribute("campingMap", campingMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/camping/readCamping.jsp";
+			nextPage = "/campingAdmin/readCamping.jsp";
 			
 		}else if(action.contentEquals("/writeCamping.do")) {
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
 			
-			nextPage = "/camping/writeCamping.jsp";
+			nextPage = "/campingAdmin/writeCamping.jsp";
 			
 		}else if(action.equals("/insertCamping.do")) {
 			
@@ -147,22 +147,22 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingService.readCamping(campingNo);
 			
-			campingVO = (CampingAdminVO)campingItemMap.get("campingVO");
+			campingVO = (CampingVO)campingMap.get("campingVO");
 			String campingFileName = campingVO.getCampingFileName();
 
 			if(campingFileName!=null && !campingFileName.equals("")) {
 				String campingFileType = getFileType(campingNo, campingFileName);
-				campingItemMap.put("campingFileType", campingFileType);
+				campingMap.put("campingFileType", campingFileType);
 			}
 
-			request.setAttribute("campingItemMap", campingItemMap);
+			request.setAttribute("campingMap", campingMap);
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
 			
-			nextPage = "/camping/modifyCamping.jsp";
+			nextPage = "/campingAdmin/modifyCamping.jsp";
 			
 		}else if(action.equals("/updateCamping.do")) {
 
@@ -233,11 +233,11 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingService.readCamping(campingNo);
 			
-			request.setAttribute("campingItemMap", campingItemMap);
+			request.setAttribute("campingMap", campingMap);
 			
-			nextPage = "/camping/replyCamping.jsp";
+			nextPage = "/campingAdmin/replyCamping.jsp";
 			
 		}else if(action.equals("/insertReplyCamping.do")) {
 

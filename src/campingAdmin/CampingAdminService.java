@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import camping.CampingVO;
+
 public class CampingAdminService {
 	
 	CampingAdminDAO campingDAO;
@@ -27,21 +29,21 @@ public class CampingAdminService {
 
 	public Map<String, Object> readCamping(int campingNo) {
 		
-		Map<String, Object> campingItemMap = new HashMap<String, Object>();
+		Map<String, Object> campingMap = new HashMap<String, Object>();
 		
-		campingDAO.incrementCampingReadCount(campingNo);
+		campingDAO.incrementCampingCount(campingNo);
 				
-		CampingAdminVO campingVO = campingDAO.getCampingItem(campingNo);
-		campingItemMap.put("campingVO", campingVO);
+		CampingVO campingVO = campingDAO.getCamping(campingNo);
+		campingMap.put("campingVO", campingVO);
 		
 		int campingCategoryNo = campingVO.getCampingCategoryNo();		
 		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);		
-		campingItemMap.put("campingCategoryName", campingCategoryName);
+		campingMap.put("campingCategoryName", campingCategoryName);
 		
-		return campingItemMap;
+		return campingMap;
 	}
 
-	public int insertCamping(CampingAdminVO campingVO) {
+	public int insertCamping(CampingVO campingVO) {
 
 		int maxNo = campingDAO.getCampingMaxNo();		
 		campingDAO.insertCamping(campingVO, maxNo);		
@@ -49,7 +51,7 @@ public class CampingAdminService {
 		return maxNo;
 	}
 
-	public int updateCamping(CampingAdminVO campingVO, String deleteFile) {		
+	public int updateCamping(CampingVO campingVO, String deleteFile) {		
 		return campingDAO.updateCamping(campingVO, deleteFile);
 	}
 
@@ -57,7 +59,7 @@ public class CampingAdminService {
 		return campingDAO.deleteCamping(campingNo);		
 	}
 
-	public int insertReplyCamping(CampingAdminVO campingVO) {
+	public int insertReplyCamping(CampingVO campingVO) {
 				
 		campingDAO.updateCampingSequence(campingVO);
 

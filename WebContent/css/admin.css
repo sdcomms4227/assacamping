@@ -101,3 +101,14 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+/*
+ * Admin Category 
+*/
+.categoryForm {
+	max-width: 480px;
+	margin: auto;
+}
+.categorySelect {
+	width: 160px;
+}

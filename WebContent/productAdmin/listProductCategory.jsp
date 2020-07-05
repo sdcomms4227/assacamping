@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/adminTop.jsp" %>
-<link rel="stylesheet" href="${contextPath}/css/board.css" />
+<%@ include file="../inc/adminTop.jsp"%>
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-9">
@@ -14,9 +13,9 @@
 <article>
 	<table class="table table-hover text-center">
 		<colgroup>
-			<col style="width:80px"/>
+			<col style="width: 80px" />
 			<col />
-			<col style="width:140px"/>
+			<col style="width: 140px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
@@ -25,7 +24,7 @@
 				<th>관리</th>
 			</tr>
 		</thead>
-		<tbody>				
+		<tbody>
 			<c:choose>
 				<c:when test="${productCategoryList == null}">
 					<tr>
@@ -44,11 +43,11 @@
 						</tr>
 					</c:forEach>
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>
 		</tbody>
 	</table>
 
-	<form action="${contextPath}/proCategory/addProductCategory.do" method="post" name="formProductCategory">
+	<form class="categoryForm" action="${contextPath}/procate/addProductCategory.do" method="post" name="formProductCategory">
 		<input type="hidden" name="productCategoryNo" />
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -65,12 +64,12 @@
 <script>
 	function deleteCategory(productCategoryNo){
 		if(confirm("정말로 삭제하시겠습니까?")){			
-			location.href="${contextPath}/proCategory/deleteProductCategory.do?productCategoryNo=" + productCategoryNo;
+			location.href="${contextPath}/procate/deleteProductCategory.do?productCategoryNo=" + productCategoryNo;
 		}
 	}
 	function updateCategory(productCategoryNo, productCategoryName){
 		form = document.formProductCategory;
-		form.action = "${contextPath}/proCategory/updateProductCategory.do";
+		form.action = "${contextPath}/procate/updateProductCategory.do";
 		form.buttonProductCategory.innerText = "수정하기";
 		form.buttonProductCategory.classList.remove("btn-primary");
 		form.buttonProductCategory.classList.add("btn-warning");
@@ -80,4 +79,4 @@
 	}
 </script>
 
-<%@ include file="../inc/adminBottom.jsp" %>
+<%@ include file="../inc/adminBottom.jsp"%>

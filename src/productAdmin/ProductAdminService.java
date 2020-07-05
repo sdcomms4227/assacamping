@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import product.ProductVO;
+
 public class ProductAdminService {
 	
 	ProductAdminDAO productDAO;
@@ -26,13 +28,13 @@ public class ProductAdminService {
 	}
 
 	public Map<String, Object> readProduct(int productNo) {						
-		return productDAO.getProductItem(productNo);
+		return productDAO.getProduct(productNo);
 	}
 
-	public int insertProduct(ProductAdminVO productAdminVO) {
+	public int insertProduct(ProductVO productVO) {
 		
 		int readNo = 0;
-		int result = productDAO.insertProduct(productAdminVO);
+		int result = productDAO.insertProduct(productVO);
 		if(result>0) {
 			readNo = productDAO.getProductLastNo();
 		}
@@ -40,8 +42,8 @@ public class ProductAdminService {
 		return readNo;
 	}
 
-	public int updateProduct(ProductAdminVO productAdminVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
-		return productDAO.updateProduct(productAdminVO, originalImageNameMap, deleteFileMap);
+	public int updateProduct(ProductVO productVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
+		return productDAO.updateProduct(productVO, originalImageNameMap, deleteFileMap);
 	}
 
 	public int deleteProduct(int productNo) {

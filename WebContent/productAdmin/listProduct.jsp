@@ -4,7 +4,6 @@
 <c:set var="totalCount" value="${productListMap.totalCount}" />
 <c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
 <c:set var="endNo" value="${beginNo + 9}" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
 
 <jsp:include page="../inc/alert.jsp" />
 
@@ -15,7 +14,7 @@
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
 		<form action="${contextPath}/proadm/listProduct.do" class="form-inline justify-content-center">
 			<div class="input-group mb-2 mb-sm-0 mr-sm-2">
-				<select class="form-control form-control-sm" name="searchCategoryNo" onchange="this.form.submit()">
+				<select class="form-control form-control-sm categorySelect" name="searchCategoryNo" onchange="this.form.submit()">
 					<option value="0">전체보기</option>
 					<c:forEach var="category" items="${productCategoryList}">
 						<c:choose>
@@ -39,12 +38,11 @@
 	</div>
 	<div class="col-12 col-lg-3 text-right">
 		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/proadm/writeProduct.do'">상품 등록</button>
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/proCategory/listProductCategory.do'">카테고리 관리</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/procate/listProductCategory.do'">카테고리 관리</button>
 	</div>
 </div>
 
-<!-- Product -->
-<article>
+<article class="product">
 	<table class="table table-hover text-center">
 		<colgroup>
 			<col style="width: 80px" />
@@ -61,7 +59,7 @@
 				<th>번호</th>
 				<th>카테고리</th>
 				<th>이미지</th>
-				<th>이름</th>
+				<th>상품명</th>
 				<th>가격</th>
 				<th>수량</th>
 				<th>등록일</th>
@@ -78,25 +76,21 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="productMap" items="${productList}">
-						<c:set var="productAdminVO" value="${productMap.productAdminVO}" />
+						<c:set var="productVO" value="${productMap.productVO}" />
 						<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
-						<tr onclick="readProduct(${productAdminVO.productNo})" style="cursor: pointer">
-							<td class="align-middle">${productAdminVO.productNo}</td>
+						<fmt:formatNumber var="productFmtPrice" value="${productVO.productPrice}" pattern="#,###" />
+						<fmt:formatDate var="productFmtDate" value="${productVO.productDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<tr onclick="readProduct(${productVO.productNo})" style="cursor: pointer">
+							<td class="align-middle">${productVO.productNo}</td>
 							<td class="align-middle wbka">${productCategoryName}</td>
+							<td class="align-middle"><img src="${contextPath}/files/product/${productVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}" style="height: 40px" /></td>
+							<td class="align-middle text-left">${productVO.productName}</td>
+							<td class="align-middle">${productFmtPrice}</td>
+							<td class="align-middle">${productVO.productQuantity}</td>
+							<td class="align-middle">${productFmtDate}</td>
 							<td class="align-middle">
-								<img src="${contextPath}/files/product/${productAdminVO.productNo}/${productAdminVO.productImageName1}" alt="${productAdminVO.productName}" style="height: 40px" />
-							</td>
-							<td class="align-middle text-left">${productAdminVO.productName}</td>
-							<td class="align-middle">
-								<fmt:formatNumber value="${productAdminVO.productPrice}" pattern="#,###" />
-							</td>
-							<td class="align-middle">${productAdminVO.productQuantity}</td>
-							<td class="align-middle">
-								<fmt:formatDate value="${productAdminVO.productDate}" pattern="yy-MM-dd" />
-							</td>
-							<td class="align-middle">
-								<button type="button" class="btn btn-warning btn-sm" onclick="modifyProduct(${productAdminVO.productNo}, event)">수정</button>
-								<button type="button" class="btn btn-danger btn-sm" onclick="deleteProduct(${productAdminVO.productNo}, event)">삭제</button>
+								<button type="button" class="btn btn-warning btn-sm" onclick="modifyProduct(${productVO.productNo}, event)">수정</button>
+								<button type="button" class="btn btn-danger btn-sm" onclick="deleteProduct(${productVO.productNo}, event)">삭제</button>
 							</td>
 						</tr>
 					</c:forEach>
@@ -133,7 +127,7 @@
 					</c:forEach>
 					<c:if test="${totalCount > endNo*10}">
 						<li class="page-item">
-							<button type="button" class="page-link" onclick="listProduct(${beginNo+10})">이전</button>
+							<button type="button" class="page-link" onclick="listProduct(${beginNo+10})">다음</button>
 						</li>
 					</c:if>
 				</ul>
@@ -141,7 +135,6 @@
 		</div>
 	</c:if>
 </article>
-<!-- //Product -->
 
 <form method="post" name="pagingForm">
 	<input type="hidden" name="pageNo" value="${pageNo}" />
