@@ -20,7 +20,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 
 
-@WebServlet("/pro/*")
+/*@WebServlet("/pro/*")*/
 public class productListController extends HttpServlet{
 	private static String PRO_IMG_REPO = "C:\\product\\product_img";
 	productListDAO proDAO;

@@ -11,6 +11,8 @@
 	6.3 Product Content
 7. Reviews
 8. Review Form
+9. Q&As
+10. Q&A Form
 
 
 ******************************/
@@ -21,7 +23,7 @@
 
 .product
 {
-	padding-top: 94px;
+	/* padding-top: 94px; */
 	padding-bottom: 98px;
 	background: #FFFFFF;
 }
@@ -117,7 +119,6 @@
 	font-size: 30px;
 	font-weight: 600;
 	color: #232323;
-	line-height: 0.75;
 }
 .product_price
 {
@@ -220,7 +221,7 @@
 .product_quantity input
 {
 	display: block;
-	width: 30px;
+	width: 60px;
 	height: 41px;
 	border: none;
 	outline: none;
@@ -231,6 +232,16 @@
 	padding-left: 9px;
 	line-height: 39px;
 	float: left;
+}
+.product_quantity_empty
+{
+	display: inline-block;
+	width: 122px;
+	height: 41px;
+	overflow: hidden;
+	padding-left: 11px;
+	vertical-align: middle;
+	line-height: 41px;
 }
 .quantity_buttons
 {
@@ -540,4 +551,211 @@
 {
 	background: #e0e3e4;
 	color: #232323;
+}
+
+/*********************************
+9. Q&As
+*********************************/
+
+.qnas
+{
+	width: 100%;
+	margin-top: 99px;
+}
+.qnas_title
+{
+	font-family: 'Lucida', serif;
+	font-size: 30px;
+	color: #232323;
+	text-transform: uppercase;
+	line-height: 0.75;
+}
+.qnas_container
+{
+	margin-top: 99px;
+}
+.qna
+{
+	margin-bottom: 62px;
+}
+.qnas_container ul li:last-child
+{
+	margin-bottom: 0;
+}
+.qna_image
+{
+	width: 92px;
+	height: 92px;
+	overflow: hidden;
+	border-radius: 50%;
+	float: left;
+}
+.qna_image img
+{
+	max-width: 100%;
+}
+.qna_content
+{
+	padding-left: 139px;
+}
+.qna_name a
+{
+	font-size: 16px;
+	font-weight: 600;
+	color: #232323;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.qna_name a:hover
+{
+	color: #937c6f;
+}
+.qna_date
+{
+	font-size: 12px;
+	color: #937c6f;
+	margin-top: 3px;
+}
+.qna_rating
+{
+	margin-top: 14px;
+}
+.qna_text
+{
+	margin-top: 28px;
+}
+.qna_text p
+{
+	color: #777777;
+	line-height: 2.14;
+}
+.qna_text p:last-of-type
+{
+	margin-bottom: 0;
+}
+
+/*********************************
+10. Q&A Form
+*********************************/
+
+.qna_form_container
+{
+	width: 100%;
+	margin-top: 99px;
+}
+.qna_form_title
+{
+	font-family: 'Lucida', serif;
+	font-size: 30px;
+	color: #232323;
+	text-transform: uppercase;
+	line-height: 0.75;
+}
+.qna_form_content
+{
+	margin-top: 99px;
+}
+.qna_form
+{
+	width: 100%;
+}
+.qna_form div
+{
+	width: 100%;
+}
+.qna_form_input
+{
+	display: block;
+	width: calc((100% - 60px) / 3);
+	height: 53px;
+	border: solid 1px #b5b5b5;
+	outline: none;
+	padding-left: 22px;
+}
+.qna_form_text
+{
+	width: 100%;
+	height: 53px;
+	border: solid 1px #b5b5b5;
+	outline: none;
+	padding-left: 22px;
+	margin-top: 27px;
+	height: 234px;
+	padding-top: 20px;
+}
+.qna_form_input::-webkit-input-placeholder,
+.qna_form_text
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: #8c8c8c !important;
+}
+.qna_form_input:-moz-placeholder,
+.qna_form_text
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: #8c8c8c !important;
+}
+.qna_form_input::-moz-placeholder,
+.qna_form_text
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: #8c8c8c !important;
+} 
+.qna_form_input:-ms-input-placeholder,
+.qna_form_text
+{ 
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: #8c8c8c !important;
+}
+.qna_form_input::input-placeholder,
+.qna_form_text
+{
+	font-size: 12px !important;
+	font-weight: 400 !important;
+	font-style: italic;
+	color: #8c8c8c !important;
+}
+.qna_form_button
+{
+	width: 179px;
+	height: 46px;
+	border: none;
+	outline: none;
+	background: #937c6f;
+	color: #FFFFFF;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	cursor: pointer;
+	margin-top: 18px;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.qna_form_button:hover
+{
+	background: #e0e3e4;
+	color: #232323;
+}
+
+/*********************************
+10. Custom
+*********************************/
+#info,
+#review,
+#qna {
+	padding-top: 94px;
 }
