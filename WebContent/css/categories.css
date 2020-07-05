@@ -31,7 +31,6 @@
 .product_sorting
 {
 	width: 100%;
-	margin-top: 42px;
 }
 .view
 {
@@ -83,7 +82,6 @@
 	font-size: 14px;
 	font-weight: 400;
 	color: #232323;
-	margin-bottom: 10px;
 }
 .item_sorting > li:last-child
 {
@@ -247,6 +245,18 @@
 	color: #8a8a8a;
 	margin-top: 0px;
 }
+.product_empty
+{
+	margin-top: 6px;
+	font-size: 18px;
+	font-weight: 600;
+	color: #232323;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
 .product_options
 {
 	float: right;
@@ -352,7 +362,7 @@
 .sidebar_left
 {
 	position: absolute;
-	top: 215px;
+	top: 136px;
 	left: -310px;
 	width: 286px;
 	padding-bottom: 98px;
@@ -387,27 +397,12 @@
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
-.sidebar_section:hover
-{
-	border: solid 1px #937c6f;
-}
-.sidebar_section:hover .sidebar_title
-{
-	background: #937c6f;
-	color: #FFFFFF;
-}
-.sidebar_section:hover .sidebar_section_content ul li
-{
-	border-bottom: solid 1px #937c6f;
-}
 .sidebar_section_content
 {
 	width: 100%;
 }
 .sidebar_section_content ul li
 {
-	height: 47px;
-	padding-left: 16px;
 	border-bottom: solid 1px #e0e3e4;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
@@ -424,6 +419,26 @@
 	font-size: 14px;
 	color: #232323;
 	line-height: 47px;
+}
+.sidebar_category_content ul li a {
+	display: block;
+	height: 47px;
+	padding-left: 16px;
+	
+}
+.sidebar_category_content ul:hover li.active a,
+.sidebar_category_content ul:hover li a {
+	font-weight: normal;
+	background-color: #fff;
+	color: #232323;
+}
+.sidebar_category_content ul li.active a,
+.sidebar_category_content ul li:hover a,
+.sidebar_category_content ul:hover li.active:hover a
+{
+	font-weight: bold;
+	background-color: #937c6f;
+	color: #fff;
 }
 .sidebar_color_content
 {
@@ -594,10 +609,6 @@
 {
 	border: none !important;
 }
-.sidebar_options:hover .sidebar_option
-{
-	border-bottom: solid 1px #937c6f;
-}
 .option_image
 {
 	width: 54px;
@@ -630,7 +641,7 @@
 .sidebar_right
 {
 	position: absolute;
-	top: 308px;
+	top: 230px;
 	right: 38px;
 	width: 285px;
 }

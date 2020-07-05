@@ -31,6 +31,10 @@
 	{
 		width: 200px;
 	}
+	.main_nav ul li
+	{
+		margin-right: 56px;
+	}
 }
 
 /************
@@ -45,8 +49,8 @@
 	}
 	.shopping
 	{
-		padding-right: 100px;
-		margin-left: 100px;
+		margin-left: 80px;
+		padding-right: 80px;
 	}
 }
 
@@ -59,7 +63,7 @@
 	.shopping
 	{
 		padding-right: 74px;
-		margin-left: 60px;
+		margin-left: 40px;
 	}
 }
 
@@ -133,34 +137,9 @@
 	{
 		padding-right: 91px;
 	}
-	.home_slider_title
-	{
-		font-size: 56px;
-		height: 76px;
-		line-height: 76px;
-	}
 	.section_title
 	{
 		font-size: 48px;
-	}
-	.promo_col:not(:last-child)
-	{
-		margin-bottom: 60px;
-	}
-	.product_col:not(:last-child)
-	{
-		margin-bottom: 50px;
-	}
-	.extra_promo
-	{
-		width: 100%;
-		height: 616px;
-		float: none;
-	}
-	.extra_promo_1
-	{
-		margin-right: 0px;
-		margin-bottom: 30px;
 	}
 	.footer_nav ul li
 	{
@@ -226,25 +205,12 @@
 	}
 	.shopping
 	{
-		padding-right: 47px;
+		padding-right: 67px;
 		margin-left: 0;
 	}
 	.burger_container
 	{
 		top: calc(50% + 1px);
-	}
-	.home_slider_dots_container,
-	.home_slider_next
-	{
-		display: none !important;
-	}
-	.home_slider_title
-	{
-		font-size: 28px;
-	}
-	.home_slider_subtitle
-	{
-		font-size: 14px;
 	}
 	.menu
 	{
@@ -282,44 +248,6 @@
 	.section_title
 	{
 		font-size: 28px;
-	}
-	.extra
-	{
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.extra_promo_1
-	{
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.extra_promo_2
-	{
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.extra_1_content
-	{
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-	.gallery
-	{
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.gallery_title ul li
-	{
-		display: block;
-		margin-right: 0px;
-	}
-	.gallery_title ul li a
-	{
-		font-size: 24px;
-	}
-	.test_text
-	{
-		font-size: 16px;
 	}
 	.newsletter
 	{

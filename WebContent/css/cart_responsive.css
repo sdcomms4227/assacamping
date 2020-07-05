@@ -27,10 +27,7 @@
 
 @media only screen and (max-width: 1800px)
 {
-	.search
-	{
-		width: 200px;
-	}
+
 }
 
 /************
@@ -39,15 +36,7 @@
 
 @media only screen and (max-width: 1600px)
 {
-	.main_nav
-	{
-		padding-left: 100px;
-	}
-	.shopping
-	{
-		padding-right: 100px;
-		margin-left: 100px;
-	}
+
 }
 
 /************
@@ -56,11 +45,7 @@
 
 @media only screen and (max-width: 1440px)
 {
-	.shopping
-	{
-		padding-right: 74px;
-		margin-left: 60px;
-	}
+
 }
 
 /************
@@ -69,18 +54,7 @@
 
 @media only screen and (max-width: 1380px)
 {
-	.main_nav
-	{
-		padding-left: 60px;
-	}
-	.main_nav ul li
-	{
-		margin-right: 34px;
-	}
-	.header_search
-	{
-		display: none;
-	}
+
 }
 
 /************
@@ -128,18 +102,6 @@
 
 @media only screen and (max-width: 991px)
 {
-	.main_nav
-	{
-		display: none;
-	}
-	.shopping
-	{
-		padding-right: 91px;
-	}
-	.section_title
-	{
-		font-size: 48px;
-	}
 	.cart_product_info,
 	.cart_bar_title_content
 	{
@@ -148,10 +110,6 @@
 	.cart_total
 	{
 		margin-top: 60px;
-	}
-	.footer_nav ul li
-	{
-		margin-right: 30px;
 	}
 }
 
@@ -232,104 +190,6 @@
 @media only screen and (max-width: 575px)
 {
 	p{font-size: 13px;}
-	.home
-	{
-		height: 372px;
-	}
-	.header
-	{
-		height: 70px;
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.logo a
-	{
-		font-size: 24px;
-	}
-	.shopping
-	{
-		padding-right: 47px;
-		margin-left: 0;
-	}
-	.burger_container
-	{
-		top: calc(50% + 1px);
-	}
-	.menu
-	{
-		width: 100%;
-		right: -100%;
-		padding-right: 15px;
-		padding-left: 15px;
-		padding-top: 21px;
-	}
-	.menu .search
-	{
-		margin-bottom: 50px;
-	}
-	.menu .search_input
-	{
-		height: 36px;
-	}
-	.menu_close_container
-	{
-		right: 15px;
-	}
-	.menu .logo
-	{
-		margin-bottom: 35px;
-		margin-right: auto;
-	}
-	.menu.active
-	{
-		right: 0;
-	}
-	.section_subtitle
-	{
-		font-size: 12px;
-	}
-	.section_title
-	{
-		font-size: 28px;
-	}
-	.newsletter
-	{
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.newsletter_button
-	{
-		display: block;
-		position: relative;
-		margin: 0 auto;
-		margin-top: 10px;
-	}
-	.newsletter_text
-	{
-		font-size: 13px;
-	}
-	.footer_logo a
-	{
-		font-size: 48px;
-	}
-	.footer_nav ul li
-	{
-		display: block;
-		margin-right: 0;
-		margin-bottom: 5px;
-	}
-	.footer_nav ul li:last-child
-	{
-		margin-bottom: 0;
-	}
-	.footer_social ul li
-	{
-		margin-right: 29px;
-	}
-	.footer_social ul li a i
-	{
-		font-size: 20px;
-	}
 }
 
 /************
