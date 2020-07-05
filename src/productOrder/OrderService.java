@@ -1,20 +1,52 @@
 package productOrder;
 
 import java.util.List;
+import java.util.Map;
+
+import productCart.productCartVO;
 
 public class OrderService {
 	
-	OrderDAO dao;
+	OrderDAO dao =new OrderDAO();
 	
-	public List<OrderVO> orderList(String userId){
+	
 
-		
-		return dao.orderList(userId);
-		
-	}
-   public int orderCount(String userId) {
+public int orderCount(String userId) {
+	  
+	  return dao.orderCount(userId);
+	  
+	 }
+	
+   public void addOrder(List<productCartVO> orderList,OrderVO vo) {
 	   
-	   return dao.orderCount(userId);
-	   
+	   dao.addOrder(orderList, vo); 
    }
+   
+   public List<OrderVO> orderList(String userId , int orderNo){
+	   
+	   return dao.orderList(userId,orderNo);
+   }
+   
+   public int orderNoCount() {
+	   
+	   return dao.orderNoCount();
+   }
+   
+   public List<OrderVO> payList(String userId){
+	   
+	   return dao.payList(userId);
+   }
+ public List<OrderVO> orderNo(String userId){
+	   
+	   return dao.orderNo(userId);
+   }
+ 
+ public List<OrderVO> orderInfo(String userId,int orderNo){
+	 return dao.oderInfo(userId, orderNo);
+ }
+ 
+ public void orderDelete(String userId,int orderNo) {
+       dao.orderDelete(userId, orderNo);
+	 
+ }
 }

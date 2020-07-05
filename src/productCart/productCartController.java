@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -54,26 +57,35 @@ public class productCartController extends HttpServlet {
 	  	    String nextPage="";
 	  	    request.setCharacterEncoding("UTF-8");
 	  		response.setContentType("text/html;charset=utf-8");
-	  		
+	  		HttpSession session = request.getSession();
 	  		String action = request.getPathInfo();
 	  		System.out.println("action:" + action);
 	  		
 	  		
 	  		try {
 				if(action == null || action.equals("/cart.do")) {
+				
+					String userId=(String)session.getAttribute("userId"); 
 					
-					String userId=request.getParameter("userId"); 
+					
+					
+					System.out.println(userId+"controller");
 					
 					List<productCartVO> list=cartService.allcartList(userId);
+					 
 					
-					
+					 
+					 Map<String, Integer> map=cartService.TotalPrice(userId);
+					 
 					request.setAttribute("list", list);
 					
-					nextPage="order/productCart.jsp";
+					request.setAttribute("map", map);
+					session.setAttribute("userId", userId);
+					nextPage="/order/productCart.jsp";
 					
 				}else if(action.equals("/allDelte.do")) {
 					
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
 					
 					List<Integer> productNoList=cartService.allDeleteCart(userId);
 					
@@ -86,34 +98,61 @@ public class productCartController extends HttpServlet {
 							 FileUtils.deleteDirectory(imgDir);
 						 }			
 					}
-					
+					session.setAttribute("userId", userId);
 					nextPage="/order/productCart.jsp";
 					
 				}else if(action.equals("/update.do")) {
-					String userId=request.getParameter("userId"); 
-					int productNo=Integer.parseInt(request.getParameter("productNo"));
-				    int cartQuantity=Integer.parseInt(request.getParameter("cartQuantity"));
-				    
+					String userId=(String)session.getAttribute("userId"); 
+					
+					String productName=request.getParameter("productName"); 
+					
+					int cartQuantity=Integer.parseInt(request.getParameter("cartQuantity"));
+					
+					int productPrice=Integer.parseInt(request.getParameter("productPrice"));
+					
+					
+				    int productTotalPrice=cartQuantity*productPrice;
+				    System.out.println(userId +"update");
+					System.out.println(productName+"update");
+					System.out.println(cartQuantity+"update");
+					System.out.println(productPrice+"update");
+					System.out.println(productTotalPrice+"update");
+					
+					cartVO.setUserId(userId);
+					cartVO.setProductName(productName);
 				    cartVO.setCartQuantity(cartQuantity);
-				    cartVO.setProductNo(productNo);
-				    cartVO.setUserId(userId);
+				    cartVO.setProductTotalPrice(productTotalPrice);
+				    
+				    
 				    
 				    cartService.update(cartVO);
-				    
-				    nextPage="/order/productCart.jsp";
+				    session.setAttribute("userId", userId);
+				    nextPage="/cart/cart.do";
 				    
 				}else if(action.equals("/allDelete.do")) {
 					
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
 					
-					cartService.allDeleteCart(userId);
+					List<Integer> list=cartService.allDeleteCart(userId);
 					
-					nextPage="/order/productCart.jsp";
-							
-					
+					for(int i=0;i<list.size();i++) {
+						
+						int productNo1=list.get(i);
+						
+						File imgDir = new File(PRO_IMG_REPO + "\\" + productNo1);
+						
+						 if(imgDir.exists()) {
+							 
+							 FileUtils.deleteDirectory(imgDir);
+					}
+						
+				}
+					session.setAttribute("userId", userId);					
+					nextPage="/cart/cart.do";
 				}else if(action.equals("/deleteCart.do")) {
 					
-					String userId=request.getParameter("userId"); 
+					String userId=(String)session.getAttribute("userId"); 
+					
 					int productNo=Integer.parseInt(request.getParameter("productNo"));
 					
 					cartService.deleteCart(userId, productNo);
@@ -129,9 +168,9 @@ public class productCartController extends HttpServlet {
 				
 				PrintWriter pw = response.getWriter();	
 				pw.print("<script>" 
-						+ " alert('��ٱ��� ����');" 
+						+ " alert('상품삭제완료');" 
 						+ " location.href='"
-						+ request.getContextPath() +"/cart/cartlist.do';"
+						+ request.getContextPath() +"/cart/cart.do';"
 						+ "</script>");
 				return;
 		        	
@@ -142,22 +181,28 @@ public class productCartController extends HttpServlet {
 					
 					String productImage = cartMap.get("productImage");
 					String productNo = cartMap.get("productNo");
-					String productPrice = cartMap.get("productPrice");
+					String productPrice1 = cartMap.get("productPrice");
 					String productDelivery=cartMap.get(" productDelivery");
-					String cartQuantity=cartMap.get("cartQuantity");
+					String cartQuantity1=cartMap.get("cartQuantity");
+					int cartQuantity=Integer.parseInt(cartQuantity1);
 					String productName=cartMap.get("productName");
 					String productCategory=cartMap.get("productCategory");
 					String userId=cartMap.get("userId");
+					int productPrice=Integer.parseInt(productPrice1);
+				
+					int productTotalPrice=cartQuantity*productPrice;
 					
 					cartVO=new productCartVO(
-							Integer.parseInt(productNo),
-							Integer.parseInt(productPrice), 
-							Integer.parseInt(cartQuantity),
+							Integer.parseInt(productNo), 
+							productPrice, 
+							cartQuantity, 
 							Integer.parseInt(productDelivery), 
-							productName, 
-							productImage,
-							productCategory, 
+							productTotalPrice, 
+							productName,
+							productImage, 
+							productCategory,
 							userId);
+					
 					
 					cartService.addcart(cartVO);
 					
@@ -169,7 +214,7 @@ public class productCartController extends HttpServlet {
 						srcFile.delete();
 					}
 					PrintWriter pw = response.getWriter();
-					pw.print("<script>" + "  alert('��ٱ��� �߰��߽��ϴ�.');" + " location.href='" + request.getContextPath()
+					pw.print("<script>" + "  alert('삭제 실패');" + " location.href='" + request.getContextPath()
 							+ "/order/productCart.jsp';" + "</script>");
 
 					return;

@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
+<c:set var="userId" value="${request.getSession('userId')}"/>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -17,15 +19,18 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/product_responsive.css">
 	   
 	<script type="text/javascript">
-   		
-   		function fn_order_pro(obj, id){
+
+   		function fn_order_pro(obj, userId){
+
    			var form = document.createElement("form");
    		 	form.setAttribute("method", "post");
    			form.setAttribute("action", url);
 	   	     var IdInput = document.createElement("input");
 	   	     parentNOInput.setAttribute("type","hidden");
-	   	     parentNOInput.setAttribute("name","id");
-	   	     parentNOInput.setAttribute("value", id);
+
+	   	     parentNOInput.setAttribute("name","userId");
+	   	     parentNOInput.setAttribute("value", userId);
+
    		 
    	     form.appendChild(parentNOInput);
    	     document.body.appendChild(form);
@@ -33,7 +38,9 @@
    		}
    		
    		function backToList(obj){
-   			obj.action="{contextPath}/pro/proList.do";
+
+   			obj.action="${contextPath}/pro/proList.do";
+
    			obj.submit();
    		}
    </script>
@@ -95,7 +102,7 @@
 				
 				<div class="col-lg-7">
 					<div class="product_image">
-						<div class="product_image_large"><img src="${productImage}" alt=""></div>
+						<div class="product_image_large"><img src="${onePro.productImage}" alt=""></div>
 						<div class="product_image_thumbnails d-flex flex-row align-items-start justify-content-start">
 							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_1.jpg)" data-image="${contextPath}/images/product_image_1.jpg"></div>
 							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_2.jpg)" data-image="${contextPath}/images/product_image_2.jpg"></div>
@@ -107,8 +114,8 @@
 				<!-- Product Content -->
 				<div class="col-lg-5">
 					<div class="product_content">
-						<div class="product_name">${productName}</div>
-						<div class="product_price">${productPrice}</div>
+						<div class="product_name">${onePro.productName}</div>
+						<div class="product_price">${onePro.productPrice}</div>
 						<div class="rating rating_4" data-rating="4">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
@@ -144,7 +151,7 @@
 							</div>
 						<!-- Product Size -->
 						<div class="product_size_container">
-							<span>Size</span>
+							<!-- <span>Size</span>
 							<div class="product_size">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
 									<li>
@@ -168,9 +175,12 @@
 										<label for="radio_5">XL</label>
 									</li>
 								</ul>
-							</div>
+
+							</div> -->
+							
 						</div>
-						<input type="button" value="주문하기" onClick="fn_order_pro('${contextPath}/cart/addCart.do', ${Session.id})">
+						<input type="button" value="장바구니" onClick="fn_order_pro('${contextPath}/cart/addCart.do', ${userId})">
+
 							<input type=button value="목록보기"  
 							onClick="backToList(this.form)">
 					</div>
