@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -92,17 +91,17 @@ public class CampingController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingService.readCamping(campingNo);
 
-			campingVO = (CampingVO)campingItemMap.get("campingVO");
+			campingVO = (CampingVO)campingMap.get("campingVO");
 			String campingFileName = campingVO.getCampingFileName();
 
 			if(campingFileName!=null && !campingFileName.equals("")) {
 				String campingFileType = getFileType(campingNo, campingFileName);
-				campingItemMap.put("campingFileType", campingFileType);
+				campingMap.put("campingFileType", campingFileType);
 			}
 			
-			request.setAttribute("campingItemMap", campingItemMap);
+			request.setAttribute("campingMap", campingMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
@@ -147,17 +146,17 @@ public class CampingController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingService.readCamping(campingNo);
 			
-			campingVO = (CampingVO)campingItemMap.get("campingVO");
+			campingVO = (CampingVO)campingMap.get("campingVO");
 			String campingFileName = campingVO.getCampingFileName();
 
 			if(campingFileName!=null && !campingFileName.equals("")) {
 				String campingFileType = getFileType(campingNo, campingFileName);
-				campingItemMap.put("campingFileType", campingFileType);
+				campingMap.put("campingFileType", campingFileType);
 			}
 
-			request.setAttribute("campingItemMap", campingItemMap);
+			request.setAttribute("campingMap", campingMap);
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
@@ -233,9 +232,9 @@ public class CampingController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingItemMap = campingService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingService.readCamping(campingNo);
 			
-			request.setAttribute("campingItemMap", campingItemMap);
+			request.setAttribute("campingMap", campingMap);
 			
 			nextPage = "/camping/replyCamping.jsp";
 			
