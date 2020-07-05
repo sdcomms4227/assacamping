@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<c:set var="productNo" value="${productItemMap.productAdminVO.productNo}" />
-<c:set var="productName" value="${productItemMap.productAdminVO.productName}" />
-<c:set var="productInformation" value="${productItemMap.productAdminVO.productInformation}" />
-<c:set var="productPrice" value="${productItemMap.productAdminVO.productPrice}" />
-<c:set var="productImageName1" value="${productItemMap.productAdminVO.productImageName1}" />
-<c:set var="productImageName2" value="${productItemMap.productAdminVO.productImageName2}" />
-<c:set var="productImageName3" value="${productItemMap.productAdminVO.productImageName3}" />
-<c:set var="productDate" value="${productItemMap.productAdminVO.productDate}" />
-<c:set var="productQuantity" value="${productItemMap.productAdminVO.productQuantity}" />
-<c:set var="productCategoryNo" value="${productItemMap.productAdminVO.productCategoryNo}" />
-<c:set var="productCategoryName" value="${productItemMap.productCategoryName}" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
+<c:set var="productNo" value="${productMap.productVO.productNo}" />
+<c:set var="productName" value="${productMap.productVO.productName}" />
+<c:set var="productContent" value="${productMap.productVO.productContent}" />
+<c:set var="productPrice" value="${productMap.productVO.productPrice}" />
+<c:set var="productImageName1" value="${productMap.productVO.productImageName1}" />
+<c:set var="productImageName2" value="${productMap.productVO.productImageName2}" />
+<c:set var="productImageName3" value="${productMap.productVO.productImageName3}" />
+<c:set var="productDate" value="${productMap.productVO.productDate}" />
+<c:set var="productQuantity" value="${productMap.productVO.productQuantity}" />
+<c:set var="productCategoryNo" value="${productMap.productVO.productCategoryNo}" />
+<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -19,8 +18,7 @@
 	</div>
 </div>
 
-<!-- Product -->
-<article>
+<article class="product">
 	<form action="${contextPath}/proadm/updateProduct.do" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="pageNo" value="${pageNo}" />
 		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
@@ -62,7 +60,7 @@
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="productName" class="m-0">이름</label>
+					<label for="productName" class="m-0">상품명</label>
 				</th>
 				<td>
 					<input class="form-control" type="text" name="productName" id="productName" value="${productName}" required />
@@ -90,10 +88,10 @@
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="productInformation" class="m-0">상세정보</label>
+					<label for="productContent" class="m-0">상세정보</label>
 				</th>
 				<td>			
-					<textarea class="form-control" name="productInformation" id="productInformation" cols="40" rows="13" required>${productInformation}</textarea>
+					<textarea class="form-control" name="productContent" id="productContent" cols="40" rows="13" required>${productContent}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -163,53 +161,14 @@
 		</div>
 	</form>
 </article>
-<!-- //Product -->
 
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>
+<script src="${contextPath}/js/lmw-custom-preview.js"></script>
 
 <script>	
 	$(document).ready(function() {
 		bsCustomFileInput.init()
 	});
-
-	function checkFile(obj){
-		if($(obj).parent().siblings(".alert")){
-			if($(obj).val().length > 0){
-				$(obj).parent().siblings(".alert").fadeIn();
-			}else{
-				$(obj).parent().siblings(".alert").hide();
-			}
-		}
-	}
-	
-	function showPreview(obj, allowType){
-		var $preview  = $(obj).parent().siblings(".preview");
-
-		if($preview.length){
-			$preview.remove();
-		}
-		
-		if(obj.files && obj.files[0]){
-			var fileType = obj.files[0].type.split("/")[0];
-			
-			if(fileType=="image"){
-				$preview = $("<div class='preview mt-2' />");
-				$preview.appendTo($(obj).parent().parent());
-				
-				var reader = new FileReader();				
-				reader.readAsDataURL(obj.files[0]);
-				
-				reader.onload = function(ProgressEvent){
-					$preview.css("background-image", "url(" + ProgressEvent.target.result + ")");
-				}
-			}else{
-				if(allowType=="image"){
-					alert("이미지 파일만 첨부하실 수 있습니다.");
-					obj.value = "";
-				}
-			}
-		}
-	}
 </script>
 
 <%@ include file="../inc/adminBottom.jsp" %>

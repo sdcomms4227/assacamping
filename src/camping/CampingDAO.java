@@ -80,9 +80,9 @@ public class CampingDAO {
 				campingVO.setCampingRe_lev(rs.getInt("campingRe_lev"));
 				campingVO.setCampingRe_ref(rs.getInt("campingRe_ref"));
 				campingVO.setCampingRe_seq(rs.getInt("campingRe_seq"));
-				campingVO.setCampingReadCount(rs.getInt("campingReadCount"));
+				campingVO.setCampingCount(rs.getInt("campingCount"));
 				campingVO.setCampingTitle(rs.getString("campingTitle"));
-				campingVO.setCampingWriteDate(rs.getTimestamp("campingWriteDate"));
+				campingVO.setCampingDate(rs.getTimestamp("campingDate"));
 				campingVO.setUserId(rs.getString("userId"));
 				
 				String campingCategoryName = rs.getString("campingCategoryName");
@@ -142,7 +142,7 @@ public class CampingDAO {
 		return 0;		
 	}
 	
-	public CampingVO getCampingItem(int campingNo) {
+	public CampingVO getCamping(int campingNo) {
 		
 		CampingVO campingVO = new CampingVO();
 		
@@ -162,14 +162,14 @@ public class CampingDAO {
 				campingVO.setCampingRe_lev(rs.getInt("campingRe_lev"));
 				campingVO.setCampingRe_ref(rs.getInt("campingRe_ref"));
 				campingVO.setCampingRe_seq(rs.getInt("campingRe_seq"));
-				campingVO.setCampingReadCount(rs.getInt("campingReadCount"));
+				campingVO.setCampingCount(rs.getInt("campingCount"));
 				campingVO.setCampingTitle(rs.getString("campingTitle"));
-				campingVO.setCampingWriteDate(rs.getTimestamp("campingWriteDate"));
+				campingVO.setCampingDate(rs.getTimestamp("campingDate"));
 				campingVO.setUserId(rs.getString("userId"));
 			}			
 			
 		} catch(Exception e) {
-			System.out.println("getCampingItem()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getCamping()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -202,17 +202,17 @@ public class CampingDAO {
 		return campingCategoryName;
 	}
 
-	public int incrementCampingReadCount(int campingNo) {
+	public int incrementCampingCount(int campingNo) {
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			String sql = "update camping set campingReadCount=campingReadCount+1 where campingNo = ?";
+			String sql = "update camping set campingCount=campingCount+1 where campingNo = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, campingNo);
 			
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {
-			System.out.println("incrementCampingReadCount()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("incrementCampingCount()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -250,7 +250,7 @@ public class CampingDAO {
 				
 		try {			
 			conn = dbUtil.DBConnection.getConnection();			
-			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingWriteDate, campingReadCount, campingCategoryNo)"
+			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingDate, campingCount, campingCategoryNo)"
 					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, maxNo);
@@ -357,7 +357,7 @@ public class CampingDAO {
 		
 		try {			
 			conn = dbUtil.DBConnection.getConnection();			
-			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingWriteDate, campingReadCount, campingCategoryNo)"
+			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingDate, campingCount, campingCategoryNo)"
 					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, maxNo);

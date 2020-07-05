@@ -1,25 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<%--JSTL의 core라이브러리, fmt라이브러리 태그들을 사용하기 위한 선언 --%>    
-<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>    
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %>    
-
-<%
-	//MemberController서블릿으로 부터 전달받은 request객체 메모리 영역에는
-	//DB로 부터 검색한 모든 회원정보(ArryList)가 저장되어 있다.
-	
-	//한글처리
-	request.setCharacterEncoding("UTF-8");
-%>
-    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../inc/top.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<style type="text/css">
+<style>
 	.cls1{
 		font-size: 40px;
 		text-align: center;

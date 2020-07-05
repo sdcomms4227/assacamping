@@ -1,12 +1,12 @@
-package productAdmin;
+package product;
 
 import java.sql.Timestamp;
 
-public class ProductAdminVO {
+public class ProductVO {
 	
 	private int productNo;
 	private String productName;
-	private String productInformation;
+	private String productContent;
 	private String productImageName1;
 	private String productImageName2;
 	private String productImageName3;
@@ -14,12 +14,13 @@ public class ProductAdminVO {
 	private Timestamp productDate;
 	private int productQuantity;
 	private int productCategoryNo;
+	private int productRating;
 	
-	public ProductAdminVO() {}
+	public ProductVO() {}
 
-	public ProductAdminVO(String productName, String productInformation, String productImageName1, String productImageName2, String productImageName3, int productPrice, int productQuantity, int productCategoryNo) {
+	public ProductVO(String productName, String productContent, String productImageName1, String productImageName2, String productImageName3, int productPrice, int productQuantity, int productCategoryNo) {
 		this.productName = productName;
-		this.productInformation = productInformation;
+		this.productContent = productContent;
 		this.productImageName1 = productImageName1;
 		this.productImageName2 = productImageName2;
 		this.productImageName3 = productImageName3;
@@ -44,12 +45,12 @@ public class ProductAdminVO {
 		this.productName = productName;
 	}
 
-	public String getProductInformation() {
-		return productInformation;
+	public String getProductContent() {
+		return productContent;
 	}
 
-	public void setProductInformation(String productInformation) {
-		this.productInformation = productInformation;
+	public void setProductContent(String productContent) {
+		this.productContent = productContent;
 	}
 
 	public String getProductImageName1() {
@@ -106,6 +107,14 @@ public class ProductAdminVO {
 
 	public void setProductCategoryNo(int productCategoryNo) {
 		this.productCategoryNo = productCategoryNo;
+	}
+
+	public int getProductRating() {
+		return productRating;
+	}
+
+	public void setProductRating(int productRating) {
+		this.productRating = productRating;
 	}
 	
 }

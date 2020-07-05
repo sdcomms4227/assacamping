@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -8,8 +7,7 @@
 	</div>
 </div>
 
-<!-- Product -->
-<article>
+<article class="product">
 	<form action="${contextPath}/proadm/insertProduct.do" method="post" enctype="multipart/form-data">
 		<table class="table">
 			<colgroup>
@@ -59,10 +57,10 @@
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="productInformation" class="m-0">상세정보</label>
+					<label for="productContent" class="m-0">상세정보</label>
 				</th>
 				<td>			
-					<textarea class="form-control" name="productInformation" id="productInformation" cols="40" rows="13" required></textarea>
+					<textarea class="form-control" name="productContent" id="productContent" cols="40" rows="13" required></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -105,43 +103,14 @@
 		</div>
 	</form>
 </article>
-<!-- //Product -->
 
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>
+<script src="${contextPath}/js/lmw-custom-preview.js"></script>
 
 <script>	
 	$(document).ready(function() {
 		bsCustomFileInput.init()
 	});
-	
-	function showPreview(obj, allowType){
-		var $preview  = $(obj).parent().siblings(".preview");
-
-		if($preview.length){
-			$preview.remove();
-		}
-		
-		if(obj.files && obj.files[0]){
-			var fileType = obj.files[0].type.split("/")[0];
-			
-			if(fileType=="image"){
-				$preview = $("<div class='preview mt-2' />");
-				$preview.appendTo($(obj).parent().parent());
-				
-				var reader = new FileReader();				
-				reader.readAsDataURL(obj.files[0]);
-				
-				reader.onload = function(ProgressEvent){
-					$preview.css("background-image", "url(" + ProgressEvent.target.result + ")");
-				}
-			}else{
-				if(allowType=="image"){
-					alert("이미지 파일만 첨부하실 수 있습니다.");
-					obj.value = "";
-				}
-			}
-		}
-	}
 </script>
 
 <%@ include file="../inc/adminBottom.jsp" %>

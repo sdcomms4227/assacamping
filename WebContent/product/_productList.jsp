@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
+<%@ include file="../inc/top.jsp"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -12,12 +8,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/categories.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/categories_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap_custom.css">
+<link rel="stylesheet" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" href="${contextPath}/css/common.css">
+<link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/categories.css">
+<link rel="stylesheet" href="${contextPath}/css/categories_responsive.css">
 </head>
 <body>
 
@@ -357,6 +356,7 @@
 <script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
 <script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/categories_custom.js"></script>
 </body>
 </html>

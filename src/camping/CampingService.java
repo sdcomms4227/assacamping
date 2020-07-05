@@ -27,18 +27,18 @@ public class CampingService {
 
 	public Map<String, Object> readCamping(int campingNo) {
 		
-		Map<String, Object> campingItemMap = new HashMap<String, Object>();
+		Map<String, Object> campingMap = new HashMap<String, Object>();
 		
-		campingDAO.incrementCampingReadCount(campingNo);
+		campingDAO.incrementCampingCount(campingNo);
 				
-		CampingVO campingVO = campingDAO.getCampingItem(campingNo);
-		campingItemMap.put("campingVO", campingVO);
+		CampingVO campingVO = campingDAO.getCamping(campingNo);
+		campingMap.put("campingVO", campingVO);
 		
 		int campingCategoryNo = campingVO.getCampingCategoryNo();		
 		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);		
-		campingItemMap.put("campingCategoryName", campingCategoryName);
+		campingMap.put("campingCategoryName", campingCategoryName);
 		
-		return campingItemMap;
+		return campingMap;
 	}
 
 	public int insertCamping(CampingVO campingVO) {

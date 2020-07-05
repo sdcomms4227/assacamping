@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
- <c:set var="map" value="${map}"/>
+<%@ include file="../inc/top.jsp"%>
+<c:set var="map" value="${map}"/>
 <c:set var="totalDelivery" value="${map.totalDelivery}"/>
- <c:set var="userId" value="${sessionScope.userId}"/>
-<% request.setCharacterEncoding("UTF-8");%>
+<c:set var="userId" value="${sessionScope.userId}"/>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -15,33 +11,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/cart.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/cart_responsive.css">
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap_custom.css">
+<link rel="stylesheet" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/css/common.css">
+<link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/cart.css">
+<link rel="stylesheet" href="${contextPath}/css/cart_responsive.css">
 
-<script type="text/javascript">
-
-function fn_update(){
-	
-	var cartQuantity = $("#quantity_input").val();
-	var productName = $("#productName").val();
-	var userId = $("#userId").val();
-	var productPrice= $("#productPrice").val();
-	
-	document.update.action="${contextPath}/cart/update.do?userId="+userId+"&cartQuantity="+cartQuantity+"&productName="+productName+"&productPrice="+productPrice ;
-    
-	document.update.submit();
-    
-    }
-
-
-function fn_delete() {
-	var userId=$("#userId").val();
-	location.href="${contextPath}/cart/allDelte.do?userId="+userId;
-}
-</script>
 </head>
 <body>
 
@@ -226,84 +203,10 @@ function fn_delete() {
 	</div>
        </c:when>
 	</c:choose>
-	
+
 	<!-- Newsletter -->
-
-	<div class="newsletter">
-		<div class="newsletter_content">
-			<div class="newsletter_image parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart_nl.jpg" data-speed="0.8"></div>
-			<div class="container">
-				<div class="row options">
-
-					<!-- Options Item -->
-					<div class="col-lg-3">
-						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_1.png" alt=""></div>
-							<div class="option_content">
-								<div class="option_title">30 Days Returns</div>
-								<div class="option_subtitle">No questions asked</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Options Item -->
-					<div class="col-lg-3">
-						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_2.png" alt=""></div>
-							<div class="option_content">
-								<div class="option_title">Free Delivery</div>
-								<div class="option_subtitle">On all orders</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Options Item -->
-					<div class="col-lg-3">
-						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_3.png" alt=""></div>
-							<div class="option_content">
-								<div class="option_title">Secure Payments</div>
-								<div class="option_subtitle">No need to worry</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Options Item -->
-					<div class="col-lg-3">
-						<div class="options_item d-flex flex-row align-items-center justify-content-start">
-							<div class="option_image"><img src="${contextPath}/images/option_4.png" alt=""></div>
-							<div class="option_content">
-								<div class="option_title">24/7 Support</div>
-								<div class="option_subtitle">Just call us</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="row newsletter_row">
-					<div class="col">
-						<div class="section_title_container text-center">
-							<div class="section_subtitle">only the best</div>
-							<div class="section_title">subscribe for a 20% discount</div>
-						</div>
-					</div>
-				</div>
-				<div class="row newsletter_container">
-					<div class="col-lg-10 offset-lg-1">
-						<div class="newsletter_form_container">
-							<form action="#">
-								<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
-								<button type="submit" class="newsletter_button">subscribe</button>
-							</form>
-						</div>
-						<div class="newsletter_text">Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestib ulum ultrices nulla. Aliquam egestas tempor leo.</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+	<jsp:include page="../inc/newsletter.jsp" />
+	
 	<!-- Footer -->
 	<jsp:include page="../inc/footer.jsp" />
 	
@@ -314,6 +217,28 @@ function fn_delete() {
 <script src="${contextPath}/js/bootstrap.min.js"></script>
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/cart_custom.js"></script>
+
+<script>
+	function fn_update() {
+		var cartQuantity = $("#quantity_input").val();
+		var productName = $("#productName").val();
+		var userId = $("#userId").val();
+		var productPrice = $("#productPrice").val();
+
+		document.update.action = "${contextPath}/cart/update.do?userId="
+				+ userId + "&cartQuantity=" + cartQuantity + "&productName="
+				+ productName + "&productPrice=" + productPrice;
+
+		document.update.submit();
+	}
+
+	function fn_delete() {
+		var userId = $("#userId").val();
+		location.href = "${contextPath}/cart/allDelte.do?userId=" + userId;
+	}
+</script>
+
 </body>
 </html>

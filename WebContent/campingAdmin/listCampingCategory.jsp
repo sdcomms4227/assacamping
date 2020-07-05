@@ -1,22 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/adminTop.jsp" %>
-<link rel="stylesheet" href="${contextPath}/css/board.css" />
+<%@ include file="../inc/adminTop.jsp"%>
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-9">
 		<h2 class="mb-0">캠핑정보 카테고리</h2>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/admin/adminCampingList.jsp'">캠핑정보</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campadm/listCamping.do'">캠핑정보</button>
 	</div>
 </div>
 
 <article>
 	<table class="table table-hover text-center">
 		<colgroup>
-			<col style="width:80px"/>
+			<col style="width: 80px" />
 			<col />
-			<col style="width:140px"/>
+			<col style="width: 140px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
@@ -25,11 +24,11 @@
 				<th>관리</th>
 			</tr>
 		</thead>
-		<tbody>				
+		<tbody>
 			<c:choose>
 				<c:when test="${campingCategoryList == null}">
 					<tr>
-						<td class="empty" colspan="3">등록된 상품 카테고리가 없습니다.</td>
+						<td class="empty" colspan="3">등록된 캠핑정보 카테고리가 없습니다.</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
@@ -44,11 +43,11 @@
 						</tr>
 					</c:forEach>
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>
 		</tbody>
 	</table>
 
-	<form action="${contextPath}/campCategory/addCampingCategory.do" method="post" name="formCampingCategory">
+	<form class="categoryForm" action="${contextPath}/campcate/addCampingCategory.do" method="post" name="formCampingCategory">
 		<input type="hidden" name="campingCategoryNo" />
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -65,12 +64,12 @@
 <script>
 	function deleteCategory(campingCategoryNo){
 		if(confirm("정말로 삭제하시겠습니까?")){			
-			location.href="${contextPath}/campCategory/deleteCampingCategory.do?campingCategoryNo=" + campingCategoryNo;
+			location.href="${contextPath}/campcate/deleteCampingCategory.do?campingCategoryNo=" + campingCategoryNo;
 		}
 	}
 	function updateCategory(campingCategoryNo, campingCategoryName){
 		form = document.formCampingCategory;
-		form.action = "${contextPath}/campCategory/updateCampingCategory.do";
+		form.action = "${contextPath}/campcate/updateCampingCategory.do";
 		form.buttonCampingCategory.innerText = "수정하기";
 		form.buttonCampingCategory.classList.remove("btn-primary");
 		form.buttonCampingCategory.classList.add("btn-warning");
@@ -80,4 +79,4 @@
 	}
 </script>
 
-<%@ include file="../inc/adminBottom.jsp" %>
+<%@ include file="../inc/adminBottom.jsp"%>

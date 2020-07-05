@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import product.ProductVO;
+
 public class ProductAdminDAO {
 	
 	private Connection conn;
@@ -71,29 +73,30 @@ public class ProductAdminDAO {
 			
 			while(rs.next()) {
 				Map<String, Object> productMap = new HashMap<String, Object>();
-				ProductAdminVO productAdminVO = new ProductAdminVO();
+				ProductVO productVO = new ProductVO();
 				
-				productAdminVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
-				productAdminVO.setProductDate(rs.getTimestamp("productDate"));
-				productAdminVO.setProductImageName1(rs.getString("productImageName1"));
-				productAdminVO.setProductImageName2(rs.getString("productImageName2"));
-				productAdminVO.setProductImageName3(rs.getString("productImageName3"));
-				productAdminVO.setProductInformation(rs.getString("productInformation"));
-				productAdminVO.setProductName(rs.getString("productName"));
-				productAdminVO.setProductNo(rs.getInt("productNo"));
-				productAdminVO.setProductPrice(rs.getInt("productPrice"));
-				productAdminVO.setProductQuantity(rs.getInt("productQuantity"));
+				productVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
+				productVO.setProductContent(rs.getString("productContent"));
+				productVO.setProductDate(rs.getTimestamp("productDate"));
+				productVO.setProductImageName1(rs.getString("productImageName1"));
+				productVO.setProductImageName2(rs.getString("productImageName2"));
+				productVO.setProductImageName3(rs.getString("productImageName3"));
+				productVO.setProductName(rs.getString("productName"));
+				productVO.setProductNo(rs.getInt("productNo"));
+				productVO.setProductPrice(rs.getInt("productPrice"));
+				productVO.setProductQuantity(rs.getInt("productQuantity"));
+				productVO.setProductRating(rs.getInt("productRating"));
 				
 				String productCategoryName = rs.getString("productCategoryName");
 				
-				productMap.put("productAdminVO", productAdminVO);
+				productMap.put("productVO", productVO);
 				productMap.put("productCategoryName", productCategoryName);
 								
 				productList.add(productMap);
 			}			
 			
 		} catch(Exception e) {
-			System.out.println("getProductList(Map)메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getProductList()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -141,10 +144,10 @@ public class ProductAdminDAO {
 		return 0;		
 	}
 	
-	public Map<String, Object> getProductItem(int productNo) {
+	public Map<String, Object> getProduct(int productNo) {
 		
 		Map<String, Object> productMap = new HashMap<String, Object>();
-		ProductAdminVO productAdminVO = new ProductAdminVO();
+		ProductVO productVO = new ProductVO();
 		String productCategoryName = "";
 		
 		try {
@@ -154,30 +157,33 @@ public class ProductAdminDAO {
 					+ " join productCategory ct"
 					+ " on pr.productCategoryNo = ct.productCategoryNo"
 					+ " where pr.productNo = ?";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productNo);
 			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				productAdminVO.setProductNo(rs.getInt("productNo"));
-				productAdminVO.setProductName(rs.getString("productName"));
-				productAdminVO.setProductInformation(rs.getString("productInformation"));
-				productAdminVO.setProductImageName1(rs.getString("productImageName1"));
-				productAdminVO.setProductImageName2(rs.getString("productImageName2"));
-				productAdminVO.setProductImageName3(rs.getString("productImageName3"));
-				productAdminVO.setProductPrice(rs.getInt("productPrice"));
-				productAdminVO.setProductQuantity(rs.getInt("productQuantity"));
-				productAdminVO.setProductDate(rs.getTimestamp("productDate"));
-				productAdminVO.setProductCategoryNo(rs.getInt("productCategoryNo"));				
+				productVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
+				productVO.setProductContent(rs.getString("productContent"));
+				productVO.setProductDate(rs.getTimestamp("productDate"));
+				productVO.setProductImageName1(rs.getString("productImageName1"));
+				productVO.setProductImageName2(rs.getString("productImageName2"));
+				productVO.setProductImageName3(rs.getString("productImageName3"));
+				productVO.setProductName(rs.getString("productName"));
+				productVO.setProductNo(rs.getInt("productNo"));
+				productVO.setProductPrice(rs.getInt("productPrice"));
+				productVO.setProductQuantity(rs.getInt("productQuantity"));
+				productVO.setProductRating(rs.getInt("productRating"));
+							
 				productCategoryName = rs.getString("productCategoryName");
 			
-				productMap.put("productAdminVO", productAdminVO);
+				productMap.put("productVO", productVO);
 				productMap.put("productCategoryName", productCategoryName);
 			}
 			
 		} catch(Exception e) {
-			System.out.println("getProductItem()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getProduct()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -211,21 +217,22 @@ public class ProductAdminDAO {
 		return lastNo;
 	}
 	
-	public int insertProduct(ProductAdminVO productAdminVO) {
+	public int insertProduct(ProductVO productVO) {
 				
 		try {			
 			conn = dbUtil.DBConnection.getConnection();			
-			String sql = "insert into product(productName, productInformation, productImageName1, productImageName2, productImageName3, productPrice, productQuantity, productCategoryNo)"
+			String sql = "insert into product(productName, productContent, productImageName1, productImageName2, productImageName3, productPrice, productQuantity, productCategoryNo)"
 					+ "values(?,?,?,?,?,?,?,?)";
+			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productAdminVO.getProductName());
-			pstmt.setString(2, productAdminVO.getProductInformation());
-			pstmt.setString(3, productAdminVO.getProductImageName1());
-			pstmt.setString(4, productAdminVO.getProductImageName2());
-			pstmt.setString(5, productAdminVO.getProductImageName3());
-			pstmt.setInt(6, productAdminVO.getProductPrice());
-			pstmt.setInt(7, productAdminVO.getProductQuantity());
-			pstmt.setInt(8, productAdminVO.getProductCategoryNo());
+			pstmt.setString(1, productVO.getProductName());
+			pstmt.setString(2, productVO.getProductContent());
+			pstmt.setString(3, productVO.getProductImageName1());
+			pstmt.setString(4, productVO.getProductImageName2());
+			pstmt.setString(5, productVO.getProductImageName3());
+			pstmt.setInt(6, productVO.getProductPrice());
+			pstmt.setInt(7, productVO.getProductQuantity());
+			pstmt.setInt(8, productVO.getProductCategoryNo());
 			
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {
@@ -237,7 +244,7 @@ public class ProductAdminDAO {
 		return 0;
 	}
 
-	public int updateProduct(ProductAdminVO productAdminVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
+	public int updateProduct(ProductVO productVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
 		
 		String productImageName1 = originalImageNameMap.get("originalImageName1");
 		String productImageName2 = originalImageNameMap.get("originalImageName2");
@@ -250,29 +257,29 @@ public class ProductAdminDAO {
 			productImageName3 = null;
 		}
 		
-		if (productAdminVO.getProductImageName1() != null) {
-			productImageName1 = productAdminVO.getProductImageName1();
+		if (productVO.getProductImageName1() != null) {
+			productImageName1 = productVO.getProductImageName1();
 		}
-		if (productAdminVO.getProductImageName2() != null) {
-			productImageName2 = productAdminVO.getProductImageName2();
+		if (productVO.getProductImageName2() != null) {
+			productImageName2 = productVO.getProductImageName2();
 		}
-		if (productAdminVO.getProductImageName3() != null) {
-			productImageName3 = productAdminVO.getProductImageName3();
+		if (productVO.getProductImageName3() != null) {
+			productImageName3 = productVO.getProductImageName3();
 		}
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();					
-			String sql = "update product set productName=?, productInformation=?, productImageName1=?, productImageName2=?, productImageName3=?, productPrice=?, productQuantity=?, productCategoryNo=? where productNo=?";
+			String sql = "update product set productName=?, productContent=?, productImageName1=?, productImageName2=?, productImageName3=?, productPrice=?, productQuantity=?, productCategoryNo=? where productNo=?";			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productAdminVO.getProductName());
-			pstmt.setString(2, productAdminVO.getProductInformation());
+			pstmt.setString(1, productVO.getProductName());
+			pstmt.setString(2, productVO.getProductContent());
 			pstmt.setString(3, productImageName1);
 			pstmt.setString(4, productImageName2);
 			pstmt.setString(5, productImageName3);
-			pstmt.setInt(6, productAdminVO.getProductPrice());
-			pstmt.setInt(7, productAdminVO.getProductQuantity());
-			pstmt.setInt(8, productAdminVO.getProductCategoryNo());
-			pstmt.setInt(9, productAdminVO.getProductNo());
+			pstmt.setInt(6, productVO.getProductPrice());
+			pstmt.setInt(7, productVO.getProductQuantity());
+			pstmt.setInt(8, productVO.getProductCategoryNo());
+			pstmt.setInt(9, productVO.getProductNo());
 	
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {
@@ -288,7 +295,7 @@ public class ProductAdminDAO {
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			String sql = "delete from product where productNo=?";
+			String sql = "delete from product where productNo=?";			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productNo);
 	
