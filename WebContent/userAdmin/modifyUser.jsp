@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/adminTop.jsp" %>
-<c:set var="userNo" value="${userMap.userVO.userNo}" />
-<c:set var="userTitle" value="${userMap.userVO.userTitle}" />
-<c:set var="userContent" value="${userMap.userVO.userContent}" />
-<c:set var="userFileName" value="${userMap.userVO.userFileName}" />
-<c:set var="userId" value="${userMap.userVO.userId}" />
-<c:set var="userDate" value="${userMap.userVO.userDate}" />
-<c:set var="userCount" value="${userMap.userVO.userCount}" />
-<c:set var="userCategoryNo" value="${userMap.userVO.userCategoryNo}" />
-<c:set var="userCategoryName" value="${userMap.userCategoryName}" />
-<c:set var="userFileType" value="${userMap.userFileType}" />
+<%@ include file="../inc/adminTop.jsp"%>
+<c:set var="userId" value="${userVO.userId}" />
+<c:set var="userPw" value="${userVO.userPw}" />
+<c:set var="userName" value="${userVO.userName}" />
+<c:set var="userPhone" value="${userVO.userPhone}" />
+<c:set var="userEmail" value="${userVO.userEmail}" />
+<c:set var="userZipcode" value="${userVO.userZipcode}" />
+<c:set var="userAddress1" value="${userVO.userAddress1}" />
+<c:set var="userAddress2" value="${userVO.userAddress2}" />
+<c:set var="userDate" value="${userVO.userDate}" />
+<c:set var="userUse" value="${userVO.userUse}" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -18,84 +18,84 @@
 </div>
 
 <article class="user">
-	<form action="${contextPath}/camp/updateUser.do" method="post" enctype="multipart/form-data" >
+	<form action="${contextPath}/camp/updateUser.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="pageNo" value="${pageNo}" />
 		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
-		<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
-		<input type="hidden" name="userNo" value="${userNo}" />	
-		<input type="hidden" name="userId" value="${userId}" />
-		<input type="hidden" name="oldFileName" value="${userFileName}" />
 		<table class="table">
 			<colgroup>
-				<col style="width:120px" />
+				<col style="width: 120px" />
 				<col />
 			</colgroup>
+			<tr>
+				<th class="align-middle">
+					<label for="userId" class="m-0">아이디</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userId" id="userId" value="${userId}" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userPw" class="m-0">비밀번호</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userPw" id="userPw" value="${userPw}" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userPw2" class="m-0">비밀번호 재확인</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userPw2" id="userPw2" value="${userPw2}" required />
+				</td>
+			</tr>
 			<tr>
 				<th class="align-middle">
 					<label for="userName" class="m-0">이름</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userName" id="userName" value="${userId}" required />
+					<input class="form-control" type="text" name="userName" id="userName" value="${userName}" required />
 				</td>
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="userCategoryNo" class="m-0">카테고리</label>
+					<label for="userPhone" class="m-0">전화번호</label>
 				</th>
 				<td>
-					<select class="form-control" name="userCategoryNo" id="userCategoryNo" required>
-						<option value="">선택하세요</option>
-						<c:forEach var="category" items="${userCategoryList}">											
-							<c:choose>
-								<c:when test="${category.userCategoryNo == userCategoryNo}">
-									<option value="${category.userCategoryNo}" selected>${category.userCategoryName}</option>	
-								</c:when>
-								<c:otherwise>
-									<option value="${category.userCategoryNo}">${category.userCategoryName}</option>	
-								</c:otherwise>
-							</c:choose>																				
-						</c:forEach>								
-					</select>
+					<input class="form-control" type="text" name="userPhone" id="userPhone" value="${userPhone}" required />
 				</td>
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="userTitle" class="m-0">제목</label>
+					<label for="userEmail" class="m-0">이메일</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userTitle" id="userTitle" value="${userTitle}" required />
+					<input class="form-control" type="text" name="userEmail" id="userEmail" value="${userEmail}" required />
 				</td>
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="userContent" class="m-0">내용</label>
-				</th>
-				<td>			
-					<textarea class="form-control" name="userContent" id="userContent" cols="40" rows="13" required>${userContent}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-middle">
-					<label class="m-0">첨부파일</label>
+					<label for="userZipcode" class="m-0">우편번호</label>
 				</th>
 				<td>
-					<c:if test="${not empty userFileName}">
-						<div class="d-flex align-items-center mb-2">
-							<c:if test="${userFileType.equals('image')}">
-								<div class="preview" style="background-image:url(${contextPath}/files/user/${userNo}/${userFileName})"></div>
-							</c:if>
-							<p class="ml-2 mb-0">${userFileName}</p>
-							<div class="custom-control custom-checkbox ml-2">
-								<input type="checkbox" class="custom-control-input" name="deleteFile" id="deleteFile">
-								<label class="custom-control-label text-danger" for="deleteFile">첨부된 파일 삭제하기</label>
-							</div>
-						</div>
-						<p class="alert alert-danger" style="display:none">파일첨부 시 기존 첨부파일 정보가 삭제됩니다.</p>
-					</c:if>
-					<div class="custom-file">
-						<input class="custom-file-input" type="file" name="userFileName" id="userFileName" onchange="checkFile(this);showPreview(this)" />
-						<label class="custom-file-label" for="userFileName">선택된 파일 없음</label>
-					</div>
+					<input class="form-control" type="text" name="userZipcode" id="userZipcode" value="${userZipcode}" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userAddress1" class="m-0">주소</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userAddress1" id="userAddress1" value="${userAddress1}" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userAddress2" class="m-0">상세주소</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userAddress2" id="userAddress2" value="${userAddress2}" required />
 				</td>
 			</tr>
 		</table>
@@ -109,10 +109,10 @@
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>
 <script src="${contextPath}/js/lmw-custom-preview.js"></script>
 
-<script>	
+<script>
 	$(document).ready(function() {
 		bsCustomFileInput.init()
 	});
 </script>
 
-<%@ include file="../inc/adminBottom.jsp" %>
+<%@ include file="../inc/adminBottom.jsp"%>

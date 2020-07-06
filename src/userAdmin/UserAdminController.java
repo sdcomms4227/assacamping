@@ -76,34 +76,26 @@ public class UserAdminController extends HttpServlet {
 			
 			nextPage = "/userAdmin/listUser.jsp";
 			
-//		}else if(action.equals("/readUser.do")) {
-//
-//			setPagination(request);
-//			
-//			int userNo = Integer.parseInt(request.getParameter("userNo"));
-//			
-//			Map<String, Object> userMap = userAdminService.readUser(userNo);
-//
-//			userVO = (UserVO)userMap.get("userVO");
-//			String userFileName = userVO.getUserFileName();
-//
-//			if(userFileName!=null && !userFileName.equals("")) {
-//				String userFileType = getFileType(userNo, userFileName);
-//				userMap.put("userFileType", userFileType);
-//			}
-//			
-//			request.setAttribute("userMap", userMap);
-//			
-//			if(request.getAttribute("alertMsg")!=null) {
-//				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
-//			}
-//			
-//			nextPage = "/userAdmin/readUser.jsp";
-//			
-//		}else if(action.contentEquals("/addUser.do")) {
-//						
-//			nextPage = "/userAdmin/addUser.jsp";
-//			
+		}else if(action.equals("/readUser.do")) {
+
+			setPagination(request);
+			
+			String userId = request.getParameter("userId");
+			
+			UserVO userVO = userAdminService.readUser(userId);
+			
+			request.setAttribute("userVO", userVO);
+			
+			if(request.getAttribute("alertMsg")!=null) {
+				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+			}
+			
+			nextPage = "/userAdmin/readUser.jsp";
+			
+		}else if(action.contentEquals("/addUser.do")) {
+						
+			nextPage = "/userAdmin/addUser.jsp";
+			
 //		}else if(action.equals("/insertUser.do")) {
 //			
 //			Map<String, String> multipartMap = uploadFile(request);
@@ -124,21 +116,21 @@ public class UserAdminController extends HttpServlet {
 //				moveFile(readNo, userFileName);
 //			}
 //						
-//			nextPage = "/campadm/readUser.do?userNo=" + readNo;
+//			nextPage = "/campadm/readUser.do?userId=" + readNo;
 //			
 //		}else if(action.equals("/modifyUser.do")) {
 //
 //			setPagination(request);
 //			
-//			int userNo = Integer.parseInt(request.getParameter("userNo"));
+//			int userId = Integer.parseInt(request.getParameter("userId"));
 //
-//			Map<String, Object> userMap = userAdminService.readUser(userNo);
+//			Map<String, Object> userMap = userAdminService.readUser(userId);
 //			
 //			userVO = (UserVO)userMap.get("userVO");
 //			String userFileName = userVO.getUserFileName();
 //
 //			if(userFileName!=null && !userFileName.equals("")) {
-//				String userFileType = getFileType(userNo, userFileName);
+//				String userFileType = getFileType(userId, userFileName);
 //				userMap.put("userFileType", userFileType);
 //			}
 //
@@ -152,7 +144,7 @@ public class UserAdminController extends HttpServlet {
 //			
 //			Map<String, String> multipartMap = uploadFile(request);
 //			
-//			int userNo = Integer.parseInt(multipartMap.get("userNo"));
+//			int userId = Integer.parseInt(multipartMap.get("userId"));
 //			String userTitle = multipartMap.get("userTitle");
 //			String userContent = multipartMap.get("userContent");
 //			String userFileName = multipartMap.get("userFileName");
@@ -160,7 +152,7 @@ public class UserAdminController extends HttpServlet {
 //			String deleteFile = multipartMap.get("deleteFile");
 //			String oldFileName = multipartMap.get("oldFileName");
 //						
-//			userVO.setUserNo(userNo);
+//			userVO.setUserNo(userId);
 //			userVO.setUserTitle(userTitle);
 //			userVO.setUserContent(userContent);
 //			userVO.setUserFileName(userFileName);
@@ -173,10 +165,10 @@ public class UserAdminController extends HttpServlet {
 //				alertMsg = "정상적으로 수정되었습니다.";
 //				
 //				if(deleteFile!=null || userFileName!=null) {
-//					deleteFile(userNo, oldFileName);
+//					deleteFile(userId, oldFileName);
 //				}
 //				if(userFileName!=null) {
-//					moveFile(userNo, userFileName);
+//					moveFile(userId, userFileName);
 //				}
 //			}else {
 //				alertMsg = "오류가 발생했습니다.";
@@ -184,21 +176,21 @@ public class UserAdminController extends HttpServlet {
 //			
 //			request.setAttribute("alertMsg", alertMsg);
 //			
-//			nextPage = "/campadm/readUser.do?userNo=" + userNo;
+//			nextPage = "/campadm/readUser.do?userId=" + userId;
 //			
 //		}else if(action.equals("/deleteUser.do")) {
 //
 //			setPagination(request);
 //			
-//			int userNo = Integer.parseInt(request.getParameter("userNo"));
+//			int userId = Integer.parseInt(request.getParameter("userId"));
 //			
-//			int result = userAdminService.deleteUser(userNo);
+//			int result = userAdminService.deleteUser(userId);
 //			String alertMsg = "";
 //
 //			if(result > 0) {
 //				alertMsg = "정상적으로 삭제되었습니다.";
 //				
-//				deleteDirectory(userNo);
+//				deleteDirectory(userId);
 //			}else {
 //				alertMsg = "오류가 발생했습니다.";
 //			}
@@ -211,9 +203,9 @@ public class UserAdminController extends HttpServlet {
 //			
 //			setPagination(request);
 //			
-//			int userNo = Integer.parseInt(request.getParameter("userNo"));
+//			int userId = Integer.parseInt(request.getParameter("userId"));
 //
-//			Map<String, Object> userMap = userAdminService.readUser(userNo);
+//			Map<String, Object> userMap = userAdminService.readUser(userId);
 //			
 //			request.setAttribute("userMap", userMap);
 //			
@@ -225,7 +217,7 @@ public class UserAdminController extends HttpServlet {
 //			
 //			Map<String, String> multipartMap = uploadFile(request);
 //			
-//			int userNo = Integer.parseInt(multipartMap.get("userNo"));
+//			int userId = Integer.parseInt(multipartMap.get("userId"));
 //			String userTitle = multipartMap.get("userTitle");
 //			String userContent = multipartMap.get("userContent");
 //			String userFileName = multipartMap.get("userFileName");
@@ -234,7 +226,7 @@ public class UserAdminController extends HttpServlet {
 //			int userRe_lev = Integer.parseInt(multipartMap.get("userRe_lev"));
 //			int userRe_seq = Integer.parseInt(multipartMap.get("userRe_seq"));
 //			
-//			userVO.setUserNo(userNo);
+//			userVO.setUserNo(userId);
 //			userVO.setUserTitle(userTitle);
 //			userVO.setUserContent(userContent);
 //			userVO.setUserFileName(userFileName);
@@ -249,14 +241,14 @@ public class UserAdminController extends HttpServlet {
 //				moveFile(readNo, userFileName);
 //			}
 //			
-//			nextPage = "/campadm/readUser.do?userNo=" + readNo;
+//			nextPage = "/campadm/readUser.do?userId=" + readNo;
 //			
 //		}else if(action.equals("/download.do")) {
 //			
-//			int userNo = Integer.parseInt(request.getParameter("userNo"));
+//			int userId = Integer.parseInt(request.getParameter("userId"));
 //			String fileName = request.getParameter("fileName");			
 //
-//			downloadFile(response, userNo, fileName);
+//			downloadFile(response, userId, fileName);
 //		
 		}
 				
@@ -347,13 +339,13 @@ public class UserAdminController extends HttpServlet {
 		return userMap;
 	}
 
-	private void moveFile(int userNo, String fileName) {
+	private void moveFile(int userId, String fileName) {
 		try {
 			File srcFile = new File(realPath + "\\temp\\" + fileName);
-			File destDir = new File(realPath + "\\" + userNo);
+			File destDir = new File(realPath + "\\" + userId);
 			Boolean createDestDir = destDir.mkdir();
 
-			String filePath = realPath + "\\" + userNo + "\\" + fileName;
+			String filePath = realPath + "\\" + userId + "\\" + fileName;
 			File file = new File(filePath);
 
 			if (!file.exists()) {
@@ -364,9 +356,9 @@ public class UserAdminController extends HttpServlet {
 		}
 	}
 
-	private void deleteFile(int userNo, String fileName) {
+	private void deleteFile(int userId, String fileName) {
 		try {
-			String filePath = realPath + "\\" + userNo + "\\" + fileName;
+			String filePath = realPath + "\\" + userId + "\\" + fileName;
 			File file = new File(filePath);
 
 			if (file.exists()) {
@@ -377,9 +369,9 @@ public class UserAdminController extends HttpServlet {
 		}
 	}
 
-	private void downloadFile(HttpServletResponse response, int userNo, String fileName) {
+	private void downloadFile(HttpServletResponse response, int userId, String fileName) {
 		try {
-			String filePath = realPath + "\\" + userNo + "\\" + fileName;
+			String filePath = realPath + "\\" + userId + "\\" + fileName;
 			File file = new File(filePath);
 
 			OutputStream out = response.getOutputStream();
@@ -409,11 +401,11 @@ public class UserAdminController extends HttpServlet {
 		}
 	}
 
-	private String getFileType(int userNo, String fileName) {
+	private String getFileType(int userId, String fileName) {
 		String userFileType = "";
 
 		try {
-			String filePath = realPath + "\\" + userNo + "\\" + fileName;
+			String filePath = realPath + "\\" + userId + "\\" + fileName;
 			File file = new File(filePath);
 
 			String mimeType = Files.probeContentType(file.toPath());
@@ -426,9 +418,9 @@ public class UserAdminController extends HttpServlet {
 		return userFileType;
 	}
 
-	private void deleteDirectory(int userNo) {
+	private void deleteDirectory(int userId) {
 		try {
-			String realDirPath = realPath + "\\" + userNo;
+			String realDirPath = realPath + "\\" + userId;
 			File realDir = new File(realDirPath);
 
 			if (realDir.exists()) {

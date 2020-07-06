@@ -29,16 +29,14 @@
 <article class="user">
 	<table class="table table-hover text-center">
 		<colgroup class="d-none d-lg-table-column-group">
+			<col style="width: 160px" />
+			<col style="width: 160px" />
+			<col style="width: 160px" />
+			<col style="width: 160px" />
 			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
+			<col style="width: 160px" />
+			<col style="width: 100px" />
+			<col style="width: 140px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
@@ -47,9 +45,7 @@
 				<th>이름</th>
 				<th>전화번호</th>
 				<th>이메일</th>
-				<th>우편번호</th>
-				<th>주소1</th>
-				<th>주소2</th>
+				<th>회원상태</th>
 				<th>가입일</th>
 				<th>관리</th>
 			</tr>
@@ -58,21 +54,28 @@
 			<c:choose>
 				<c:when test="${totalCount==0}">			
 					<tr>
-						<td colspan="10">등록된 회원이 없습니다.</td>
+						<td colspan="8">등록된 회원이 없습니다.</td>
 					</tr>
 				</c:when>	
 				<c:otherwise>
 					<c:forEach var="userVO" items="${userList}">
 						<fmt:formatDate var="userFmtDate" value="${userVO.userDate}" pattern="yyyy-MM-dd HH:mm"/>
-						<tr onclick="readUser(${userVO.userId})" style="cursor:pointer">
+						<tr onclick="readUser('${userVO.userId}')" style="cursor:pointer">
 							<td class="align-middle">${userVO.userId}</td>
 							<td class="align-middle">${userVO.userPw}</td>
 							<td class="align-middle">${userVO.userName}</td>
 							<td class="align-middle">${userVO.userPhone}</td>
 							<td class="align-middle">${userVO.userEmail}</td>
-							<td class="align-middle">${userVO.userZipcode}</td>
-							<td class="align-middle">${userVO.userAddress1}</td>
-							<td class="align-middle">${userVO.userAddress2}</td>
+							<td class="align-middle">							
+								<c:choose>
+									<c:when test="${userVO.userUse==1}">
+										<span>일반회원</span>
+									</c:when>
+									<c:otherwise>
+										<span class="text-danger">탈퇴회원</span>
+									</c:otherwise>
+								</c:choose>
+							</td>
 							<td class="align-middle">${userFmtDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyUser(${userVO.userId}, event)">수정</button>

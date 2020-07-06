@@ -49,39 +49,39 @@
 			<form class="userForm" action="${contextPath}/userCon/addUser.do" method="post">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
-					<input type="text" class="form-control form-control-lg" name="userId" id="userId" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userId" id="userId" required />
 				</div>
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userPw">비밀번호</label>
-					<input type="password" class="form-control form-control-lg" name="userPw" id="userPw" maxlength="20" required>
+					<input type="password" class="form-control form-control-lg" name="userPw" id="userPw" required />
 				</div>
 				<div class="form-group mb-3"> 
 					<label class="font-weight-bold" for="userPw2">비밀번호 재확인</label>
-					<input type="password" class="form-control form-control-lg" name="userPw2" id="userPw2" maxlength="20" required>
+					<input type="password" class="form-control form-control-lg" name="userPw2" id="userPw2" required />
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userName">이름</label>
-					<input type="text" class="form-control form-control-lg" name="userName" id="userName" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userName" id="userName" required />
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userPhone">전화번호</label>
-					<input type="text" class="form-control form-control-lg" name="userPhone" id="userPhone" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userPhone" id="userPhone" required />
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userEmail">이메일</label>
-					<input type="text" class="form-control form-control-lg" name="userEmail" id="userEmail" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userEmail" id="userEmail" required />
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>
-					<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" required />
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress1">주소</label>
-					<input type="text" class="form-control form-control-lg" name="userAddress1" id="userAddress1" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userAddress1" id="userAddress1" required />
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress2">상세주소</label>
-					<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" maxlength="20" required>
+					<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" required />
 				</div>
 				<button type="submit" class="btn btn-xl btn-primary btn-block">가입하기</button>
 			</form>

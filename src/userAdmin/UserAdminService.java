@@ -27,17 +27,12 @@ public class UserAdminService {
 		return userListMap;
 	}
 
-//	public Map<String, Object> readUser(int userNo) {
-//
-//		Map<String, Object> userMap = new HashMap<String, Object>();
-//
-//		userAdminDAO.incrementUserCount(userNo);
-//
-//		UserVO userVO = userAdminDAO.getUser(userNo);
-//		userMap.put("userVO", userVO);
-//
-//		return userMap;
-//	}
+	public UserVO readUser(String userId) {
+
+		UserVO userVO = userAdminDAO.getUser(userId);
+
+		return userVO;
+	}
 //
 //	public int insertUser(UserVO userVO) {
 //
@@ -51,8 +46,8 @@ public class UserAdminService {
 //		return userAdminDAO.updateUser(userVO, deleteFile);
 //	}
 //
-//	public int deleteUser(int userNo) {
-//		return userAdminDAO.deleteUser(userNo);
+//	public int deleteUser(String userId) {
+//		return userAdminDAO.deleteUser(userId);
 //	}
 //
 //	public int insertReplyUser(UserVO userVO) {

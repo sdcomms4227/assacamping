@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/adminTop.jsp" %>
-<c:set var="userId" value="${userId}" />
-<c:set var="userName" value="${userName}" />
+<%@ include file="../inc/adminTop.jsp"%>
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -11,64 +9,89 @@
 
 <article class="user">
 	<form action="${contextPath}/camp/insertUser.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="userId" value="${userId}" />
+		<input type="hidden" name="pageNo" value="${pageNo}" />
+		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 		<table class="table">
 			<colgroup>
-				<col style="max-width: 120px" />
+				<col style="width: 120px" />
 				<col />
 			</colgroup>
+			<tr>
+				<th class="align-middle">
+					<label for="userId" class="m-0">아이디</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userId" id="userId" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userPw" class="m-0">비밀번호</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userPw" id="userPw" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userPw2" class="m-0">비밀번호 재확인</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userPw2" id="userPw2" required />
+				</td>
+			</tr>
 			<tr>
 				<th class="align-middle">
 					<label for="userName" class="m-0">이름</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userName" id="userName" value="${userId}" required />
+					<input class="form-control" type="text" name="userName" id="userName" required />
 				</td>
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="userCategoryNo" class="m-0">카테고리</label>
+					<label for="userPhone" class="m-0">전화번호</label>
 				</th>
 				<td>
-					<select class="form-control" name="userCategoryNo" id="userCategoryNo" required>
-						<option value="">선택하세요</option>
-						<c:forEach var="category" items="${userCategoryList}">
-							<option value="${category.userCategoryNo}">${category.userCategoryName}</option>									
-						</c:forEach>
-					</select>
+					<input class="form-control" type="text" name="userPhone" id="userPhone" required />
 				</td>
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="userTitle" class="m-0">제목</label>
+					<label for="userEmail" class="m-0">이메일</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userTitle" id="userTitle" required />
+					<input class="form-control" type="text" name="userEmail" id="userEmail" required />
 				</td>
 			</tr>
 			<tr>
 				<th class="align-middle">
-					<label for="userContent" class="m-0">내용</label>
-				</th>
-				<td>			
-					<textarea class="form-control" name="userContent" id="userContent" cols="40" rows="13" required></textarea>
-				</td>
-			</tr>
-			<tr>
-				<th class="align-middle">
-					<label class="m-0">첨부파일</label>
+					<label for="userZipcode" class="m-0">우편번호</label>
 				</th>
 				<td>
-					<div class="custom-file">
-						<input class="custom-file-input" type="file" name="userFileName" id="userFileName" onchange="showPreview(this)" />
-						<label class="custom-file-label" for="userFileName">선택된 파일 없음</label>
-					</div>
+					<input class="form-control" type="text" name="userZipcode" id="userZipcode" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userAddress1" class="m-0">주소</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userAddress1" id="userAddress1" required />
+				</td>
+			</tr>
+			<tr>
+				<th class="align-middle">
+					<label for="userAddress2" class="m-0">상세주소</label>
+				</th>
+				<td>
+					<input class="form-control" type="text" name="userAddress2" id="userAddress2" required />
 				</td>
 			</tr>
 		</table>
 		<div class="text-center my-5">
 			<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
-			<button type="submit" class="btn btn-primary">글쓰기</button>
+			<button type="submit" class="btn btn-primary">등록하기</button>
 		</div>
 	</form>
 </article>
@@ -76,10 +99,10 @@
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>
 <script src="${contextPath}/js/lmw-custom-preview.js"></script>
 
-<script>	
+<script>
 	$(document).ready(function() {
 		bsCustomFileInput.init()
 	});
 </script>
 
-<%@ include file="../inc/adminBottom.jsp" %>
+<%@ include file="../inc/adminBottom.jsp"%>

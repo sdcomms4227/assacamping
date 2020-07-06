@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<c:set var="userNo" value="${userMap.userVO.userNo}" />
-<c:set var="userTitle" value="${userMap.userVO.userTitle}" />
-<c:set var="userContent" value="${userMap.userVO.userContent}" />
-<c:set var="userFileName" value="${userMap.userVO.userFileName}" />
-<c:set var="userId" value="${userMap.userVO.userId}" />
-<c:set var="userDate" value="${userMap.userVO.userDate}" />
-<c:set var="userCount" value="${userMap.userVO.userCount}" />
-<c:set var="userCategoryName" value="${userMap.userCategoryName}" />
-<c:set var="userFileType" value="${userMap.userFileType}" />
-<c:set var="userName" value="홍길동" />
+<c:set var="userId" value="${userVO.userId}" />
+<c:set var="userPw" value="${userVO.userPw}" />
+<c:set var="userName" value="${userVO.userName}" />
+<c:set var="userPhone" value="${userVO.userPhone}" />
+<c:set var="userEmail" value="${userVO.userEmail}" />
+<c:set var="userZipcode" value="${userVO.userZipcode}" />
+<c:set var="userAddress1" value="${userVO.userAddress1}" />
+<c:set var="userAddress2" value="${userVO.userAddress2}" />
+<c:set var="userDate" value="${userVO.userDate}" />
+<c:set var="userUse" value="${userVO.userUse}" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -19,7 +19,7 @@
 
 <article class="user">
 	<div class="row">
-		<div class="col-12 col-lg-6">
+		<div class="col-12">
 			<table class="table read-table table-layout-fixed">
 				<colgroup>
 					<col style="width:120px" />
@@ -27,61 +27,53 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<th>번호</th>
-						<td class="text-danger">${userNo}</td>
-					</tr>
-					<tr>
-						<th>카테고리</th>
-						<td>${userCategoryName}</td>
-					</tr>
-					<tr>
-						<th>작성자</th>
+						<th>아이디</th>
 						<td>${userId}</td>
 					</tr>
 					<tr>
-						<th>조회수</th>
-						<td><fmt:formatNumber value="${userCount}" pattern="#,###"/></td>
+						<th>비밀번호</th>
+						<td>${userPw}</td>
 					</tr>
 					<tr>
-						<th>제목</th>
-						<td>${userTitle}</td>
+						<th>이름</th>
+						<td>${userName}</td>
 					</tr>
 					<tr>
-						<th>내용</th>
-						<td>${fn:replace(userContent,LF,BR)}</td>
+						<th>전화번호</th>
+						<td>${userPhone}</td>
 					</tr>
 					<tr>
-						<th>작성일</th>
-						<td><fmt:formatDate value="${userDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<th>이메일</th>
+						<td>${userEmail}</td>
 					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-12 col-lg-6">
-			<table class="table table-layout-fixed text-center">
-				<thead>
 					<tr>
-						<th>첨부파일</th>
+						<th>우편번호</th>
+						<td>${userZipcode}</td>
 					</tr>
-				</thead>
-				<tbody>
 					<tr>
-						<td class="p-3">
+						<th>주소</th>
+						<td>${userAddress1}</td>
+					</tr>
+					<tr>
+						<th>상세주소</th>
+						<td>${userAddress2}</td>
+					</tr>
+					<tr>
+						<th>회원상태</th>
+						<td>
 							<c:choose>
-								<c:when test="${userFileName == null}">
-									<div>등록된 첨부파일이 없습니다.</div>
-								</c:when> 
+								<c:when test="${userUse==1}">
+									<span>일반회원</span>
+								</c:when>
 								<c:otherwise>
-									<div class="d-flex align-items-center">
-										<c:if test="${userFileType.equals('image')}">
-											<div class="preview" style="background-image:url(${contextPath}/files/user/${userNo}/${userFileName})"></div>
-										</c:if>
-										<p class="ml-2 mb-0">${userFileName}</p>
-										<button type="button" class="btn btn-sm btn-info ml-2" onclick="downloadUser(${userNo}, '${userFileName}')">다운로드</button>
-									</div>
+									<span class="text-danger">탈퇴회원</span>
 								</c:otherwise>
 							</c:choose>
 						</td>
+					</tr>
+					<tr>
+						<th>가입일</th>
+						<td><fmt:formatDate value="${userDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 					</tr>
 				</tbody>
 			</table>
@@ -90,46 +82,34 @@
 	
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listUser()">목록</button>							
-		<button type="button" class="btn btn-warning" onclick="modifyUser(${userNo})">수정</button>
-		<button type="button" class="btn btn-danger" onclick="deleteUser(${userNo})">삭제</button>
-		<button type="button" class="btn btn-primary" onclick="replyUser(${userNo})">답글쓰기</button>
+		<button type="button" class="btn btn-warning" onclick="modifyUser('${userId}')">수정</button>
+		<button type="button" class="btn btn-danger" onclick="deleteUser('${userId}')">삭제</button>
 	</div>			
 </article>
 
 <form method="post" name="pagingForm">
 	<input type="hidden" name="pageNo" value="${pageNo}" />
 	<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
-	<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
 </form>
 
 <script>
 function listUser(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/listUser.do";	
+	form.action = "${contextPath}/usradm/listUser.do";	
 	form.submit();
 }
-function modifyUser(userNo){
+function modifyUser(userId){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/modifyUser.do?userNo=" + userNo;
+	form.action = "${contextPath}/usradm/modifyUser.do?userId=" + userId;
 	form.submit();
 }
-function deleteUser(userNo){
+function deleteUser(userId){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/campadm/deleteUser.do?userNo=" + userNo;
+		form.action = "${contextPath}/usradm/deleteUser.do?userId=" + userId;
 		form.submit();
 	}
-}
-function replyUser(userNo){
-	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/replyUser.do?userNo=" + userNo;
-	form.submit();
-}
-function downloadUser(userNo, userFileName){
-	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/download.do?userNo=" + userNo + "&fileName=" + userFileName;
-	form.submit();
 }
 </script>
 
