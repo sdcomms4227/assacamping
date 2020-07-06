@@ -39,7 +39,8 @@
 
 <div class="container">
 
-  <h2>이벤트 게시판</h2>
+  <h2 align="center">이벤트 게시판</h2>
+  <br><br>
 
   <div class="row">
 
@@ -61,7 +62,61 @@
 			</c:forEach>						
 		</c:when>						
 	</c:choose>
-											
+
+
+	  <div class="cls2">
+			<c:if test="${totArticles != null}">
+				<c:choose>
+					<%--전체 글수가 100보다 클때(검색한 글개수가 100초과인 경우) 페이징번호 표시  --%>
+					<c:when test="${totArticles > 100}">
+						
+						<c:forEach var="page" begin="1" end="10" step="1">
+							<%--섹션값 2부터는 앞 섹션으로 이동할 수 있는 pre문구를 표시 --%>
+							<c:if test="${section > 1 && page=1}">
+								<a href="${contextPath}/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10+1}">
+								&nbsp;pre</a>
+							</c:if>	
+							
+							<a href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10}</a>
+														
+							<%-- 페이지 번호 10 오른쪽에는 다음 섹션으로 이동할 수 있는 next를 표시 --%>
+							<c:if test="${page==10}">
+								<a href="${contextPath}/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}">
+								&nbsp;next</a>
+							</c:if>												
+						</c:forEach>		
+					</c:when>
+					<%--전체 글수가 100개 일때는 ? 첫 번째 section의 10개의 페이지만 표시하면 됩니다. --%>
+					<c:when test="${totArticles ==100}">
+						<c:forEach var="page" begin="1" end="10" step="1">
+							<a href="#">${page}</a>
+						</c:forEach>										
+					</c:when>			
+					<%--전체 글 수가 100개보다 적을때 페이징을 표시함 --%>
+					<c:when test="${totArticles < 100 }">
+													 <%-- 글수가 100개 되지 않으므로  표시되는 페이지는 10개가 되지 않고, 전체 글수를 10으로 나누어 구한 몫에 1을 더한 페이지까지 표시됩니다.--%>
+						<c:forEach var="page" begin="1" end="${totArticles/10+1}" step="1">
+							<c:choose>
+					   <c:when test="${page==pageNum}">		       
+							  <a class="sel-page" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">
+							  ${page}
+							  </a>
+						</c:when>	
+						<c:otherwise>	  	     
+							  <a class="no-unline" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">
+							  ${page}
+							  </a>	
+						</c:otherwise>
+							</c:choose>												
+						</c:forEach>					
+					</c:when>
+				</c:choose>			
+			</c:if>
+			
+		</div>
+		<a class="cls1" href="${contextPath}/board/articleForm.do">
+		<p class="cls2">글쓰기</p>
+		</a>															
 						
 <!--     <div class="col-md-4">
   <a href="city1.jpg" class="thumbnail">

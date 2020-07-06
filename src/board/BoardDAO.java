@@ -344,14 +344,14 @@ public List selectAllArticles(Map pagingMap) {
 	
 	int section = (Integer)pagingMap.get("section");
 	int pageNum = (Integer)pagingMap.get("pageNum"); 
-	int startNum = (section - 1)*100 + (pageNum - 1)*10;
+	int startNum = (section - 1)*27 + (pageNum - 1)*9;
 
 	try {
 		
 		conn = dbUtil.DBConnection.getConnection();
 		
 		String sql = "select * from board order by boardRe_ref desc, boardRe_seq asc"
-					+ " limit ?, 10";
+					+ " limit ?, 9";
 
 		System.out.println(sql);
 					

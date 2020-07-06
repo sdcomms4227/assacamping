@@ -87,7 +87,7 @@ public class BoardController extends HttpServlet {
 			
 		}else if(action.equals("/articleForm.do")) {//새글을 DB에 추가하기위한 폼페이지 요청
 		
-			session.setAttribute("userId", "hong"); //임시
+			session.setAttribute("userId", "admin"); //임시
 			
 		 nextPage = "/board01/articleForm.jsp";
 
@@ -105,7 +105,7 @@ public class BoardController extends HttpServlet {
 			boardVO.setBoardTitle(title);
 			boardVO.setBoardContent(content);
 			boardVO.setBoardImageFileName(imageFileName);		
-			boardVO.setUserId("hong");
+			boardVO.setUserId("admin");
 			//새글 추가 후 추가시킨 새글에 대한 글번호 얻기 
 			int boardNo =boardService.addArticle(boardVO);
 			
@@ -151,7 +151,7 @@ public class BoardController extends HttpServlet {
 			String content = boardMap.get("boardContent");
 			String imageFileName = boardMap.get("imageFileName");
 			
-			boardVO.setUserId("hong");
+			boardVO.setUserId("admin");
 			boardVO.setBoardTitle(title);
 			boardVO.setBoardContent(content);
 			boardVO.setBoardImageFileName(imageFileName);
@@ -215,7 +215,7 @@ public class BoardController extends HttpServlet {
 			
 			int boardRe_ref = Integer.parseInt(request.getParameter("boardRe_ref"));
 			session = request.getSession();
-			session.setAttribute("userId", "hong"); //임시
+			session.setAttribute("userId", "admin"); //임시
 			session.setAttribute("boardRe_ref", boardRe_ref);
 			
 			nextPage = "/board01/replyForm.jsp";	
@@ -233,7 +233,7 @@ public class BoardController extends HttpServlet {
 			
 			boardVO.setBoardRe_ref(boardRe_ref);
 			
-			boardVO.setUserId("hong"); //임시
+			boardVO.setUserId("admin"); //임시
 			boardVO.setBoardTitle(title);
 			boardVO.setBoardContent(content);
 			boardVO.setBoardImageFileName(imageFileName);
