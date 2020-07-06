@@ -67,7 +67,6 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<c:choose>
 				<c:when test="${totalCount==0}">
 					<tr>
@@ -96,7 +95,6 @@
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
-
 		</tbody>
 	</table>
 

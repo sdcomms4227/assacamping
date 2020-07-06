@@ -14,7 +14,7 @@
 		<input type="hidden" name="userId" value="${userId}" />
 		<table class="table">
 			<colgroup>
-				<col style="max-width: 120px" />
+				<col style="width: 120px" />
 				<col />
 			</colgroup>
 			<tr>
