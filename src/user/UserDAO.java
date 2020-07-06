@@ -188,7 +188,9 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				if(userPw.equals(rs.getString("userPw"))) {
-					check=2;
+					if(rs.getInt("userUse")==1) {
+						check=2;
+					}
 				}else {
 					check=1;
 				}

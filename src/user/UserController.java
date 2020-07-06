@@ -41,7 +41,6 @@ public class UserController extends HttpServlet{
 		UserDAO userDAO = new UserDAO();
 		String action = request.getPathInfo();
 		String nextPage = null;
-		System.out.println(action);
 		if(action == null || action.equals("/listUsers.do")) {
 			String userId=request.getParameter("userId");
 			List<UserVO> usersList = userDAO.listUsers();
@@ -64,7 +63,7 @@ public class UserController extends HttpServlet{
 			UserVO userVO = new UserVO(userId, userPw, userName, userPhone, userEmail, userZipcode, userAddress1, userAddress2, null, 1);
 			userDAO.addUser(userVO);
 			request.setAttribute("msg", "addUser");
-			nextPage = "/userCon/listUsers.do";
+			nextPage = "/user/login.jsp";
 			
 		}else if(action.equals("/userForm.do")) {
 			
@@ -90,7 +89,7 @@ public class UserController extends HttpServlet{
 
 				userDAO.modUser(userVO); 
 				request.setAttribute("msg", "modified");
-				nextPage = "/userCon/listUsers.do";
+				nextPage = "/";
 			
 			}else if(action.equals("/delUser.do")) {
 			
@@ -107,30 +106,22 @@ public class UserController extends HttpServlet{
 				
 				String userId = request.getParameter("userId");
 				String userPw = request.getParameter("userPw");
-				
-				System.out.println(userId+userPw);
 				int check = userDAO.login(userId,userPw);
-				
-				String msg ="";
 				if(check==0) {
-					//msg="존재하지 않는 ID입니다.";
 					request.setAttribute("msg", "id");
 					nextPage = "/user/login.jsp";
 				}else if(check==1) {
-					msg="비밀번호가 틀렸습니다.";
+					request.setAttribute("msg", "pw");
 					nextPage = "/user/login.jsp";
 				}else {
 					session.setAttribute("userId", userId);
-					
-					nextPage = "/userCon/listUsers.do";
-					
+					nextPage = "/";
 				}
-				request.setAttribute("msg",	msg);
 				
 			}else if(action.equals("/logout.do")) {
 				session.invalidate();
 				request.setAttribute("msg", "logout");
-				nextPage = "/userCon/listUsers.do";
+				nextPage = "/";
 			}
 
 		RequestDispatcher  dispatch = 

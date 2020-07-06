@@ -16,6 +16,17 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
+<script type="text/javascript">
+	function idCheck() {
+		var id = document.f.userId.value;
+		if(id == ""){
+			alert("아이디를 입력해주세요.");
+			document.f.userId.focus();
+			return;
+		}
+		window.open("idCheck.jsp?userId=" + id,"", "width=400,height=240");
+	}
+</script>
 </head>
 <body>
 
@@ -46,10 +57,13 @@
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form class="userForm" action="${contextPath}/userCon/addUser.do" method="post">
+			<form name="f" class="userForm" action="${contextPath}/userCon/addUser.do" method="post" onsubmit="return check();">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
 					<input type="text" class="form-control form-control-lg" name="userId" id="userId" maxlength="20" required>
+				</div>
+				<div class="form-group mb-3">
+					<button class="font-weight-bold" type="button" onclick="idCheck()">아이디 중복확인</button>
 				</div>
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userPw">비밀번호</label>
@@ -69,7 +83,7 @@
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userEmail">이메일</label>
-					<input type="text" class="form-control form-control-lg" name="userEmail" id="userEmail" maxlength="20" required>
+					<input type="email" class="form-control form-control-lg" name="userEmail" id="userEmail" maxlength="20" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>
