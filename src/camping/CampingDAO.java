@@ -28,7 +28,8 @@ public class CampingDAO {
 	public List<Map<String,Object>> getCampingList(Map<String, Object> searchMap) {
 
 		List<Map<String,Object>> campingList = new ArrayList<Map<String,Object>>();
-		
+
+		int numberPerPage = 10;
 		int pageNo = (int)searchMap.get("pageNo");
 		int offset = (pageNo - 1)*10;
 		String searchKeyword = (String)searchMap.get("searchKeyword");
@@ -46,11 +47,12 @@ public class CampingDAO {
 						+ " on cp.campingCategoryNo = ct.campingCategoryNo"
 						+ " where cp.campingTitle like ?"
 						+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
-						+ "	limit ?, 10";
+						+ "	limit ?, ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, '%' + searchKeyword + '%');
 				pstmt.setInt(2, offset);
+				pstmt.setInt(3, numberPerPage);
 			}else {
 				sql = "	select *"
 						+ " from camping cp"
@@ -59,12 +61,13 @@ public class CampingDAO {
 						+ " where cp.campingTitle like ?"
 						+ " and cp.campingCategoryNo = ?"
 						+ " order by cp.campingRe_ref desc, cp.campingRe_seq asc"
-						+ "	limit ?, 10";		
+						+ "	limit ?, ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, '%' + searchKeyword + '%');
 				pstmt.setInt(2, searchCategoryNo);
 				pstmt.setInt(3, offset);
+				pstmt.setInt(4, numberPerPage);
 			}
 			
 			rs = pstmt.executeQuery();
