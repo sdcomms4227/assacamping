@@ -27,7 +27,7 @@ import productCategory.ProductCategoryVO;
 @WebServlet("/proadm/*")
 public class ProductAdminController extends HttpServlet{
 	
-	ProductAdminService productService;
+	ProductAdminService productAdminService;
 	ProductVO productVO;	
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
@@ -35,7 +35,7 @@ public class ProductAdminController extends HttpServlet{
 		
 	@Override
 	public void init() throws ServletException {
-		productService = new ProductAdminService();
+		productAdminService = new ProductAdminService();
 		productVO = new ProductVO();
 		productCategoryService = new ProductCategoryService();
 		productCategoryVO = new ProductCategoryVO();
@@ -70,7 +70,7 @@ public class ProductAdminController extends HttpServlet{
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
-			Map<String, Object> productListMap = productService.listProduct(searchMap);			
+			Map<String, Object> productListMap = productAdminService.listProduct(searchMap);			
 			request.setAttribute("productListMap", productListMap);
 			
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
@@ -87,7 +87,7 @@ public class ProductAdminController extends HttpServlet{
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));			
-			Map<String, Object> productMap = productService.readProduct(productNo);			
+			Map<String, Object> productMap = productAdminService.readProduct(productNo);			
 			request.setAttribute("productMap", productMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
@@ -125,7 +125,7 @@ public class ProductAdminController extends HttpServlet{
 			productVO.setProductQuantity(productQuantity);
 			productVO.setProductCategoryNo(productCategoryNo);
 			
-			int readNo = productService.insertProduct(productVO);
+			int readNo = productAdminService.insertProduct(productVO);
 			
 			String alertMsg = "";
 			
@@ -154,7 +154,7 @@ public class ProductAdminController extends HttpServlet{
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));
-			Map<String, Object> productMap = productService.readProduct(productNo);
+			Map<String, Object> productMap = productAdminService.readProduct(productNo);
 			request.setAttribute("productMap", productMap);
 
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
@@ -202,7 +202,7 @@ public class ProductAdminController extends HttpServlet{
 			deleteFileMap.put("deleteFile2", deleteFile2);
 			deleteFileMap.put("deleteFile3", deleteFile3);
 			
-			int result = productService.updateProduct(productVO, originalImageNameMap, deleteFileMap);
+			int result = productAdminService.updateProduct(productVO, originalImageNameMap, deleteFileMap);
 			String alertMsg = "";
 			
 			if(result > 0) {
@@ -241,7 +241,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));
 			
-			int result = productService.deleteProduct(productNo);
+			int result = productAdminService.deleteProduct(productNo);
 			String alertMsg = "";
 
 			if(result > 0) {
