@@ -37,7 +37,7 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/campadm/writeCamping.do'">게시글 등록</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/campadm/addCamping.do'">게시글 등록</button>
 		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campcate/listCampingCategory.do'">카테고리 관리</button>
 	</div>
 </div>

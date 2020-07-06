@@ -110,12 +110,12 @@ public class CampingAdminController extends HttpServlet {
 			
 			nextPage = "/campingAdmin/readCamping.jsp";
 			
-		}else if(action.contentEquals("/writeCamping.do")) {
+		}else if(action.contentEquals("/addCamping.do")) {
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
 			
-			nextPage = "/campingAdmin/writeCamping.jsp";
+			nextPage = "/campingAdmin/addCamping.jsp";
 			
 		}else if(action.equals("/insertCamping.do")) {
 			

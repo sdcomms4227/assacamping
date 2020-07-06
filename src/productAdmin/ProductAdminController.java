@@ -96,12 +96,12 @@ public class ProductAdminController extends HttpServlet{
 			
 			nextPage = "/productAdmin/readProduct.jsp";
 			
-		}else if(action.contentEquals("/writeProduct.do")) {
+		}else if(action.contentEquals("/addProduct.do")) {
 
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 			
-			nextPage = "/productAdmin/writeProduct.jsp";
+			nextPage = "/productAdmin/addProduct.jsp";
 			
 		}else if(action.equals("/insertProduct.do")) {
 

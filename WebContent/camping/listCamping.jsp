@@ -144,7 +144,7 @@
 			</div>
 			<div class="col-12 col-lg-4 mt-3 mt-lg-0">
 				<div class="form-group text-center text-lg-right">
-					<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/camp/writeCamping.do'">글쓰기</button>
+					<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/camp/addCamping.do'">글쓰기</button>
 				</div>
 			</div>
 		</div>

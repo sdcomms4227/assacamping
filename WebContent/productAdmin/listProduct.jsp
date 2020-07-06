@@ -37,7 +37,7 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/proadm/writeProduct.do'">상품 등록</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/proadm/addProduct.do'">상품 등록</button>
 		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/procate/listProductCategory.do'">카테고리 관리</button>
 	</div>
 </div>
