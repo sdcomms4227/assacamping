@@ -225,31 +225,24 @@ public class UserDAO {
 		return check;
 	}//idCheck 메소드
 	
-	public int findId(String userName, String userEmail) {
-		int check = 0;
+	public String findId(String userName, String userEmail) {
+		String userId = "";
 		try{
 			conn = dataFactory.getConnection();
-			String query = "select * from user where userName=?";
+			String query = "select userId from user where userName=? and userEmail=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userName);
+			pstmt.setString(2, userEmail);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				if(userName.equals(rs.getString("userName"))) {
-					if(userEmail.equals(rs.getString("userEmail"))) {
-						check = 2;
-					}
-				}else {
-						check = 1;
-				}
-			}else {
-				check = 0;
+				userId = rs.getString("userId");
 			}
 		} catch (Exception e) {
 			System.out.println("findId메소드 내부에서 SQL 실행 오류: " + e);
 		}finally {
 			resourceClose();
 		}
-		return check;
+		return userId;
 	}//findId 메소드
 }//UserDAO클래스 
 
