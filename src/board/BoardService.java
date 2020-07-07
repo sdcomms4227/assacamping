@@ -58,7 +58,7 @@ return boardNoList;
 		Map boardMap = new HashMap();
 
 		List<BoardVO> boardList = boardDAO.selectAllArticles(pagingMap);
-		int totArticles = boardDAO.selectToArticles();
+		int totArticles = boardDAO.selectToArticles(pagingMap);
 		
 		boardMap.put("boardList", boardList);
 		boardMap.put("totArticles", totArticles);

@@ -29,7 +29,6 @@ public List selectAllBoard(){
 
 	String sql = "";	
 	
-	//검색한 글 정보들을 저장할 용도
 	List boardList = new ArrayList();
 
 	try {
@@ -145,8 +144,7 @@ public BoardVO selectArticle(int boardNo) {
 	
 	try {
 		conn = dbUtil.DBConnection.getConnection();
-		
-		
+				
 		 String sql = "select boardRe_ref, boardNo, boardTitle,"
 				   +"boardContent, boardImageFileName, userId, boardReadCount, boardWriteDate"
 				   +" from board where boardNo=?";
@@ -165,7 +163,6 @@ public BoardVO selectArticle(int boardNo) {
 		String userId = rs.getString("userId");
 		Timestamp boardWriteDate = rs.getTimestamp("boardWriteDate");	
 		
-		//System.out.println(boardReadCount +"조회수");
 		
 		board.setBoardNo(_boardNo);
 		board.setBoardRe_ref(boardRe_ref);
@@ -197,13 +194,11 @@ public void updateArticle(BoardVO board) {
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			String sql = "update board  set boardTitle=?, boardContent=?";
+			String sql = "update board set boardTitle=?, boardContent=?";
 			
-			//수정된 이미지 파일이 있을때만 imageFileNmae을 SQL문에 추가 합니다.
 			if (imageFileName != null && imageFileName.length() != 0) {
 				sql += ",boardImageFileName=?";
 			}
-			//수정된 이미지 파일이 없을때는 뒤에 where절만 붙인다.
 			sql += " where boardNo=?";
 			
 			System.out.println(sql);
@@ -259,7 +254,7 @@ public List<Integer> selectRemovedArticles(int boardNo) {
 public void deleteArticle(int boardNo) {
 	try {
 		conn = dbUtil.DBConnection.getConnection();
-		//SQL문 만들기??? :  삭제 글과 관련된 자식글까지 모두 삭제
+
 		String sql = "DELETE FROM board ";
 			   sql += "WHERE boardNo=? ;";
 			   
@@ -345,18 +340,24 @@ public List selectAllArticles(Map pagingMap) {
 	int section = (Integer)pagingMap.get("section");
 	int pageNum = (Integer)pagingMap.get("pageNum"); 
 	int startNum = (section - 1)*27 + (pageNum - 1)*9;
-
+	String search = (String) pagingMap.get("search");
+	
 	try {
 		
 		conn = dbUtil.DBConnection.getConnection();
 		
-		String sql = "select * from board order by boardRe_ref desc, boardRe_seq asc"
+		String sql = "select * from board"
+					+ " where boardTitle like ?"
+					+ " order by boardRe_ref desc, boardRe_seq asc"
 					+ " limit ?, 9";
 
 		System.out.println(sql);
 					
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, startNum);
+		pstmt.setString(1,'%'+search +'%');
+		pstmt.setInt(2,startNum);
+
+		System.out.println(pstmt.toString());
 		
 		rs = pstmt.executeQuery();
 		
@@ -387,14 +388,21 @@ public List selectAllArticles(Map pagingMap) {
 }//selectAllArticles(Map pagingMap)
 
 
-public int selectToArticles() {
+public int selectToArticles(Map pagingMap) {
+	
+		int section = (Integer)pagingMap.get("section");
+		int pageNum = (Integer)pagingMap.get("pageNum"); 
+		int startNum = (section - 1)*27 + (pageNum - 1)*9;
+		String search = (String) pagingMap.get("search");
+	
+	
 	try {
 		conn = dbUtil.DBConnection.getConnection();
 		
-		String sql = "select count(boardNo) from board";
+		String sql = "select count(boardNo) from board where boardTitle like ?";
 		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,'%'+search +'%');
 		rs = pstmt.executeQuery();
-		
 		if(rs.next()) {
 			return rs.getInt(1);
 		}

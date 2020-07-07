@@ -7,6 +7,7 @@
 <c:set var="totArticles" value="${boardMap.totArticles}"/>
 <c:set var="section" value="${boardMap.section}"/>
 <c:set var="pageNum" value="${boardMap.pageNum}"/>  
+<c:set var="search" value="${boardMap.search}"/>
 <c:set var="userId" value="${sessionScope.userId}"/>
 <!DOCTYPE html>
 <html lang="ko">
@@ -58,7 +59,7 @@
 			</c:forEach>						
 		</c:when>						
 	</c:choose>
-
+	</div>	
 	  <div class="cls2">
 			<c:if test="${totArticles != null}">
 				<c:choose>
@@ -68,15 +69,15 @@
 						<c:forEach var="page" begin="1" end="10" step="1">
 							<%--섹션값 2부터는 앞 섹션으로 이동할 수 있는 pre문구를 표시 --%>
 							<c:if test="${section > 1 && page=1}">
-								<a href="${contextPath}/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10+1}">
+								<a href="${contextPath}/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10+1}&search=${search}">
 								&nbsp;pre</a>
 							</c:if>	
 							
-							<a href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10}</a>
+							<a href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}&search=${search}">${(section-1)*10}</a>
 														
 							<%-- 페이지 번호 10 오른쪽에는 다음 섹션으로 이동할 수 있는 next를 표시 --%>
 							<c:if test="${page==10}">
-								<a href="${contextPath}/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}">
+								<a href="${contextPath}/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}&search=${search}&search=${search}">
 								&nbsp;next</a>
 							</c:if>												
 						</c:forEach>		
@@ -92,12 +93,12 @@
 						<c:forEach var="page" begin="1" end="${totArticles/10+1}" step="1">
 							<c:choose>
 					   <c:when test="${page==pageNum}">		       
-							  <a class="sel-page" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">
+							  <a class="sel-page" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}&search=${search}">
 							  ${page}
 							  </a>
 						</c:when>	
 						<c:otherwise>	  	     
-							  <a class="no-unline" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}">
+							  <a class="no-unline" href="${contextPath}/board/listArticles.do?section=${section}&pageNum=${page}&search=${search}">
 							  ${page}
 							  </a>	
 						</c:otherwise>
@@ -107,13 +108,18 @@
 				</c:choose>			
 			</c:if>			
 		</div>
+		<form action="${contextPath}/board/listArticles.do">
+		  <input type="hidden" name="section" value="${section}" >
+		  <input type="hidden" name="pageNum" value="${pageNum}" >
+		  <input type="text" name="search" value="${search}" >		  		  
+		  <button type="submit">검색</button>
+		</form>  
 		<%-- ID가 admin일 경우만 글쓰기 가능 --%>
 		<c:if test="${userId eq 'admin'}">
 			<a class="cls1" href="${contextPath}/board/articleForm.do">
 			<p class="cls2">글쓰기</p>
 			</a>
-		</c:if>															
-    </div>
+		</c:if>	
 </div>
 
 </body>

@@ -19,10 +19,7 @@
    </style>
    <script  src="http://code.jquery.com/jquery-latest.min.js"></script> 
    <script type="text/javascript" >
-   
-   //답글쓰기 버튼 클릭시 호출되는 함수로  
-   //답글을 작성할수 있는 화면으로 이동시켜줘~라는 요청주소와
-   //답글 작성시 부모글의 글번호를 매개변수로 전달 받는다.
+
     function fn_reply_form(url, boardRe_ref){
 	   	
 	   console.log(boardRe_ref);
@@ -61,25 +58,16 @@
 		 var form = document.createElement("form");
 		 form.setAttribute("method", "post");
 		 form.setAttribute("action", url);		 
-// 		 <form action=url method="post"></form>
 		 
 	     var articleNOInput = document.createElement("input");
 	     articleNOInput.setAttribute("type","hidden");
 	     articleNOInput.setAttribute("name","boardNo");
 	     articleNOInput.setAttribute("value",boardNo);
-//		<input type="hidden" name="articleNO" value="articleNO"/>
+
 	     
 	     form.appendChild(articleNOInput);	     
-// 	     <form action=url method="post">
-// 	     	<input type="hidden" name="articleNO" value="articleNO"/>
-// 	     </form>
 	     
 	     document.body.appendChild(form);	     
-	//   <body>
-	//	     <form action=url method="post">
-	//	     	<input type="hidden" name="articleNO" value="articleNO"/
-	//	     </form>
-	//   </body>
 	     
 		 form.submit();
 	 
@@ -152,17 +140,16 @@
       이미지
    </td>
    <td>
-   	<%-- 이미지 수정에 대비해  미리 원래 이미지 파일 이름을 <hidden>태그에 저장합니다. --%>
      <input  type= "hidden"   name="originalFileName" value="${board.boardImageFileName }" />
-    <img src="${contextPath}/download.do?boardNo=${board.boardNo}&boardImageFileName=${board.boardImageFileName}" id="preview"/><br>
+    <img src="${contextPath}/files/event/${board.boardNo}/${board.boardImageFileName}" id="preview"/><br>
        
    </td>   
   </tr>  
   <tr>
     <td>
-       <%-- 수정된 이미지 파일 이름을 전송 합니다. --%>
+       <%-- 수정된 이미지 파일 이름을 전송 --%>
        <input  type="file"  name="imageFileName" 
-	    id="i_imageFileName"   disabled   onchange="readURL(this);"   />
+	    id="i_imageFileName"  disabled   onchange="readURL(this);"   />
     </td>
   </tr>
  </c:if>
@@ -176,17 +163,12 @@
   </tr>
   <tr   id="tr_btn_modify"  >
 	   <td colspan="2"   align="center" >
-	   		<%--
-	   			수정 반영하기 버튼을 클릭하면  함수를 호출시  <form>태그의 name속성값 frmArticle을 전달 하여
-	   			<form>태그를 이용하여  BoardController서블릿으로 수정요청을 함
-	   			수정요청 주소 :  /board/modArticle.do
-	   		 --%>
 	       <input type=button value="수정반영하기"   onClick="fn_modify_article(frmArticle)"  >
          <input type=button value="취소"  onClick="backToList(frmArticle)">
 	   </td>   
   </tr>
     
-  <tr  id="tr_btn"    >
+  <tr  id="tr_btn" >
    <td colspan=2 align=center>
 	    <input type=button value="수정하기" onClick="fn_enable(this.form)">
 	    <input type=button value="삭제하기" 

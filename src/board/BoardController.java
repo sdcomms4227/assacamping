@@ -67,20 +67,25 @@ public class BoardController extends HttpServlet {
 		
 		if(action == null || action.equals("/listArticles.do")) {// DB에 전체 글을 조회 
 			
+			String _search = request.getParameter("search");			
 			String _section = request.getParameter("section");
 			String _pageNum = request.getParameter("pageNum");			
 			
 			int section = Integer.parseInt(((_section == null) ? "1" : _section));
 			int pageNum = Integer.parseInt(((_pageNum == null) ? "1" : _pageNum));
-
+			String search = (_search == null) ? "" : _search;
+			
 			Map pagingMap = new HashMap();
 			pagingMap.put("section", section);
 			pagingMap.put("pageNum", pageNum);
+			pagingMap.put("search", search);
+			
 			
 			Map boardMap = boardService.listBoard(pagingMap);
 			
 			boardMap.put("section", section);
 			boardMap.put("pageNum", pageNum);
+			boardMap.put("search", search);
 			
 			request.setAttribute("boardMap", boardMap);
 			
@@ -109,17 +114,16 @@ public class BoardController extends HttpServlet {
 			boardVO.setBoardContent(content);
 			boardVO.setBoardImageFileName(imageFileName);		
 			boardVO.setUserId("admin");
-			//새글 추가 후 추가시킨 새글에 대한 글번호 얻기 
+		
 			int boardNo =boardService.addArticle(boardVO);
 			
 			//파일을 첨부한 경우
 			if(imageFileName != null && imageFileName.length() != 0) {
 				
-				//temp폴더에 임시로 업로드된 파일 객체를 생성 합니다.
 				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);
 				
 				File destDir = new File(realPath + "\\" + boardNo);
-				destDir.mkdirs();//글 번호로 폴더를 생성
+				destDir.mkdirs();
 				
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);	
 			}
@@ -131,6 +135,7 @@ public class BoardController extends HttpServlet {
 			out.print("</script>");
 				
 			return;
+			
 		}else if(action.equals("/viewArticle.do")) {
 			BoardDAO boardDAO = new BoardDAO();
 			
@@ -159,22 +164,18 @@ public class BoardController extends HttpServlet {
 			boardVO.setBoardContent(content);
 			boardVO.setBoardImageFileName(imageFileName);
 			
-			//전송된 글정보를 이용해 글을 수정
+		
 			boardService.modArticle(boardVO);  
 			
 			if (imageFileName != null && imageFileName.length() != 0) {
 				String originalFileName = boardMap.get("originalFileName");
 				
 				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);
-				
-				//수정한 글의 글번호를 이용해 글번호 폴더 생성
 				File destDir = new File(realPath + "\\" + boardNo);
 				destDir.mkdirs();
 				
-				//수정된 이미지파일을 글번호 폴더로 이동
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
-				
-				//전송된 originalFileName을 이용해 기존의 파일 삭제
+
 				File oldFile = new File(realPath + "\\" + boardNo + "\\" + originalFileName);
 				oldFile.delete();
 			}
@@ -187,13 +188,10 @@ public class BoardController extends HttpServlet {
 			return;
 			
 		}else if(action.equals("/removeArticle.do")) {//삭제 요청이 들어 왔을때
-			//삭제할 글번호 얻기 (요청한 값 얻기)
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-
 			List<Integer> boardNoList = 
 					boardService.removeArticle(boardNo);
 			
-			//삭제된 글들의 이미지 저장 폴더삭제
 			for(int _boardNo : boardNoList) {
 			
 				File imgDir = new File(realPath + "\\" + _boardNo);
@@ -214,7 +212,6 @@ public class BoardController extends HttpServlet {
 		
 		}else if(action.equals("/replyForm.do")) {
 			
-			System.out.println("리플라이폼" + request.getParameter("boardRe_ref"));
 			
 			int boardRe_ref = Integer.parseInt(request.getParameter("boardRe_ref"));
 			session = request.getSession();
@@ -302,7 +299,7 @@ public class BoardController extends HttpServlet {
 
 					boardMap.put(fileItem.getFieldName(), fileItem.getString(encoding));
 					
-				}else {//DiskFileItem객체(아이템 하나의 정보)가 파일 아이템일 경우
+				}else {
 					
 					boardMap.put(fileItem.getFieldName(), fileItem.getName());
 					
@@ -326,9 +323,9 @@ public class BoardController extends HttpServlet {
  
 						fileItem.write(uploadFile);
 						
-					}//end if
-				}//end if
-			}//end for
+					}
+				}
+			}
 		}catch (Exception e) {
 			System.out.println("upload메소드 내부에서 업로드 오류 : " + e);
 		}
