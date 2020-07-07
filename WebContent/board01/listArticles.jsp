@@ -7,6 +7,7 @@
 <c:set var="totArticles" value="${boardMap.totArticles}"/>
 <c:set var="section" value="${boardMap.section}"/>
 <c:set var="pageNum" value="${boardMap.pageNum}"/>  
+<c:set var="userId" value="${sessionScope.userId}"/>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,15 +15,10 @@
   <title>이벤트</title>
 
   <meta charset="utf-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
 
 	<style type="text/css">
 		.cls1{ text-decoration: none;}
@@ -55,14 +51,13 @@
 			<c:forEach var="board" items="${boardList}">
 				<div class="col-md-4">
 	        		<a href="${contextPath}/board/viewArticle.do?boardNo=${board.boardNo}" class="thumbnail">
-	        			<img src="${contextPath}/images/${board.boardImageFileName}" alt="city1" style="width:200px;height:150px">
+	        			<img src="${contextPath}/files/event/${board.boardNo}/${board.boardImageFileName}"  style="width:250px;height:180px">
 	        		      <p align="center">${board.boardTitle}</p>	
 	        		</a>
 	        	</div>	
 			</c:forEach>						
 		</c:when>						
 	</c:choose>
-
 
 	  <div class="cls2">
 			<c:if test="${totArticles != null}">
@@ -86,7 +81,7 @@
 							</c:if>												
 						</c:forEach>		
 					</c:when>
-					<%--전체 글수가 100개 일때는 ? 첫 번째 section의 10개의 페이지만 표시하면 됩니다. --%>
+					<%--전체 글수가 100개 일때  --%>
 					<c:when test="${totArticles ==100}">
 						<c:forEach var="page" begin="1" end="10" step="1">
 							<a href="#">${page}</a>
@@ -94,7 +89,6 @@
 					</c:when>			
 					<%--전체 글 수가 100개보다 적을때 페이징을 표시함 --%>
 					<c:when test="${totArticles < 100 }">
-													 <%-- 글수가 100개 되지 않으므로  표시되는 페이지는 10개가 되지 않고, 전체 글수를 10으로 나누어 구한 몫에 1을 더한 페이지까지 표시됩니다.--%>
 						<c:forEach var="page" begin="1" end="${totArticles/10+1}" step="1">
 							<c:choose>
 					   <c:when test="${page==pageNum}">		       
@@ -111,78 +105,15 @@
 						</c:forEach>					
 					</c:when>
 				</c:choose>			
-			</c:if>
-			
+			</c:if>			
 		</div>
-		<a class="cls1" href="${contextPath}/board/articleForm.do">
-		<p class="cls2">글쓰기</p>
-		</a>															
-						
-<!--     <div class="col-md-4">
-  <a href="city1.jpg" class="thumbnail">
-        <p>이벤트1</p>
-        <img src="../images/event_1.jpg" alt="city1" style="width:200px;height:150px">
-      </a>
-	</div>
-	
-    <div class="col-md-4">
-  <a href="city2.jpg" class="thumbnail">
-        <p>이벤트2</p>
-        <img src="../images/event_2.jpg"  alt="city1" style="width:200px;height:150px">
-      </a>
+		<%-- ID가 admin일 경우만 글쓰기 가능 --%>
+		<c:if test="${userId eq 'admin'}">
+			<a class="cls1" href="${contextPath}/board/articleForm.do">
+			<p class="cls2">글쓰기</p>
+			</a>
+		</c:if>															
     </div>
-
-    <div class="col-md-4">
-  <a href="city3.jpg" class="thumbnail">
-        <p>이벤트3</p>
-        <img src="../images/event_3.jpg"  alt="city1" style="width:200px;height:150px">
-      </a>
-    </div>
-
-    <div class="col-md-4">
-  <a href="city1.jpg" class="thumbnail">
-        <p>이벤트1</p>
-        <img src="../images/event_1.jpg" alt="city1" style="width:200px;height:150px">
-      </a>
-    </div>
-
-    <div class="col-md-4">
-  <a href="city2.jpg" class="thumbnail">
-        <p>이벤트2</p>
-        <img src="../images/event_2.jpg"  alt="city1" style="width:200px;height:150px">
-      </a>
-    </div>
-
-    <div class="col-md-4">
-  <a href="city3.jpg" class="thumbnail">
-        <p>이벤트3</p>
-        <img src="../images/event_3.jpg"  alt="city1" style="width:200px;height:150px">
-      </a>
-    </div>
-    <div class="col-md-4">
-  <a href="city1.jpg" class="thumbnail">
-        <p>이벤트1</p>
-        <img src="../images/event_1.jpg" alt="city1" style="width:200px;height:150px">
-      </a>
-    </div>
-
-    <div class="col-md-4">
-  <a href="city2.jpg" class="thumbnail">
-        <p>이벤트2</p>
-        <img src="../images/event_2.jpg"  alt="city1" style="width:200px;height:150px">
-      </a>
-    </div>
-
-    <div class="col-md-4">
-  <a href="city3.jpg" class="thumbnail">
-        <p>이벤트3</p>
-        <img src="../images/event_3.jpg"  alt="city1" style="width:200px;height:150px">
-      </a>
-    </div> -->
-
-
-  </div>
-
 </div>
 
 </body>

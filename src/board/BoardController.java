@@ -24,7 +24,7 @@ import org.apache.commons.io.FileUtils;
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 
-	private static String ARTICLE_IMAGE_REPO = "C:\\board\\article_image";
+	String realPath = "";
 
 	BoardService boardService;
 	BoardVO boardVO;
@@ -50,6 +50,8 @@ public class BoardController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		BoardVO boardVO = new BoardVO();
+
+		realPath = request.getServletContext().getRealPath("/files/event");
 		
 		String nextPage = "";
 		request.setCharacterEncoding("utf-8");
@@ -81,7 +83,8 @@ public class BoardController extends HttpServlet {
 			boardMap.put("pageNum", pageNum);
 			
 			request.setAttribute("boardMap", boardMap);
-
+			
+			session.setAttribute("userId", "admin"); //임시
 	
 			nextPage =  "/board01/listArticles.jsp";	
 			
@@ -113,9 +116,9 @@ public class BoardController extends HttpServlet {
 			if(imageFileName != null && imageFileName.length() != 0) {
 				
 				//temp폴더에 임시로 업로드된 파일 객체를 생성 합니다.
-				File srcFile = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);
 				
-				File destDir = new File(ARTICLE_IMAGE_REPO + "\\" + boardNo);
+				File destDir = new File(realPath + "\\" + boardNo);
 				destDir.mkdirs();//글 번호로 폴더를 생성
 				
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);	
@@ -162,17 +165,17 @@ public class BoardController extends HttpServlet {
 			if (imageFileName != null && imageFileName.length() != 0) {
 				String originalFileName = boardMap.get("originalFileName");
 				
-				File srcFile = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);
 				
 				//수정한 글의 글번호를 이용해 글번호 폴더 생성
-				File destDir = new File(ARTICLE_IMAGE_REPO + "\\" + boardNo);
+				File destDir = new File(realPath + "\\" + boardNo);
 				destDir.mkdirs();
 				
 				//수정된 이미지파일을 글번호 폴더로 이동
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
 				
 				//전송된 originalFileName을 이용해 기존의 파일 삭제
-				File oldFile = new File(ARTICLE_IMAGE_REPO + "\\" + boardNo + "\\" + originalFileName);
+				File oldFile = new File(realPath + "\\" + boardNo + "\\" + originalFileName);
 				oldFile.delete();
 			}
 			PrintWriter pw = response.getWriter();
@@ -193,7 +196,7 @@ public class BoardController extends HttpServlet {
 			//삭제된 글들의 이미지 저장 폴더삭제
 			for(int _boardNo : boardNoList) {
 			
-				File imgDir = new File(ARTICLE_IMAGE_REPO + "\\" + _boardNo);
+				File imgDir = new File(realPath + "\\" + _boardNo);
 				
 				 if(imgDir.exists()) {
 					 
@@ -243,10 +246,10 @@ public class BoardController extends HttpServlet {
 			if(imageFileName != null && imageFileName.length() != 0) {
 				
 				File srcFile = 
-				new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				new File(realPath + "\\" + "temp" + "\\" + imageFileName);
 				
 				File destDir = 
-				new File(ARTICLE_IMAGE_REPO + "\\" + boardNo);
+				new File(realPath + "\\" + boardNo);
 
 				destDir.mkdirs();
 
@@ -278,7 +281,7 @@ public class BoardController extends HttpServlet {
 		
 		String encoding="utf-8";
 		
-		File currentDirPath = new File(ARTICLE_IMAGE_REPO);
+		File currentDirPath = new File(realPath);
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		
@@ -313,7 +316,12 @@ public class BoardController extends HttpServlet {
 
 						String fileName = fileItem.getName().substring(idx + 1);
 						boardMap.put(fileItem.getFieldName(), fileName);  
-
+						String tempDirPath = realPath + "\\temp";
+						File tempDir = new File(tempDirPath);
+						
+						if(!tempDir.exists()) {
+							tempDir.mkdir();
+						}						
 						File uploadFile = new File(currentDirPath + "\\temp\\" + fileName);
  
 						fileItem.write(uploadFile);

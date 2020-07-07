@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 //역할  : viewArticle.jsp에서 전송한 글번호와 이미지 파일 이름으로 파일 경로를 만든후
 //      해당 파일을 내려 받습니다.
 
-@WebServlet("/download.do")
+//@WebServlet("/download.do")
 public class FileDownloadController extends HttpServlet{
 
 	//다운로드할 장소 
