@@ -122,6 +122,17 @@ public class UserController extends HttpServlet{
 				session.invalidate();
 				request.setAttribute("msg", "logout");
 				nextPage = "/";
+			}else if(action.equals("/idCheck.do")) {
+				String userId = (String)request.getParameter("userId");
+				int check = userDAO.idCheck(userId);
+				if(userId.length()<4 || userId.length()>12) {
+					request.setAttribute("msg", "char");
+				}else if(check==1) {
+					request.setAttribute("msg", "used");
+				}else {
+					request.setAttribute("msg", "allow");
+				}
+				nextPage="/user/idCheck.jsp";
 			}
 
 		RequestDispatcher  dispatch = 

@@ -204,9 +204,27 @@ public class UserDAO {
 			resourceClose();
 		}
 		return check;
-	
 	}//login 메소드
 
+	public int idCheck(String userId) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				check=1;
+			}
+		} catch (Exception e) {
+			System.out.println("idCheck메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return check;
+	}//idCheck 메소드
+	
 }//UserDAO클래스 
 
 
