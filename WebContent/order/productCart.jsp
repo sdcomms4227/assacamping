@@ -55,12 +55,7 @@ function fn_delete() {
 
 	<!-- Home -->
 <c:set var="userId" value="${sessionScope.userId }"/>
-	<%
-  // String userId=(String)session.getAttribute("userId");  
-  //  String userId=request.getParameter("userId"); 
- 
-  //  System.out.print(userId+"cart"); 
-     %>
+	
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
 		<div class="container">
@@ -122,7 +117,7 @@ function fn_delete() {
 
 								
 								<div class="cart_product_image">
-								<img src="${contextPath}/images/cart_product_1.jpg"  name="productImage"></div>
+								<img src="${contextPath}/temp/${cartList.productNo}/${cartList.productImage}.jpg"  name="productImage"></div>
 
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="${contextPath}/pro/getOnePro.do?productNo=${cartList.productNo}">${cartList.productName}</a></div>

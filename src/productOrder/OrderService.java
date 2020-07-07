@@ -49,4 +49,9 @@ public int orderCount(String userId) {
        dao.orderDelete(userId, orderNo);
 	 
  }
+ 
+ public List<OrderVO> selectAllOrderList(){
+	 
+	 return dao.selectAllOrderList();
+ }
 }

@@ -33,7 +33,9 @@
 					       ${pay.productPayment }
 					       ${pay.productDelivery}
 					       ${pay.orderDate}
-					       ${order.orderNo }
+					       ${order.orderNo}
+					       ${order.orderState}
+				           
 					   </td>
 					   </tr>
 					   </table>

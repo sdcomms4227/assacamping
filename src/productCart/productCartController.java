@@ -177,6 +177,9 @@ public class productCartController extends HttpServlet {
 					
 				}else if(action.equals("/addCart.do")) {
 					
+					String userId=(String)session.getAttribute("userId");
+					
+					
 					Map<String, String> cartMap = upload(request, response);
 					
 					String productImage = cartMap.get("productImage");
@@ -187,7 +190,7 @@ public class productCartController extends HttpServlet {
 					int cartQuantity=Integer.parseInt(cartQuantity1);
 					String productName=cartMap.get("productName");
 					String productCategory=cartMap.get("productCategory");
-					String userId=cartMap.get("userId");
+					
 					int productPrice=Integer.parseInt(productPrice1);
 				
 					int productTotalPrice=cartQuantity*productPrice;
@@ -240,7 +243,7 @@ public class productCartController extends HttpServlet {
 			File currentDirPath = new File(PRO_IMG_REPO);
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setRepository(currentDirPath);
-			factory.setSizeThreshold(1024 * 1024);
+			factory.setSizeThreshold(1024*1024*1);
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			try {
 				List items = upload.parseRequest(request);

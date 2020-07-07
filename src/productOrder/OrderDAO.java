@@ -191,17 +191,19 @@ public class OrderDAO implements Serializable{
 	}//orderList()
 	
 	
-	public void orderDelete (String userId , int orderNo) {//주문취소
+	public void orderDelete (String userId , int orderNo) {//결제 취소
 		try {
 			
 			con=db.getConnection();
 			
-			sql="delete from productorder where userId=?  and orderNo=?";
+			sql="update productorder set orderstate=? where userId=?  and orderNo=? ";
+			
 			
 			pstmt=con.prepareStatement(sql);
 			
-			pstmt.setString(1, userId);
-			pstmt.setInt(2, orderNo);
+			pstmt.setString(1, "결제취소");
+			pstmt.setString(2, userId);
+			pstmt.setInt(3, orderNo);
 			
 			pstmt.executeUpdate();
 			
@@ -264,7 +266,7 @@ public class OrderDAO implements Serializable{
 	}//updateOrderState()
 	
 	public List<OrderVO> selectAllOrderList(){//관리자 모드에서 주문목록 보여주는거
-		List<OrderVO> list= new ArrayList<OrderVO>();
+		List<OrderVO> list= new ArrayList();
 		try {
 			con=db.getConnection();
 			
@@ -310,6 +312,7 @@ public class OrderDAO implements Serializable{
 			           vo.setOrderNo(rs.getInt("orderNo"));
 			           vo.setProductPayment(rs.getInt("productPayment"));
 			           vo.setProductDelivery(rs.getInt("productDelivery"));
+			           vo.setOrderState(rs.getString("orderState"));
 			         	list.add(vo);
 			}
 			 
@@ -329,7 +332,7 @@ public class OrderDAO implements Serializable{
 		try {
 			con=db.getConnection();
 			
-			sql="select distinct orderNo from productorder where userId=?";
+			sql="select distinct orderNo,orderState from productorder where userId=?";
 			
 			pstmt= con.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -340,7 +343,7 @@ public class OrderDAO implements Serializable{
 			       OrderVO vo = new OrderVO();
 			           
 			           vo.setOrderNo(rs.getInt("orderNo"));
-			           
+			           vo.setOrderState(rs.getString("orderState"));
 			         	list.add(vo);
 			}
 			 

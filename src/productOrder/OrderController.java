@@ -145,7 +145,7 @@ public class OrderController extends HttpServlet{
 				System.out.println(orderNo);
 				productCartService cartservice=new productCartService();
 				 
-				//cartservice.allDeleteCart(userId); 
+				//cartservice.allDeleteCart(userId);  //결제되면 장바구니 정보는 삭제 
 			       
 				List<OrderVO> orderlist= orderservice.orderList(userId,orderNo);
 				
@@ -161,7 +161,7 @@ public class OrderController extends HttpServlet{
 				
 				productListService listservice= new productListService();
 				
-				productListVO onepro=listservice.getOnePro(productNo);
+				 Map<String, Object> onepro=listservice.getProductItem(productNo);
 				
 				request.setAttribute("onepro", onepro);
 				
@@ -174,6 +174,7 @@ public class OrderController extends HttpServlet{
 			    System.out.println(userId);
 				
 				List<OrderVO> payList=orderservice.payList(userId);
+				
 				List<OrderVO> orderNo=orderservice.orderNo(userId);
 				
 				System.out.println(payList);
@@ -182,7 +183,9 @@ public class OrderController extends HttpServlet{
 				request.setAttribute("payList", payList);
 				
 				nextPage="/mypage/myOrderList.jsp";
+				
 			}else if(action.equals("/orderInfo.do")) {
+				
 				String userId=(String)session.getAttribute("userId");
 				System.out.println(userId);
 				int orderNo= Integer.parseInt(request.getParameter("orderNo"));
@@ -193,15 +196,31 @@ public class OrderController extends HttpServlet{
 				request.setAttribute("orderInfo", orderInfo);
 				
 				nextPage="/mypage/myOrderInfo.jsp";
-			}else if(action.equals("/orderDelete.do")) {
+				
+			}else if(action.equals("/orderDelete.do")) {//결제취소 
 			
 				int orderNo=Integer.parseInt(request.getParameter("orderNo"));
+				
 				String userId=(String)session.getAttribute("userId");
 				
 				orderservice.orderDelete(userId, orderNo);
+				
 				 session.setAttribute("userId", userId); 
-				nextPage="/mypage/myOrderList.jsp";
+				 
+				nextPage="/cartorder/orderList.do";
 		
+			}else if(action.equals("/adminOrderList.do")) {
+				
+				List<OrderVO> orderlist1=orderservice.selectAllOrderList();
+				System.out.println(orderlist1);
+				for(int i=0; i<orderlist1.size() ; i++) {
+					  OrderVO vo3=orderlist1.get(i);
+					  System.out.println(vo3.getUserId());
+				
+				}
+				request.setAttribute("orderlist", orderlist1);
+				
+				nextPage="/admin/adminOrderList.jsp";
 			}
 			
 			

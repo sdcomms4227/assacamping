@@ -63,7 +63,7 @@ public class productListController extends HttpServlet{
 			
 			if(action.equals("/proList.do")) {
 				
-			proList = proService.proAllList();
+			proList = proService.getProductList();
 			
 			request.setAttribute("proList", proList);
 			
@@ -74,17 +74,13 @@ public class productListController extends HttpServlet{
 				nextPage="/product/writeForm.jsp";
 			
 				
-
-			}else if(action.equals("/addForm.do")) {
-				//게시판 구현자가 구현 
-				
-			}else if(action.equals("/getOnePro.do")) {
+             }else if(action.equals("/getOnePro.do")) {
 
 				int productNo = Integer.parseInt(request.getParameter("productNo"));
 				productListVO onePro = new productListVO();
-				onePro = proService.getOnePro(productNo); 
+				Map<String, Object>	proItem = proService.getProductItem(productNo);
 				
-				request.setAttribute("onePro", onePro);
+				request.setAttribute("proItem", proItem);
 				
 				nextPage = "/product/productInfo.jsp";
 

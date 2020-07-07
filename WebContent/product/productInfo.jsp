@@ -4,7 +4,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<c:set var="userId" value="${request.getSession('userId')}"/>
+ <c:set var="userId" value="${sessionScope.userId}"/>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -95,7 +95,7 @@
 					</div>
 				</div>
 			</div>
-			<form name="frmPro" method="post" action="${contextPath}" enctype="multipart/form-data">
+			<form name="frmPro" method="post" action="${contextPath}/cart/addCart.do" enctype="multipart/form-data">
 			<div class="row product_row">
 
 				<!-- Product Image -->

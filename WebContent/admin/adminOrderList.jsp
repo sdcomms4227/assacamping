@@ -5,23 +5,31 @@
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
 		<thead>
-			<tr>
-				<th>#</th>
-				<th>Header</th>
-				<th>Header</th>
-				<th>Header</th>
-				<th>Header</th>
+			<tr align="center">
+				<th>회원이름</th>
+				<th>구매상품</th>
+				<th>구매수량</th>
+				<th>주문번호</th>
+				<th>주문상태</th>
+				<th>결제일</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1,001</td>
-				<td>Lorem</td>
-				<td>ipsum</td>
-				<td>dolor</td>
-				<td>sit</td>
+		    <c:choose>
+		      <c:when test="${orderlist !=null}">
+			   <c:forEach items="${orderlist}" var="order" >
+			<tr align="center">
+				<td>${order.userName}</td> 
+			    <td>${order.productName}</td>
+			    <td>${order.cartQuantity }</td> 
+				<td>${order.orderNo}</td>
+				<td>${order.orderState}</td>
+				<td>${order.orderDate}</td>
 			</tr>
-			<tr>
+			  </c:forEach>
+			 </c:when>
+			</c:choose>
+			<!-- <tr>
 				<td>1,002</td>
 				<td>amet</td>
 				<td>consectetur</td>
@@ -124,7 +132,7 @@
 				<td>sodales</td>
 				<td>ligula</td>
 				<td>in</td>
-				<td>libero</td>
+				<td>libero</td> -->
 			</tr>
 		</tbody>
 	</table>

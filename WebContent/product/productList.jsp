@@ -268,6 +268,37 @@
 						</c:forEach>
 				</tr>
 				</table>
+				
+	<c:if test="${totalCount != null}">
+		<div class="row">
+			<div class="col-12">
+				<ul class="pagination justify-content-center">
+				<c:if test="${pageNo > 10}">	
+				   	<li class="page-item">
+						<button type="button" class="page-link" onclick="listProduct(${beginNo-10})">이전</button>
+					</li>
+				</c:if>
+				<c:forEach var="page" begin="${beginNo}" end="${endNo}" step="1">
+					<c:if test="${page <= Math.ceil(totalCount/10)}">
+						<c:choose>	
+							<c:when test="${page==pageNo}">
+								<li class="page-item active">
+									<button type="button" class="page-link" onclick="listProduct(${page})">${page}</button>						
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item">
+									<button type="button" class="page-link" onclick="listProduct(${page})">${page}</button>							
+								</li>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</c:forEach>								
+				<c:if test="${totalCount > endNo*10}">						
+				   	<li class="page-item">
+						<button type="button" class="page-link" onclick="listProduct(${beginNo+10})">이전</button>
+					</li>
+				</c:if>
 			</form>
 
 			<div class="row page_num_container">

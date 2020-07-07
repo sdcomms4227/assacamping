@@ -5,19 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-
-
+import java.util.Map;
 
 import dbUtil.DBConnection;
+import productAdmin.ProductAdminVO;
 
 
 
 
 public class productListDAO {
 	
-	private Connection con;
+	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String sql;
@@ -26,87 +26,103 @@ public class productListDAO {
 	public void freeResource() {
 		if(rs != null) {try {rs.close();}catch(SQLException e){e.printStackTrace();}}
 		if(pstmt != null) {try {pstmt.close();}catch(SQLException e){e.printStackTrace();}}	
-		if(con != null) {try {con.close();}catch(SQLException e){e.printStackTrace();}}
+		if(conn != null) {try {conn.close();}catch(SQLException e){e.printStackTrace();}}
 	
 	}//freeResource()
 
-	public List<productListVO> selectAllList() {
+	public List<Map<String,Object>> getProductList() {
+
+		List<Map<String,Object>> productList = new ArrayList<Map<String,Object>>();
 		
-		
-		List<productListVO> proList = new ArrayList<productListVO>();
+		String sql = "";
 		
 		try {
-			con = db.getConnection();
-		
-			sql = "select * from productlist";
-			pstmt = con.prepareStatement(sql);
-		
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				productListVO proVO = new productListVO(rs.getInt("productNo"), 
-														rs.getInt("productPrice"), 
-														rs.getInt("productRestQuantity"), 
-														rs.getInt("productDelivery"), 
-														rs.getString("productName"), 
-														rs.getString("productInformation"), 
-														rs.getString("productImage"), 
-														rs.getString("productCategory"));
-						
-						
-						
-		
+			
+			conn = dbUtil.DBConnection.getConnection();
+			
+				sql = "	select *"
+						+ " from product pr"
+						+ " join productCategory ct"
+						+ " on pr.productCategoryNo = ct.productCategoryNo";
+					
 				
-				proList.add(proVO);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
+				pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Map<String, Object> productMap = new HashMap<String, Object>();
+				ProductAdminVO productAdminVO = new ProductAdminVO();
+				
+				productAdminVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
+				productAdminVO.setProductDate(rs.getTimestamp("productDate"));
+				productAdminVO.setProductImageName1(rs.getString("productImageName1"));
+				productAdminVO.setProductImageName2(rs.getString("productImageName2"));
+				productAdminVO.setProductImageName3(rs.getString("productImageName3"));
+				productAdminVO.setProductInformation(rs.getString("productInformation"));
+				productAdminVO.setProductName(rs.getString("productName"));
+				productAdminVO.setProductNo(rs.getInt("productNo"));
+				productAdminVO.setProductPrice(rs.getInt("productPrice"));
+				productAdminVO.setProductQuantity(rs.getInt("productQuantity"));
+				
+				String productCategoryName = rs.getString("productCategoryName");
+				
+				productMap.put("productAdminVO", productAdminVO);
+				productMap.put("productCategoryName", productCategoryName);
+								
+				productList.add(productMap);
+			}			
+			
+		} catch(Exception e) {
+			System.out.println("getProductList(Map)메소드 내부에서 오류 : " + e.toString());
+		} finally {
 			freeResource();
 		}
 		
-		return proList;
-	
-	}//selectAllList()
+		return productList;		
+	}
 
-	public productListVO selectOnePro(int productNo) {
+public Map<String, Object> getProductItem(int productNo) {
 		
-		productListVO onePro = new productListVO();
+		Map<String, Object> productMap = new HashMap<String, Object>();
+		ProductAdminVO productAdminVO = new ProductAdminVO();
+		String productCategoryName = "";
 		
 		try {
-
-			con =db.getConnection();
-
-			
-			sql = "select * from productlist where productNo=?";
-			pstmt = con.prepareStatement(sql);
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "select *"
+					+ " from product pr"
+					+ " join productCategory ct"
+					+ " on pr.productCategoryNo = ct.productCategoryNo"
+					+ " where pr.productNo = ?";
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productNo);
 			
 			rs = pstmt.executeQuery();
+			
 			if(rs.next()) {
-				int _productNo = rs.getInt("productNo");
-				int productPrice = rs.getInt("productPrice");
-				int productDelivery = rs.getInt("productDelivery");
-				String productName = rs.getString("productName");
-				String productInformation = rs.getString("productInformation");
-				String productImage = rs.getString("productImage");
-				String productCategory = rs.getString("productCategory");
-				
-				onePro.setProductNo(_productNo); 
-				onePro.setProductPrice(productPrice);
-				onePro.setProductDelivery(productDelivery);
-				onePro.setProductName(productName);
-				onePro.setProductInformation(productInformation);
-				onePro.setProductImage(productImage);
-				onePro.setProductCategory(productCategory);
-				
+				productAdminVO.setProductNo(rs.getInt("productNo"));
+				productAdminVO.setProductName(rs.getString("productName"));
+				productAdminVO.setProductInformation(rs.getString("productInformation"));
+				productAdminVO.setProductImageName1(rs.getString("productImageName1"));
+				productAdminVO.setProductImageName2(rs.getString("productImageName2"));
+				productAdminVO.setProductImageName3(rs.getString("productImageName3"));
+				productAdminVO.setProductPrice(rs.getInt("productPrice"));
+				productAdminVO.setProductQuantity(rs.getInt("productQuantity"));
+				productAdminVO.setProductDate(rs.getTimestamp("productDate"));
+				productAdminVO.setProductCategoryNo(rs.getInt("productCategoryNo"));				
+				productCategoryName = rs.getString("productCategoryName");
+			
+				productMap.put("productAdminVO", productAdminVO);
+				productMap.put("productCategoryName", productCategoryName);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
+			
+		} catch(Exception e) {
+			System.out.println("getProductItem()메소드 내부에서 오류 : " + e.toString());
+		} finally {
 			freeResource();
 		}
 		
-		return onePro;
-		
-	}//selectOnePro()
+		return productMap;
+	}
 }

@@ -217,6 +217,7 @@ public class ProductAdminDAO {
 			conn = dbUtil.DBConnection.getConnection();			
 			String sql = "insert into product(productName, productInformation, productImageName1, productImageName2, productImageName3, productPrice, productQuantity, productCategoryNo)"
 					+ "values(?,?,?,?,?,?,?,?)";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, productAdminVO.getProductName());
 			pstmt.setString(2, productAdminVO.getProductInformation());

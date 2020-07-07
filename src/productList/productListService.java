@@ -2,6 +2,7 @@ package productList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class productListService {
@@ -11,20 +12,14 @@ productListDAO proDAO;
 		proDAO = new productListDAO();
 	}
 	
-	public List<productListVO> proAllList(){
+	public List<Map<String,Object> getProductList(Map<String, Object> searchMap) {
 		
-		List<productListVO> proList = new ArrayList<productListVO>();
-		
-		proList = proDAO.selectAllList();
-		
-		return proList;
+		return proDAO.getProductList();
 		
 	}
 	
-	public productListVO getOnePro(int productNo){
+	public Map<String, Object> getProductItem(int productNo) {
+		return proDAO.getProductItem(productNo);
 		
-		productListVO onePro = new productListVO();
-		onePro = proDAO.selectOnePro(productNo); 
-		return onePro;
 	}
 }
