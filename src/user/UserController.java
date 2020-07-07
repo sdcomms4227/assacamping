@@ -133,6 +133,20 @@ public class UserController extends HttpServlet{
 					request.setAttribute("msg", "allow");
 				}
 				nextPage="/user/idCheck.jsp";
+			}else if(action.equals("/findId.do")) {
+				String userName = request.getParameter("userName");
+				String userEmail = request.getParameter("userEmail");
+				int check = userDAO.findId(userName,userEmail);
+				if(check==0) {
+					request.setAttribute("msg", "id");
+					nextPage = "/user/login.jsp";
+				}else if(check==1) {
+					request.setAttribute("msg", "pw");
+					nextPage = "/user/login.jsp";
+				}else {
+					session.setAttribute("userId", userId);
+					nextPage = "/";
+				}
 			}
 
 		RequestDispatcher  dispatch = 

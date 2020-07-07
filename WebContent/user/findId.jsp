@@ -50,7 +50,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Login</div>
+							<div class="home_title">FindId</div>
 						</div>
 					</div>
 				</div>
@@ -61,22 +61,17 @@
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form name="loginform" class="loginform text-center" action="${contextPath}/userCon/loginAction.do" method="post">
+			<form name="loginform" class="loginform text-center" action="${contextPath}/userCon/findId.do" method="post">
 				<div class="form-label-group">
-					<input type="text" class="form-control" placeholder="아이디를 입력하세요." name="userId" id="userId" maxlength="20" required autofocus />
-					<label for="userId">아이디</label>
+					<input type="text" class="form-control" placeholder="이름을 입력하세요." name="userName" id="userName" maxlength="20" required autofocus />
+					<label for="userName">이름</label>
 				</div>
 				<div class="form-label-group">
-					<input type="password" class="form-control" placeholder="비밀번호를 입력하세요." name="userPw" id="userPw" maxlength="20" required />
-					<label for="userPw">비밀번호</label>
+					<input type="email" class="form-control" placeholder="이메일을 입력하세요." name="userEmail" id="userEmail" maxlength="20" required />
+					<label for="userPw">이메일</label>
 				</div>
-				<button type="submit" class="btn btn-xl btn-primary btn-block mb-5">로그인</button>
+				<button type="submit" class="btn btn-xl btn-primary btn-block mb-5">아이디 찾기</button>
 				<hr />
-				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/findId.jsp">아이디 찾기</a>
-				<span class="text-muted">|</span>
-				<a class="btn btn-sm btn-secondary-link" href="javascript:alert('준비중입니다.')">비밀번호 찾기</a>
-				<span class="text-muted">|</span>
-				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/regFormImpl.jsp">회원가입</a>
 			</form>
 		</div>
 	</section>
