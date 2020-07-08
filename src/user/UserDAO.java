@@ -161,13 +161,9 @@ public class UserDAO {
 		
 		try {
 			conn = dataFactory.getConnection();
-			
 			String query = "delete from user where userId=?";
-			
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setString(1, userId);
-			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("delUser메소드 내부에서 SQL 실행 오류: " + e);
@@ -244,9 +240,36 @@ public class UserDAO {
 		}
 		return userId;
 	}//findId 메소드
+
+	public int withdrawlUser(String userId, String userPw) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(userPw.equals(rs.getString("userPw"))) {
+					query = "update user set userUse = 0 where userId = ?";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, userId);
+					pstmt.executeUpdate();
+					check = 1;
+				}else {
+					check = 0;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("withdrawlUser메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return check;
+	}//withdrawlUser메소드 
 }//UserDAO클래스 
 
-
+//컨트롤러에서 
 
 
 

@@ -19,6 +19,15 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/index.css">
 <link rel="stylesheet" href="${contextPath}/css/index_responsive.css">
+<c:choose>
+	<c:when test='${msg=="complete"}'>
+		<script type="text/javascript">
+			window.onload = function(){
+				window.alert("그동안 ASSACAMPING을 이용해 주셔서 감사합니다.");
+			}
+		</script>
+	</c:when>
+</c:choose>
 </head>
 <body>
 

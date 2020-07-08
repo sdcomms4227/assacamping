@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%request.setCharacterEncoding("UTF-8");
+	String userId =(String)request.getAttribute("userId");
+	System.out.println("userId3" + userId);
+%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -16,17 +22,10 @@
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
 <c:choose>
-	<c:when test='${msg=="id"}'>
+	<c:when test='${msg=="xId"}'>
 		<script type="text/javascript">
 			window.onload = function(){
-				window.alert("존재하지 않는 아이디 입니다.");
-			}
-		</script>
-	</c:when>
-	<c:when test='${msg=="pw"}'>
-		<script type="text/javascript">
-			window.onload = function(){
-				window.alert("비밀번호가 일치하지 않습니다.");
+				window.alert("회원정보가 존재하지 않습니다.");
 			}
 		</script>
 	</c:when>
@@ -59,9 +58,12 @@
 	</div>
 
 	<!-- user-->
-	<section class="section-user">
-		<div class="container body-container my-5 py-5">
-			<form name="loginform" class="loginform text-center" action="${contextPath}/userCon/findId.do" method="post">
+	
+<section class="section-user">
+	<div class="container body-container my-5 py-5">
+		<c:choose>
+				<c:when test="${userId == null }">
+			<form name="findId" class="loginform text-center" action="${contextPath}/userCon/findId.do" method="post">
 				<div class="form-label-group">
 					<input type="text" class="form-control" placeholder="이름을 입력하세요." name="userName" id="userName" maxlength="20" required autofocus />
 					<label for="userName">이름</label>
@@ -73,6 +75,12 @@
 				<button type="submit" class="btn btn-xl btn-primary btn-block mb-5">아이디 찾기</button>
 				<hr />
 			</form>
+			</c:when>
+			<c:otherwise>
+				아이디는 <%=userId %> 입니다.
+			</c:otherwise>
+		</c:choose>
+			
 		</div>
 	</section>
 	<!-- 조회되어온 아이디가 잇으면 이프문을 걸어서 폼부분 숨기고 아이디 정보 출력
