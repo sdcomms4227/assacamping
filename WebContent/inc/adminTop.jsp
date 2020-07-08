@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="top.jsp"%>
 <c:set var="userId" value="${sessionScope.userId}" />
+<c:set var="alertMsg" value="${alertMsg}" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -23,6 +24,12 @@
 		alert("관리자만 접근할 수 있습니다.");
 		location.href = "${contextPath}/userCon/logout.do";
 	</script>
+</c:if>
+<c:if test="${alertMsg!=null}">
+	<script>
+		alert("${alertMsg}");
+	</script>
+	<c:remove var="alertMsg" />
 </c:if>
 </head>
 <body>
