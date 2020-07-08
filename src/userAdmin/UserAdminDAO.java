@@ -137,164 +137,100 @@ public class UserAdminDAO {
 		return userVO;
 	}
 
-//	public int getUserMaxNo() {
-//
-//		int maxNo = 0;
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "select max(userId) from user";
-//			pstmt = conn.prepareStatement(sql);
-//
-//			rs = pstmt.executeQuery();
-//
-//			if (rs.next()) {
-//				maxNo = rs.getInt(1) + 1;
-//			} else {
-//				maxNo = 1;
-//			}
-//
-//		} catch (Exception e) {
-//			System.out.println("getUserMaxNo()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return maxNo;
-//	}
-//
-//	public int insertUser(UserVO userVO, int maxNo) {
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "insert into user(userId, userName, userContent, userFileName, userId, userRe_ref, userRe_lev, userRe_seq, userDate, userCount, userCategoryNo)"
-//					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, maxNo);
-//			pstmt.setString(2, userVO.getUserTitle());
-//			pstmt.setString(3, userVO.getUserContent());
-//			pstmt.setString(4, userVO.getUserFileName());
-//			pstmt.setString(5, userVO.getUserId());
-//			pstmt.setInt(6, maxNo);
-//			pstmt.setInt(7, 0);
-//			pstmt.setInt(8, 0);
-//			pstmt.setInt(9, 0);
-//			pstmt.setInt(10, userVO.getUserCategoryNo());
-//
-//			return pstmt.executeUpdate();
-//		} catch (Exception e) {
-//			System.out.println("insertUser()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return 0;
-//	}
-//
-//	public int updateUser(UserVO userVO, String deleteFile) {
-//
-//		String userFileName = userVO.getUserFileName();
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//
-//			if (userFileName != null) {
-//				String sql = "update user set userName=?, userContent=?, userFileName=?, userCategoryNo=? where userId=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, userVO.getUserTitle());
-//				pstmt.setString(2, userVO.getUserContent());
-//				pstmt.setString(3, userFileName);
-//				pstmt.setInt(4, userVO.getUserCategoryNo());
-//				pstmt.setInt(5, userVO.getUserNo());
-//			} else if (deleteFile != null) {
-//				String sql = "update user set userName=?, userContent=?, userFileName=?, userCategoryNo=? where userId=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, userVO.getUserTitle());
-//				pstmt.setString(2, userVO.getUserContent());
-//				pstmt.setString(3, null);
-//				pstmt.setInt(4, userVO.getUserCategoryNo());
-//				pstmt.setInt(5, userVO.getUserNo());
-//			} else {
-//				String sql = "update user set userName=?, userContent=?, userCategoryNo=? where userId=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, userVO.getUserTitle());
-//				pstmt.setString(2, userVO.getUserContent());
-//				pstmt.setInt(3, userVO.getUserCategoryNo());
-//				pstmt.setInt(4, userVO.getUserNo());
-//			}
-//
-//			return pstmt.executeUpdate();
-//		} catch (Exception e) {
-//			System.out.println("updateUser()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return 0;
-//	}
-//
-//	public int deleteUser(String userId) {
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "delete from user where userId=?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, userId);
-//
-//			return pstmt.executeUpdate();
-//		} catch (Exception e) {
-//			System.out.println("deleteUser()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return 0;
-//	}
-//
-//	public int updateUserSequence(UserVO userVO) {
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "update user set userRe_seq=userRe_seq+1 where userRe_ref=? and userRe_seq>?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, userVO.getUserRe_ref());
-//			pstmt.setInt(2, userVO.getUserRe_seq());
-//
-//			return pstmt.executeUpdate();
-//		} catch (Exception e) {
-//			System.out.println("updateUserSequence()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return 0;
-//	}
-//
-//	public int insertReplyUser(UserVO userVO, int maxNo) {
-//
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "insert into user(userId, userName, userContent, userFileName, userId, userRe_ref, userRe_lev, userRe_seq, userDate, userCount, userCategoryNo)"
-//					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, maxNo);
-//			pstmt.setString(2, userVO.getUserTitle());
-//			pstmt.setString(3, userVO.getUserContent());
-//			pstmt.setString(4, userVO.getUserFileName());
-//			pstmt.setString(5, userVO.getUserId());
-//			pstmt.setInt(6, userVO.getUserRe_ref());
-//			pstmt.setInt(7, userVO.getUserRe_lev() + 1);
-//			pstmt.setInt(8, userVO.getUserRe_seq() + 1);
-//			pstmt.setInt(9, 0);
-//			pstmt.setInt(10, userVO.getUserCategoryNo());
-//
-//			return pstmt.executeUpdate();
-//		} catch (Exception e) {
-//			System.out.println("insertReplyUser()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
-//
-//		return 0;
-//	}
+	public int insertUser(UserVO userVO) {
+
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "insert into user(userId, userPw, userName, userPhone, userEmail, userZipcode, userAddress1, userAddress2, userDate, userUse)"
+					+ "values(?,?,?,?,?,?,?,?,now(),1)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userVO.getUserId());
+			pstmt.setString(2, userVO.getUserPw());
+			pstmt.setString(3, userVO.getUserName());
+			pstmt.setString(4, userVO.getUserPhone());
+			pstmt.setString(5, userVO.getUserEmail());
+			pstmt.setString(6, userVO.getUserZipcode());
+			pstmt.setString(7, userVO.getUserAddress1());
+			pstmt.setString(8, userVO.getUserAddress2());
+
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("insertUser()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+
+		return 0;
+	}
+	
+	public int checkUserPw(UserVO userVO) {
+		String userPw = "";
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			String sql = "select userPw from user where userId=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userVO.getUserId());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userPw = rs.getString("userPw");
+			}
+			
+			if(userPw.equals(userVO.getUserPw())) {
+				return 1;
+			}
+		} catch (Exception e) {
+			System.out.println("checkUserPw()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+
+		return 0;
+	}
+
+	public int updateUser(UserVO userVO) {
+
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+
+			String sql = "update user set userName=?, userPhone=?, userEmail=?, userZipcode=?, userAddress1=?, userAddress2=? where userId=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userVO.getUserName());
+			pstmt.setString(2, userVO.getUserPhone());
+			pstmt.setString(3, userVO.getUserEmail());
+			pstmt.setString(4, userVO.getUserZipcode());
+			pstmt.setString(5, userVO.getUserAddress1());
+			pstmt.setString(6, userVO.getUserAddress2());
+			pstmt.setString(7, userVO.getUserId());
+
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("updateUser()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+
+		return 0;
+	}
+
+	public int deleteUser(String userId) {
+
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "delete from user where userId=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("deleteUser()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+
+		return 0;
+	}
+
 }
