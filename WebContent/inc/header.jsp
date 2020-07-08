@@ -8,7 +8,7 @@
 		<div class="logo"><a href="${contextPath}">ASSA</a></div>
 		<nav class="main_nav">
 			<ul>
-				<li><a href="${contextPath}/product/productList.jsp">상품 목록</a></li>
+				<li><a href="${contextPath}/pro/proList.do">상품 목록</a></li>
 				<li><a href="${contextPath}/product/productInfo.jsp">상품 상세보기</a></li>
 
 				<li><a href="${contextPath}/cart/cart.do">장바구니</a></li>

@@ -105,10 +105,12 @@ function fn_delete() {
 				<div class="col">
 					<div class="cart_products">
 					<c:choose>
+					 
 					 <c:when test="${list == null }">
                           <br> <div align="center">장바구니가 비어있습니다</div>
                           <button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>					 
 					 </c:when>
+					  
 					  <c:when test="${list != null }">
 					    <c:forEach var="cartList" items="${list}">
 						<ul>
@@ -117,7 +119,7 @@ function fn_delete() {
 
 								
 								<div class="cart_product_image">
-								<img src="${contextPath}/temp/${cartList.productNo}/${cartList.productImage}.jpg"  name="productImage"></div>
+								<img src="${contextPath}/files/product/${cartList.productNo}/${cartList.productImage}" width="50px" name="productImage"></div>
 
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="${contextPath}/pro/getOnePro.do?productNo=${cartList.productNo}">${cartList.productName}</a></div>
@@ -170,7 +172,7 @@ function fn_delete() {
 					    <input type="hidden" id="userId" value="${userId}">
 						<button class="button_clear cart_button" onclick="fn_delete();">clear cart</button>
 						</form>
-						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>
+						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/pro/proList.do'">continue shopping</button>
 					
 					</div>
 				</div>
@@ -220,6 +222,8 @@ function fn_delete() {
 		</div>
 	</div>
        </c:when>
+       
+       
 	</c:choose>
 	
 	<!-- Newsletter -->

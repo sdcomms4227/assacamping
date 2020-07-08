@@ -1,6 +1,7 @@
 package productList;
 
-import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,14 +13,23 @@ productListDAO proDAO;
 		proDAO = new productListDAO();
 	}
 	
-	public List<Map<String,Object> getProductList(Map<String, Object> searchMap) {
+	public Map<String, Object> listProduct(Map<String, Object> searchMap) {
 		
-		return proDAO.getProductList();
+		Map<String, Object> productListMap = new HashMap<String, Object>();
 		
+		List<Map<String,Object>> productList = proDAO.getProductList(searchMap);
+		productListMap.put("productList", productList);
+		
+		int totalCount = proDAO.getProductCount(searchMap);
+		productListMap.put("totalCount", totalCount);
+		
+		return productListMap;
 	}
 	
-	public Map<String, Object> getProductItem(int productNo) {
-		return proDAO.getProductItem(productNo);
+	public productListVO getOnePro(int productNo){
 		
+		productListVO onePro = new productListVO();
+		onePro = proDAO.selectOnePro(productNo); 
+		return onePro;
 	}
 }

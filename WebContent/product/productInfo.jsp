@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<% request.setCharacterEncoding("UTF-8"); %>
+<% 
+	request.setCharacterEncoding("UTF-8");
+	//String productCategory = request.getParameter("productCategory");
+%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
- <c:set var="userId" value="${sessionScope.userId}"/>
+<c:set var="userId" value="${sessionScope.userId}"/>
+<c:set var="productCategory" value="${productCategory}"/>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -20,12 +25,16 @@
 	   
 	<script type="text/javascript">
 
-   		function fn_order_pro(obj, userId){
+   		/* function fn_order_pro(obj, userId){
 
    			var form = document.createElement("form");
+   			
    		 	form.setAttribute("method", "post");
+   		 	
    			form.setAttribute("action", url);
+   			
 	   	     var IdInput = document.createElement("input");
+	   	     
 	   	     parentNOInput.setAttribute("type","hidden");
 
 	   	     parentNOInput.setAttribute("name","userId");
@@ -35,7 +44,7 @@
    	     form.appendChild(parentNOInput);
    	     document.body.appendChild(form);
    		 form.submit();
-   		}
+   		} */
    		
    		function backToList(obj){
 
@@ -68,7 +77,7 @@
 							<div class="home_title">Woman</div>
 							<div class="breadcrumbs">
 								<ul>
-									<li><a href="index.html">Home</a></li>
+									<li><a href="${contextPath}/index.jsp">Home</a></li>
 									<li>Woman</li>
 									<li>Swimsuits</li>
 								</ul>
@@ -88,25 +97,37 @@
 				<div class="col">
 					<div class="current_page">
 						<ul>
-							<li><a href="categories.html">Woman's Fashion</a></li>
-							<li><a href="categories.html">Swimsuits</a></li>
-							<li>2 Piece Swimsuits</li>
+							<li><a href="${contextPath}/pro/proList.do"><!-- Woman's Fashion -->상품목록</a></li>
+							<li><a href="categories.html">[${productvo.productCategoryName}]</a></li>
+							<li>${onePro.productName}</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<form name="frmPro" method="post" action="${contextPath}/cart/addCart.do" enctype="multipart/form-data">
+			<form name="frmPro" method="post" action="${contextPath}/cart/addCart.do?userId=${userId}" enctype="multipart/form-data">
+			
+			
 			<div class="row product_row">
 
 				<!-- Product Image -->
 				
-				<div class="col-lg-7">
+				<c:set var="onePro" value="${onePro}"/>
+				<input type="hidden" name="productNo" value="${onePro.productNo}">
+				<input type="hidden" name="productName" value="${onePro.productName}">
+				<input type="hidden" name="productPrice" value="${onePro.productPrice}">
+				<input type="hidden" name="productImage" value="${onePro.productImageName1}">
+				<input type="hidden" name="productCategory" value="${onePro.productCategoryNo }">
+ 				<div class="col-lg-7">
 					<div class="product_image">
-						<div class="product_image_large"><img src="${onePro.productImage}" alt=""></div>
+						<div class="product_image_large">
+						
+						
+ 						<%-- <img name="productImage"  src="${contextPath}/files/product/${onePro.productNo}/${onePro.productImageName1}" style="height:40px" /> --%>
+						</div>
 						<div class="product_image_thumbnails d-flex flex-row align-items-start justify-content-start">
-							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_1.jpg)" data-image="${contextPath}/images/product_image_1.jpg"></div>
-							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_2.jpg)" data-image="${contextPath}/images/product_image_2.jpg"></div>
-							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/images/product_image_4.jpg)" data-image="${contextPath}/images/product_image_4.jpg"></div>
+							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/files/product/${onePro.productNo}/${onePro.productImageName1}" data-image="${contextPath}/images/product_image_1.jpg"></div>
+							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/files/product/${onePro.productNo}/${onePro.productImageName2}" data-image="${contextPath}/images/product_image_2.jpg"></div>
+							<div class="product_image_thumbnail" style="background-image:url(${contextPath}/files/product/${onePro.productNo}/${onePro.productImageName3}" data-image="${contextPath}/images/product_image_4.jpg"></div>
 						</div>
 					</div>
 				</div>
@@ -129,13 +150,13 @@
 							<span>in stock</span>
 						</div>
 						<div class="product_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis quam ipsum. Pellentesque consequat tellus non tortor tempus, id egestas elit iaculis. Proin eu dui porta, pretium metus vitae, pharetra odio. Sed ac mi commodo, pellentesque erat eget, accumsan justo. Etiam sed placerat felis. Proin non rutrum ligula.</p>
+							<p>${onePro.productInformation}</p>
 						</div>
 						<!-- Product Quantity -->
 						<div class="product_quantity_container">
 							<span>Quantity</span>
 							<div class="product_quantity clearfix">
-								<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+								<input name="cartQuantity" id="quantity_input" type="text" pattern="[0-9]*" value="1">
 								<div class="quantity_buttons">
 									<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
 									<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
@@ -144,42 +165,17 @@
 						</div>
 						<span>배송비</span>
 							<div>
-								<select name="prodel">
+								<select name="productDelivery">
 									<option value="1">주문시 결제(선결제)</option>
 									<option value="2">수령시 결제(착불)</option>
 								</select>
 							</div>
 						<!-- Product Size -->
 						<div class="product_size_container">
-							<!-- <span>Size</span>
-							<div class="product_size">
-								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li>
-										<input type="radio" id="radio_1" name="product_radio" class="regular_radio radio_1">
-										<label for="radio_1">XS</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_2" name="product_radio" class="regular_radio radio_2" checked>
-										<label for="radio_2">S</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_3" name="product_radio" class="regular_radio radio_3">
-										<label for="radio_3">M</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_4" name="product_radio" class="regular_radio radio_4">
-										<label for="radio_4">L</label>
-									</li>
-									<li>
-										<input type="radio" id="radio_5" name="product_radio" class="regular_radio radio_5">
-										<label for="radio_5">XL</label>
-									</li>
-								</ul>
-
-							</div> -->
+							
 							
 						</div>
-						<input type="button" value="장바구니" onClick="fn_order_pro('${contextPath}/cart/addCart.do', ${userId})">
+						<input type="submit" value="장바구니" >
 
 							<input type=button value="목록보기"  
 							onClick="backToList(this.form)">

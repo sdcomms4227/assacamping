@@ -17,31 +17,46 @@
 </head>
 <body>
 	<h1 align="center">결제내역 </h1>
-	<form action="${contextPath}/order/*" method="post">
-		
-		
-			
+   <form action="${contextPath}/order/*" method="post">
+	 <table border="1" align="center" width="30%">
+		  <tr>
+
+		        <th>주문번호</th>
+		        <th>결제일</td>
+		        <th>구매상태</th>
+		     </tr>
 		<c:choose>
-		 <c:when test="${orderNo != null  }">
-		     <c:forEach items="${orderNo}"  var="order" >
-						<c:set var="pay" value="${payList[0]}"/>
-				
-					   <table border="1" align="center" width="30%">
-					   <tr>
-					   <td>
-					      <a href="${contextPath}/cartorder/orderInfo.do?orderNo=${order.orderNo}"> ${pay.productName}</a><br>
-					       ${pay.productPayment }
-					       ${pay.productDelivery}
-					       ${pay.orderDate}
-					       ${order.orderNo}
-					       ${order.orderState}
-				           
-					   </td>
-					   </tr>
-					   </table>
-					</c:forEach> 
-			  </c:when>
-			</c:choose>
+		  <c:when test="${orderNo !=null}" >
+		     <c:forEach items="${orderNo}" var="order" >
+		      <tr>
+		         <td> <a href="${contextPath}/cartorder/orderInfo.do?orderNo=${order.orderNo}">${order.orderNo}</a></td>
+		         <td>${order.orderDate}</td>
+		         <td>${order.orderState}</td>
+		      </tr>                 
+		     </c:forEach>
+		   </c:when>
+		</c:choose>
+		
+		
+		     <%-- <c:choose>
+		  <c:when test="${payList !=null}" >
+		     <c:forEach items="${payList}" var="payList" >
+		    
+		           <tr>
+		            <td><a href="${contextPath}/cartorder/orderInfo.do?orderNo=${payList.orderNo}"> ${payList.productName}</a></td>
+		            <td>${payList.cartQuantity}</td>
+		            <td>${payList.orderNo}</td>
+		            <td>${payList.orderDate}</td>
+		            <td><a href="${contextPath}/pro/getOnePro.do?productNo=${payList.productNo}">재구매</a></td>
+		           </tr> 
+		         
+		  </c:forEach>
+		   </c:when>
+		</c:choose> --%>
+		
+		
+	</table>	
+	
 						
 		
 	</form>

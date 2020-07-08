@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="productList" value="${productListMap.productList}"/>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -251,54 +252,36 @@
 			</div>
 
 		<form action="${contextPath}/pro/*">
+			<%-- <input type="hidden" name="productCategory" value="${productMap.productCategoryName}">	 --%>
 			<table width="1000" border="0" height="470" align="center">
-				<c:set var="i" value="0"/>
-					<c:forEach var="proList" items="${proList}">
-						<c:if test="${i%4 == 0}">
-				<tr align="center">
-						</c:if>
-								<td>
-									<a href="${contextPath}/pro/getOnePro.do?productNo=${proList.productNo}">
-										<img alt="pro" src="${proList.productImage}" border="0" width="220" height="180">
-									</a>
-									${proList.productName}<br/>
-									금액: ${proList.productPrice}
-								</td>
-								<c:set var="i" value="${i+1}" />
-						</c:forEach>
-				</tr>
-				</table>
 				
-	<c:if test="${totalCount != null}">
-		<div class="row">
-			<div class="col-12">
-				<ul class="pagination justify-content-center">
-				<c:if test="${pageNo > 10}">	
-				   	<li class="page-item">
-						<button type="button" class="page-link" onclick="listProduct(${beginNo-10})">이전</button>
-					</li>
-				</c:if>
-				<c:forEach var="page" begin="${beginNo}" end="${endNo}" step="1">
-					<c:if test="${page <= Math.ceil(totalCount/10)}">
-						<c:choose>	
-							<c:when test="${page==pageNo}">
-								<li class="page-item active">
-									<button type="button" class="page-link" onclick="listProduct(${page})">${page}</button>						
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="page-item">
-									<button type="button" class="page-link" onclick="listProduct(${page})">${page}</button>							
-								</li>
-							</c:otherwise>
-						</c:choose>
-					</c:if>
-				</c:forEach>								
-				<c:if test="${totalCount > endNo*10}">						
-				   	<li class="page-item">
-						<button type="button" class="page-link" onclick="listProduct(${beginNo+10})">이전</button>
-					</li>
-				</c:if>
+				<c:choose>
+					<c:when test="${productListMap.totalCount == null}">
+						<div align="center">목록이 없습니다.</div>
+					</c:when>
+					
+					<c:when test="${productListMap.totalCount != null}">
+				
+				<c:forEach var="productMap" items="${productList}">
+				<c:set var="productCategoryName" value="${productMap.productCategoryName}"/>
+				<c:set var="proVO" value="${productMap.proVO}"/>	
+				<tr align="center">
+				
+				
+				
+								<td>
+									<a href="${contextPath}/pro/getOnePro.do?productNo=${proVO.productNo}&productCategory=${productCategoryName}">
+										
+									<img src="${contextPath}/files/product/${proVO.productNo}/${proVO.productImageName1}" alt="${productAdminVO.productName}" style="height:40px" />
+									</a>
+									${proVO.productName}<br/>
+									금액: ${proVO.productPrice}
+								</td>
+				</tr>
+				</c:forEach>
+				</c:when>
+				</c:choose>
+			</table>
 			</form>
 
 			<div class="row page_num_container">

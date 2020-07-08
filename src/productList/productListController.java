@@ -18,6 +18,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import productCategory.ProductCategoryService;
+import productCategory.ProductCategoryVO;
+
 
 
 @WebServlet("/pro/*")
@@ -26,12 +29,16 @@ public class productListController extends HttpServlet{
 	productListDAO proDAO;
 	productListVO proVO;
 	productListService proService; 
+	ProductCategoryService productCategoryService;
+	ProductCategoryVO productCategoryVO;
 	
 	@Override
 	public void init() throws ServletException {
 		proDAO = new productListDAO();  
 		proVO = new productListVO();
 		proService = new productListService();
+		productCategoryService = new ProductCategoryService();
+		productCategoryVO = new ProductCategoryVO();
 	}
 	
 	
@@ -58,36 +65,51 @@ public class productListController extends HttpServlet{
 		
 		String action = request.getPathInfo();
 		System.out.println("action:"+action);
+		
 		try {
-			List<productListVO> proList = new ArrayList<productListVO>();
+			
 			
 			if(action.equals("/proList.do")) {
 				
-			proList = proService.getProductList();
-			
-			request.setAttribute("proList", proList);
+				setPagination(request);
+				
+				Map<String, Object> searchMap = new HashMap<String, Object>();
+				searchMap.put("pageNo", request.getAttribute("pageNo"));
+				searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
+				searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
+
+				Map<String, Object> productListMap = proService.listProduct(searchMap);
+				System.out.println(productListMap);
+				request.setAttribute("productListMap", productListMap);
+				
+				List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
+				request.setAttribute("productCategoryList", productCategoryList);
+
+				if(request.getAttribute("alertMsg")!=null) {
+					request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+				}
 			
 
 			nextPage = "/product/productList.jsp";
 			
-			}else if(action.equals("/writeForm.do")) {
-				nextPage="/product/writeForm.jsp";
-			
-				
-             }else if(action.equals("/getOnePro.do")) {
+		
+			}else if(action.equals("/getOnePro.do")) {
 
 				int productNo = Integer.parseInt(request.getParameter("productNo"));
 				productListVO onePro = new productListVO();
-				Map<String, Object>	proItem = proService.getProductItem(productNo);
+				onePro = proService.getOnePro(productNo); 
 				
-				request.setAttribute("proItem", proItem);
+				ProductCategoryService pcategoryservice=new ProductCategoryService();
+				ProductCategoryVO productvo =pcategoryservice.ProductCategoryName(onePro.getProductCategoryNo());
 				
+				request.setAttribute("onePro", onePro);
+				request.setAttribute("productvo", productvo);
 				nextPage = "/product/productInfo.jsp";
 
 			
-			}else if(action.equals("/selectNewProduct")) {
-				
 			}
+			
+			
 			if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);
@@ -98,6 +120,39 @@ public class productListController extends HttpServlet{
 		}
 		
 	}//doHandle()끝
+	
+	
+	private void setPagination(HttpServletRequest request) {
+		try {
+			int pageNo = 1;
+			if(request.getParameter("pageNo")!=null) {
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+			}
+			if(request.getAttribute("pageNo")==null) {
+				request.setAttribute("pageNo", pageNo);
+			}
+			
+			String searchKeyword = "";
+			if(request.getParameter("searchKeyword")!=null) {
+				searchKeyword = request.getParameter("searchKeyword");
+			}
+			if(request.getAttribute("searchKeyword")==null) {
+				request.setAttribute("searchKeyword", searchKeyword);
+			}
+			
+			int searchCategoryNo = 0;
+			if(request.getParameter("searchCategoryNo")!=null) {
+				searchCategoryNo = Integer.parseInt(request.getParameter("searchCategoryNo"));
+			}
+			if(request.getAttribute("searchCategoryNo")==null) {
+				request.setAttribute("searchCategoryNo", searchCategoryNo);
+			}			
+		} catch (Exception e) {
+			System.out.println("setPagination()메소드 내부에서 오류 : " + e.toString());
+		}
+	}
+	
+	
 	
 	private Map<String, String> upload(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{

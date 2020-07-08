@@ -47,4 +47,9 @@ public class ProductAdminService {
 	public int deleteProduct(int productNo) {
 		return productDAO.deleteProduct(productNo);		
 	}
+	
+	public void updateProductQuantity(int productNo,int cartQuantity) {
+		
+		productDAO.updateProductQuantity(productNo, cartQuantity);
+	}
 }

@@ -60,7 +60,7 @@ public class OrderDAO implements Serializable{
 	}//orderCount()
 	
 	
-	public void addOrder(List<productCartVO> orderList,OrderVO vo)  {//주문
+	public void addOrder(List<productCartVO> orderList,OrderVO vo)  {//주문하기
         
 	try {
 		
@@ -69,20 +69,7 @@ public class OrderDAO implements Serializable{
 	  for(int i=0 ;i<orderList.size();i++) { 
 		  
 		  productCartVO vo1=orderList.get(i);
-				/*
-				 * System.out.println(vo.getProductPayment());
-				 * System.out.println(vo.getUserZipcode());
-				 * System.out.println(vo.getUserAddress1());
-				 * System.out.println(vo.getUserAddress2());
-				 * System.out.println(vo1.getProductName());
-				 * System.out.println(vo.getUserName()); System.out.println(vo.getUserPhone());
-				 * System.out.println(vo.getUserComment());
-				 * System.out.println(vo.getOrderState());
-				 * System.out.println(vo1.getProductNo());
-				 * System.out.println(vo1.getCartQuantity());
-				 * System.out.println(vo.getUserId()); System.out.println(vo.getUserEmail());
-				 * System.out.println( vo.getProductDelivery());
-				 */
+				
 		       sql=" insert into productorder(productPayment,userZipcode,"
 		       		+ "userAddress1,userAddress2,"
 		       		+ "productName,userName,"
@@ -95,9 +82,7 @@ public class OrderDAO implements Serializable{
 				 +" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?)";
 				
 				pstmt=con.prepareStatement(sql);
-				
-				
-				
+
 				
 				pstmt.setInt(1, vo.getProductPayment());
 				pstmt.setString(2, vo.getUserZipcode());
@@ -130,7 +115,7 @@ public class OrderDAO implements Serializable{
 		
 	}//addOrder()
 	
-	public int orderNoCount() {
+	public int orderNoCount() {//주문번호 조회
 		int orderNo=0;
 		try {
 			con=db.getConnection();
@@ -298,7 +283,7 @@ public class OrderDAO implements Serializable{
 		try {
 			con=db.getConnection();
 			
-			sql="select * from productorder where userId=? order by orderNo ";
+			sql="select * from productorder where userId=? order by orderNo desc ";
 			
 			pstmt= con.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -313,7 +298,11 @@ public class OrderDAO implements Serializable{
 			           vo.setProductPayment(rs.getInt("productPayment"));
 			           vo.setProductDelivery(rs.getInt("productDelivery"));
 			           vo.setOrderState(rs.getString("orderState"));
-			         	list.add(vo);
+			           vo.setCartQuantity(rs.getInt("cartQuantity"));
+			           vo.setUserName(rs.getString("userName"));
+			           vo.setOrderDate(rs.getDate("orderDate"));
+			           vo.setProductNo(rs.getInt("productNo"));
+			           list.add(vo);
 			}
 			 
 			 
@@ -326,13 +315,12 @@ public class OrderDAO implements Serializable{
 		return list;
 	}//payList
 	
-	
 	public List<OrderVO> orderNo(String userId){
 		List<OrderVO> list=new ArrayList<OrderVO>();
 		try {
 			con=db.getConnection();
 			
-			sql="select distinct orderNo,orderState from productorder where userId=?";
+			sql="select distinct orderNo,orderDate,orderState  from productorder where userId=?";
 			
 			pstmt= con.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -343,22 +331,23 @@ public class OrderDAO implements Serializable{
 			       OrderVO vo = new OrderVO();
 			           
 			           vo.setOrderNo(rs.getInt("orderNo"));
+			           vo.setOrderDate(rs.getDate("orderDate"));
 			           vo.setOrderState(rs.getString("orderState"));
-			         	list.add(vo);
+			           list.add(vo);
 			}
+			
 			 
 			 
 		} catch (Exception e) {
-			System.out.println("orderNo에서 오류"+e.getMessage());
+			System.out.println("orderNo1에서 오류"+e.getMessage());
 		}finally {
 			freeResource();
 		}
 		
 		return list;
 		
-	}
-	
-	
+	}//orderNo()
+
 	
 	public List<OrderVO> oderInfo(String userId , int orderNo){
 		List<OrderVO> list=new ArrayList<OrderVO>();
@@ -391,6 +380,6 @@ public class OrderDAO implements Serializable{
 		
 		return list;
 		
-	}
+	}//orderInfo
 	
 }

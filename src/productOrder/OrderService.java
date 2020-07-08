@@ -36,10 +36,11 @@ public int orderCount(String userId) {
 	   
 	   return dao.payList(userId);
    }
+
  public List<OrderVO> orderNo(String userId){
 	   
 	   return dao.orderNo(userId);
-   }
+ }
  
  public List<OrderVO> orderInfo(String userId,int orderNo){
 	 return dao.oderInfo(userId, orderNo);
@@ -54,4 +55,5 @@ public int orderCount(String userId) {
 	 
 	 return dao.selectAllOrderList();
  }
+ 
 }

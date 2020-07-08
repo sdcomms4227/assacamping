@@ -116,4 +116,27 @@ public class ProductCategoryDAO {
 		
 		return 0;	
 	}
+	
+	public ProductCategoryVO ProductCategoryName(int productCategoryNo) {
+		ProductCategoryVO vo=new ProductCategoryVO();
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			String sql = "select productCategoryName from productCategory where productCategoryNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productCategoryNo);
+			
+			rs= pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				vo.setProductCategoryName(rs.getString("productCategoryName"));
+				
+			}
+		} catch (Exception e) {
+			System.out.println("ProductCategoryName()메소드 내부에서 오류 : " + e.toString());
+		}			
+		
+		return vo;
+	}
 }
