@@ -53,7 +53,7 @@
 									<img src="${contextPath}/images/avatar.svg" alt="">
 									<div class="avatar_name_container">
 										<div class="avatar_name_inner">
-											<div class="avatar_name">${userId}</div>
+											<div class="avatar_name">${userName}</div>
 										</div>
 									</div>
 								</div>

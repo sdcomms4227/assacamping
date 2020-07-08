@@ -111,6 +111,9 @@ public class UserController extends HttpServlet{
 				System.out.println(userId+userPw);
 				int check = userDAO.login(userId,userPw);
 				
+				//20200708 추가
+				String userName = userDAO.getUserName(userId);
+				
 				String msg ="";
 				if(check==0) {
 					//msg="존재하지 않는 ID입니다.";
@@ -121,6 +124,7 @@ public class UserController extends HttpServlet{
 					nextPage = "/user/login.jsp";
 				}else {
 					session.setAttribute("userId", userId);
+					session.setAttribute("userName", userName);
 					
 					nextPage = "/userCon/listUsers.do";
 					

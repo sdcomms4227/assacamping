@@ -204,6 +204,27 @@ public class UserDAO {
 		return check;
 	
 	}//login 메소드
+	
+	public String getUserName(String userId) {
+		String userName = "";
+
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select userName from user where userId=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				userName = rs.getString("userName");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getUserName메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return userName;
+	}
 
 }//UserDAO클래스 
 

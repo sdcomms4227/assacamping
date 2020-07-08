@@ -9,7 +9,6 @@
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">

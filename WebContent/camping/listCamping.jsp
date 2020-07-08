@@ -89,6 +89,7 @@
 				<c:forEach var="campingMap" items="${campingList}">
 					<c:set var="campingVO" value="${campingMap.campingVO}" />
 					<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
+					<fmt:formatDate var="campingFomattedDate" value="${campingVO.campingDate}" pattern="yy-MM-dd" />
 					<tr onclick="readCamping(${campingVO.campingNo})" style="cursor:pointer">
 						<td class="d-none d-lg-table-cell align-middle">${campingVO.campingNo}</td>
 						<td class="d-none d-lg-table-cell align-middle wbka">${campingCategoryName}</td>
@@ -102,11 +103,11 @@
 								<img class="ml-2" style="width:16px;height:16px" src="${contextPath}/images/download.svg" />
 							</c:if>
 							<small class="d-block d-lg-none text-right mt-1 text-muted">
-								${campingVO.userId} | <fmt:formatDate value="${campingVO.campingDate}" pattern="yy-MM-dd"/> | ${campingVO.campingCount}
+								${campingVO.userName} | ${campingFomattedDate} | ${campingVO.campingCount}
 							</small>
 						</td>
-						<td class="d-none d-lg-table-cell align-middle">${campingVO.userId}</td>
-						<td class="d-none d-lg-table-cell align-middle"><fmt:formatDate value="${campingVO.campingDate}" pattern="yy-MM-dd"/></td>
+						<td class="d-none d-lg-table-cell align-middle">${campingVO.userName}</td>
+						<td class="d-none d-lg-table-cell align-middle">${campingFomattedDate}</td>
 						<td class="d-none d-lg-table-cell align-middle">${campingVO.campingCount}</td>
 					</tr>
 				</c:forEach>

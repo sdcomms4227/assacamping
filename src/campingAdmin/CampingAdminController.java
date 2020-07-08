@@ -125,12 +125,14 @@ public class CampingAdminController extends HttpServlet {
 			String campingContent = multipartMap.get("campingContent");
 			String campingFileName = multipartMap.get("campingFileName");
 			String userId = multipartMap.get("userId");
+			String userName = multipartMap.get("userName");
 			int campingCategoryNo = Integer.parseInt(multipartMap.get("campingCategoryNo"));
 			
 			campingVO.setCampingTitle(campingTitle);
 			campingVO.setCampingContent(campingContent);
 			campingVO.setCampingFileName(campingFileName);
 			campingVO.setUserId(userId);
+			campingVO.setUserName(userName);
 			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
 			int readNo = campingAdminService.insertCamping(campingVO);			
@@ -175,6 +177,7 @@ public class CampingAdminController extends HttpServlet {
 			String campingContent = multipartMap.get("campingContent");
 			String campingFileName = multipartMap.get("campingFileName");
 			String userId = multipartMap.get("userId");
+			String userName = multipartMap.get("userName");
 			int campingCategoryNo = Integer.parseInt(multipartMap.get("campingCategoryNo"));
 			String deleteFile = multipartMap.get("deleteFile");
 			String oldFileName = multipartMap.get("oldFileName");
@@ -184,6 +187,7 @@ public class CampingAdminController extends HttpServlet {
 			campingVO.setCampingContent(campingContent);
 			campingVO.setCampingFileName(campingFileName);
 			campingVO.setUserId(userId);
+			campingVO.setUserName(userName);
 			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
 			int result = campingAdminService.updateCamping(campingVO, deleteFile);
@@ -250,6 +254,7 @@ public class CampingAdminController extends HttpServlet {
 			String campingContent = multipartMap.get("campingContent");
 			String campingFileName = multipartMap.get("campingFileName");
 			String userId = multipartMap.get("userId");
+			String userName = multipartMap.get("userName");
 			int campingRe_ref = Integer.parseInt(multipartMap.get("campingRe_ref"));
 			int campingRe_lev = Integer.parseInt(multipartMap.get("campingRe_lev"));
 			int campingRe_seq = Integer.parseInt(multipartMap.get("campingRe_seq"));
@@ -260,6 +265,7 @@ public class CampingAdminController extends HttpServlet {
 			campingVO.setCampingContent(campingContent);
 			campingVO.setCampingFileName(campingFileName);
 			campingVO.setUserId(userId);
+			campingVO.setUserName(userName);
 			campingVO.setCampingRe_ref(campingRe_ref);
 			campingVO.setCampingRe_lev(campingRe_lev);
 			campingVO.setCampingRe_seq(campingRe_seq);

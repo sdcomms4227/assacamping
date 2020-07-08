@@ -12,7 +12,6 @@
 <c:set var="productCategoryNo" value="${productMap.productVO.productCategoryNo}" />
 <c:set var="productRating" value="${productMap.productVO.productRating}" />
 <c:set var="productCategoryName" value="${productMap.productCategoryName}" />
-<c:set var="userName" value="홍길동" />
 <c:set var="userId" value="${request.getSession(userId)}" />
 <c:set var="productImage1" value="${contextPath}/files/product/${productNo}/${productImageName1}" />
 <c:set var="productImage2" value="${contextPath}/files/product/${productNo}/${productImageName2}" />

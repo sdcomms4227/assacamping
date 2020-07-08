@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
-<c:set var="userId" value="hong" />
-<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -67,7 +65,7 @@
 						<label for="userName" class="m-0">이름</label>
 					</th>
 					<td>
-						<input class="form-control" type="text" name="userName" id="userName" value="${userId}" readonly />
+						<input class="form-control" type="text" name="userName" id="userName" value="${userName}" readonly />
 					</td>
 				</tr>
 				<tr>

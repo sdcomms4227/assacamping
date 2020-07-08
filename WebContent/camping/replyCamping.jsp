@@ -7,8 +7,6 @@
 <c:set var="campingRe_seq" value="${campingMap.campingVO.campingRe_seq}" />
 <c:set var="campingCategoryNo" value="${campingMap.campingVO.campingCategoryNo}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-<c:set var="userId" value="hong" />
-<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>

@@ -5,11 +5,11 @@
 <c:set var="campingContent" value="${campingMap.campingVO.campingContent}" />
 <c:set var="campingFileName" value="${campingMap.campingVO.campingFileName}" />
 <c:set var="userId" value="${campingMap.campingVO.userId}" />
+<c:set var="userName" value="${campingMap.campingVO.userName}" />
 <c:set var="campingDate" value="${campingMap.campingVO.campingDate}" />
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -80,13 +80,13 @@
 						<small class="text-muted">[${campingCategoryName}]</small>									
 					</c:if>									
 					<div class="h6 mt-3 mb-0 d-lg-none text-right">
-						<small class="text-muted">${userId} | <fmt:formatDate value="${campingDate}" pattern="yy-MM-dd HH:mm"/> | ${campingCount}</small>
+						<small class="text-muted">${userName} | <fmt:formatDate value="${campingDate}" pattern="yy-MM-dd HH:mm"/> | ${campingCount}</small>
 					</div>
 				</td>
 			</tr>
 			<tr class="d-none d-lg-table-row">
 				<th class="align-middle">작성자</th>
-				<td>${userId}</td>
+				<td>${userName}</td>
 				<th class="align-middle">작성일</th>
 				<td><fmt:formatDate value="${campingDate}" pattern="yy-MM-dd HH:mm"/></td>
 				<th class="align-middle">조회수</th>
