@@ -54,7 +54,7 @@ public class ProductReviewController extends HttpServlet{
 		System.out.println("action : " + action);
 		String info = null;
 //		String nextPage = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		
 		if (action != null) {
 			if (action.equals("/listReview.do")) {
@@ -64,7 +64,7 @@ public class ProductReviewController extends HttpServlet{
 					int productNo = Integer.parseInt((String) reviewObject.get("productNo"));
 
 					List<ProductReviewVO> reviewList = productReviewService.getReviewList(productNo);
-				
+					
 					if (reviewList.size() > 0) {
 						JSONArray jsonArray = new JSONArray();
 						for (int i = 0; i < reviewList.size(); i++) {
@@ -74,6 +74,10 @@ public class ProductReviewController extends HttpServlet{
 							returnObject.put("userId",reviewList.get(i).getUserId());
 							returnObject.put("userName", reviewList.get(i).getUserName());
 							returnObject.put("reviewContent", reviewList.get(i).getReviewContent());
+							returnObject.put("starRating", Integer.toString(reviewList.get(i).getStarRating()));
+							
+							// 리뷰갯수
+							returnObject.put("reviewNum", Integer.toString(reviewList.size()));
 							
 							String formattedDate = sdf.format(reviewList.get(i).getReviewDate());
 							returnObject.put("reviewDate", formattedDate);
@@ -102,12 +106,14 @@ public class ProductReviewController extends HttpServlet{
 					String userId = (String) reviewObject.get("userId");
 					String userName = (String) reviewObject.get("userName");
 					String reviewContent = (String) reviewObject.get("reviewContent");
-
+					int starRating = Integer.parseInt((String) reviewObject.get("starRating"));
+					
 					productReviewVO.setProductNo(productNo);
 					productReviewVO.setUserId(userId);
 					productReviewVO.setUserName(userName);
 					productReviewVO.setReviewContent(reviewContent);
- 
+					productReviewVO.setStarRating(starRating);
+					
 					int result = productReviewService.insertReview(productReviewVO);
 					
 					if (result == 1) {

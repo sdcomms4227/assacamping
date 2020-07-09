@@ -6,6 +6,7 @@ public class ProductQnaVO {
 	private int productNo;
 	private int qnaNo;
 	private String qnaContent;
+	private String qnaAnswer;
 	private String userId;
 	private String userName;
 	private Timestamp qnaDate;
@@ -13,6 +14,12 @@ public class ProductQnaVO {
 	// getter, setter method
 	public int getProductNo() {
 		return productNo;
+	}
+	public String getQnaAnswer() {
+		return qnaAnswer;
+	}
+	public void setQnaAnswer(String qnaAnswer) {
+		this.qnaAnswer = qnaAnswer;
 	}
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;

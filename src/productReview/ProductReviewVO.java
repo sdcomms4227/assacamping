@@ -9,15 +9,15 @@ public class ProductReviewVO {
 	private String userId;
 	private String userName;
 	private Timestamp reviewDate;
-	private int startRaing;
+	private int starRating;
 	
 
 	// getter, setter method
-	public int getStartRaing() {
-		return startRaing;
+	public int getStarRating() {
+		return starRating;
 	}
-	public void setStartRaing(int startRaing) {
-		this.startRaing = startRaing;
+	public void setStarRating(int starRating) {
+		this.starRating = starRating;
 	}
 	public int getProductNo() {
 		return productNo;

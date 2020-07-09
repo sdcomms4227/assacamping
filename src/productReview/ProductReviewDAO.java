@@ -50,6 +50,7 @@ public class ProductReviewDAO {
 				productReviewVO.setReviewNo(rs.getInt("reviewNo"));
 				productReviewVO.setUserId(rs.getString("userId"));
 				productReviewVO.setUserName(rs.getString("userName"));
+				productReviewVO.setStarRating(rs.getInt("starRating"));
 
 				reviewList.add(productReviewVO);
 			}
@@ -82,8 +83,8 @@ public class ProductReviewDAO {
 					num = 1;
 				}
 				
-				sql = "insert into productReview(reviewNo,productNo,userId,userName,reviewContent,reviewDate)"
-						+ "values(?, ?, ?, ?, ?, now())";
+				sql = "insert into productReview(reviewNo,productNo,userId,userName,reviewContent,reviewDate, starRating)"
+						+ "values(?, ?, ?, ?, ?, now(), ?)";
 
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
@@ -91,6 +92,7 @@ public class ProductReviewDAO {
 				pstmt.setString(3, productReviewVO.getUserId());
 				pstmt.setString(4, productReviewVO.getUserName());
 				pstmt.setString(5, productReviewVO.getReviewContent());
+				pstmt.setInt(6, productReviewVO.getStarRating());
 
 				return pstmt.executeUpdate();
 
@@ -114,7 +116,7 @@ public class ProductReviewDAO {
 			pstmt.setInt(1, reviewNo);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (userId.equals(rs.getString("userId"))) {
+				if (userId.equals(rs.getString("userId")) || userId.equals("admin")) {
 					sql = "delete from productReview where reviewNo=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, reviewNo);
