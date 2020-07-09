@@ -126,7 +126,10 @@ public class EventController extends HttpServlet {
 			out.print("</script>");				
 			return;
 			
+
 		}else if(action.equals("/readEvent.do")) {
+
+
 			EventDAO eventDAO = new EventDAO();
 			
 			String eventNo = request.getParameter("eventNo");
@@ -137,6 +140,7 @@ public class EventController extends HttpServlet {
 			
 			request.setAttribute("event", eventVO);
 			
+
 			nextPage ="/event/readEvent.jsp"; 
 					
 					
@@ -173,6 +177,7 @@ public class EventController extends HttpServlet {
 					+ "/eve/viewEvent.do?eventNo=" + eventNo + "';" 
 					+ "</script>");
 			return;
+
 		}else if (action.equals("/modEvent.do")) { //글 수정
 			
 			Map<String, String> eventMap = upload(request, response);
@@ -207,7 +212,9 @@ public class EventController extends HttpServlet {
 					+ "</script>");
 			return;
 			
+
 		}else if(action.equals("/delEvent.do")) {//삭제 요청이 들어 왔을때
+
 			int eventNo = Integer.parseInt(request.getParameter("eventNo"));
 			List<Integer> eventNoList = 
 					eventService.removeEvent(eventNo);

@@ -168,7 +168,6 @@ public void updateEvent(EventVO event) {
 				sql += ",eventImageFileName=?";
 			}
 			sql += " where eventNo=?";
-			
 //			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, title);
