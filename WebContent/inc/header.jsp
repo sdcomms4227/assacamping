@@ -5,7 +5,6 @@
 		<div class="logo"><a href="${contextPath}">ASSA</a></div>
 		<nav class="main_nav">
 			<ul>
-
 				<li><a href="${contextPath}/pro/listProduct.do">캠핑상품</a></li>
 				<li><a href="${contextPath}/camp/listCamping.do">캠핑정보</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">고객센터</a></li>

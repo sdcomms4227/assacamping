@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="productList" value="${productListMap.productList}"/>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-
 <%@ include file="../inc/top.jsp"%>
-
+<c:set var="productList" value="${productListMap.productList}"/>
 <!DOCTYPE html>
 <html lang="kr">
 <head>

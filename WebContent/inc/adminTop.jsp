@@ -45,12 +45,9 @@
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-
-
 					 <li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminUserList.jsp"> <span data-feather="users"></span> 회원 관리 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminOrderList.jsp"> <span data-feather="file"></span> 주문 관리 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li> 
-
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
