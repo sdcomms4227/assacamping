@@ -12,14 +12,14 @@ public class CampingVO {
 	private int campingRe_ref;
 	private int campingRe_lev;
 	private int campingRe_seq;
-	private Timestamp campingWriteDate;
-	private int campingReadCount;
+	private Timestamp campingDate;
+	private int campingCount;
 	private int campingCategoryNo;
 		
 	public CampingVO() {}
 
-	public CampingVO(int campingNo, String campingTitle, String campingContent, String campingFileName, String userId, int campingRe_ref, int campingRe_lev, int campingRe_seq, Timestamp campingWriteDate,
-			int campingReadCount, int campingCategoryNo) {
+	public CampingVO(int campingNo, String campingTitle, String campingContent, String campingFileName, String userId, int campingRe_ref, int campingRe_lev, int campingRe_seq, Timestamp campingDate,
+			int campingCount, int campingCategoryNo) {
 		this.campingNo = campingNo;
 		this.campingTitle = campingTitle;
 		this.campingContent = campingContent;
@@ -28,8 +28,8 @@ public class CampingVO {
 		this.campingRe_ref = campingRe_ref;
 		this.campingRe_lev = campingRe_lev;
 		this.campingRe_seq = campingRe_seq;
-		this.campingWriteDate = campingWriteDate;
-		this.campingReadCount = campingReadCount;
+		this.campingDate = campingDate;
+		this.campingCount = campingCount;
 		this.campingCategoryNo = campingCategoryNo;
 	}
 
@@ -97,20 +97,20 @@ public class CampingVO {
 		this.campingRe_seq = campingRe_seq;
 	}
 
-	public Timestamp getCampingWriteDate() {
-		return campingWriteDate;
+	public Timestamp getCampingDate() {
+		return campingDate;
 	}
 
-	public void setCampingWriteDate(Timestamp campingWriteDate) {
-		this.campingWriteDate = campingWriteDate;
+	public void setCampingDate(Timestamp campingDate) {
+		this.campingDate = campingDate;
 	}
 
-	public int getCampingReadCount() {
-		return campingReadCount;
+	public int getCampingCount() {
+		return campingCount;
 	}
 
-	public void setCampingReadCount(int campingReadCount) {
-		this.campingReadCount = campingReadCount;
+	public void setCampingCount(int campingCount) {
+		this.campingCount = campingCount;
 	}
 
 	public int getCampingCategoryNo() {

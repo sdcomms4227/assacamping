@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<c:set var="productNo" value="${productItemMap.productAdminVO.productNo}" />
-<c:set var="productName" value="${productItemMap.productAdminVO.productName}" />
-<c:set var="productInformation" value="${productItemMap.productAdminVO.productInformation}" />
-<c:set var="productPrice" value="${productItemMap.productAdminVO.productPrice}" />
-<c:set var="productImageName1" value="${productItemMap.productAdminVO.productImageName1}" />
-<c:set var="productImageName2" value="${productItemMap.productAdminVO.productImageName2}" />
-<c:set var="productImageName3" value="${productItemMap.productAdminVO.productImageName3}" />
-<c:set var="productDate" value="${productItemMap.productAdminVO.productDate}" />
-<c:set var="productQuantity" value="${productItemMap.productAdminVO.productQuantity}" />
-<c:set var="productCategoryName" value="${productItemMap.productCategoryName}" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
+<c:set var="productNo" value="${productMap.productVO.productNo}" />
+<c:set var="productName" value="${productMap.productVO.productName}" />
+<c:set var="productContent" value="${productMap.productVO.productContent}" />
+<c:set var="productPrice" value="${productMap.productVO.productPrice}" />
+<c:set var="productImageName1" value="${productMap.productVO.productImageName1}" />
+<c:set var="productImageName2" value="${productMap.productVO.productImageName2}" />
+<c:set var="productImageName3" value="${productMap.productVO.productImageName3}" />
+<c:set var="productDate" value="${productMap.productVO.productDate}" />
+<c:set var="productQuantity" value="${productMap.productVO.productQuantity}" />
+<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -18,8 +17,7 @@
 	</div>
 </div>
 
-<!-- Product -->
-<article>
+<article class="product">
 	<div class="row">
 		<div class="col-12 col-lg-6">
 			<table class="table read-table table-layout-fixed">
@@ -37,7 +35,7 @@
 						<td>${productCategoryName}</td>
 					</tr>
 					<tr>
-						<th>이름</th>
+						<th>상품명</th>
 						<td>${productName}</td>
 					</tr>
 					<tr>
@@ -49,12 +47,12 @@
 						<td><fmt:formatNumber value="${productQuantity}" pattern="#,###"/></td>
 					</tr>
 					<tr>
-						<th>등록일</th>
-						<td><fmt:formatDate value="${productDate}" pattern="yy-MM-dd HH:mm" /></td>
+						<th>상세정보</th>
+						<td>${fn:replace(productContent,LF,BR)}</td>
 					</tr>
 					<tr>
-						<th>상세정보</th>
-						<td>${productInformation}</td>
+						<th>등록일</th>
+						<td><fmt:formatDate value="${productDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 					</tr>
 				</tbody>
 			</table>
@@ -101,9 +99,8 @@
 		<button type="button" class="btn btn-secondary" onclick="listProduct()">목록</button>							
 		<button type="button" class="btn btn-warning" onclick="modifyProduct(${productNo})">수정</button>
 		<button type="button" class="btn btn-danger" onclick="deleteProduct(${productNo})">삭제</button>
-	</div>			
+	</div>	
 </article>
-<!-- //Product -->
 
 <form method="post" name="pagingForm">
 	<input type="hidden" name="pageNo" value="${pageNo}" />

@@ -1,20 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="campingNo" value="${campingItemMap.campingVO.campingNo}" />
-<c:set var="campingTitle" value="${campingItemMap.campingVO.campingTitle}" />
-<c:set var="campingContent" value="${campingItemMap.campingVO.campingContent}" />
-<c:set var="campingFileName" value="${campingItemMap.campingVO.campingFileName}" />
-<c:set var="userId" value="${campingItemMap.campingVO.userId}" />
-<c:set var="campingWriteDate" value="${campingItemMap.campingVO.campingWriteDate}" />
-<c:set var="campingReadCount" value="${campingItemMap.campingVO.campingReadCount}" />
-<c:set var="campingCategoryNo" value="${campingItemMap.campingVO.campingCategoryNo}" />
-<c:set var="campingCategoryName" value="${campingItemMap.campingCategoryName}" />
-<c:set var="campingFileType" value="${campingItemMap.campingFileType}" />
+<%@ include file="../inc/top.jsp"%>
+<c:set var="campingNo" value="${campingMap.campingVO.campingNo}" />
+<c:set var="campingTitle" value="${campingMap.campingVO.campingTitle}" />
+<c:set var="campingContent" value="${campingMap.campingVO.campingContent}" />
+<c:set var="campingFileName" value="${campingMap.campingVO.campingFileName}" />
+<c:set var="userId" value="${campingMap.campingVO.userId}" />
+<c:set var="campingDate" value="${campingMap.campingVO.campingDate}" />
+<c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
+<c:set var="campingCategoryNo" value="${campingMap.campingVO.campingCategoryNo}" />
+<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
+<c:set var="campingFileType" value="${campingMap.campingFileType}" />
 <c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
@@ -24,12 +19,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/board.css" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/camping.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/camping_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap_custom.css">
+<link rel="stylesheet" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" href="${contextPath}/css/common.css">
+<link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/camping.css">
+<link rel="stylesheet" href="${contextPath}/css/camping_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/board.css" />
 </head>
 <body>
 
@@ -41,8 +39,7 @@
 	<!-- Menu -->
 	<jsp:include page="../inc/menu.jsp" />
 	
-	<!-- Home -->
-	
+	<!-- Home -->	
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
 		<div class="container">
@@ -66,110 +63,101 @@
 	</div>
 	
 	<!-- Camping -->
-
-	<div class="camping">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-				
-					<!-- 게시판 -->
-					<article class="mt-3">
-						<form action="${contextPath}/camp/updateCamping.do" method="post" enctype="multipart/form-data" >
-							<input type="hidden" name="pageNo" value="${pageNo}" />
-							<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
-							<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
-							<input type="hidden" name="campingNo" value="${campingNo}" />	
-							<input type="hidden" name="userId" value="${userId}" />
-							<input type="hidden" name="oldFileName" value="${campingFileName}" />
-							<table class="table">
-								<colgroup>
-									<col style="max-width: 15%" />
-									<col />
-								</colgroup>
-								<tr>
-									<th class="align-middle">
-										<label for="userName" class="m-0">이름</label>
-									</th>
-									<td>
-										<input class="form-control" type="text" name="userName" id="userName" value="${userName}" readonly />
-									</td>
-								</tr>
-								<tr>
-									<th class="align-middle">
-										<label for="campingCategoryNo" class="m-0">카테고리</label>
-									</th>
-									<td>
-										<select class="form-control" name="campingCategoryNo" id="campingCategoryNo" required>
-											<option value="">선택하세요</option>
-											<c:forEach var="category" items="${campingCategoryList}">											
-												<c:choose>
-													<c:when test="${category.campingCategoryNo == campingCategoryNo}">
-														<option value="${category.campingCategoryNo}" selected>${category.campingCategoryName}</option>	
-													</c:when>
-													<c:otherwise>
-														<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>	
-													</c:otherwise>
-												</c:choose>																				
-											</c:forEach>								
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<th class="align-middle">
-										<label for="campingTitle" class="m-0">제목</label>
-									</th>
-									<td>
-										<input class="form-control" type="text" name="campingTitle" id="campingTitle" value="${campingTitle}" required />
-									</td>
-								</tr>
-								<tr>
-									<th class="align-middle">
-										<label for="campingContent" class="m-0">내용</label>
-									</th>
-									<td>			
-										<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required>${campingContent}</textarea>
-									</td>
-								</tr>
-								<tr>
-									<th class="align-middle">
-										<label class="m-0">첨부파일</label>
-									</th>
-									<td>
-										<c:if test="${not empty campingFileName}">
-											<div class="d-flex align-items-center mb-2">
-												<c:if test="${campingFileType.equals('image')}">
-													<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
-												</c:if>
-												<p class="ml-2 mb-0">${campingFileName}</p>
-												<div class="custom-control custom-checkbox ml-2">
-													<input type="checkbox" class="custom-control-input" name="deleteFile" id="deleteFile">
-													<label class="custom-control-label text-danger" for="deleteFile">첨부된 파일 삭제하기</label>
-												</div>
-											</div>
-											<p class="alert alert-danger" style="display:none">파일첨부 시 기존 첨부파일 정보가 삭제됩니다.</p>
-										</c:if>
-										<div class="custom-file">
-											<input class="custom-file-input" type="file" name="campingFileName" id="campingFileName" onchange="checkFile(this);showPreview(this)" />
-											<label class="custom-file-label" for="campingFileName">선택된 파일 없음</label>
-										</div>
-									</td>
-								</tr>
-							</table>
-							<div class="text-center my-5">
-								<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
-								<button type="submit" class="btn btn-warning">수정하기</button>
+	<article class="camping container">
+		<form action="${contextPath}/camp/updateCamping.do" method="post" enctype="multipart/form-data" >
+			<input type="hidden" name="pageNo" value="${pageNo}" />
+			<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
+			<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
+			<input type="hidden" name="campingNo" value="${campingNo}" />	
+			<input type="hidden" name="userId" value="${userId}" />
+			<input type="hidden" name="oldFileName" value="${campingFileName}" />
+			<table class="table">
+				<colgroup>
+					<col style="max-width: 15%" />
+					<col />
+				</colgroup>
+				<tr>
+					<th class="align-middle">
+						<label for="userName" class="m-0">이름</label>
+					</th>
+					<td>
+						<input class="form-control" type="text" name="userName" id="userName" value="${userName}" readonly />
+					</td>
+				</tr>
+				<tr>
+					<th class="align-middle">
+						<label for="campingCategoryNo" class="m-0">카테고리</label>
+					</th>
+					<td>
+						<select class="form-control" name="campingCategoryNo" id="campingCategoryNo" required>
+							<option value="">선택하세요</option>
+							<c:forEach var="category" items="${campingCategoryList}">											
+								<c:choose>
+									<c:when test="${category.campingCategoryNo == campingCategoryNo}">
+										<option value="${category.campingCategoryNo}" selected>${category.campingCategoryName}</option>	
+									</c:when>
+									<c:otherwise>
+										<option value="${category.campingCategoryNo}">${category.campingCategoryName}</option>	
+									</c:otherwise>
+								</c:choose>																				
+							</c:forEach>								
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th class="align-middle">
+						<label for="campingTitle" class="m-0">제목</label>
+					</th>
+					<td>
+						<input class="form-control" type="text" name="campingTitle" id="campingTitle" value="${campingTitle}" required />
+					</td>
+				</tr>
+				<tr>
+					<th class="align-middle">
+						<label for="campingContent" class="m-0">내용</label>
+					</th>
+					<td>			
+						<textarea class="form-control" name="campingContent" id="campingContent" cols="40" rows="13" required>${campingContent}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<th class="align-middle">
+						<label class="m-0">첨부파일</label>
+					</th>
+					<td>
+						<c:if test="${not empty campingFileName}">
+							<div class="d-flex align-items-center mb-2">
+								<c:if test="${campingFileType.equals('image')}">
+									<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
+								</c:if>
+								<p class="ml-2 mb-0">${campingFileName}</p>
+								<div class="custom-control custom-checkbox ml-2">
+									<input type="checkbox" class="custom-control-input" name="deleteFile" id="deleteFile">
+									<label class="custom-control-label text-danger" for="deleteFile">첨부된 파일 삭제하기</label>
+								</div>
 							</div>
-						</form>
-					</article>
-					<!-- // 게시판 -->
-				
-				</div>
+							<p class="alert alert-danger" style="display:none">파일첨부 시 기존 첨부파일 정보가 삭제됩니다.</p>
+						</c:if>
+						<div class="custom-file">
+							<input class="custom-file-input" type="file" name="campingFileName" id="campingFileName" onchange="checkFile(this);showPreview(this)" />
+							<label class="custom-file-label" for="campingFileName">선택된 파일 없음</label>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div class="text-center my-5">
+				<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
+				<button type="submit" class="btn btn-warning">수정하기</button>
 			</div>
-		</div>
-	</div>
+		</form>
+	</article>
+	
+	<!-- Newsletter -->
+	<jsp:include page="../inc/newsletter.jsp" />
 	
 	<!-- Footer -->
 	<jsp:include page="../inc/footer.jsp" />
+	
 </div>
 
 <script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
@@ -180,6 +168,7 @@
 <script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
 <script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>
 

@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import product.ProductVO;
 import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
@@ -27,7 +28,7 @@ import productCategory.ProductCategoryVO;
 public class ProductAdminController extends HttpServlet{
 	
 	ProductAdminService productService;
-	ProductAdminVO productAdminVO;	
+	ProductVO productVO;	
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
 	String realPath = "";
@@ -35,7 +36,7 @@ public class ProductAdminController extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		productService = new ProductAdminService();
-		productAdminVO = new ProductAdminVO();
+		productVO = new ProductVO();
 		productCategoryService = new ProductCategoryService();
 		productCategoryVO = new ProductCategoryVO();
 	}	
@@ -53,7 +54,7 @@ public class ProductAdminController extends HttpServlet{
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextPage = "";
 		realPath = request.getServletContext().getRealPath("/files/product");
-		
+				
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		
@@ -86,8 +87,8 @@ public class ProductAdminController extends HttpServlet{
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));			
-			Map<String, Object> productItemMap = productService.readProduct(productNo);			
-			request.setAttribute("productItemMap", productItemMap);
+			Map<String, Object> productMap = productService.readProduct(productNo);			
+			request.setAttribute("productMap", productMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
@@ -107,7 +108,7 @@ public class ProductAdminController extends HttpServlet{
 			Map<String, String> multipartMap = uploadFile(request);
 									
 			String productName = multipartMap.get("productName");
-			String productInformation = multipartMap.get("productInformation");
+			String productContent = multipartMap.get("productContent");
 			String productImageName1 = multipartMap.get("productImageName1");
 			String productImageName2 = multipartMap.get("productImageName2");
 			String productImageName3 = multipartMap.get("productImageName3");
@@ -115,16 +116,16 @@ public class ProductAdminController extends HttpServlet{
 			int productQuantity = Integer.parseInt(multipartMap.get("productQuantity"));
 			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
 			
-			productAdminVO.setProductName(productName);
-			productAdminVO.setProductInformation(productInformation);
-			productAdminVO.setProductImageName1(productImageName1);
-			productAdminVO.setProductImageName2(productImageName2);
-			productAdminVO.setProductImageName3(productImageName3);
-			productAdminVO.setProductPrice(productPrice);
-			productAdminVO.setProductQuantity(productQuantity);
-			productAdminVO.setProductCategoryNo(productCategoryNo);
+			productVO.setProductName(productName);
+			productVO.setProductContent(productContent);
+			productVO.setProductImageName1(productImageName1);
+			productVO.setProductImageName2(productImageName2);
+			productVO.setProductImageName3(productImageName3);
+			productVO.setProductPrice(productPrice);
+			productVO.setProductQuantity(productQuantity);
+			productVO.setProductCategoryNo(productCategoryNo);
 			
-			int readNo = productService.insertProduct(productAdminVO);
+			int readNo = productService.insertProduct(productVO);
 			
 			String alertMsg = "";
 			
@@ -153,8 +154,8 @@ public class ProductAdminController extends HttpServlet{
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));
-			Map<String, Object> productItemMap = productService.readProduct(productNo);
-			request.setAttribute("productItemMap", productItemMap);
+			Map<String, Object> productMap = productService.readProduct(productNo);
+			request.setAttribute("productMap", productMap);
 
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
@@ -169,7 +170,7 @@ public class ProductAdminController extends HttpServlet{
 						
 			int productNo = Integer.parseInt(multipartMap.get("productNo"));
 			String productName = multipartMap.get("productName");
-			String productInformation = multipartMap.get("productInformation");
+			String productContent = multipartMap.get("productContent");
 			String productImageName1 = multipartMap.get("productImageName1");
 			String productImageName2 = multipartMap.get("productImageName2");
 			String productImageName3 = multipartMap.get("productImageName3");
@@ -177,15 +178,15 @@ public class ProductAdminController extends HttpServlet{
 			int productQuantity = Integer.parseInt(multipartMap.get("productQuantity"));
 			int productCategoryNo = Integer.parseInt(multipartMap.get("productCategoryNo"));
 			
-			productAdminVO.setProductNo(productNo);
-			productAdminVO.setProductName(productName);
-			productAdminVO.setProductInformation(productInformation);
-			productAdminVO.setProductImageName1(productImageName1);
-			productAdminVO.setProductImageName2(productImageName2);
-			productAdminVO.setProductImageName3(productImageName3);
-			productAdminVO.setProductPrice(productPrice);
-			productAdminVO.setProductQuantity(productQuantity);
-			productAdminVO.setProductCategoryNo(productCategoryNo);
+			productVO.setProductNo(productNo);
+			productVO.setProductName(productName);
+			productVO.setProductContent(productContent);
+			productVO.setProductImageName1(productImageName1);
+			productVO.setProductImageName2(productImageName2);
+			productVO.setProductImageName3(productImageName3);
+			productVO.setProductPrice(productPrice);
+			productVO.setProductQuantity(productQuantity);
+			productVO.setProductCategoryNo(productCategoryNo);
 			
 			Map<String, String> originalImageNameMap = new HashMap<String, String>();
 			String originalImageName1 = multipartMap.get("originalImageName1");
@@ -201,7 +202,7 @@ public class ProductAdminController extends HttpServlet{
 			deleteFileMap.put("deleteFile2", deleteFile2);
 			deleteFileMap.put("deleteFile3", deleteFile3);
 			
-			int result = productService.updateProduct(productAdminVO, originalImageNameMap, deleteFileMap);
+			int result = productService.updateProduct(productVO, originalImageNameMap, deleteFileMap);
 			String alertMsg = "";
 			
 			if(result > 0) {

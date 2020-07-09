@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ include file="../inc/top.jsp"%>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -9,12 +8,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="ASSA Camping - 나혼자간다">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/contact.css">
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/contact_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" href="${contextPath}/css/common.css">
+<link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/contact.css">
+<link rel="stylesheet" href="${contextPath}/css/contact_responsive.css">
 </head>
 <body>
 
@@ -202,6 +203,7 @@
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/contact_custom.js"></script>
 </body>
 </html>
