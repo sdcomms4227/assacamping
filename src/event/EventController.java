@@ -93,7 +93,7 @@ public class EventController extends HttpServlet {
 			session.setAttribute("userId", "admin"); //임시		
 			nextPage = "/event/eventForm.jsp";
 
-		}else if(action.equals("/addEvent.do")) {//글쓰기 요청 주소
+		}else if(action.equals("/addEvent.do")) {//글쓰기 요청 
 			
 			 Map<String, String> eventMap = upload(request, response);
 		
@@ -108,14 +108,11 @@ public class EventController extends HttpServlet {
 		
 			int eventNo =eventService.addEvent(eventVO);
 			
-			//파일을 첨부한 경우
 			if(imageFileName != null && imageFileName.length() != 0) {
 				
-				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);
-				
+				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);				
 				File destDir = new File(realPath + "\\" + eventNo);
-				destDir.mkdirs();
-				
+				destDir.mkdirs();			
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);	
 			  }
 			
@@ -129,56 +126,21 @@ public class EventController extends HttpServlet {
 
 		}else if(action.equals("/readEvent.do")) {
 
-
-			EventDAO eventDAO = new EventDAO();
-			
-			String eventNo = request.getParameter("eventNo");
-			
-			eventVO = eventService.viewEvent(Integer.parseInt(eventNo));		
-			
-			eventDAO.updateReadCount(Integer.parseInt(eventNo));  
-			
-			request.setAttribute("event", eventVO);
-			
-
+			EventDAO eventDAO = new EventDAO();			
+			String eventNo = request.getParameter("eventNo");			
+			eventVO = eventService.viewEvent(Integer.parseInt(eventNo));					
+			eventDAO.updateReadCount(Integer.parseInt(eventNo));  			
+			request.setAttribute("event", eventVO);			
 			nextPage ="/event/readEvent.jsp"; 
-					
-					
+										
 		}else if (action.equals("/modEvent.do")) { //글 수정요청시 수정폼으로
 			
-			Map<String, String> eventMap = upload(request, response);
-			
-			int eventNo = Integer.parseInt(eventMap.get("eventNo"));
-			eventVO.setEventNo(eventNo);
-			String title = eventMap.get("eventTitle");
-			String content = eventMap.get("eventContent");
-			String imageFileName = eventMap.get("imageFileName");
-			
-			eventVO.setUserId("admin");
-			eventVO.setEventTitle(title);
-			eventVO.setEventContent(content);
-			eventVO.setEventImageFileName(imageFileName);			
-			eventService.modEvent(eventVO);  
-			
-			if (imageFileName != null && imageFileName.length() != 0) {
-				String originalFileName = eventMap.get("originalFileName");
-				
-				File srcFile = new File(realPath + "\\" + "temp" + "\\" + imageFileName);
-				File destDir = new File(realPath + "\\" + eventNo);
-				destDir.mkdirs();			
-				FileUtils.moveFileToDirectory(srcFile, destDir, true);
-				File oldFile = new File(realPath + "\\" + eventNo + "\\" + originalFileName);
-				oldFile.delete();
-			}
-			PrintWriter pw = response.getWriter();
-			pw.print("<script>" 
-					+ "  alert('글을 수정했습니다.');" 
-					+ " location.href='" + request.getContextPath()
-					+ "/eve/viewEvent.do?eventNo=" + eventNo + "';" 
-					+ "</script>");
-			return;
-
-		}else if (action.equals("/modEvent.do")) { //글 수정
+			String eventNo = request.getParameter("eventNo");
+			eventVO = eventService.viewEvent(Integer.parseInt(eventNo));			
+			request.setAttribute("event", eventVO);				
+			nextPage = "/event/modEvent.jsp";
+		
+		}else if (action.equals("/updateEvent.do")) { //글 수정
 			
 			Map<String, String> eventMap = upload(request, response);
 			
@@ -208,7 +170,7 @@ public class EventController extends HttpServlet {
 			pw.print("<script>" 
 					+ "  alert('글을 수정했습니다.');" 
 					+ " location.href='" + request.getContextPath()
-					+ "/eve/viewEvent.do?eventNo=" + eventNo + "';" 
+					+ "/eve/readEvent.do?eventNo=" + eventNo + "';" 
 					+ "</script>");
 			return;
 			

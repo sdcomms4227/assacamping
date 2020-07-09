@@ -8,7 +8,6 @@
 <c:set var="eventImageFileName" value="${event.eventImageFileName}" />
 <c:set var="eventWriteDate" value="${event.eventWriteDate}" />
 <c:set var="eventReadCount" value="${event.eventReadCount}" />
-
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -26,7 +25,6 @@
 <link rel="stylesheet" href="${contextPath}/css/camping.css">
 <link rel="stylesheet" href="${contextPath}/css/camping_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/board.css" />
-<jsp:include page="../inc/alert.jsp" />
 </head>
 <body>
 
@@ -63,60 +61,57 @@
 	
 	<!-- Camping -->
 	<article class="camping container">
-		<table class="table read-table">
-			<colgroup>
-				<col style="width: 70px" />
-				<col />
-				<col style="width: 70px" />
-				<col style="width: 210px" />
-				<col style="width: 70px" />
-				<col style="width: 70px" />
-			</colgroup>
-			<tr>
-				<td colspan="6" class="h4 p-3 readsubject">
-					${eventTitle}																	
-					<div class="h6 mt-3 mb-0 d-lg-none text-right">
-						<small class="text-muted">${userId} | <fmt:formatDate value="${eventWriteDate}" pattern="yy-MM-dd"/> | ${eventReadCount}</small>
-					</div>
-				</td>
-			</tr>
-			<tr class="d-none d-lg-table-row">
-				<th class="align-middle">제목</th>
-				<td>${event.eventTitle}</td>				
-				<th class="align-middle">작성일</th>
-				<td><fmt:formatDate value="${eventWriteDate}" pattern="yy-MM-dd"/></td>
-				<th class="align-middle">조회수</th>
-				<td>${eventReadCount}</td>
-			</tr>
-			<tr>
-				<td colspan="6" class="py-5">
-				     <input  type= "hidden"   name="originalFileName" value="${eventImageFileName}" />
-   						 <img src="${contextPath}/files/event/${eventNo}/${eventImageFileName}" align="center"/><br><br>				
-						 ${fn:replace(eventContent,LF,BR)}
-				</td>
-			</tr>
-			<c:if test="${not empty eventImageFileName && eventImageFileName!='null'}">
+		<form action="${contextPath}/eve/updateEvent.do" method="post" enctype="multipart/form-data" >
+			<input type="hidden" name="eventNo" value="${eventNo}" />	
+			<input type="hidden" name="userId" value="${userId}" />
+			<input type="hidden" name="originalFileName" value="${eventImageFileName}" />
+			<table class="table">
+				<colgroup>
+					<col style="max-width: 15%" />
+					<col />
+				</colgroup>
 				<tr>
-					<th class="align-middle">첨부파일</th>
-					<td colspan="5">
-						<div class="d-flex align-items-center">
-<%-- 								<div class="preview" style="background-image:url(${contextPath}/files/event/${event.eventNo}/${event.eventImageFileName})"></div>
- --%>							
- 							<p class="ml-2 mb-0">${eventImageFileName}</p>
+					<th class="align-middle">
+						<label for="eventTitle" class="m-0">제목</label>
+					</th>
+					<td>
+						<input class="form-control" type="text" name="eventTitle" id="eventTitle" value="${eventTitle}" required />
+					</td>
+				</tr>
+				<tr>
+					<th class="align-middle">
+						<label for="eventContent" class="m-0">내용</label>
+					</th>
+					<td>			
+						<textarea class="form-control" name="eventContent" id="eventContent" cols="40" rows="13" required>${eventContent}</textarea>				
+					</td>
+				</tr>
+				<tr>
+					<th class="align-middle">
+						<label class="m-0">첨부파일</label>
+					</th>
+					<td>
+						<c:if test="${not empty eventImageFileName}">
+							<div class="d-flex align-items-center mb-2">
+								<c:if test="${eventImageFileType.equals('image')}">
+									<div class="preview" style="background-image:url(${contextPath}/files/event/${eventNo}/${eventImageFileName})"></div>
+								</c:if>
+								<p class="ml-2 mb-0">${eventImageFileName}</p>
+							</div>
+							<p class="alert alert-danger" style="display:none">파일첨부 시 기존 첨부파일 정보가 삭제됩니다.</p>
+						</c:if>
+						<div class="custom-file">
+							<input class="custom-file-input" type="file" name="imageFileName" id="eventImageFileName" onchange="readURL()" />
+							<label class="custom-file-label" for="eventImageFileName">선택된 파일 없음</label>
 						</div>
 					</td>
-				</tr>				
-			</c:if>
-		</table>
-		<form>
-		<div class="text-center my-5">
-			<a href="${contextPath}/eve/listEvent.do">
-			<button type="button" class="btn btn-secondary">목록</button></a>
-			<c:if test="${userId eq 'admin'}">							
-				<a href="${contextPath}/eve/modEvent.do?eventNo=${eventNo}" class="btn btn-warning">수정</a>
-				<a href="${contextPath}/eve/delEvent.do?eventNo=${eventNo}" class="btn btn-warning">삭제</a>	    
-			</c:if>
-		</div>			
+				</tr>
+			</table>
+			<div class="text-center my-5">
+				<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
+				<button type="submit" class="btn btn-warning">수정하기</button>
+			</div>
+		</form>
 	</article>
 	
 	<!-- Newsletter -->
@@ -136,6 +131,51 @@
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
+<script src="${contextPath}/js/bs-custom-file-input.js"></script>
 
+<script>
+	$(document).ready(function() {
+		bsCustomFileInput.init()
+	});
+
+	function checkFile(obj){
+		if($(obj).parent().siblings(".alert")){
+			if($(obj).val().length > 0){
+				$(obj).parent().siblings(".alert").fadeIn();
+			}else{
+				$(obj).parent().siblings(".alert").hide();
+			}
+		}
+	}
+	
+	function showPreview(obj, allowType){
+		var $preview  = $(obj).parent().siblings(".preview");
+
+		if($preview.length){
+			$preview.remove();
+		}
+		
+		if(obj.files && obj.files[0]){
+			var fileType = obj.files[0].type.split("/")[0];
+			
+			if(fileType=="image"){
+				$preview = $("<div class='preview mt-2' />");
+				$preview.appendTo($(obj).parent().parent());
+				
+				var reader = new FileReader();				
+				reader.readAsDataURL(obj.files[0]);
+				
+				reader.onload = function(ProgressEvent){
+					$preview.css("background-image", "url(" + ProgressEvent.target.result + ")");
+				}
+			}else{
+				if(allowType=="image"){
+					alert("이미지 파일만 첨부하실 수 있습니다.");
+					obj.value = "";
+				}
+			}
+		}
+	}
+</script>
 </body>
 </html>

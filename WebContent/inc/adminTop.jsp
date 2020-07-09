@@ -33,7 +33,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<ul class="navbar-nav px-3">
-		<li class="nav-item text-nowrap"><a class="nav-link" href="${contextPath}/usradm/logout.do">Sign out</a></li>
+		<li class="nav-item text-nowrap"><a class="nav-link" href="${contextPath}/userCon/logout.do">Sign out</a></li>
 	</ul>
 </nav>
 <div class="container-fluid">
