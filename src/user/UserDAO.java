@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.sql.DataSource;
 
 public class UserDAO {
@@ -222,7 +223,7 @@ public class UserDAO {
 	}//idCheck 메소드
 	
 	public String findId(String userName, String userEmail) {
-		String userId = "";
+		String userId ="";
 		try{
 			conn = dataFactory.getConnection();
 			String query = "select userId from user where userName=? and userEmail=?";
@@ -239,6 +240,7 @@ public class UserDAO {
 			resourceClose();
 		}
 		return userId;
+		
 	}//findId 메소드
 
 	public int withdrawlUser(String userId, String userPw) {
@@ -267,9 +269,59 @@ public class UserDAO {
 		}
 		return check;
 	}//withdrawlUser메소드 
+
+	public int checkAction(String userId, String userPw) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				if(userPw.equals(rs.getString("userPw"))) {
+					check = 1;
+				}else {
+					check = 0;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("checkAction메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+	return check;
+	}// checkAction
+
+	public int changePw(String userId, String userPw, String userPw1 ) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId=?";
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(userPw.equals(rs.getString("userPw"))) {
+					query = "update user set userPw= ? where userId=?";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, userPw1);
+					pstmt.setString(2, userId);
+					pstmt.executeUpdate();
+					check = 1;
+				}else {
+					check = 0;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("changePw메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return check;
+	}
 }//UserDAO클래스 
 
-//컨트롤러에서 
 
 
 

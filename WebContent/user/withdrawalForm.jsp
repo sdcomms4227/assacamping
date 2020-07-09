@@ -15,7 +15,7 @@ request.setCharacterEncoding("UTF-8");
 	<c:when test='${msg=="fail"}'>
 		<script type="text/javascript">
 			window.onload = function(){
-				window.alert("비밀번호가 틀렸습니다.");
+				window.alert("비밀번호가 일치하지 않습니다.");
 			}
 		</script>
 	</c:when>

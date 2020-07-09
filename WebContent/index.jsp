@@ -23,10 +23,15 @@
 	<c:when test='${msg=="complete"}'>
 		<script type="text/javascript">
 			window.onload = function(){
-				window.alert("그동안 ASSACAMPING을 이용해 주셔서 감사합니다.");
-			}
+				window.alert("그동안 ASSACAMPING을 이용해 주셔서 감사합니다.");	}
 		</script>
 	</c:when>
+	<c:when test='${requestScope.msg == "modified" }'>
+		<script type="text/javascript">
+				window.onload = function(){
+				window.alert("수정완료 되었습니다.");}		
+		</script>
+	</c:when>	
 </c:choose>
 </head>
 <body>

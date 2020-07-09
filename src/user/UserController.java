@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,14 +42,8 @@ public class UserController extends HttpServlet{
 		UserDAO userDAO = new UserDAO();
 		String action = request.getPathInfo();
 		String nextPage = null;
-		if(action == null || action.equals("/listUsers.do")) {
-			String userId=request.getParameter("userId");
-			List<UserVO> usersList = userDAO.listUsers();
-			request.setAttribute("usersList", usersList);
-			session.setAttribute("userId", userId);
-			
-			nextPage = "/index.jsp";
-
+		if(action == null ) {
+			nextPage = "/";
 		}else if(action.equals("/addUser.do")) {
 			
 			String userId = request.getParameter("userId");
@@ -137,14 +132,13 @@ public class UserController extends HttpServlet{
 				String userName = request.getParameter("userName");
 				String userEmail = request.getParameter("userEmail");
 				String userId = userDAO.findId(userName,userEmail);
-				if(userId != null) {
-					request.setAttribute("userId", userId);
+				if(userId == null || userId=="") {
+					request.setAttribute("msg", "userId");
 					nextPage = "/user/findId.jsp";
 				}else {
-					request.setAttribute("msg", "xId");
+					request.setAttribute("userId", userId);
 					nextPage = "/user/findId.jsp";
 				}
-				
 			}else if(action.equals("/withdrawal.do")) {
 				String userId = request.getParameter("userId");
 				UserVO userInfo = userDAO.findUser(userId);
@@ -170,15 +164,47 @@ public class UserController extends HttpServlet{
 				UserVO userInfo = userDAO.findUser(userId);
 				request.setAttribute("userInfo", userInfo);
 				nextPage = "/user/userPwCheckForm.jsp";
+			}else if(action.equals("/userPwCheckAction.do")){
+				String userId = request.getParameter("userId");
+				String userPw = request.getParameter("userPw");
+				int check = userDAO.checkAction(userId,userPw);
+				if(check ==1) {
+					UserVO userInfo = userDAO.findUser(userId);
+					request.setAttribute("userInfo", userInfo);
+					nextPage = "/user/modUserForm.jsp";
+				}else {
+					userId = request.getParameter("userId");
+					UserVO userInfo = userDAO.findUser(userId);
+					request.setAttribute("userInfo", userInfo);
+					request.setAttribute("msg", "fail");
+					nextPage = "/user/userPwCheckForm.jsp";
+				}
+			}else if(action.equals("/changePw.do")) {
+				String userId = request.getParameter("userId");
+				UserVO userInfo = userDAO.findUser(userId);
+				request.setAttribute("userInfo", userInfo);
+				nextPage = "/user/changePw.jsp";
+			}else if(action.equals("/changePwAction.do")) {
+				String userId = request.getParameter("userId");
+				String userPw = request.getParameter("userPw");
+				String userPw1 = request.getParameter("userPw1");
+				int check = userDAO.changePw(userId, userPw, userPw1);
+				if(check ==1) {
+					request.setAttribute("msg", "modified");
+					nextPage = "/";
+				}else {
+					userId = request.getParameter("userId");
+					UserVO userInfo = userDAO.findUser(userId);
+					request.setAttribute("userInfo", userInfo);
+					request.setAttribute("msg", "fail");
+					nextPage = "/user/changePw.jsp";
+				}
 			}
+				
 		RequestDispatcher  dispatch = 
 		request.getRequestDispatcher(nextPage);
 		dispatch.forward(request, response);
-		
-		
 	}//doHandle 메소드 
-	
-	
 }//UserController클래스
 
 

@@ -19,17 +19,21 @@
 	<c:when test='${msg=="id"}'>
 		<script type="text/javascript">
 			window.onload = function(){
-				window.alert("존재하지 않는 아이디 입니다.");
-			}
+			window.alert("존재하지 않는 아이디 입니다.");}
 		</script>
 	</c:when>
 	<c:when test='${msg=="pw"}'>
 		<script type="text/javascript">
 			window.onload = function(){
-				window.alert("비밀번호가 일치하지 않습니다.");
-			}
+			window.alert("비밀번호가 일치하지 않습니다.");}
 		</script>
 	</c:when>
+	<c:when test='${requestScope.msg == "addUser" }'>
+		<script type="text/javascript">
+			window.onload = function(){
+			window.alert("회원가입이 완료되었습니다.");}		
+		</script>
+	</c:when>	
 </c:choose>
 </head>
 <body>

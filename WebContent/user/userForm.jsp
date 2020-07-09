@@ -114,14 +114,12 @@
 						<label class="font-weight-bold" for="userEmail">이메일</label>
 						<input type="email" class="form-control form-control-lg" name="userEmail" id="userEmail" maxlength="20" required>
 					</div>
-					<div>
-						<div class="form-group mb-3">					
+					<div class="form-group mb-3">					
 							<label class="font-weight-bold" for="userZipcode">우편번호</label>
 							<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" maxlength="20" required>
-						</div>
-						<div class="form-group mb-3">
-						<button class="font-weight-bold" type="button" onclick="postCode()">우편번호검색</button>
 					</div>
+					<div class="form-group mb-3">
+						<button class="font-weight-bold" type="button" onclick="postCode()">우편번호검색</button>
 					</div>
 					<div class="form-group mb-3">					
 						<label class="font-weight-bold" for="userAddress1">주소</label>
@@ -129,7 +127,7 @@
 					</div>
 					<div class="form-group mb-3">					
 						<label class="font-weight-bold" for="userAddress2">상세주소</label>
-						<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" maxlength="20" required>
+						<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" maxlength="20" >
 					</div>
 					<button type="submit" class="btn btn-xl btn-primary btn-block">가입하기</button>
 			</form>

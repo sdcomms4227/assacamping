@@ -15,21 +15,20 @@ request.setCharacterEncoding("UTF-8");
 	<c:when test='${msg=="fail"}'>
 		<script type="text/javascript">
 			window.onload = function(){
-				window.alert("비밀번호가 틀렸습니다.");
+				window.alert("비밀번호가 일치하지 않습니다.");
 			}
 		</script>
 	</c:when>
 </c:choose>
 </head>
 <body>
-<form action="${contextPath}/userCon/modUserForm.do" method="post" >
-	<h2>회원수정</h2>
+<form action="${contextPath}/userCon/userPwCheckAction.do" method="post" >
+	<h2>회원정보수정</h2>
 	비밀번호를 다시 입력해 주세요.<br>
-	<label>User ID</label>
-		<input type="text" name="userId" value="${userInfo.userId}" readonly>
+	<input type="text" name="userId" value="${userInfo.userId}" hidden>
 	<label>Password</label>
 		<input type="password" name="userPw" >		
-	<button type="submit">수정</button>
+	<button type="submit">입력</button>
 </form>
 </body>
 </html>
