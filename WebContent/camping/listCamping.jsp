@@ -144,8 +144,15 @@
 				</form>
 			</div>
 			<div class="col-12 col-lg-4 mt-3 mt-lg-0">
-				<div class="form-group text-center text-lg-right">
-					<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/camp/addCamping.do'">글쓰기</button>
+				<div class="form-group text-center text-lg-right">				
+					<c:choose>
+						<c:when test="${sessionScope.userId != null}">
+							<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/camp/addCamping.do'">글쓰기</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-secondary" onclick="alert('로그인 후 글 작성이 가능합니다.');location.href='${contextPath}/userCon/login.do'">글쓰기</button>
+						</c:otherwise>
+					</c:choose>					
 				</div>
 			</div>
 		</div>

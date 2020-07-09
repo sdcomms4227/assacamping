@@ -98,7 +98,7 @@ public class CampingDAO {
 			}			
 			
 		} catch(Exception e) {
-			System.out.println("getCampingList(Map)메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getCampingList()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
