@@ -86,6 +86,7 @@ function fn_delete() {
 					<div class="cart_title">your shopping cart</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col">
 					<div class="cart_bar d-flex flex-row align-items-center justify-content-start">
