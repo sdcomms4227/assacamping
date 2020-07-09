@@ -16,7 +16,7 @@ public class UserVO {
 	private int userUse;
 	
 	public UserVO() {
-		System.out.println("객체 생성시 UserVO 생성자가 호출됨");
+//		System.out.println("객체 생성시 UserVO 생성자가 호출됨");
 	}
 	
 	

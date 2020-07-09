@@ -68,7 +68,7 @@ public class UserAdminDAO {
 			}
 
 		} catch (Exception e) {
-			System.out.println("getUserList(Map)메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getUserList()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
