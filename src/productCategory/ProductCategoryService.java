@@ -25,5 +25,8 @@ public class ProductCategoryService {
 	public int deleteProductCategory(int productCategoryNo) {
 		return productCategoryDAO.deleteProductCategory(productCategoryNo);	
 	}
-
+   public ProductCategoryVO ProductCategoryName(int productCategoryNo) {
+	   
+	   return productCategoryDAO.ProductCategoryName(productCategoryNo);
+   }
 }
