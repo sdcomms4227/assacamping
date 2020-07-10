@@ -11,12 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/pro/*")
+//@WebServlet("/pro/*")
 public class ProductController extends HttpServlet{
 	
 	ProductService productService;
@@ -24,7 +25,7 @@ public class ProductController extends HttpServlet{
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
 	String realPath = "";
-		
+	
 	@Override
 	public void init() throws ServletException {
 		productService = new ProductService();
@@ -46,7 +47,7 @@ public class ProductController extends HttpServlet{
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextPage = "";
 		realPath = request.getServletContext().getRealPath("/files/product");
-				
+		HttpSession session = request.getSession();		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		
@@ -72,7 +73,7 @@ public class ProductController extends HttpServlet{
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
-			
+			session.setAttribute("userId", session.getAttribute("userId"));
 			nextPage = "/product/listProduct.jsp";
 			
 		}else if(action.equals("/readProduct.do")) {
@@ -86,7 +87,7 @@ public class ProductController extends HttpServlet{
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
-			
+			session.setAttribute("userId", session.getAttribute("userId"));
 			nextPage = "/product/readProduct.jsp";
 			
 		}
