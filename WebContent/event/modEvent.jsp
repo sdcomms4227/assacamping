@@ -98,10 +98,9 @@
 								</c:if>
 								<p class="ml-2 mb-0">${eventImageFileName}</p>
 							</div>
-							<p class="alert alert-danger" style="display:none">파일첨부 시 기존 첨부파일 정보가 삭제됩니다.</p>
 						</c:if>
 						<div class="custom-file">
-							<input class="custom-file-input" type="file" name="imageFileName" id="eventImageFileName" onchange="readURL()" />
+							<input class="custom-file-input" type="file" name="imageFileName" id="eventImageFileName" onchange="checkFile(this);showPreview(this)" />
 							<label class="custom-file-label" for="eventImageFileName">선택된 파일 없음</label>
 						</div>
 					</td>

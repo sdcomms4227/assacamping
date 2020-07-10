@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class EventDAO {
 	
 	private Connection conn;
@@ -48,9 +47,8 @@ public List selectAllEvent(){
 	}	
 	return eventList;
 
-   }//selectAllEvent()메소드 끝
+   }
 
-//DB에 새글 추가하기 전에, DB에 존재하는 가장 최신글번호 검색해서 가져오는 메소드
 public int getNewEventNo() {
 	 int eventNo=0;
 	
@@ -72,9 +70,8 @@ public int getNewEventNo() {
 	}
 	return eventNo; 
 		
-}//getNewEventNo()메소드
+}
 
-//DB에 추가할 새글번호(최신글번호+1) 얻어와 insert 실행
 public int insertNewEvent(EventVO event) {
 	
 	int eventNo = getNewEventNo(); //DB에 새로 추가할 새글 글번호 얻기	
@@ -106,9 +103,8 @@ public int insertNewEvent(EventVO event) {
 	
 	return eventNo;
 	
-}//insertNewEvent()메소드 
+}
 
-//글번호를 이용해 하나의 글정보 조회후 반환
 public EventVO selectEvent(int eventNo) {
 	
 	EventVO event = new EventVO();
@@ -149,17 +145,14 @@ public EventVO selectEvent(int eventNo) {
 	
 	return event;
 	
-}//selectEvent
+}
+
 public void updateEvent(EventVO event) {
 		int eventNo = event.getEventNo();
 		String title = event.getEventTitle();
 		String content = event.getEventContent();
 		String imageFileName = event.getEventImageFileName();
-		
-//		System.out.println(event.getEventNo() +"update제목");
-//		System.out.println(event.getEventTitle()+"update파일내용");
-//		System.out.println(event.getEventImageFileName()+"update파일네임");
-		
+
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			String sql = "update event set eventTitle=?, eventContent=?";
@@ -168,17 +161,14 @@ public void updateEvent(EventVO event) {
 				sql += ",eventImageFileName=?";
 			}
 			sql += " where eventNo=?";
-//			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
 			
-			//이미지 파일을 수정하는 경우 설정
 			if (imageFileName != null && imageFileName.length() != 0) {
 				pstmt.setString(3, imageFileName);
 				pstmt.setInt(4, eventNo);
-			
-			//이미지 파일을 수정하지 않은 경우를 구분해서  설정 
+
 			} else {
 				pstmt.setInt(3, eventNo);
 			}
@@ -223,7 +213,7 @@ public void deleteEvent(int eventNo) {
 			   sql += "WHERE eventNo=? ;";			   		   
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, eventNo);
-		pstmt.executeUpdate(); //delete	
+		pstmt.executeUpdate(); 
 		pstmt.close();
 		conn.close();
 	} catch (Exception e) {
@@ -262,14 +252,10 @@ public List selectAllEvents(Map pagingMap) {
 		String sql = "select * from event"
 					+ " where eventTitle like ?"
 					+ " limit ?, 9";
-
-		//System.out.println(sql);
 					
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,"%"+search +"%");
 		pstmt.setInt(2,startNum);
-
-		System.out.println(pstmt.toString());
 		
 		rs = pstmt.executeQuery();
 		
@@ -294,8 +280,7 @@ public List selectAllEvents(Map pagingMap) {
 	}
 	
 	return eventList;
-}//selectAllEvents(Map pagingMap)
-
+}
 
 public int selectToEvents(Map pagingMap) {
 	
@@ -320,6 +305,6 @@ public int selectToEvents(Map pagingMap) {
 		closeDB();
 	}
 	return 0;
-   }//selectToEvents() 
+   }
 
 }
