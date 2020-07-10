@@ -8,35 +8,35 @@ import productQna.ProductQnaVO;
 
 public class ProductQnaAdminService {
 
-	ProductQnaAdminDAO productAdminADO;
+	ProductQnaAdminDAO proAdminADO;
 
 	public ProductQnaAdminService() {
-		productAdminADO = new ProductQnaAdminDAO();
+		proAdminADO = new ProductQnaAdminDAO();
 	}
 
 	public Map<String, Object> listProductQna(Map<String, Object> searchMap) {
 
 		Map<String, Object> productQnaListMap = new HashMap<String, Object>();
 
-		List<Map<String, Object>> productQnaList = productAdminADO.getProductQnaList(searchMap);
+		List<Map<String, Object>> productQnaList = proAdminADO.getProductQnaList(searchMap);
 		productQnaListMap.put("productQnaList", productQnaList);
 
-		int totalCount = productAdminADO.getProductQnaListCount(searchMap);
+		int totalCount = proAdminADO.getProductQnaListCount(searchMap);
 		productQnaListMap.put("totalCount", totalCount);
 
 		return productQnaListMap;
 	}
 
 	public Map<String, Object> readProductQna(int qnaNo) {
-		return productAdminADO.getProductQna(qnaNo);
+		return proAdminADO.getProductQna(qnaNo);
 	}
 
 	public int updateProductQna(ProductQnaVO productQnaVO) {
-		return productAdminADO.updateProductQna(productQnaVO);
+		return proAdminADO.updateProductQna(productQnaVO);
 	}
 
 	public int deleteProductQna(int qnaNo) {
-		return productAdminADO.deleteProductQna(qnaNo);
+		return proAdminADO.deleteProductQna(qnaNo);
 	}
 
 }

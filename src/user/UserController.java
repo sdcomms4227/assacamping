@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/userCon/*")
+@WebServlet("/usr/*")
 public class UserController extends HttpServlet{
   
 	UserDAO userDAO;
@@ -64,7 +64,7 @@ public class UserController extends HttpServlet{
 			UserVO userVO = new UserVO(userId, userPw, userName, userPhone, userEmail, userZipcode, userAddress1, userAddress2, null, 1);
 			userDAO.addUser(userVO);
 			request.setAttribute("msg", "addUser");
-			nextPage = "/userCon/listUsers.do";
+			nextPage = "/usr/listUsers.do";
 			
 		}else if(action.equals("/userForm.do")) {
 			
@@ -90,14 +90,14 @@ public class UserController extends HttpServlet{
 
 				userDAO.modUser(userVO); 
 				request.setAttribute("msg", "modified");
-				nextPage = "/userCon/listUsers.do";
+				nextPage = "/usr/listUsers.do";
 			
 			}else if(action.equals("/delUser.do")) {
 			
 				String userId = request.getParameter("userId");    
 				userDAO.delUser(userId);    
 				request.setAttribute("msg", "deleted");
-				nextPage = "/userCon/listUsers.do";
+				nextPage = "/usr/listUsers.do";
 			
 			}else if(action.equals("/login.do")) {
 				
@@ -126,7 +126,7 @@ public class UserController extends HttpServlet{
 					session.setAttribute("userId", userId);
 					session.setAttribute("userName", userName);
 					
-					nextPage = "/userCon/listUsers.do";
+					nextPage = "/usr/listUsers.do";
 					
 				}
 				request.setAttribute("msg",	msg);

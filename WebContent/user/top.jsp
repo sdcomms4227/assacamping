@@ -11,7 +11,7 @@
 	%>
 	<div id="login">
 		<a href="/modUserForm.jsp?userId=${userId }">${userId }</a>님 로그인중...
-		|| <a href="${contextPath}/userCon/logout.do">logout</a>
+		|| <a href="${contextPath}/usr/logout.do">logout</a>
 	</div>
 	<%
 		}

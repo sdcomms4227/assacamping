@@ -26,7 +26,7 @@ import org.apache.commons.io.FileUtils;
 import user.UserVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/usradm/*")
+@WebServlet("/usrAdm/*")
 public class UserAdminController extends HttpServlet {
 
 	UserAdminService userAdminService;
@@ -123,7 +123,7 @@ public class UserAdminController extends HttpServlet {
 			
 			if(result > 0) {
 				alertMsg = "정상적으로 가입되었습니다.";
-				nextPage = "/usradm/readUser.do?userId=" + userId;
+				nextPage = "/usrAdm/readUser.do?userId=" + userId;
 			}else {
 				alertMsg = "오류가 발생했습니다.";
 				nextPage = "/userAdmin/addUser.jsp";
@@ -172,13 +172,13 @@ public class UserAdminController extends HttpServlet {
 			
 			if(result > 0) {
 				alertMsg = "정상적으로 수정되었습니다.";		
-				nextPage = "/usradm/readUser.do?userId=" + userId;
+				nextPage = "/usrAdm/readUser.do?userId=" + userId;
 			}else if(result == -1){
 				alertMsg = "비밀번호가 일치하지 않습니다.";
-				nextPage = "/usradm/modifyUser.do?userId=" + userId;
+				nextPage = "/usrAdm/modifyUser.do?userId=" + userId;
 			}else {
 				alertMsg = "오류가 발생했습니다.";
-				nextPage = "/usradm/readUser.do?userId=" + userId;
+				nextPage = "/usrAdm/readUser.do?userId=" + userId;
 			}
 			
 			request.setAttribute("alertMsg", alertMsg);
@@ -200,7 +200,7 @@ public class UserAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/usradm/listUser.do";
+			nextPage = "/usrAdm/listUser.do";
 			
 		}
 				

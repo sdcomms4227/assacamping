@@ -18,7 +18,7 @@
 </div>
 
 <article class="user">
-	<form action="${contextPath}/usradm/updateUser.do" method="post" enctype="multipart/form-data">
+	<form action="${contextPath}/usrAdm/updateUser.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="pageNo" value="${pageNo}" />
 		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 		<table class="table">

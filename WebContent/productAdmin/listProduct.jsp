@@ -10,7 +10,7 @@
 		<h2 class="mb-0">상품 관리</h2>
 	</div>
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
-		<form action="${contextPath}/proadm/listProduct.do" class="form-inline justify-content-center">
+		<form action="${contextPath}/proAdm/listProduct.do" class="form-inline justify-content-center">
 			<div class="input-group mb-2 mb-sm-0 mr-sm-2">
 				<select class="form-control form-control-sm categorySelect" name="searchCategoryNo" onchange="this.form.submit()">
 					<option value="0">전체보기</option>
@@ -35,7 +35,7 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/proadm/addProduct.do'">상품 등록</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/proAdm/addProduct.do'">상품 등록</button>
 		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/procate/listProductCategory.do'">카테고리 관리</button>
 	</div>
 </div>
@@ -141,19 +141,19 @@
 <script>
 function listProduct(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proadm/listProduct.do";	
+	form.action = "${contextPath}/proAdm/listProduct.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
 function readProduct(productNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proadm/readProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/proAdm/readProduct.do?productNo=" + productNo;
 	form.submit();
 }
 function modifyProduct(productNo, event){
 	event.stopPropagation();
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proadm/modifyProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/proAdm/modifyProduct.do?productNo=" + productNo;
 	form.submit();
 }
 function deleteProduct(productNo, event){
@@ -161,7 +161,7 @@ function deleteProduct(productNo, event){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/proadm/deleteProduct.do?productNo=" + productNo;
+		form.action = "${contextPath}/proAdm/deleteProduct.do?productNo=" + productNo;
 		form.submit();
 	}
 }

@@ -271,7 +271,7 @@
 								<td>
 									<a href="${contextPath}/pro/getOnePro.do?productNo=${proVO.productNo}&productCategory=${productCategoryName}">
 										
-									<img src="${contextPath}/files/product/${proVO.productNo}/${proVO.productImageName1}" alt="${productAdminVO.productName}" style="height:40px" />
+									<img src="${contextPath}/files/product/${proVO.productNo}/${proVO.productImageName1}" alt="${proAdminVO.productName}" style="height:40px" />
 									</a>
 									${proVO.productName}<br/>
 									금액: ${proVO.productPrice}

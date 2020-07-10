@@ -18,12 +18,12 @@ import productQna.ProductQnaVO;
 @WebServlet("/proQnaAdm/*")
 public class ProductQnaAdminController extends HttpServlet {
 
-	ProductQnaAdminService productQnaAdminService;
+	ProductQnaAdminService proQnaAdminService;
 	ProductQnaVO productQnaVO;
 
 	@Override
 	public void init() throws ServletException {
-		productQnaAdminService = new ProductQnaAdminService();
+		proQnaAdminService = new ProductQnaAdminService();
 		productQnaVO = new ProductQnaVO();
 	}
 
@@ -55,14 +55,14 @@ public class ProductQnaAdminController extends HttpServlet {
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 			searchMap.put("answerCheck", request.getAttribute("answerCheck"));
 
-			Map<String, Object> productQnaListMap = productQnaAdminService.listProductQna(searchMap);			
+			Map<String, Object> productQnaListMap = proQnaAdminService.listProductQna(searchMap);			
 			request.setAttribute("productQnaListMap", productQnaListMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/productQnaAdmin/listProductQna.jsp";
+			nextPage = "/proQnaAdmin/listProductQna.jsp";
 			
 		}else if(action.equals("/readProductQna.do")) {
 
@@ -70,7 +70,7 @@ public class ProductQnaAdminController extends HttpServlet {
 			
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 			
-			Map<String, Object> productQnaMap = productQnaAdminService.readProductQna(qnaNo);			
+			Map<String, Object> productQnaMap = proQnaAdminService.readProductQna(qnaNo);			
 			ProductQnaVO productQnaVO = (ProductQnaVO)productQnaMap.get("productQnaVO");			
 			ProductVO productVO = (ProductVO)productQnaMap.get("productVO");
 			
@@ -81,7 +81,7 @@ public class ProductQnaAdminController extends HttpServlet {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/productQnaAdmin/readProductQna.jsp";
+			nextPage = "/proQnaAdmin/readProductQna.jsp";
 			
 		}else if(action.equals("/answerProductQna.do")) {
 
@@ -89,14 +89,14 @@ public class ProductQnaAdminController extends HttpServlet {
 
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 
-			Map<String, Object> productQnaMap = productQnaAdminService.readProductQna(qnaNo);			
+			Map<String, Object> productQnaMap = proQnaAdminService.readProductQna(qnaNo);			
 			ProductQnaVO productQnaVO = (ProductQnaVO)productQnaMap.get("productQnaVO");			
 			ProductVO productVO = (ProductVO)productQnaMap.get("productVO");
 			
 			request.setAttribute("productQnaVO", productQnaVO);
 			request.setAttribute("productVO", productVO);
 			
-			nextPage = "/productQnaAdmin/answerProductQna.jsp";
+			nextPage = "/proQnaAdmin/answerProductQna.jsp";
 			
 		}else if(action.equals("/updateProductQna.do")) {
 
@@ -108,7 +108,7 @@ public class ProductQnaAdminController extends HttpServlet {
 			productQnaVO.setQnaNo(qnaNo);
 			productQnaVO.setQnaAnswer(qnaAnswer);
 			
-			int result = productQnaAdminService.updateProductQna(productQnaVO);
+			int result = proQnaAdminService.updateProductQna(productQnaVO);
 			String alertMsg = "";
 			
 			if(result > 0) {
@@ -127,7 +127,7 @@ public class ProductQnaAdminController extends HttpServlet {
 
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 			
-			int result = productQnaAdminService.deleteProductQna(qnaNo);
+			int result = proQnaAdminService.deleteProductQna(qnaNo);
 			String alertMsg = "";
 
 			if(result > 0) {

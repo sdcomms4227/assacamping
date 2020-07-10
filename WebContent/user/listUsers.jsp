@@ -103,8 +103,8 @@
 			<td>${userVO.userUse }</td>
 			
 			<%-- 수정, 삭제를 위해 회원의 ID를 전달해 수정과 삭제 요청을 합니다. --%>
-			<td><a href="${contextPath}/userCon/modUserForm.do?userId=${userVO.userId}">수정</a></td>
-			<td><a href="${contextPath}/userCon/delUser.do?userId=${userVO.userId}">삭제</a></td> 
+			<td><a href="${contextPath}/usr/modUserForm.do?userId=${userVO.userId}">수정</a></td>
+			<td><a href="${contextPath}/usr/delUser.do?userId=${userVO.userId}">삭제</a></td> 
 		</tr>
 		</c:forEach>
 	</c:when>
@@ -112,8 +112,8 @@
 	</table>
 	
 	<p class="cls2">
-	<a href="${contextPath}/userCon/userForm.do"> 회원가입하기  || </a>
-	<a href="${contextPath}/userCon/login.do"> 로그인</a>
+	<a href="${contextPath}/usr/userForm.do"> 회원가입하기  || </a>
+	<a href="${contextPath}/usr/login.do"> 로그인</a>
 	</p>	
 		
 	

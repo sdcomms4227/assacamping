@@ -150,7 +150,7 @@
 							<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/camp/addCamping.do'">글쓰기</button>
 						</c:when>
 						<c:otherwise>
-							<button type="button" class="btn btn-secondary" onclick="alert('로그인 후 글 작성이 가능합니다.');location.href='${contextPath}/userCon/login.do'">글쓰기</button>
+							<button type="button" class="btn btn-secondary" onclick="alert('로그인 후 글 작성이 가능합니다.');location.href='${contextPath}/usr/login.do'">글쓰기</button>
 						</c:otherwise>
 					</c:choose>					
 				</div>

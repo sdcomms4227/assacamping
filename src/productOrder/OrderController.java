@@ -152,8 +152,8 @@ public class OrderController extends HttpServlet{
 				for(int i=0;i<orderlist.size();i++) {// 재고수량관리
 					  
 					OrderVO productvo=orderlist.get(i);
-					ProductAdminService proadminservice=new ProductAdminService();
-					proadminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
+					ProductAdminService proAdminservice=new ProductAdminService();
+					proAdminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
 					 
 				  }
 				
