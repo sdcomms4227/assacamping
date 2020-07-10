@@ -58,7 +58,7 @@
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/proRvAdm/listProductReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/proReviewAdm/listProductReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/proQnaAdm/listProductQna.do"> <span data-feather="file-text"></span> 상품 문의 </a></li>
 				</ul>
 				<hr />
