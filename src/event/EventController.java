@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
 
+@SuppressWarnings("serial")
 @WebServlet("/eve/*")
 public class EventController extends HttpServlet {
 
@@ -61,9 +62,7 @@ public class EventController extends HttpServlet {
 		String action = request.getPathInfo();  
 		
 		System.out.println("action : " + action);
-		
-		List<EventVO> eventList = null;
-		
+				
 		if(action == null || action.equals("/listEvent.do")) {// DB에 전체 글을 조회 			
 			String _search = request.getParameter("search");			
 			String _section = request.getParameter("section");
@@ -73,12 +72,12 @@ public class EventController extends HttpServlet {
 			int pageNum = Integer.parseInt(((_pageNum == null) ? "1" : _pageNum));
 			String search = (_search == null) ? "" : _search;
 			
-			Map pagingMap = new HashMap();
+			Map<String, Object> pagingMap = new HashMap<String, Object>();
 			pagingMap.put("section", section);
 			pagingMap.put("pageNum", pageNum);
 			pagingMap.put("search", search);
 					
-			Map eventMap = eventService.listEvent(pagingMap);
+			Map<String, Object> eventMap = eventService.listEvent(pagingMap);
 			
 			eventMap.put("section", section);
 			eventMap.put("pageNum", pageNum);

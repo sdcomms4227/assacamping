@@ -17,7 +17,7 @@ import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
 @SuppressWarnings("serial")
-//@WebServlet("/pro/*")
+@WebServlet("/pro/*")
 public class ProductController extends HttpServlet{
 	
 	ProductService productService;

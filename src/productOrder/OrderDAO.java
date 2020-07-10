@@ -6,30 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.sql.DataSource;
-
-import dbUtil.DBConnection;
 import productCart.CartVO;
-import user.UserVO;
 
 public class OrderDAO implements Serializable{
 
-	private DataSource dataFactory;
-	private Connection con;
+	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String sql;
-	private DBConnection db;
 	
 	
 	public void freeResource() {
 		if(rs != null) {try {rs.close();}catch(SQLException e){e.printStackTrace();}}
 		if(pstmt != null) {try {pstmt.close();}catch(SQLException e){e.printStackTrace();}}	
-		if(con != null) {try {con.close();}catch(SQLException e){e.printStackTrace();}}
+		if(conn != null) {try {conn.close();}catch(SQLException e){e.printStackTrace();}}
 	
 	}//freeResource()
 
@@ -37,11 +29,11 @@ public class OrderDAO implements Serializable{
 	public int orderCount(String userId) {//장바구니 총 상품개수
 		  int total=0;
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select count(*) from productCart where userId=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, userId);
 			
@@ -63,7 +55,7 @@ public class OrderDAO implements Serializable{
         
 	try {
 		
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 	  for(int i=0 ;i<orderList.size();i++) { 
 		  
@@ -80,7 +72,7 @@ public class OrderDAO implements Serializable{
 		       		+ "productCategory,orderNo)"
 				 +" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?)";
 				
-				pstmt=con.prepareStatement(sql);
+				pstmt=conn.prepareStatement(sql);
 
 				
 				pstmt.setInt(1, vo.getProductPayment());
@@ -117,11 +109,11 @@ public class OrderDAO implements Serializable{
 	public int orderNoCount() {//주문번호 조회
 		int orderNo=0;
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
             sql =" select max(orderNo) from productorder";
 			
-			pstmt = con.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -143,11 +135,11 @@ public class OrderDAO implements Serializable{
 	public List<OrderVO> orderList(String userId , int orderNo) {//주문내역
 		  List list=new ArrayList();
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select * from productorder where userId=? and orderNo=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, orderNo);
 			rs=pstmt.executeQuery();
@@ -178,12 +170,12 @@ public class OrderDAO implements Serializable{
 	public void orderDelete (String userId , int orderNo) {//결제 취소
 		try {
 			
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="update productorder set orderstate=? where userId=?  and orderNo=? ";
 			
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, "결제취소");
 			pstmt.setString(2, userId);
@@ -203,11 +195,11 @@ public class OrderDAO implements Serializable{
 	public OrderVO selectOrderState(String userId, int orderNo) {//배송상태 조회
 		 OrderVO vo=new OrderVO();
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select orderState from productorder where userId=? and orderNo=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, orderNo);
@@ -232,11 +224,11 @@ public class OrderDAO implements Serializable{
 	
 	public void updateOrderState(String userId , int orderNo,String orderState) {//배송상태업데이트
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="update productorder set orderState=? where userId=? and orderNo=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, orderState);
 			pstmt.setString(2, userId);
@@ -252,11 +244,11 @@ public class OrderDAO implements Serializable{
 	public List<OrderVO> selectAllOrderList(){//관리자 모드에서 주문목록 보여주는거
 		List<OrderVO> list= new ArrayList();
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select * from productorder";
 			
-			pstmt= con.prepareStatement(sql);
+			pstmt= conn.prepareStatement(sql);
 			
 		   rs=pstmt.executeQuery();
 		
@@ -280,11 +272,11 @@ public class OrderDAO implements Serializable{
 	public List<OrderVO> payList(String userId){//결제내역
 		List<OrderVO> list=new ArrayList<OrderVO>();
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select * from productorder where userId=? order by orderNo desc ";
 			
-			pstmt= con.prepareStatement(sql);
+			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			
 			rs = pstmt.executeQuery();
@@ -317,11 +309,11 @@ public class OrderDAO implements Serializable{
 	public List<OrderVO> orderNo(String userId){
 		List<OrderVO> list=new ArrayList<OrderVO>();
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select distinct orderNo,orderDate,orderState  from productorder where userId=?";
 			
-			pstmt= con.prepareStatement(sql);
+			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			
 			rs = pstmt.executeQuery();
@@ -351,11 +343,11 @@ public class OrderDAO implements Serializable{
 	public List<OrderVO> oderInfo(String userId , int orderNo){
 		List<OrderVO> list=new ArrayList<OrderVO>();
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select * from productorder where userId=? and orderNo=?";
 			
-			pstmt= con.prepareStatement(sql);
+			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, orderNo);
 			rs = pstmt.executeQuery();
