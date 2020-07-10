@@ -73,16 +73,23 @@ public class ProductQnaController extends HttpServlet{
 							returnObject.put("userId",qnaList.get(i).getUserId());
 							returnObject.put("userName", qnaList.get(i).getUserName());
 							returnObject.put("qnaContent", qnaList.get(i).getQnaContent());
+							returnObject.put("qnaAnswer", qnaList.get(i).getQnaAnswer());
 							
 							String formattedDate = sdf.format(qnaList.get(i).getQnaDate());
 							returnObject.put("qnaDate", formattedDate);
-
+							
+							if(qnaList.get(i).getQnaAnswer() != null) {
+								String formattedAnswerDate = sdf.format(qnaList.get(i).getQnaAnswerDate());
+								returnObject.put("qnaAnswerDate", formattedAnswerDate);	
+							}
 							jsonArray.add(returnObject);
 						}
 						JSONObject result = new JSONObject();
 						result.put("jsonArray", jsonArray);
 						
 						response.setContentType("text/html; charset=utf-8");
+						request.setAttribute("qnaNum", qnaList.size());					
+						
 						out.print(result.toString());
 						out.flush();
 						out.close();						
@@ -127,11 +134,17 @@ public class ProductQnaController extends HttpServlet{
 
 					int qnaNo = Integer.parseInt((String) qnaObject.get("qnaNo"));
 					String userId = (String) qnaObject.get("userId");
-
+					int productNo = Integer.parseInt((String) qnaObject.get("productNo"));
+					
 					int result = productQnaService.deleteQna(qnaNo, userId);
 
 					if (result == 1) {
-						out.print("success");
+						int qnaCnt = productQnaService.getQnaList(productNo).size();
+						JSONObject returnObject = new JSONObject();
+						
+						returnObject.put("qnaCnt", Integer.toString(qnaCnt));
+						out.print(returnObject.toString());
+						
 					} else {
 						out.print("fail");
 					}

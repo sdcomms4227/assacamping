@@ -12,7 +12,7 @@
 <c:set var="productCategoryNo" value="${productMap.productVO.productCategoryNo}" />
 <c:set var="productRating" value="${productMap.productVO.productRating}" />
 <c:set var="productCategoryName" value="${productMap.productCategoryName}" />
-<c:set var="userName" value="천인우" />
+<c:set var="userName" value="관리자" />
 <!--
 	<c:set var="userId" value="${request.getSession(userId)}" />
 -->
@@ -20,6 +20,12 @@
 <c:set var="productImage1" value="${contextPath}/files/product/${productNo}/${productImageName1}" />
 <c:set var="productImage2" value="${contextPath}/files/product/${productNo}/${productImageName2}" />
 <c:set var="productImage3" value="${contextPath}/files/product/${productNo}/${productImageName3}" />
+
+<!-- 리뷰 개수 -->
+<c:set var="reviewNum" value="${requestScope.reviewNum}" />
+<!-- 문의 개수 -->
+<c:set var="qnaNum" value="${requestScope.qnaNum}" />
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -149,8 +155,8 @@
 				
 				<div class="row no-gutters">
 					<div class="col-4"><a class="btn btn-outline-primary btn-block" href="javascript:scrollTop('#info')">상품정보</a></div>
-					<div class="col-4"><a class="btn btn-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#review')">상품후기</a></div>
-					<div class="col-4"><a class="btn btn-outline-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#qna')">상품문의</a></div>
+					<div class="col-4"><a class="btn btn-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#review')">상품후기(<span id="rCount">0</span>)</a></div>
+					<div class="col-4"><a class="btn btn-outline-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#qna')">상품문의(<span id="qCount">0</span>)</a></div>
 				</div>
 				
 				<div class="row">
@@ -210,8 +216,8 @@
 			<section id="qna" class="mt-5">
 				<div class="row no-gutters">
 					<div class="col-4"><a class="btn btn-outline-primary btn-block" href="javascript:scrollTop('#info')">상품정보</a></div>
-					<div class="col-4"><a class="btn btn-outline-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#review')">상품후기</a></div>
-					<div class="col-4"><a class="btn btn-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#qna')">상품문의</a></div>
+					<div class="col-4"><a class="btn btn-outline-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#review')">상품후기(<span id="rCount2">0</span>)</a></div>
+					<div class="col-4"><a class="btn btn-primary btn-block" style="margin-left:-1px" href="javascript:scrollTop('#qna')">상품문의(<span id="qCount2">0</span>)</a></div>
 				</div>
 				<div class="row">
 					<div class="col">
@@ -275,6 +281,7 @@
 
 <script>
 
+// review ----------------------------------------------------------------------------------------------------------
 //페이지 로딩시 리뷰 목록 출력 
 $(document).ready(function(){
     reviewList(); 
@@ -338,6 +345,9 @@ function reviewList(){
 					$(".reviews_container").html(a);	
 				
            		});
+        		var rCount = entry.length;
+        		$("#rCount").html(rCount);
+        		$("#rCount2").html(rCount);
           	});
        },
        error: function(err) {
@@ -394,11 +404,12 @@ function reviewSubmit(){
 function reviewDelete(reviewNo){
 	
 	var result = confirm("리뷰를 삭제하시겠습니까?");
+	var productNo = ${productNo};
 	
 	if(result){	
 
 		var userId = '${userId}';
-		var _reviewDeleteInfo = '{"userId":"'+userId+'","reviewNo":"'+reviewNo+'"}';
+		var _reviewDeleteInfo = '{"userId":"'+userId+'","reviewNo":"'+reviewNo+'","productNo":"'+productNo+'"}';
 		var _url = '${contextPath}/proreview/deleteReview.do'; 		
 		$.ajax({
 			type : "post",
@@ -406,7 +417,9 @@ function reviewDelete(reviewNo){
 			url : _url,
 			data : {reviewDeleteInfo : _reviewDeleteInfo},
 			success : function(data, status){
-				if(data == "success"){
+				if(data == "fail"){
+					alert("리뷰가 정상적으로 삭제되지 않았습니다.");
+				}else{
 					var str = "<td class='alert alert-danger text-center' colspan='3'>리뷰가 삭제되었습니다.</td>";						
 					$("#review" + reviewNo).html(str).fadeOut(1000, function(){
 						$(this).remove();
@@ -421,8 +434,10 @@ function reviewDelete(reviewNo){
 						}
 					});
 					
-				}else{
-					alert("리뷰가 정상적으로 삭제되지 않았습니다.");
+					var jsonInfo = JSON.parse(data);
+					var rCount = jsonInfo.reviewCnt;
+					$("#rCount").html(rCount);
+	        		$("#rCount2").html(rCount);
 				}
 			},
 			error : function(){
@@ -434,6 +449,7 @@ function reviewDelete(reviewNo){
 //--------------------------------------------------------------------------------------------------------------
 
 
+// Qna ----------------------------------------------------------------------------------------------------------
 //페이지 로딩시 상품문의 목록 출력 
 $(document).ready(function(){
     qnaList(); 
@@ -443,7 +459,6 @@ $(document).ready(function(){
 function qnaList(){
 	var _url = '${contextPath}/proqna/listQna.do';
 	var _qnaListInfo = '{"productNo":"'+${productNo}+'"}';
-	var no = ${productNo};
 	
     $.ajax({
         url : _url,
@@ -470,28 +485,42 @@ function qnaList(){
  			       	var content = value.qnaContent;
 	        	   	var date = value.qnaDate;	
 	           		var id = value.userId;
-					
+	           		var answer = value.qnaAnswer;
+					var answerDate = value.qnaAnswerDate;
+	           		
 					a += '<li class=" qna clearfix" id="qna'+no+'">';
 					a += '<div class="qna_image"><img src="${contextPath}/images/review_1.jpg" alt=""></div>';
+				
 					a += '<div class="qna_content">';
 					a += '<div class="qna_name"><b>'+name+'</b></div>';
 					a += '<div class="qna_date">'+date+'</div>';
 					a += '<div class="qna_text">';
 					a += '<p>'+content+'</p>';
 					if('${userId}' == id){
-						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button>';
+						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button></div>';
 					}
 					if('${userId}' == 'admin'){
 						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button>';
-						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/proQnaAdm/answerProductQna.do?qnaNo='+no+'\'">답변</button>';
+						if(answer == null){
+							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/proQnaAdm/answerProductQna.do?qnaNo='+no+'\'">답변</button></div>';
+						} else {
+							a += '<div class="qna_content">';
+							a += '<div class="qna_name"><b>[답변]관리자</b></div>';
+							a += '<div class="qna_date">'+answerDate+'</div>';
+							a += '<div class="qna_text">';
+							a += '<p>'+answer+'</p>';
+							a += '</div>';
+						}		
 					}
-					a += '</div>';
+					
 					a += '</div>';
 					a += '</li>';
 					
-					$(".qnas_container").html(a);	
-					
+					$(".qnas_container").html(a);
            		});
+	        	var qCount = entry.length;
+        		$("#qCount").html(qCount);
+        		$("#qCount2").html(qCount);
           	});
        },
        error: function(err) {
@@ -539,11 +568,12 @@ function qnaSubmit(){
 function qnaDelete(qnaNo){
 	
 	var result = confirm("문의를 삭제하시겠습니까?");
+	var productNo = ${productNo};
 	
 	if(result){	
 
 		var userId = '${userId}';
-		var _qnaDeleteInfo = '{"userId":"'+userId+'","qnaNo":"'+qnaNo+'"}';
+		var _qnaDeleteInfo = '{"userId":"'+userId+'","qnaNo":"'+qnaNo+'","productNo":"'+productNo+'"}';
 		var _url = '${contextPath}/proqna/deleteQna.do'; 		
 		$.ajax({
 			type : "post",
@@ -551,7 +581,9 @@ function qnaDelete(qnaNo){
 			url : _url,
 			data : {qnaDeleteInfo : _qnaDeleteInfo},
 			success : function(data, status){
-				if(data == "success"){
+				if(data == "fail"){
+					alert("문의가 정상적으로 삭제되지 않았습니다.");
+				}else{
 					var str = "<td class='alert alert-danger text-center' colspan='3'>문의가 삭제되었습니다.</td>";						
 					$("#qna" + qnaNo).html(str).fadeOut(1000, function(){
 						$(this).remove();
@@ -566,8 +598,11 @@ function qnaDelete(qnaNo){
 							$(".qnas_container").append(emptyStr);
 						}
 					});
-				}else{
-					alert("문의가 정상적으로 삭제되지 않았습니다.");
+					
+					var jsonInfo = JSON.parse(data);
+					var qCount = jsonInfo.qnaCnt;
+					$("#qCount").html(qCount);
+	        		$("#qCount2").html(qCount);
 				}
 			},
 			error : function(){

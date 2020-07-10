@@ -10,8 +10,16 @@ public class ProductQnaVO {
 	private String userId;
 	private String userName;
 	private Timestamp qnaDate;
+	private Timestamp qnaAnswerDate;
+	
 	
 	// getter, setter method
+	public Timestamp getQnaAnswerDate() {
+		return qnaAnswerDate;
+	}
+	public void setQnaAnswerDate(Timestamp qnaAnswerDate) {
+		this.qnaAnswerDate = qnaAnswerDate;
+	}
 	public int getProductNo() {
 		return productNo;
 	}

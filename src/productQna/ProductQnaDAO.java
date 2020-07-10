@@ -48,7 +48,9 @@ public class ProductQnaDAO {
 				productQnaVO.setQnaNo(rs.getInt("qnaNo"));
 				productQnaVO.setUserId(rs.getString("userId"));
 				productQnaVO.setUserName(rs.getString("userName"));
-
+				productQnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
+				productQnaVO.setQnaAnswerDate(rs.getTimestamp("qnaAnswerDate"));
+				
 				qnaList.add(productQnaVO);
 			}
 		} catch (Exception e) {

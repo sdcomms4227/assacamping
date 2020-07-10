@@ -76,8 +76,6 @@ public class ProductReviewController extends HttpServlet{
 							returnObject.put("reviewContent", reviewList.get(i).getReviewContent());
 							returnObject.put("starRating", Integer.toString(reviewList.get(i).getStarRating()));
 							
-							// 리뷰갯수
-							returnObject.put("reviewNum", Integer.toString(reviewList.size()));
 							
 							String formattedDate = sdf.format(reviewList.get(i).getReviewDate());
 							returnObject.put("reviewDate", formattedDate);
@@ -88,6 +86,7 @@ public class ProductReviewController extends HttpServlet{
 						result.put("jsonArray", jsonArray);
 						
 						response.setContentType("text/html; charset=utf-8");
+						
 						out.print(result.toString());
 						out.flush();
 						out.close();						
@@ -132,12 +131,18 @@ public class ProductReviewController extends HttpServlet{
 					reviewObject = (JSONObject) jsonParser.parse(info);
 
 					int reviewNo = Integer.parseInt((String) reviewObject.get("reviewNo"));
+					int productNo = Integer.parseInt((String) reviewObject.get("productNo"));
 					String userId = (String) reviewObject.get("userId");
 
 					int result = productReviewService.deleteReview(reviewNo, userId);
-
+					
 					if (result == 1) {
-						out.print("success");
+						int reviewCnt = productReviewService.getReviewList(productNo).size();
+						JSONObject returnObject = new JSONObject();
+						
+						returnObject.put("reviewCnt", Integer.toString(reviewCnt));
+						out.print(returnObject.toString());
+						
 					} else {
 						out.print("fail");
 					}
@@ -169,11 +174,6 @@ public class ProductReviewController extends HttpServlet{
 				}	
 			}
 		} 
-
-//		if (nextPage != null && !nextPage.equals("")) {
-//			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
-//			dispatch.forward(request, response);
-//		}
 	}
 }
 
