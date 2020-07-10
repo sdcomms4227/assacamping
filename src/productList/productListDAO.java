@@ -9,19 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dbUtil.DBConnection;
-import productAdmin.ProductAdminVO;
-
-
-
-
 public class productListDAO {
 	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String sql;
-	private DBConnection db;
 	
 	public void freeResource() {
 		if(rs != null) {try {rs.close();}catch(SQLException e){e.printStackTrace();}}
@@ -157,8 +150,7 @@ public class productListDAO {
 		
 		try {
 
-			con =db.getConnection();
-
+			con = dbUtil.DBConnection.getConnection();
 			
 			sql = "select * from product where productNo=?";
 			pstmt = con.prepareStatement(sql);

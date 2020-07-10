@@ -52,6 +52,6 @@ public class ProductAdminService {
 	
 	public void updateProductQuantity(int productNo,int cartQuantity) {
 		
-		productDAO.updateProductQuantity(productNo, cartQuantity);
+		productAdminDAO.updateProductQuantity(productNo, cartQuantity);
 	}
 }
