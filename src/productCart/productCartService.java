@@ -37,4 +37,10 @@ public class productCartService {
   public Map<String,Integer> TotalPrice(String userId) {
 	  return dao.TotalPrice(userId);
   }
+  
+  public Integer cartTotalCount(String userId) {
+	  
+	  return dao.cartTotalCount(userId);
+	  
+  }
 }
