@@ -319,6 +319,26 @@ public class UserDAO {
 			resourceClose();
 		}
 		return check;
+	}//changePw메소드
+
+	public String findPw(String userId, String userEmail) {
+		String userPw = "";
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select userPw from user where userId=? and userEmail=?";
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userEmail);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				userPw = rs.getString("userPw");
+			}
+		} catch (Exception e) {
+			System.out.println("findPw메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return userPw;
 	}
 }//UserDAO클래스 
 
