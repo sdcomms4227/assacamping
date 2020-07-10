@@ -1,35 +1,39 @@
 package productList;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class productListVO {
 	
-	   private int productNo; //상품번호
-	   private int productPrice; //상품가격
-	   private int productRestQuantity; //상품재고수량
-	   private int productDelivery; //배송비
-	   private String productName; //상품이름
-	   private String productInformation; //상품설명
-	   private String productImage; //상품이미지
-	   private String productCategory; //상품카테고리
+	private int productNo;
+	private String productName;
+	private String productInformation;
+	private String productImageName1;
+	private String productImageName2;
+	private String productImageName3;
+	private int productPrice;
+	private Timestamp productDate;
+	private int productQuantity;
+	private int productCategoryNo;
 
 	   
-	   public productListVO() {
-		
-	}
+	public productListVO() {}
 
 
-	public productListVO(int productNo, int productPrice, int productRestQuantity, int productDelivery,
-			String productName, String productInformation, String productImage, String productCategory) {
-
+	public productListVO(int productNo, String productName, String productInformation, String productImageName1,
+			String productImageName2, String productImageName3, int productPrice, Timestamp productDate,
+			int productQuantity, int productCategoryNo) {
+		super();
 		this.productNo = productNo;
-		this.productPrice = productPrice;
-		this.productRestQuantity = productRestQuantity;
-		this.productDelivery = productDelivery;
 		this.productName = productName;
 		this.productInformation = productInformation;
-		this.productImage = productImage;
-		this.productCategory = productCategory;
+		this.productImageName1 = productImageName1;
+		this.productImageName2 = productImageName2;
+		this.productImageName3 = productImageName3;
+		this.productPrice = productPrice;
+		this.productDate = productDate;
+		this.productQuantity = productQuantity;
+		this.productCategoryNo = productCategoryNo;
 	}
 
 
@@ -40,36 +44,6 @@ public class productListVO {
 
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
-	}
-
-
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-
-
-	public int getProductRestQuantity() {
-		return productRestQuantity;
-	}
-
-
-	public void setProductRestQuantity(int productRestQuantity) {
-		this.productRestQuantity = productRestQuantity;
-	}
-
-
-	public int getProductDelivery() {
-		return productDelivery;
-	}
-
-
-	public void setProductDelivery(int productDelivery) {
-		this.productDelivery = productDelivery;
 	}
 
 
@@ -93,25 +67,78 @@ public class productListVO {
 	}
 
 
-	public String getProductImage() {
-		return productImage;
+	public String getProductImageName1() {
+		return productImageName1;
 	}
 
 
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
+	public void setProductImageName1(String productImageName1) {
+		this.productImageName1 = productImageName1;
 	}
 
 
-	public String getProductCategory() {
-		return productCategory;
+	public String getProductImageName2() {
+		return productImageName2;
 	}
 
 
-	public void setProductCategory(String productCategory) {
-		this.productCategory = productCategory;
+	public void setProductImageName2(String productImageName2) {
+		this.productImageName2 = productImageName2;
 	}
 
+
+	public String getProductImageName3() {
+		return productImageName3;
+	}
+
+
+	public void setProductImageName3(String productImageName3) {
+		this.productImageName3 = productImageName3;
+	}
+
+
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+
+
+	public Timestamp getProductDate() {
+		return productDate;
+	}
+
+
+	public void setProductDate(Timestamp productDate) {
+		this.productDate = productDate;
+	}
+
+
+	public int getProductQuantity() {
+		return productQuantity;
+	}
+
+
+	public void setProductQuantity(int productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
+
+	public int getProductCategoryNo() {
+		return productCategoryNo;
+	}
+
+
+	public void setProductCategoryNo(int productCategoryNo) {
+		this.productCategoryNo = productCategoryNo;
+	}
+
+	
+	
+	
 	
 	
 	   

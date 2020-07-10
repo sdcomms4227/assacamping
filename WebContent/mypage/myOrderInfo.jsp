@@ -19,27 +19,32 @@
 	<form action="${contextPath}/order/*" method="post">
 		
 		<table border="1" align="center" width="30%">
-			<tr align="center">
-							<th colspan="3">상품명</th>
-							</tr>
+
 		<c:choose>
 		 <c:when test="${orderInfo != null }">
 		 <tr align="center">
-			<td colspan="2">
+			<th >상품명</th>
+			 <td >
 		     <c:forEach items="${orderInfo}" var="order">
-            <a href="cartorder/orderDetail.do?productNo=${order.productNo}">${order.productName}</a>
-						
+                
+                 ${order.productName} <a href="${contextPath}/pro/getOnePro.do?productNo=${order.productNo}">재구매</a> <br>
+                 
+			 
 				 </c:forEach>	
 				  </td>
 				 </tr>
 				 <tr align="center">
-				
-                <td>
-                ${orderInfo[0].userZipcode}<br>
-                ${orderInfo[0].userAddress1}${orderInfo[0].userAddress2 }
-                 <br>배송상태=${orderInfo[0].orderState}
+				<th>배송지</th>
+                <td colspan="2">
+                   ${orderInfo[0].userZipcode}<br>
+                  ${orderInfo[0].userAddress1}${orderInfo[0].userAddress2 }
                  <br>배송메시지  = ${orderInfo[0].userComment} 
+                 
                 </td>
+                </tr>
+                <tr  align="center">
+                  <th>배송상태</th>
+                  <td>배송상태 = ${orderInfo[0].orderState}</td>
                 </tr>
 			  </c:when>
 			  <c:otherwise>

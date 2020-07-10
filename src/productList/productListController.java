@@ -13,25 +13,34 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import productCategory.ProductCategoryService;
+import productCategory.ProductCategoryVO;
 
 
-/*@WebServlet("/pro/*")*/
+
+//@WebServlet("/pro/*")
+
 public class productListController extends HttpServlet{
 	private static String PRO_IMG_REPO = "C:\\product\\product_img";
 	productListDAO proDAO;
 	productListVO proVO;
 	productListService proService; 
+	ProductCategoryService productCategoryService;
+	ProductCategoryVO productCategoryVO;
 	
 	@Override
 	public void init() throws ServletException {
 		proDAO = new productListDAO();  
 		proVO = new productListVO();
 		proService = new productListService();
+		productCategoryService = new ProductCategoryService();
+		productCategoryVO = new ProductCategoryVO();
 	}
 	
 	
@@ -55,43 +64,55 @@ public class productListController extends HttpServlet{
 		String nextPage = "";
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
-		
+		//HttpSession session = request.getSession();
 		String action = request.getPathInfo();
 		System.out.println("action:"+action);
+		
 		try {
-			List<productListVO> proList = new ArrayList<productListVO>();
 			
-			if(action.equals("/proList.do")) {
-				
-			proList = proService.proAllList();
 			
-			request.setAttribute("proList", proList);
+			if(action.equals("/listProduct.do")) {
 			
+				setPagination(request);
+				 //String userId=(String)session.getAttribute("userId");
+				Map<String, Object> searchMap = new HashMap<String, Object>();
+				searchMap.put("pageNo", request.getAttribute("pageNo"));
+				searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
+				searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
-			nextPage = "/product/productList.jsp";
-			
-			}else if(action.equals("/writeForm.do")) {
-				nextPage="/product/writeForm.jsp";
-			
+				Map<String, Object> productListMap = proService.listProduct(searchMap);
+				System.out.println(productListMap);
+				request.setAttribute("productListMap", productListMap);
 				
+				List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
+				request.setAttribute("productCategoryList", productCategoryList);
 
-			}else if(action.equals("/addForm.do")) {
-				//게시판 구현자가 구현 
-				
+				if(request.getAttribute("alertMsg")!=null) {
+					request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+				}
+			
+				//session.setAttribute("userId", userId);
+			   nextPage = "/product/_productList.jsp";
+			
+		
 			}else if(action.equals("/getOnePro.do")) {
-
+                   //    String userId=(String)session.getAttribute("userId");
 				int productNo = Integer.parseInt(request.getParameter("productNo"));
 				productListVO onePro = new productListVO();
 				onePro = proService.getOnePro(productNo); 
 				
-				request.setAttribute("onePro", onePro);
+				ProductCategoryService pcategoryservice=new ProductCategoryService();
+				ProductCategoryVO productvo =pcategoryservice.ProductCategoryName(onePro.getProductCategoryNo());
 				
-				nextPage = "/product/productInfo.jsp";
+				request.setAttribute("onePro", onePro);
+				request.setAttribute("productvo", productvo);
+				//session.setAttribute("userId", userId);
+				nextPage = "/product/_productInfo.jsp";
 
 			
-			}else if(action.equals("/selectNewProduct")) {
-				
 			}
+			
+			
 			if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = 
 					request.getRequestDispatcher(nextPage);
@@ -102,6 +123,39 @@ public class productListController extends HttpServlet{
 		}
 		
 	}//doHandle()끝
+	
+	
+	private void setPagination(HttpServletRequest request) {
+		try {
+			int pageNo = 1;
+			if(request.getParameter("pageNo")!=null) {
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+			}
+			if(request.getAttribute("pageNo")==null) {
+				request.setAttribute("pageNo", pageNo);
+			}
+			
+			String searchKeyword = "";
+			if(request.getParameter("searchKeyword")!=null) {
+				searchKeyword = request.getParameter("searchKeyword");
+			}
+			if(request.getAttribute("searchKeyword")==null) {
+				request.setAttribute("searchKeyword", searchKeyword);
+			}
+			
+			int searchCategoryNo = 0;
+			if(request.getParameter("searchCategoryNo")!=null) {
+				searchCategoryNo = Integer.parseInt(request.getParameter("searchCategoryNo"));
+			}
+			if(request.getAttribute("searchCategoryNo")==null) {
+				request.setAttribute("searchCategoryNo", searchCategoryNo);
+			}			
+		} catch (Exception e) {
+			System.out.println("setPagination()메소드 내부에서 오류 : " + e.toString());
+		}
+	}
+	
+	
 	
 	private Map<String, String> upload(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{

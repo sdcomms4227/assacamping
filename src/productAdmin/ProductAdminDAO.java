@@ -308,4 +308,26 @@ public class ProductAdminDAO {
 	
 		return 0;
 	}	
+	
+	public void updateProductQuantity(int productNo , int cartQuantity) {
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			String sql = "update product set ProductQuantity=ProductQuantity-?  where productNo=?";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, cartQuantity);
+			pstmt.setInt(2, productNo);
+			
+			pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			System.out.println("updateProductQuantity()메소드 내부에서 오류 : " + e.toString());
+		}finally {
+			freeResource();
+		}
+
+	}//updateProductQuantity()
 }

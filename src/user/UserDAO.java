@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.sql.DataSource;
 
 public class UserDAO {
@@ -161,13 +162,9 @@ public class UserDAO {
 		
 		try {
 			conn = dataFactory.getConnection();
-			
 			String query = "delete from user where userId=?";
-			
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setString(1, userId);
-			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("delUser메소드 내부에서 SQL 실행 오류: " + e);
@@ -188,7 +185,9 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				if(userPw.equals(rs.getString("userPw"))) {
-					check=2;
+					if(rs.getInt("userUse")==1) {
+						check=2;
+					}
 				}else {
 					check=1;
 				}
@@ -202,11 +201,126 @@ public class UserDAO {
 			resourceClose();
 		}
 		return check;
-	
 	}//login 메소드
 
-}//UserDAO클래스 
+	public int idCheck(String userId) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				check=1;
+			}
+		} catch (Exception e) {
+			System.out.println("idCheck메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return check;
+	}//idCheck 메소드
+	
+	public String findId(String userName, String userEmail) {
+		String userId ="";
+		try{
+			conn = dataFactory.getConnection();
+			String query = "select userId from user where userName=? and userEmail=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, userEmail);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				userId = rs.getString("userId");
+			}
+		} catch (Exception e) {
+			System.out.println("findId메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return userId;
+		
+	}//findId 메소드
 
+	public int withdrawlUser(String userId, String userPw) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(userPw.equals(rs.getString("userPw"))) {
+					query = "update user set userUse = 0 where userId = ?";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, userId);
+					pstmt.executeUpdate();
+					check = 1;
+				}else {
+					check = 0;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("withdrawlUser메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return check;
+	}//withdrawlUser메소드 
+
+	public int checkAction(String userId, String userPw) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				if(userPw.equals(rs.getString("userPw"))) {
+					check = 1;
+				}else {
+					check = 0;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("checkAction메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+	return check;
+	}// checkAction
+
+	public int changePw(String userId, String userPw, String userPw1 ) {
+		int check = 0;
+		try {
+			conn = dataFactory.getConnection();
+			String query = "select * from user where userId=?";
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(userPw.equals(rs.getString("userPw"))) {
+					query = "update user set userPw= ? where userId=?";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, userPw1);
+					pstmt.setString(2, userId);
+					pstmt.executeUpdate();
+					check = 1;
+				}else {
+					check = 0;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("changePw메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return check;
+	}
+}//UserDAO클래스 
 
 
 
