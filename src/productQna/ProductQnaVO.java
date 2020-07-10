@@ -6,10 +6,11 @@ public class ProductQnaVO {
 	private int productNo;
 	private int qnaNo;
 	private String qnaContent;
-	private String qnaAnswer;
 	private String userId;
 	private String userName;
 	private Timestamp qnaDate;
+	private String qnaAnswer;
+	private Timestamp qnaAnswerDate;
 	
 	public int getProductNo() {
 		return productNo;
@@ -29,12 +30,6 @@ public class ProductQnaVO {
 	public void setQnaContent(String qnaContent) {
 		this.qnaContent = qnaContent;
 	}
-	public String getQnaAnswer() {
-		return qnaAnswer;
-	}
-	public void setQnaAnswer(String qnaAnswer) {
-		this.qnaAnswer = qnaAnswer;
-	}
 	public String getUserId() {
 		return userId;
 	}
@@ -52,6 +47,18 @@ public class ProductQnaVO {
 	}
 	public void setQnaDate(Timestamp qnaDate) {
 		this.qnaDate = qnaDate;
+	}
+	public String getQnaAnswer() {
+		return qnaAnswer;
+	}
+	public void setQnaAnswer(String qnaAnswer) {
+		this.qnaAnswer = qnaAnswer;
+	}
+	public Timestamp getQnaAnswerDate() {
+		return qnaAnswerDate;
+	}
+	public void setQnaAnswerDate(Timestamp qnaAnswerDate) {
+		this.qnaAnswerDate = qnaAnswerDate;
 	}
 	
 }

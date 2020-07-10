@@ -10,8 +10,8 @@ public class ProductReviewVO {
 	private String userId;
 	private String userName;
 	private Timestamp reviewDate;
-	int starRating;
-	
+	private int starRating;
+
 	public int getProductNo() {
 		return productNo;
 	}
@@ -53,7 +53,5 @@ public class ProductReviewVO {
 	}
 	public void setStarRating(int starRating) {
 		this.starRating = starRating;
-	}
-	
-	
+	}	
 }
