@@ -30,5 +30,17 @@ public class CommentService {
 	public CommentVO getLastComment() {
 		return commentDAO.getLastComment();
 	}
+
+	public int replyComment(CommentVO commentVO, CommentVO parentVO) {
+		return commentDAO.replyComment(commentVO, parentVO);
+	}
+
+	public CommentVO getComment(int parentNo) {
+		return commentDAO.getComment(parentNo);
+	}
+
+	public int replyUpdate(CommentVO parentVO) {
+		return commentDAO.replyUpdate(parentVO);
+	}
 	
 }

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,8 @@ public class CommentDAO {
 	public int insertComment(CommentVO commentVO) {
 		String sql = "";
 		int num = 0;
-
+		int num2 = 0;
+		
 		if (commentVO.getCommentContent() == null || commentVO.getCommentContent().equals("")) {
 			return -1;
 		} else {
@@ -46,9 +46,19 @@ public class CommentDAO {
 				} else {
 					num = 1;
 				}
+				
+				sql = "select max(commentRe_ref) from comment";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
 
+				if (rs.next()) {
+					num2 = rs.getInt(1) + 1;
+				} else {
+					num2 = 0;
+				}
+				
 				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_lev, commentRe_seq)"
-						+ "values(?,?,?,?,?,?,now(), 0, 0, 0)";
+						+ "values(?,?,?,?,?,?,now(), ?, 0, 0)";
 
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
@@ -57,6 +67,7 @@ public class CommentDAO {
 				pstmt.setString(4, commentVO.getUserId());
 				pstmt.setString(5, commentVO.getUserName());
 				pstmt.setString(6, commentVO.getCommentContent());
+				pstmt.setInt(7, num2);
 
 				return pstmt.executeUpdate();
 
@@ -105,7 +116,7 @@ public class CommentDAO {
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 
-			sql = "select * from comment where boardCategoryNo=? and boardNo=? order by commentNo";
+			sql = "select * from comment where boardCategoryNo=? and boardNo=? order by commentRe_ref ASC, commentRe_seq ASC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardCategoryNo);
 			pstmt.setInt(2, boardNo);
@@ -137,7 +148,39 @@ public class CommentDAO {
 		return commentList;
 	} // getCommentList
 
+	// 댓글하나 가져오기
+	public CommentVO getComment(int commentNo) {
+		String sql = "";
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			sql = "select * from comment where commentNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, commentNo);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				CommentVO commentVO = new CommentVO();
+				commentVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
+				commentVO.setBoardNo(rs.getInt("boardNo"));
+				commentVO.setCommentContent(rs.getString("commentContent"));
+				commentVO.setCommentWriteDate(rs.getTimestamp("commentWriteDate"));
+				commentVO.setCommentNo(rs.getInt("commentNo"));
+				commentVO.setUserId(rs.getString("userId"));
+				commentVO.setUserName(rs.getString("userName"));
+				commentVO.setCommentRe_ref(rs.getInt("commentRe_ref"));
+				commentVO.setCommentRe_lev(rs.getInt("commentRe_lev"));
+				commentVO.setCommentRe_seq(rs.getInt("commentRe_seq"));
+				return commentVO;
+			}
+		} catch (Exception e) {
+			System.out.println("getComment()메소드 내부에서 예외발생 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return null;
+	}
 	
+	// 마지막 댓글 가져오기
 	public CommentVO getLastComment() {
 		String sql = "";
 		int num = 0;
@@ -210,4 +253,88 @@ public class CommentDAO {
 		}
 		return 0;
 	} // updateComment
+
+	public int replyComment(CommentVO commentVO, CommentVO parentVO) {
+		String sql = "";
+		int num = 0;
+
+		if (commentVO.getCommentContent() == null || commentVO.getCommentContent().equals("")) {
+			return -1;
+		} else {
+			try {
+				conn = dbUtil.DBConnection.getConnection();
+				sql = "select max(commentNo) from comment";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					num = rs.getInt(1) + 1;
+				} else {
+					num = 1;
+				}
+				
+				System.out.println(num);
+				
+				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_seq, commentRe_lev)"
+						+ "values(?, ?, ?, ?, ?, ?, now(), ?, ?, ?)";
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				pstmt.setInt(2, commentVO.getBoardCategoryNo());
+				pstmt.setInt(3, commentVO.getBoardNo());
+				pstmt.setString(4, commentVO.getUserId());
+				pstmt.setString(5, commentVO.getUserName());
+				pstmt.setString(6, commentVO.getCommentContent());
+				pstmt.setInt(7, parentVO.getCommentRe_ref());
+				pstmt.setInt(8, parentVO.getCommentRe_seq() + 1);
+				pstmt.setInt(9, parentVO.getCommentRe_lev() + 1);
+
+				return pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				System.out.println("replyComment()메소드 내부에서 예외발생 : " + e.toString());
+			} finally {
+				freeResource();
+			}
+		}
+		return 0;
+	}
+	
+	// 부모글을 입력으로 받아서 sequence update
+	public int replyUpdate(CommentVO parentVO) {
+		String sql = "";
+		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			sql = "update comment set commentRe_seq = commentRe_seq + 1 where commentRe_ref = ?  and commentRe_seq > ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, parentVO.getCommentRe_ref());
+			pstmt.setInt(2, parentVO.getCommentRe_seq());
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("replyUpdate()메소드 내부에서 예외발생 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return -1;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

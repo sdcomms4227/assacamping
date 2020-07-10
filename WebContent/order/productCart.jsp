@@ -31,13 +31,8 @@
 	<jsp:include page="../inc/menu.jsp" />
 
 	<!-- Home -->
-<c:set var="userId" value="${sessionScope.userId }"/>
-	<%
-  // String userId=(String)session.getAttribute("userId");  
-  //  String userId=request.getParameter("userId"); 
- 
-  //  System.out.print(userId+"cart"); 
-     %>
+
+	
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
 		<div class="container">
@@ -68,6 +63,7 @@
 					<div class="cart_title">your shopping cart</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col">
 					<div class="cart_bar d-flex flex-row align-items-center justify-content-start">
@@ -87,11 +83,13 @@
 				<div class="col">
 					<div class="cart_products">
 					<c:choose>
-					 <c:when test="${list == null }">
+					 
+					 <c:when test="${ list == null ||map == null}">
                           <br> <div align="center">장바구니가 비어있습니다</div>
                           <button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>					 
-					 </c:when>
-					  <c:when test="${list != null }">
+					 </c:when> 
+					  
+					  <c:when test="${list != null  }">
 					    <c:forEach var="cartList" items="${list}">
 						<ul>
 							<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
@@ -99,7 +97,7 @@
 
 								
 								<div class="cart_product_image">
-								<img src="${contextPath}/images/cart_product_1.jpg"  name="productImage"></div>
+								<img src="${contextPath}/files/product/${cartList.productNo}/${cartList.productImage}" width="50px" name="productImage"></div>
 
 								<!-- Product Name -->
 								<div class="cart_product_name" name="productName"><a href="${contextPath}/pro/getOnePro.do?productNo=${cartList.productNo}">${cartList.productName}</a></div>
@@ -152,7 +150,7 @@
 					    <input type="hidden" id="userId" value="${userId}">
 						<button class="button_clear cart_button" onclick="fn_delete();">clear cart</button>
 						</form>
-						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>
+						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/pro/proList.do'">continue shopping</button>
 					
 					</div>
 				</div>
@@ -202,6 +200,7 @@
 		</div>
 	</div>
        </c:when>
+       
 	</c:choose>
 
 	<!-- Newsletter -->

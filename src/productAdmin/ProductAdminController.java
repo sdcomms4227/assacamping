@@ -77,7 +77,7 @@ public class ProductAdminController extends HttpServlet{
 			request.setAttribute("productCategoryList", productCategoryList);
 
 			if(request.getAttribute("alertMsg")!=null) {
-				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
+				request.setAttribute("alertMsg", request.getAttribute("alertMsg")); 
 			}
 			
 			nextPage = "/productAdmin/listProduct.jsp";

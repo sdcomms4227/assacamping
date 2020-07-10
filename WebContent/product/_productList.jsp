@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
+<c:set var="productList" value="${productListMap.productList}"/>
+<c:set var="userId" value="${userId }" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -250,23 +252,36 @@
 			</div>
 
 		<form action="${contextPath}/pro/*">
+			<%-- <input type="hidden" name="productCategory" value="${productMap.productCategoryName}">	 --%>
 			<table width="1000" border="0" height="470" align="center">
-				<c:set var="i" value="0"/>
-					<c:forEach var="proList" items="${proList}">
-						<c:if test="${i%4 == 0}">
+				
+				<c:choose>
+					<c:when test="${productListMap.totalCount == null}">
+						<div align="center">목록이 없습니다.</div>
+					</c:when>
+					
+					<c:when test="${productListMap.totalCount != null}">
+				
+				<c:forEach var="productMap" items="${productList}">
+				<c:set var="productCategoryName" value="${productMap.productCategoryName}"/>
+				<c:set var="proVO" value="${productMap.proVO}"/>	
 				<tr align="center">
-						</c:if>
+				
+				
+				
 								<td>
-									<a href="${contextPath}/pro/getOnePro.do?productNo=${proList.productNo}">
-										<img alt="pro" src="${proList.productImage}" border="0" width="220" height="180">
+									<a href="${contextPath}/pro/getOnePro.do?productNo=${proVO.productNo}&productCategory=${productCategoryName}&userId=${userId}">
+										
+									<img src="${contextPath}/files/product/${proVO.productNo}/${proVO.productImageName1}" alt="${productAdminVO.productName}" style="height:40px" />
 									</a>
-									${proList.productName}<br/>
-									금액: ${proList.productPrice}
+									${proVO.productName}<br/>
+									금액: ${proVO.productPrice}
 								</td>
-								<c:set var="i" value="${i+1}" />
-						</c:forEach>
 				</tr>
-				</table>
+				</c:forEach>
+				</c:when>
+				</c:choose>
+			</table>
 			</form>
 
 			<div class="row page_num_container">
