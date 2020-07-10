@@ -31,6 +31,7 @@ public class productListDAO {
 		int offset = (pageNo - 1)*10;
 		String searchKeyword = (String)searchMap.get("searchKeyword");
 		int searchCategoryNo = (int)searchMap.get("searchCategoryNo");
+		
 		String sql = "";
 		
 		try {

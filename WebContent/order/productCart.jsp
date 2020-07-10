@@ -31,7 +31,7 @@
 	<jsp:include page="../inc/menu.jsp" />
 
 	<!-- Home -->
-<c:set var="userId" value="${sessionScope.userId }"/>
+
 	
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
@@ -84,12 +84,12 @@
 					<div class="cart_products">
 					<c:choose>
 					 
-					 <c:when test="${list == null }">
+					 <c:when test="${ list == null ||map == null}">
                           <br> <div align="center">장바구니가 비어있습니다</div>
                           <button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>					 
-					 </c:when>
+					 </c:when> 
 					  
-					  <c:when test="${list != null }">
+					  <c:when test="${list != null  }">
 					    <c:forEach var="cartList" items="${list}">
 						<ul>
 							<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
@@ -200,7 +200,6 @@
 		</div>
 	</div>
        </c:when>
-       
        
 	</c:choose>
 

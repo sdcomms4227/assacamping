@@ -13,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -21,7 +22,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
+
+
 //@WebServlet("/pro/*")
+
 public class productListController extends HttpServlet{
 	private static String PRO_IMG_REPO = "C:\\product\\product_img";
 	productListDAO proDAO;
@@ -60,17 +64,17 @@ public class productListController extends HttpServlet{
 		String nextPage = "";
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
-		
+		//HttpSession session = request.getSession();
 		String action = request.getPathInfo();
 		System.out.println("action:"+action);
 		
 		try {
 			
 			
-			if(action.equals("/proList.do")) {
-				
+			if(action.equals("/listProduct.do")) {
+			
 				setPagination(request);
-				
+				 //String userId=(String)session.getAttribute("userId");
 				Map<String, Object> searchMap = new HashMap<String, Object>();
 				searchMap.put("pageNo", request.getAttribute("pageNo"));
 				searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
@@ -87,12 +91,12 @@ public class productListController extends HttpServlet{
 					request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 				}
 			
-
-			nextPage = "/product/productList.jsp";
+				//session.setAttribute("userId", userId);
+			   nextPage = "/product/_productList.jsp";
 			
 		
 			}else if(action.equals("/getOnePro.do")) {
-
+                   //    String userId=(String)session.getAttribute("userId");
 				int productNo = Integer.parseInt(request.getParameter("productNo"));
 				productListVO onePro = new productListVO();
 				onePro = proService.getOnePro(productNo); 
@@ -102,7 +106,8 @@ public class productListController extends HttpServlet{
 				
 				request.setAttribute("onePro", onePro);
 				request.setAttribute("productvo", productvo);
-				nextPage = "/product/productInfo.jsp";
+				//session.setAttribute("userId", userId);
+				nextPage = "/product/_productInfo.jsp";
 
 			
 			}

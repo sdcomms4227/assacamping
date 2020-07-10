@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <c:set var="productList" value="${productListMap.productList}"/>
+<c:set var="userId" value="${userId }" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -269,7 +270,7 @@
 				
 				
 								<td>
-									<a href="${contextPath}/pro/getOnePro.do?productNo=${proVO.productNo}&productCategory=${productCategoryName}">
+									<a href="${contextPath}/pro/getOnePro.do?productNo=${proVO.productNo}&productCategory=${productCategoryName}&userId=${userId}">
 										
 									<img src="${contextPath}/files/product/${proVO.productNo}/${proVO.productImageName1}" alt="${proAdminVO.productName}" style="height:40px" />
 									</a>

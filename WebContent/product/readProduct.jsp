@@ -127,7 +127,7 @@
 							<div class="product_size_container">
 								<c:choose>
 									<c:when test="${productQuantity > 0}">
-										<div class="button cart_button btn-block"><a href="#">장바구니 담기</a></div>
+										<div class="button cart_button btn-block"><a href="${contextPath}/cart/addCart.do">장바구니 담기</a></div>
 									</c:when>
 									<c:otherwise>
 										<div class="button cart_button"><a href="javascript:alert('준비중입니다.')">재입고 알림</a></div>							

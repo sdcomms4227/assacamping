@@ -157,5 +157,17 @@ public class productCartVO {
 		this.productCategory = productCategory;
 		this.userId = userId;
 	}
-	  
+	public productCartVO(int productNo, int productPrice, int cartQuantity, int productDelivery, int productTotalPrice,
+			String productName, String productImage, String productCategory) {
+		
+		this.productNo = productNo;
+		this.productPrice = productPrice;
+		this.cartQuantity = cartQuantity;
+		this.productDelivery = productDelivery;
+		this.productTotalPrice = productTotalPrice;
+		this.productName = productName;
+		this.productImage = productImage;
+		this.productCategory = productCategory;
+	
+	}  
 }
