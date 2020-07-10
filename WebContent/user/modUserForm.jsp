@@ -16,6 +16,18 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function postCode() {
+		new daum.Postcode({
+			oncomplete:function(data) { 				
+				$('[name=userZipcode]').val(data.zonecode);
+				$('[name=userAddress1]').val(data.address);
+				$('[name=userAddress2]').val(data.buildingName);
+			}
+		}).open();
+}
+</script>
 </head>
 <body>
 
@@ -46,12 +58,12 @@
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form class="userForm" action="${contextPath}/usr/modUser.do?userId=${userInfo.userId}" method="post">
+			<form class="userForm" action="${contextPath}/usr/modUser.do?userId=${userInfo.userId}" method="post" onsubmit="return check();">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
 					<input type="text" class="form-control form-control-lg" name="userId" id="userId" value="${userInfo.userId}" disabled>
 				</div>
-				<div class="form-group mb-3">
+				<div class="form-group mb-3" hidden>
 					<label class="font-weight-bold" for="userPw">비밀번호</label>
 					<input type="password" class="form-control form-control-lg" name="userPw" id="userPw" value="${userInfo.userPw}" required>
 				</div>
@@ -70,6 +82,9 @@
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>
 					<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" value="${userInfo.userZipcode}" required>
+				</div>
+				<div class="form-group mb-3">
+						<button class="font-weight-bold" type="button" onclick="postCode()">우편번호검색</button>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress1">주소</label>
@@ -100,11 +115,3 @@
 <script src="${contextPath}/js/user_custom.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-

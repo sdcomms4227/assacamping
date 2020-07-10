@@ -15,13 +15,26 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
-<c:if test='${msg=="id"}'>
-	<script type="text/javascript">
-		window.onload = function() {
-			alert("존재하지 않는 ID입니다.");
-		}
-	</script>
-</c:if>
+<c:choose>
+	<c:when test='${msg=="id"}'>
+		<script type="text/javascript">
+			window.onload = function(){
+			window.alert("존재하지 않는 아이디 입니다.");}
+		</script>
+	</c:when>
+	<c:when test='${msg=="pw"}'>
+		<script type="text/javascript">
+			window.onload = function(){
+			window.alert("비밀번호가 일치하지 않습니다.");}
+		</script>
+	</c:when>
+	<c:when test='${requestScope.msg == "addUser" }'>
+		<script type="text/javascript">
+			window.onload = function(){
+			window.alert("회원가입이 완료되었습니다.");}		
+		</script>
+	</c:when>	
+</c:choose>
 </head>
 <body>
 
@@ -63,11 +76,11 @@
 				</div>
 				<button type="submit" class="btn btn-xl btn-primary btn-block mb-5">로그인</button>
 				<hr />
-				<a class="btn btn-sm btn-secondary-link" href="javascript:alert('준비중입니다.')">아이디 찾기</a>
+				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/findId.jsp">아이디 찾기</a>
 				<span class="text-muted">|</span>
 				<a class="btn btn-sm btn-secondary-link" href="javascript:alert('준비중입니다.')">비밀번호 찾기</a>
 				<span class="text-muted">|</span>
-				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/usr/userForm.do">회원가입</a>
+				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/regFormImpl.jsp">회원가입</a>
 			</form>
 		</div>
 	</section>

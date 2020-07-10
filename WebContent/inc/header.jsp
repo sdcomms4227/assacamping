@@ -59,12 +59,17 @@
 									</div>
 								</div>
 							</a>
-							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">								
-								<a class="dropdown-item" href="${contextPath}/cartorder/orderList.do">나의 주문 내역</a>
+							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">
+								<a class="dropdown-item" href="${contextPath}/cartorder/orderList.do">나의 주문 내역(수정전)</a>
 								<hr />
-								<a class="dropdown-item" href="${contextPath}/usr/modUserForm.do?userId=${userId}">회원정보수정</a>
-								<a class="dropdown-item" href="javascript:alert('준비중입니다.')">비밀번호변경</a>
-								<a class="dropdown-item" href="javascript:alert('준비중입니다.')">회원탈퇴</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myOrderList.do">나의 주문 내역</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myQnaList.do">내가 쓴 상품문의</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myReviewList.do">내가 쓴 상품후기</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myWishList.do">나의 위시리스트</a>
+								<hr />
+								<a class="dropdown-item" href="${contextPath}/usr/userPwCheck.do?userId=${userId}">회원정보수정</a>
+								<a class="dropdown-item" href="${contextPath}/usr/changePw.do?userId=${userId}">비밀번호변경</a>
+								<a class="dropdown-item" href="${contextPath}/usr/withdrawal.do?userId=${userId}">회원탈퇴</a>
 								<a class="dropdown-item" href="${contextPath}/usr/logout.do">로그아웃</a>
 								<c:if test='${userId=="admin"}'>
 									<hr />
