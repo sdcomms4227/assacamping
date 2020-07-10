@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import dbUtil.DBConnection;
-import productAdmin.ProductAdminVO;
+
+
 
 
 
@@ -38,6 +39,7 @@ public class productListDAO {
 		int offset = (pageNo - 1)*10;
 		String searchKeyword = (String)searchMap.get("searchKeyword");
 		int searchCategoryNo = (int)searchMap.get("searchCategoryNo");
+		
 		String sql = "";
 		
 		try {

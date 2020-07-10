@@ -58,8 +58,8 @@ public class productCartDAO {
 												 rs.getInt("productTotalPrice"), 
 												 rs.getString("productName"), 
 												 rs.getString("productImage"),
-												 rs.getString("productCategory"), 
-												      userId);
+												 rs.getString("productCategory")
+												      );
 					
 				                    list.add(vo);
 			 }

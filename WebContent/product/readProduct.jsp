@@ -13,7 +13,7 @@
 <c:set var="productRating" value="${productMap.productVO.productRating}" />
 <c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 <c:set var="userName" value="홍길동" />
-<c:set var="userId" value="${request.getSession(userId)}" />
+<c:set var="userId" value="${sessionScope.userId}" />
 <c:set var="productImage1" value="${contextPath}/files/product/${productNo}/${productImageName1}" />
 <c:set var="productImage2" value="${contextPath}/files/product/${productNo}/${productImageName2}" />
 <c:set var="productImage3" value="${contextPath}/files/product/${productNo}/${productImageName3}" />
@@ -128,7 +128,7 @@
 							<div class="product_size_container">
 								<c:choose>
 									<c:when test="${productQuantity > 0}">
-										<div class="button cart_button btn-block"><a href="#">장바구니 담기</a></div>
+										<div class="button cart_button btn-block"><a href="${contextPath}/cart/addCart.do">장바구니 담기</a></div>
 									</c:when>
 									<c:otherwise>
 										<div class="button cart_button"><a href="javascript:alert('준비중입니다.')">재입고 알림</a></div>							
