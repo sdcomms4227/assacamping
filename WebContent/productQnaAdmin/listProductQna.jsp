@@ -66,7 +66,7 @@
 			<c:choose>
 				<c:when test="${totalCount==0}">			
 					<tr>
-						<td colspan="7">등록된 문의가 없습니다.</td>
+						<td colspan="9">등록된 문의가 없습니다.</td>
 					</tr>
 				</c:when>	
 				<c:otherwise>

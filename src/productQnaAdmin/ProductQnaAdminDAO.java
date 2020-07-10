@@ -164,7 +164,6 @@ public class ProductQnaAdminDAO {
 				
 				productQnaMap.put("productQnaVO", productQnaVO);
 				
-				productVO.setProductNo(rs.getInt("productNo"));
 				productVO.setProductImageName1(rs.getString("productImageName1"));
 				productVO.setProductName(rs.getString("productName"));
 				
