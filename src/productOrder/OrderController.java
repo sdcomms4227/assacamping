@@ -17,8 +17,6 @@ import javax.servlet.http.HttpSession;
 import productAdmin.ProductAdminService;
 import productCart.productCartService;
 import productCart.productCartVO;
-import productList.productListService;
-import productList.productListVO;
 import user.UserDAO;
 import user.UserVO;
 

@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
 import productCart.productCartVO;
-import productList.productListVO;
 import user.UserVO;
 
 public class OrderDAO implements Serializable{

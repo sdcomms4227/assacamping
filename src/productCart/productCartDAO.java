@@ -13,7 +13,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
-import productList.productListVO;
 
 public class productCartDAO {
 	PreparedStatement pstmt;
