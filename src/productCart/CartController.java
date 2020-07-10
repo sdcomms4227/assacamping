@@ -27,16 +27,16 @@ import org.apache.commons.io.FileUtils;
 
 
 @WebServlet("/cart/*") 
-public class productCartController extends HttpServlet {
+public class CartController extends HttpServlet {
 	String realPath=null;
-	productCartVO cartVO;
-	productCartService cartService;
+	CartVO cartVO;
+	CartService cartService;
 	/* private static String PRO_IMG_REPO = "C:\\product\\product_img"; */
 	
 	@Override
 	public void init() throws ServletException {
-		cartVO=new productCartVO();
-		cartService=new productCartService();
+		cartVO=new CartVO();
+		cartService=new CartService();
 	}
 	 @Override
 	  	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -73,7 +73,7 @@ public class productCartController extends HttpServlet {
 					System.out.println(userId+"controller");
 					
 
-					List<productCartVO> list=cartService.allcartList(userId);
+					List<CartVO> list=cartService.allcartList(userId);
 
 					 Map<String, Integer> map=cartService.TotalPrice(userId);
 					 if(!list.isEmpty()) {
@@ -219,7 +219,7 @@ public class productCartController extends HttpServlet {
 				
 					int productTotalPrice=cartQuantity*productPrice;
 					
-					cartVO=new productCartVO(
+					cartVO=new CartVO(
 							Integer.parseInt(productNo), 
 							productPrice, 
 							cartQuantity, 

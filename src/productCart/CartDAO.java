@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
 
-public class productCartDAO {
+public class CartDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	Connection con;
@@ -33,9 +33,9 @@ public class productCartDAO {
 	}//freeResource();
    
   
-	public List<productCartVO> allcartList(String userId){//장바구니목록조회
+	public List<CartVO> allcartList(String userId){//장바구니목록조회
 		  System.out.println(userId+"DAO");
-		 List<productCartVO> list=new ArrayList();
+		 List<CartVO> list=new ArrayList();
 		
 		try {
 			 con=db.getConnection();
@@ -49,7 +49,7 @@ public class productCartDAO {
 			 rs=pstmt.executeQuery();
 			 
 			 while(rs.next()) {
-			 productCartVO vo= new productCartVO(
+			 CartVO vo= new CartVO(
 											     rs.getInt("productNo"),
 												 rs.getInt("productPrice"),
 												 rs.getInt("cartQuantity"),
@@ -72,7 +72,7 @@ public class productCartDAO {
 		return list;
 	}//allCartList
 	
-	public void addCartList(productCartVO vo) {//장바구니추가하기
+	public void addCartList(CartVO vo) {//장바구니추가하기
 		try {
 			con=db.getConnection();
 			
@@ -100,7 +100,7 @@ public class productCartDAO {
 		
 	}//addCartList
 	
-	public void cartUpdate(productCartVO vo) {//수량수정
+	public void cartUpdate(CartVO vo) {//수량수정
 		try {
 			con=db.getConnection();
 			

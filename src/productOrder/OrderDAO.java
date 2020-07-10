@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
-import productCart.productCartVO;
+import productCart.CartVO;
 import user.UserVO;
 
 public class OrderDAO implements Serializable{
@@ -59,7 +59,7 @@ public class OrderDAO implements Serializable{
 	}//orderCount()
 	
 	
-	public void addOrder(List<productCartVO> orderList,OrderVO vo)  {//주문하기
+	public void addOrder(List<CartVO> orderList,OrderVO vo)  {//주문하기
         
 	try {
 		
@@ -67,7 +67,7 @@ public class OrderDAO implements Serializable{
 			
 	  for(int i=0 ;i<orderList.size();i++) { 
 		  
-		  productCartVO vo1=orderList.get(i);
+		  CartVO vo1=orderList.get(i);
 				
 		       sql=" insert into productorder(productPayment,userZipcode,"
 		       		+ "userAddress1,userAddress2,"

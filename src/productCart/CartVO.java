@@ -2,7 +2,7 @@ package productCart;
 
 import java.sql.Date;
 
-public class productCartVO {
+public class CartVO {
 	
 
 	   private int productNo; //상품번호
@@ -18,7 +18,7 @@ public class productCartVO {
 	   
 	
 	   
-	  public productCartVO() {
+	  public CartVO() {
 	
 	}
 
@@ -144,7 +144,7 @@ public class productCartVO {
 
 
 
-	public productCartVO(int productNo, int productPrice, int cartQuantity, int productDelivery, int productTotalPrice,
+	public CartVO(int productNo, int productPrice, int cartQuantity, int productDelivery, int productTotalPrice,
 			String productName, String productImage, String productCategory, String userId) {
 		
 		this.productNo = productNo;
@@ -157,7 +157,7 @@ public class productCartVO {
 		this.productCategory = productCategory;
 		this.userId = userId;
 	}
-	public productCartVO(int productNo, int productPrice, int cartQuantity, int productDelivery, int productTotalPrice,
+	public CartVO(int productNo, int productPrice, int cartQuantity, int productDelivery, int productTotalPrice,
 			String productName, String productImage, String productCategory) {
 		
 		this.productNo = productNo;
