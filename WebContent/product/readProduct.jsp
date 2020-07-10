@@ -99,49 +99,62 @@
 	
 					<!-- Product Content -->
 					<div class="col-lg-5">
-						<div class="product_content">
-							<div class="product_name">${productName}</div>
-							<div class="product_price"><fmt:formatNumber value="${productPrice}" pattern="#,###" /> <small>원</small></div>
-							<div class="rating rating_${productRating}" data-rating="${productRating}">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</div>
-							<div class="product_text">
-								<p>${fn:replace(productContent,LF,BR)}</p>
-							</div>
-							<!-- Product Quantity -->
-							<div class="product_quantity_container">
-								<span>수량</span>
-								<c:choose>
-									<c:when test="${productQuantity > 0}">
-										<div class="product_quantity clearfix">
-											<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-											<div class="quantity_buttons">
-												<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
-												<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+						<form action="${contextPath}/cart/addCart.do" method="post">
+							<input type="hidden" name="productNo" value="${productNo}" />
+							<input type="hidden" name="userId" value="${userId}" />
+
+							<div class="product_content">
+								<div class="product_name">${productName}</div>
+								<div class="product_price"><fmt:formatNumber value="${productPrice}" pattern="#,###" /> <small>원</small></div>
+								<div class="rating rating_${productRating}" data-rating="${productRating}">
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+								</div>
+								<div class="product_text">
+									<p>${fn:replace(productContent,LF,BR)}</p>
+								</div>
+								<!-- Product Quantity -->
+								<div class="product_quantity_container">
+									<span>수량</span>
+									<c:choose>
+										<c:when test="${productQuantity > 0}">
+											<div class="product_quantity clearfix">
+												<input name="cartQuantity" id="quantity_input" type="text" pattern="[0-9]*" value="1">
+												<div class="quantity_buttons">
+													<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
+													<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+												</div>
 											</div>
-										</div>
-									</c:when>
-									<c:otherwise>
-										<div class="product_quantity_empty text-danger">품절</div>								
-									</c:otherwise>
-								</c:choose>
+										</c:when>
+										<c:otherwise>
+											<div class="product_quantity_empty text-danger">품절</div>								
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<!-- Product Delivery -->
+								<div class="product_delivery_container">
+									<span>배송비</span>
+									<select name="productDelivery">
+										<option value="2500">주문시 결제(2,500원)</option>
+										<option value="0">수령시 결제(착불)</option>
+									</select>
+								</div>
+								<!-- Product Size -->
+								<div class="product_size_container">
+									<c:choose>
+										<c:when test="${productQuantity > 0}">										
+											<div class="button cart_button btn-block"><button type="submit">장바구니 담기</button></div>
+										</c:when>
+										<c:otherwise>
+											<div class="button cart_button"><a href="javascript:alert('준비중입니다.')">재입고 알림</a></div>							
+										</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
-							<!-- Product Size -->
-							<div class="product_size_container">
-								<c:choose>
-									<c:when test="${productQuantity > 0}">
-										<div class="button cart_button btn-block"><a href="${contextPath}/cart/addCart.do">장바구니 담기</a></div>
-									</c:when>
-									<c:otherwise>
-										<div class="button cart_button"><a href="javascript:alert('준비중입니다.')">재입고 알림</a></div>							
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</section>
