@@ -130,7 +130,7 @@ public class UserController extends HttpServlet{
 			}else if(action.equals("/logout.do")) {
 				session.invalidate();
 				request.setAttribute("msg", "logout");
-				nextPage = "/userCon/listUsers.do";
+				nextPage = "/";
 			}
 
 		RequestDispatcher  dispatch = 

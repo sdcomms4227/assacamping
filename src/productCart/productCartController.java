@@ -72,10 +72,7 @@ public class productCartController extends HttpServlet {
 					
 					System.out.println(userId+"controller");
 					
-					List<productCartVO> list=cartService.allcartList(userId);
-					 
-					
-					 
+					List<productCartVO> list=cartService.allcartList(userId);							 
 					 Map<String, Integer> map=cartService.TotalPrice(userId);
 					 
 					request.setAttribute("list", list);
