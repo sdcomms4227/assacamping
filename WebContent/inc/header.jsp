@@ -61,10 +61,10 @@
 							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">								
 								<a class="dropdown-item" href="${contextPath}/cartorder/orderList.do">나의 주문 내역</a>
 								<hr />
-								<a class="dropdown-item" href="${contextPath}/userCon/modUserForm.do?userId=${userId}">회원정보수정</a>
+								<a class="dropdown-item" href="${contextPath}/usr/modUserForm.do?userId=${userId}">회원정보수정</a>
 								<a class="dropdown-item" href="javascript:alert('준비중입니다.')">비밀번호변경</a>
 								<a class="dropdown-item" href="javascript:alert('준비중입니다.')">회원탈퇴</a>
-								<a class="dropdown-item" href="${contextPath}/userCon/logout.do">로그아웃</a>
+								<a class="dropdown-item" href="${contextPath}/usr/logout.do">로그아웃</a>
 								<c:if test='${userId=="admin"}'>
 									<hr />
 									<a class="dropdown-item" href="${contextPath}/adm/admin.do">관리자모드</a>
@@ -73,7 +73,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a class="shopping_a" href="${contextPath}/userCon/login.do">
+						<a class="shopping_a" href="${contextPath}/usr/login.do">
 							<div class="avatar">
 								<img src="${contextPath}/images/avatar.svg" alt="">
 							</div>
