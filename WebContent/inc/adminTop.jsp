@@ -33,7 +33,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<ul class="navbar-nav px-3">
-		<li class="nav-item text-nowrap"><a class="nav-link" href="${contextPath}/usradm/logout.do">Sign out</a></li>
+		<li class="nav-item text-nowrap"><a class="nav-link" href="${contextPath}/userCon/logout.do">Sign out</a></li>
 	</ul>
 </nav>
 <div class="container-fluid">
@@ -47,7 +47,7 @@
 				<ul class="nav flex-column">
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/usradm/listUser.do"> <span data-feather="users"></span> 회원 관리 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminOrderList.jsp"> <span data-feather="file"></span> 주문 관리 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li> 
 				</ul>
 				<hr />
 				<ul class="nav flex-column">

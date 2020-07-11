@@ -16,6 +16,46 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-Latest.js"></script>
+<script>
+	function idCheck(){
+		var id = document.f.userId.value;
+		if(id==""){
+			alert("아이디를 입력하세요.");
+			document.f.userId.focus();
+			return
+		}
+		window.open("idCheck.jsp?userId="+id, "" , "width=500,height=200")
+	}
+	function check(){
+		if (document.f.userPw.value == "") {
+            alert("비밀번호를 입력하지 않았습니다.")
+            document.f.userPw.focus();
+            return false;
+        }
+        if (f.userPw.value == f.userId.value) {
+            alert("아이디와 비밀번호가 같습니다.")
+            document.f.userPw.focus();
+            return false;
+        }
+        if (document.f.userPw.value != document.f.userPw2.value) {
+            alert("비밀번호가 일치하지 않습니다")
+            document.f.userPw2.value = ""
+            document.f.userPw2.focus();
+            return false;
+        }
+	}
+        function postCode() {
+     		new daum.Postcode({
+     			oncomplete:function(data) { 				
+     				$('[name=userZipcode]').val(data.zonecode);
+     				$('[name=userAddress1]').val(data.address);
+     				$('[name=userAddress2]').val(data.buildingName);
+     			}
+     		}).open();
+	}
+</script>
 </head>
 <body>
 

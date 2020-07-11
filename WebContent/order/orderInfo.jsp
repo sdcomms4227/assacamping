@@ -19,7 +19,7 @@
 							<th>상품명</th>
 							<td><a href="cartorder/orderDetail.do?productNo=${order.productNo}">${order.productName}</a></td>
 							<td>${order.userName}</td>
-							<td>${order. cartQuantity}</td>
+							<td>${order.cartQuantity}</td>
 							
 						</tr>
 				 </c:forEach>	
@@ -44,7 +44,7 @@
 	<h2 align="center">주문해주셔서 감사합니다.</h2>
 	<div align="center">
 	<a href="${contextPath}/index.jsp">홈</a>
-	<a href="${contextPath}/ }">마이페이지</a>
+	<a href="${contextPath}/">마이페이지</a>
 	</div>
 	
 	

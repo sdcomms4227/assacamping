@@ -65,8 +65,9 @@
 
 
 	<p class="cls1">회원정보</p>
-	<table border="1" align="center" >
-		<tr align="center" bgcolor="lightgreen">
+
+<table border="1" align="center" >
+<tr align="center" bgcolor="lightgreen">
 			<td width="7%"><b>아이디</b></td>
 			<td width="7%"><b>비밀번호</b></td>
 			<td width="7%"><b>이름</b></td>

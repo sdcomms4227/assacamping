@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
+import productAdmin.ProductAdminService;
 import productCart.productCartService;
 import productCart.productCartVO;
 import productList.productListService;
@@ -133,6 +132,7 @@ public class OrderController extends HttpServlet{
 			    
 				 session.setAttribute("userId", userId); 
 				 session.setAttribute("orderNo", orderNo);
+				 
 				 System.out.println(orderNo);
 				 
 				 nextPage="/cartorder/paypro.do";
@@ -145,44 +145,45 @@ public class OrderController extends HttpServlet{
 				System.out.println(orderNo);
 				productCartService cartservice=new productCartService();
 				 
-				//cartservice.allDeleteCart(userId); 
+				cartservice.allDeleteCart(userId);  //결제되면 장바구니 정보는 삭제 
 			       
 				List<OrderVO> orderlist= orderservice.orderList(userId,orderNo);
+							
+				for(int i=0;i<orderlist.size();i++) {// 재고수량관리
+					  
+					OrderVO productvo=orderlist.get(i);
+					ProductAdminService proadminservice=new ProductAdminService();
+					proadminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
+					 
+				  }
+				
 				
 			     request.setAttribute("orderlist", orderlist);
 			     
 			     session.setAttribute("userId", userId);
-			     
+			    
 				nextPage="/order/orderInfo.jsp";
 				
-			}else if(action.equals("/orderDetail.do")) {
-				
-				int productNo=Integer.parseInt(request.getParameter("prodcutNo"));
-				
-				productListService listservice= new productListService();
-				
-				productListVO onepro=listservice.getOnePro(productNo);
-				
-				request.setAttribute("onepro", onepro);
-				
-				nextPage="/product/prodcutInfo.jsp";
-				
-			}else if(action.equals("/orderList.do")) {
+			} else if(action.equals("/orderList.do")) {
 				
 			    String userId=(String)session.getAttribute("userId");
 				
 			    System.out.println(userId);
 				
 				List<OrderVO> payList=orderservice.payList(userId);
-				List<OrderVO> orderNo=orderservice.orderNo(userId);
 				
+				List<OrderVO> orderNo=orderservice.orderNo(userId);
+		
 				System.out.println(payList);
 				
-				request.setAttribute("orderNo", orderNo);
-				request.setAttribute("payList", payList);
+			
+				request.setAttribute("orderNo", orderNo);//distinct orderNo
+				request.setAttribute("payList", payList);//모든주문내역
 				
 				nextPage="/mypage/myOrderList.jsp";
+				
 			}else if(action.equals("/orderInfo.do")) {
+				
 				String userId=(String)session.getAttribute("userId");
 				System.out.println(userId);
 				int orderNo= Integer.parseInt(request.getParameter("orderNo"));
@@ -193,15 +194,26 @@ public class OrderController extends HttpServlet{
 				request.setAttribute("orderInfo", orderInfo);
 				
 				nextPage="/mypage/myOrderInfo.jsp";
-			}else if(action.equals("/orderDelete.do")) {
+				
+			}else if(action.equals("/orderDelete.do")) {//결제취소 
 			
 				int orderNo=Integer.parseInt(request.getParameter("orderNo"));
+				
 				String userId=(String)session.getAttribute("userId");
 				
 				orderservice.orderDelete(userId, orderNo);
+				
 				 session.setAttribute("userId", userId); 
-				nextPage="/mypage/myOrderList.jsp";
+				 
+				nextPage="/cartorder/orderList.do";
 		
+			}else if(action.equals("/adminOrderList.do")) {
+				
+				List<OrderVO> orderlist1=orderservice.selectAllOrderList();
+				
+				request.setAttribute("orderlist", orderlist1);
+				
+				nextPage="/admin/adminOrderList.jsp";
 			}
 			
 			

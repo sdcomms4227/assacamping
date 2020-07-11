@@ -117,16 +117,21 @@
 		 			       	var content = value.commentContent;
 			        	   	var date = value.commentWriteDate;	
 			           		var id = value.userId;
-			            	
+			           		var lev = value.commentRe_lev;
+			           		
 				           	a += '<tr id="comment'+no+'">';
-				           	a += '<td class="d-none d-lg-table-cell align-middle">'+name+'</td>';
+				           	a += '<td class="d-none d-lg-table-cell align-middle">';
+				           	for(var i = 0; i < value.commentRe_lev; i++) {
+				           		a += '&nbsp;&nbsp;';
+				           	}
+				           	a += name+'</td>';
 							a += '<td class="text-left align-middle">';
 							a += content;	 
 							if('${userId}' == id){
 								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentUpdate('+no+',\''+content+'\')">수정</button>';
 								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('+no+')">삭제</button>';
-								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentReply('+no+')">답변</button>';
-							}					
+							}
+							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentReply('+no+')">답변</button>';
 							a += '</td>';
 							a += '<td class="d-none d-lg-table-cell text-center align-middle">';
 							a += '<small>'+date+'</small>';
@@ -171,6 +176,69 @@
 					commentList();
 					
 					$("#commentContent").val("");
+					if($("#commentEmpty")){
+						$("#commentEmpty").remove();
+					}
+						
+				},
+				error : function(){
+					alert("통신에러가 발생했습니다.");	
+				}				
+			});
+		}
+		
+		// 대댓글 달기 - input 폼 변
+		function commentReply(commentNo) {
+			
+			var a = '';
+			
+			a += '<colgroup class="d-lg-none"><col/><col style="width:112px" /></colgroup><colgroup class="d-none d-lg-table-column-group"><col style="width:80px" /><col /><col style="width:112px" /></colgroup>';
+			a += '<tr>';
+			a += '<td class="d-none d-lg-table-cell align-middle">';
+			a += '<p class="m-0">${userName}</p>';
+			a += '</td>';
+			a += '<td class="pr-0">';
+			a += '<p class="d-block d-lg-none text-left mb-1 text-muted">${userName}</p>';
+			a += '<label for="commentContent" class="d-none">답변하세요</label>';
+			a += '<input class="form-control" type="text" name="replyContent" id="replyContent" required />';
+			a += '</td>';
+			a += '<td class="align-bottom">';
+			a += '<button type="button" class="btn btn-primary" onclick="commentReplyProc('+commentNo+')">답변하기</button>';
+			a += '</td>';
+			a += '</tr>';
+
+			$(".comment-form-table").html(a);
+		}
+		
+		// 대댓글 달기
+		function commentReplyProc(commentNo) {
+			
+			var boardCategoryNo = ${boardCategoryNo};
+			var boardNo = ${boardNo};
+			var userId = '${userId}';
+			var userName = '${userName}';
+			var replyContent = document.commentform.replyContent.value; 
+			
+			if(replyContent.length == 0){
+				alert("답변 내용을 입력해주세요.");
+				document.commentform.replyContent.focus();
+				return;
+			}
+			
+			var _commentReplyInfo = '{"commentNo":"'+commentNo+'","boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","replyContent":"'+replyContent+'"}';
+			var _url = '${contextPath}/comment/replyComment.do';
+			
+			$.ajax({
+				type : "post",
+				async : "false",
+				url : _url,
+				data : {commentReplyInfo : _commentReplyInfo},
+				success : function(data, status){
+					
+					// 정상적으로 댓글이 등록되었다면 댓글목록을 reload
+					commentList();
+					
+					$("#replyContent").val("");
 					if($("#commentEmpty")){
 						$("#commentEmpty").remove();
 					}

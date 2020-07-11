@@ -58,8 +58,8 @@ public class productCartDAO {
 												 rs.getInt("productTotalPrice"), 
 												 rs.getString("productName"), 
 												 rs.getString("productImage"),
-												 rs.getString("productCategory"), 
-												      userId);
+												 rs.getString("productCategory")
+												      );
 					
 				                    list.add(vo);
 			 }
@@ -227,4 +227,37 @@ public class productCartDAO {
 		
 		return map;
 	}
+	
+	public Integer cartTotalCount(String userId) {
+		   int totalcount=0;
+		try {
+               con=db.getConnection();
+			
+			   sql="select count(*) from productcart where userId=?";
+			    
+			   pstmt=con.prepareStatement(sql);
+			   
+			   pstmt.setString(1, userId);
+			   rs=pstmt.executeQuery();
+			   if(rs.next()) {
+				   
+				   totalcount= rs.getInt(1);
+				   
+			   }
+			
+		} catch (Exception e) {
+			
+			System.out.println("cartTotalCount에서 오류"+e.getMessage());
+			
+		}finally {
+			freeResource();
+		}
+		
+		
+		
+		return totalcount;
+	}
+	
+	
+	
 }
