@@ -42,7 +42,7 @@ function check(){
 </script>
 </head>
 <body>
-<form name="f" action="${contextPath}/userCon/changePwAction.do" method="post" onsubmit="return check();">
+<form name="f" action="${contextPath}/usr/changePwAction.do" method="post" onsubmit="return check();">
 	<h2>비밀번호 변경</h2>
 	비밀번호를 입력해 주세요.<br>
 	<input type="text" name="userId" value="${userInfo.userId}" hidden>

@@ -1,4 +1,4 @@
-package productCart;
+package cart;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,18 +13,16 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dbUtil.DBConnection;
-import productList.productListVO;
 
-public class productCartDAO {
+public class CartDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
-	Connection con;
+	Connection conn;
 	String sql;
-	DBConnection db;
   
    public void freeResource() {
 		try {
-			if(con !=null) { con.close();}
+			if(conn!=null) { conn.close();}
 			if(pstmt !=null) { pstmt.close();}
 			if(rs !=null) { rs.close();}
 			
@@ -34,23 +32,23 @@ public class productCartDAO {
 	}//freeResource();
    
   
-	public List<productCartVO> allcartList(String userId){//장바구니목록조회
+	public List<CartVO> allcartList(String userId){//장바구니목록조회
 		  System.out.println(userId+"DAO");
-		 List<productCartVO> list=new ArrayList();
+		 List<CartVO> list=new ArrayList();
 		
 		try {
-			 con=db.getConnection();
+			 conn=dbUtil.DBConnection.getConnection();
 			
 			 sql="select * from productcart where userId=? order by productCartDate desc";
 			
-			 pstmt=con.prepareStatement(sql);
+			 pstmt=conn.prepareStatement(sql);
 			 
 			 pstmt.setString(1, userId);
 			 
 			 rs=pstmt.executeQuery();
 			 
 			 while(rs.next()) {
-			 productCartVO vo= new productCartVO(
+			 CartVO vo= new CartVO(
 											     rs.getInt("productNo"),
 												 rs.getInt("productPrice"),
 												 rs.getInt("cartQuantity"),
@@ -73,14 +71,14 @@ public class productCartDAO {
 		return list;
 	}//allCartList
 	
-	public void addCartList(productCartVO vo) {//장바구니추가하기
+	public void addCartList(CartVO vo) {//장바구니추가하기
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="insert into productcart(productNo, productPrice, cartQuantity, productDelivery, productName, productImage, productCategory ,userId, productCartDate,productTotalPrice)"
 				+ " values(?,?,?,?,?,?,?,?,now(),?)";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, vo.getProductNo());
 			pstmt.setInt(2,vo.getProductPrice());
@@ -101,13 +99,13 @@ public class productCartDAO {
 		
 	}//addCartList
 	
-	public void cartUpdate(productCartVO vo) {//수량수정
+	public void cartUpdate(CartVO vo) {//수량수정
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="update productcart set cartQuantity=? ,productTotalPrice=? where userId=? and productName=?  ";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			
 			
@@ -129,11 +127,11 @@ public class productCartDAO {
 		List<Integer> productNoList = new ArrayList<Integer>();
 
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select productNo from productcart where userId=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, userId);
 			
@@ -153,11 +151,11 @@ public class productCartDAO {
 	
 	public void allDeleteCart(String userId) {//전체장바구니삭제
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="delete from productcart where userId=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, userId);
 			
@@ -175,11 +173,11 @@ public class productCartDAO {
 	public void deleteCart(String userId,int productNo ) {//하나의 상품장바구니 삭제
 		
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="delete from productcart where productNo=? and userId=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, productNo);
 			pstmt.setString(2, userId);
@@ -199,11 +197,11 @@ public class productCartDAO {
 		int totalPrice=0;
 		int totalDelivery=0;
 		try {
-			con=db.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			sql="select sum(productTotalPrice) ,sum(productDelivery) from productcart where userId=?";
 			
-			pstmt=con.prepareStatement(sql);
+			pstmt=conn.prepareStatement(sql);
 			
 			pstmt.setString(1, userId);
 			
@@ -231,11 +229,11 @@ public class productCartDAO {
 	public Integer cartTotalCount(String userId) {
 		   int totalcount=0;
 		try {
-               con=db.getConnection();
+               conn=dbUtil.DBConnection.getConnection();
 			
 			   sql="select count(*) from productcart where userId=?";
 			    
-			   pstmt=con.prepareStatement(sql);
+			   pstmt=conn.prepareStatement(sql);
 			   
 			   pstmt.setString(1, userId);
 			   rs=pstmt.executeQuery();

@@ -6,7 +6,7 @@
 		<h2 class="mb-0">캠핑정보 카테고리</h2>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campadm/listCamping.do'">캠핑정보</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campAdm/listCamping.do'">캠핑정보</button>
 	</div>
 </div>
 

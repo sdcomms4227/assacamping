@@ -15,10 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import productAdmin.ProductAdminService;
-import productCart.productCartService;
-import productCart.productCartVO;
-import productList.productListService;
-import productList.productListVO;
+import productCart.CartService;
+import productCart.CartVO;
 import user.UserDAO;
 import user.UserVO;
 
@@ -58,8 +56,8 @@ public class OrderController extends HttpServlet{
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		Map<String, Integer> totalPrice=null;
-		productCartService procartservice=new productCartService();
-		List<productCartVO> orderList = new ArrayList();
+		CartService procartservice=new CartService();
+		List<CartVO> orderList = new ArrayList();
 		String action = request.getPathInfo();
 		System.out.println("action"+action);
 		try {
@@ -126,7 +124,7 @@ public class OrderController extends HttpServlet{
 				 vo.setProductDelivery(productDelivery);
 				 vo.setOrderNo(orderNo);
 				 
-	            List<productCartVO> orderList1=(List<productCartVO>)session.getAttribute("orderList");
+	            List<CartVO> orderList1=(List<CartVO>)session.getAttribute("orderList");
 	              
 				  orderservice.addOrder(orderList1,vo);
 			    
@@ -143,7 +141,7 @@ public class OrderController extends HttpServlet{
 				System.out.println(userId);
 				int orderNo=(Integer)session.getAttribute("orderNo");
 				System.out.println(orderNo);
-				productCartService cartservice=new productCartService();
+				CartService cartservice=new CartService();
 				 
 				cartservice.allDeleteCart(userId);  //결제되면 장바구니 정보는 삭제 
 			       
@@ -152,8 +150,8 @@ public class OrderController extends HttpServlet{
 				for(int i=0;i<orderlist.size();i++) {// 재고수량관리
 					  
 					OrderVO productvo=orderlist.get(i);
-					ProductAdminService proadminservice=new ProductAdminService();
-					proadminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
+					ProductAdminService proAdminservice=new ProductAdminService();
+					proAdminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
 					 
 				  }
 				

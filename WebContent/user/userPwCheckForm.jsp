@@ -22,7 +22,7 @@ request.setCharacterEncoding("UTF-8");
 </c:choose>
 </head>
 <body>
-<form action="${contextPath}/userCon/userPwCheckAction.do" method="post" >
+<form action="${contextPath}/usr/userPwCheckAction.do" method="post" >
 	<h2>회원정보수정</h2>
 	비밀번호를 다시 입력해 주세요.<br>
 	<input type="text" name="userId" value="${userInfo.userId}" hidden>

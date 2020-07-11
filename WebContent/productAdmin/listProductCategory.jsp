@@ -6,7 +6,7 @@
 		<h2 class="mb-0">상품 카테고리</h2>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/proadm/listProduct.do'">상품 관리</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/proAdm/listProduct.do'">상품 관리</button>
 	</div>
 </div>
 

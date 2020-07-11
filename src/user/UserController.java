@@ -1,18 +1,16 @@
 package user;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/userCon/*")
+@WebServlet("/usr/*")
 public class UserController extends HttpServlet{
   
 	UserDAO userDAO;
@@ -57,7 +55,7 @@ public class UserController extends HttpServlet{
 			
 			UserVO userVO = new UserVO(userId, userPw, userName, userPhone, userEmail, userZipcode, userAddress1, userAddress2, null, 1);
 			userDAO.addUser(userVO);
-			request.setAttribute("msg", "addUser");
+			request.setAttribute("msg", "addUser");			
 			nextPage = "/user/login.jsp";
 			
 		}else if(action.equals("/userForm.do")) {
@@ -91,7 +89,7 @@ public class UserController extends HttpServlet{
 				String userId = request.getParameter("userId");    
 				userDAO.delUser(userId);    
 				request.setAttribute("msg", "deleted");
-				nextPage = "/userCon/listUsers.do";
+				nextPage = "/usr/listUsers.do";
 			
 			}else if(action.equals("/login.do")) {
 				
@@ -102,6 +100,10 @@ public class UserController extends HttpServlet{
 				String userId = request.getParameter("userId");
 				String userPw = request.getParameter("userPw");
 				int check = userDAO.login(userId,userPw);
+				String userName = userDAO.getUserName(userId);
+				
+				String msg ="";
+				
 				if(check==0) {
 					request.setAttribute("msg", "id");
 					nextPage = "/user/login.jsp";
@@ -110,6 +112,8 @@ public class UserController extends HttpServlet{
 					nextPage = "/user/login.jsp";
 				}else {
 					session.setAttribute("userId", userId);
+					session.setAttribute("userName", userName);
+					
 					nextPage = "/";
 				}
 				

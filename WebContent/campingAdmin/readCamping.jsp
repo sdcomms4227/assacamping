@@ -9,7 +9,6 @@
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -105,30 +104,30 @@
 <script>
 function listCamping(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/listCamping.do";	
+	form.action = "${contextPath}/campAdm/listCamping.do";	
 	form.submit();
 }
 function modifyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/modifyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campAdm/modifyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function deleteCamping(campingNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/campadm/deleteCamping.do?campingNo=" + campingNo;
+		form.action = "${contextPath}/campAdm/deleteCamping.do?campingNo=" + campingNo;
 		form.submit();
 	}
 }
 function replyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/replyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campAdm/replyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function downloadCamping(campingNo, campingFileName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
+	form.action = "${contextPath}/campAdm/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
 	form.submit();
 }
 </script>

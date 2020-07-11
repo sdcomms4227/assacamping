@@ -3,6 +3,7 @@ package productReview;
 import java.sql.Timestamp;
 
 public class ProductReviewVO {
+	
 	private int productNo;
 	private int reviewNo;
 	private String reviewContent;
@@ -10,15 +11,7 @@ public class ProductReviewVO {
 	private String userName;
 	private Timestamp reviewDate;
 	private int starRating;
-	
 
-	// getter, setter method
-	public int getStarRating() {
-		return starRating;
-	}
-	public void setStarRating(int starRating) {
-		this.starRating = starRating;
-	}
 	public int getProductNo() {
 		return productNo;
 	}
@@ -55,7 +48,10 @@ public class ProductReviewVO {
 	public void setReviewDate(Timestamp reviewDate) {
 		this.reviewDate = reviewDate;
 	}
-	
-	
-	
+	public int getStarRating() {
+		return starRating;
+	}
+	public void setStarRating(int starRating) {
+		this.starRating = starRating;
+	}	
 }

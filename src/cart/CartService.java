@@ -1,12 +1,12 @@
-package productCart;
+package cart;
 
 import java.util.List;
 import java.util.Map;
 
-public class productCartService {
-	productCartDAO dao=new productCartDAO();
+public class CartService {
+	CartDAO dao=new CartDAO();
 	                         
-	public List<productCartVO> allcartList(String userId){//전제창바구니 조회
+	public List<CartVO> allcartList(String userId){//전제창바구니 조회
 		System.out.println(userId+"Service");
 		return dao.allcartList(userId);
 	}
@@ -21,7 +21,7 @@ public class productCartService {
 	   return productNoList;
    }
    
-   public void update(productCartVO vo) {//장바구니수량 수정
+   public void update(CartVO vo) {//장바구니수량 수정
 	 
 	   dao.cartUpdate(vo);
    }
@@ -30,7 +30,7 @@ public class productCartService {
 	   dao.deleteCart(userId, productNo);
    }
    
-   public void addcart(productCartVO vo) {
+   public void addcart(CartVO vo) {
 	   dao.addCartList(vo);
    }
    

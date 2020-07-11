@@ -24,10 +24,10 @@ import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/proadm/*")
+@WebServlet("/proAdm/*")
 public class ProductAdminController extends HttpServlet{
 	
-	ProductAdminService productAdminService;
+	ProductAdminService proAdminService;
 	ProductVO productVO;	
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
@@ -35,7 +35,7 @@ public class ProductAdminController extends HttpServlet{
 		
 	@Override
 	public void init() throws ServletException {
-		productAdminService = new ProductAdminService();
+		proAdminService = new ProductAdminService();
 		productVO = new ProductVO();
 		productCategoryService = new ProductCategoryService();
 		productCategoryVO = new ProductCategoryVO();
@@ -70,7 +70,7 @@ public class ProductAdminController extends HttpServlet{
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
-			Map<String, Object> productListMap = productAdminService.listProduct(searchMap);			
+			Map<String, Object> productListMap = proAdminService.listProduct(searchMap);			
 			request.setAttribute("productListMap", productListMap);
 			
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
@@ -80,28 +80,28 @@ public class ProductAdminController extends HttpServlet{
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg")); 
 			}
 			
-			nextPage = "/productAdmin/listProduct.jsp";
+			nextPage = "/proAdmin/listProduct.jsp";
 			
 		}else if(action.equals("/readProduct.do")) {
 
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));			
-			Map<String, Object> productMap = productAdminService.readProduct(productNo);			
+			Map<String, Object> productMap = proAdminService.readProduct(productNo);			
 			request.setAttribute("productMap", productMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/productAdmin/readProduct.jsp";
+			nextPage = "/proAdmin/readProduct.jsp";
 			
 		}else if(action.contentEquals("/addProduct.do")) {
 
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 			
-			nextPage = "/productAdmin/addProduct.jsp";
+			nextPage = "/proAdmin/addProduct.jsp";
 			
 		}else if(action.equals("/insertProduct.do")) {
 
@@ -125,7 +125,7 @@ public class ProductAdminController extends HttpServlet{
 			productVO.setProductQuantity(productQuantity);
 			productVO.setProductCategoryNo(productCategoryNo);
 			
-			int readNo = productAdminService.insertProduct(productVO);
+			int readNo = proAdminService.insertProduct(productVO);
 			
 			String alertMsg = "";
 			
@@ -147,20 +147,20 @@ public class ProductAdminController extends HttpServlet{
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/proadm/readProduct.do?productNo=" + readNo;
+			nextPage = "/proAdm/readProduct.do?productNo=" + readNo;
 			
 		}else if(action.equals("/modifyProduct.do")) {
 
 			setPagination(request);
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));
-			Map<String, Object> productMap = productAdminService.readProduct(productNo);
+			Map<String, Object> productMap = proAdminService.readProduct(productNo);
 			request.setAttribute("productMap", productMap);
 
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 			
-			nextPage = "/productAdmin/modifyProduct.jsp";
+			nextPage = "/proAdmin/modifyProduct.jsp";
 			
 		}else if(action.equals("/updateProduct.do")) {
 
@@ -202,7 +202,7 @@ public class ProductAdminController extends HttpServlet{
 			deleteFileMap.put("deleteFile2", deleteFile2);
 			deleteFileMap.put("deleteFile3", deleteFile3);
 			
-			int result = productAdminService.updateProduct(productVO, originalImageNameMap, deleteFileMap);
+			int result = proAdminService.updateProduct(productVO, originalImageNameMap, deleteFileMap);
 			String alertMsg = "";
 			
 			if(result > 0) {
@@ -233,7 +233,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/proadm/readProduct.do?productNo=" + productNo;
+			nextPage = "/proAdm/readProduct.do?productNo=" + productNo;
 			
 		}else if(action.equals("/deleteProduct.do")) {
 
@@ -241,7 +241,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			int productNo = Integer.parseInt(request.getParameter("productNo"));
 			
-			int result = productAdminService.deleteProduct(productNo);
+			int result = proAdminService.deleteProduct(productNo);
 			String alertMsg = "";
 
 			if(result > 0) {
@@ -254,7 +254,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/proadm/listProduct.do";
+			nextPage = "/proAdm/listProduct.do";
 			
 		}
 		

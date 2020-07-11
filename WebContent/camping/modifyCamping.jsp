@@ -5,12 +5,12 @@
 <c:set var="campingContent" value="${campingMap.campingVO.campingContent}" />
 <c:set var="campingFileName" value="${campingMap.campingVO.campingFileName}" />
 <c:set var="userId" value="${campingMap.campingVO.userId}" />
+<c:set var="userName" value="${campingMap.campingVO.userName}" />
 <c:set var="campingDate" value="${campingMap.campingVO.campingDate}" />
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryNo" value="${campingMap.campingVO.campingCategoryNo}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>

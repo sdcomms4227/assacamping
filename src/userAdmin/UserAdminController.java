@@ -26,7 +26,7 @@ import org.apache.commons.io.FileUtils;
 import user.UserVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/usradm/*")
+@WebServlet("/usrAdm/*")
 public class UserAdminController extends HttpServlet {
 
 	UserAdminService userAdminService;
@@ -96,160 +96,112 @@ public class UserAdminController extends HttpServlet {
 						
 			nextPage = "/userAdmin/addUser.jsp";
 			
-//		}else if(action.equals("/insertUser.do")) {
-//			
-//			Map<String, String> multipartMap = uploadFile(request);
-//									
-//			String userTitle = multipartMap.get("userTitle");
-//			String userContent = multipartMap.get("userContent");
-//			String userFileName = multipartMap.get("userFileName");
-//			String userId = multipartMap.get("userId");
-//			
-//			userVO.setUserTitle(userTitle);
-//			userVO.setUserContent(userContent);
-//			userVO.setUserFileName(userFileName);
-//			userVO.setUserId(userId);
-//			
-//			int readNo = userAdminService.insertUser(userVO);			
-//
-//			if(userFileName!=null) {
-//				moveFile(readNo, userFileName);
-//			}
-//						
-//			nextPage = "/campadm/readUser.do?userId=" + readNo;
-//			
-//		}else if(action.equals("/modifyUser.do")) {
-//
-//			setPagination(request);
-//			
-//			int userId = Integer.parseInt(request.getParameter("userId"));
-//
-//			Map<String, Object> userMap = userAdminService.readUser(userId);
-//			
-//			userVO = (UserVO)userMap.get("userVO");
-//			String userFileName = userVO.getUserFileName();
-//
-//			if(userFileName!=null && !userFileName.equals("")) {
-//				String userFileType = getFileType(userId, userFileName);
-//				userMap.put("userFileType", userFileType);
-//			}
-//
-//			request.setAttribute("userMap", userMap);
-//			
-//			nextPage = "/userAdmin/modifyUser.jsp";
-//			
-//		}else if(action.equals("/updateUser.do")) {
-//
-//			setPagination(request);
-//			
-//			Map<String, String> multipartMap = uploadFile(request);
-//			
-//			int userId = Integer.parseInt(multipartMap.get("userId"));
-//			String userTitle = multipartMap.get("userTitle");
-//			String userContent = multipartMap.get("userContent");
-//			String userFileName = multipartMap.get("userFileName");
-//			String userId = multipartMap.get("userId");
-//			String deleteFile = multipartMap.get("deleteFile");
-//			String oldFileName = multipartMap.get("oldFileName");
-//						
-//			userVO.setUserNo(userId);
-//			userVO.setUserTitle(userTitle);
-//			userVO.setUserContent(userContent);
-//			userVO.setUserFileName(userFileName);
-//			userVO.setUserId(userId);
-//			
-//			int result = userAdminService.updateUser(userVO, deleteFile);
-//			String alertMsg = "";
-//			
-//			if(result > 0) {
-//				alertMsg = "정상적으로 수정되었습니다.";
-//				
-//				if(deleteFile!=null || userFileName!=null) {
-//					deleteFile(userId, oldFileName);
-//				}
-//				if(userFileName!=null) {
-//					moveFile(userId, userFileName);
-//				}
-//			}else {
-//				alertMsg = "오류가 발생했습니다.";
-//			}
-//			
-//			request.setAttribute("alertMsg", alertMsg);
-//			
-//			nextPage = "/campadm/readUser.do?userId=" + userId;
-//			
-//		}else if(action.equals("/deleteUser.do")) {
-//
-//			setPagination(request);
-//			
-//			int userId = Integer.parseInt(request.getParameter("userId"));
-//			
-//			int result = userAdminService.deleteUser(userId);
-//			String alertMsg = "";
-//
-//			if(result > 0) {
-//				alertMsg = "정상적으로 삭제되었습니다.";
-//				
-//				deleteDirectory(userId);
-//			}else {
-//				alertMsg = "오류가 발생했습니다.";
-//			}
-//			
-//			request.setAttribute("alertMsg", alertMsg);
-//			
-//			nextPage = "/campadm/listUser.do";
-//			
-//		}else if(action.equals("/replyUser.do")) {
-//			
-//			setPagination(request);
-//			
-//			int userId = Integer.parseInt(request.getParameter("userId"));
-//
-//			Map<String, Object> userMap = userAdminService.readUser(userId);
-//			
-//			request.setAttribute("userMap", userMap);
-//			
-//			nextPage = "/userAdmin/replyUser.jsp";
-//			
-//		}else if(action.equals("/insertReplyUser.do")) {
-//
-//			setPagination(request);
-//			
-//			Map<String, String> multipartMap = uploadFile(request);
-//			
-//			int userId = Integer.parseInt(multipartMap.get("userId"));
-//			String userTitle = multipartMap.get("userTitle");
-//			String userContent = multipartMap.get("userContent");
-//			String userFileName = multipartMap.get("userFileName");
-//			String userId = multipartMap.get("userId");
-//			int userRe_ref = Integer.parseInt(multipartMap.get("userRe_ref"));
-//			int userRe_lev = Integer.parseInt(multipartMap.get("userRe_lev"));
-//			int userRe_seq = Integer.parseInt(multipartMap.get("userRe_seq"));
-//			
-//			userVO.setUserNo(userId);
-//			userVO.setUserTitle(userTitle);
-//			userVO.setUserContent(userContent);
-//			userVO.setUserFileName(userFileName);
-//			userVO.setUserId(userId);
-//			userVO.setUserRe_ref(userRe_ref);
-//			userVO.setUserRe_lev(userRe_lev);
-//			userVO.setUserRe_seq(userRe_seq);
-//			
-//			int readNo = userAdminService.insertReplyUser(userVO);
-//
-//			if(userFileName!=null) {
-//				moveFile(readNo, userFileName);
-//			}
-//			
-//			nextPage = "/campadm/readUser.do?userId=" + readNo;
-//			
-//		}else if(action.equals("/download.do")) {
-//			
-//			int userId = Integer.parseInt(request.getParameter("userId"));
-//			String fileName = request.getParameter("fileName");			
-//
-//			downloadFile(response, userId, fileName);
-//		
+		}else if(action.equals("/insertUser.do")) {
+			
+			Map<String, String> multipartMap = uploadFile(request);
+			
+			String userId = multipartMap.get("userId");
+			String userPw = multipartMap.get("userPw");
+			String userName = multipartMap.get("userName");
+			String userPhone = multipartMap.get("userPhone");
+			String userEmail = multipartMap.get("userEmail");
+			String userZipcode = multipartMap.get("userZipcode");
+			String userAddress1 = multipartMap.get("userAddress1");
+			String userAddress2 = multipartMap.get("userAddress2");
+			
+			userVO.setUserId(userId);
+			userVO.setUserPw(userPw);
+			userVO.setUserName(userName);
+			userVO.setUserPhone(userPhone);
+			userVO.setUserEmail(userEmail);
+			userVO.setUserZipcode(userZipcode);
+			userVO.setUserAddress1(userAddress1);
+			userVO.setUserAddress2(userAddress2);
+			
+			int result = userAdminService.insertUser(userVO);			
+			String alertMsg = "";
+			
+			if(result > 0) {
+				alertMsg = "정상적으로 가입되었습니다.";
+				nextPage = "/usrAdm/readUser.do?userId=" + userId;
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+				nextPage = "/userAdmin/addUser.jsp";
+			}								
+			
+			request.setAttribute("alertMsg", alertMsg);
+			
+		}else if(action.equals("/modifyUser.do")) {
+
+			setPagination(request);
+			
+			String userId = request.getParameter("userId");
+
+			UserVO userVO = userAdminService.readUser(userId);
+			
+			request.setAttribute("userVO", userVO);
+			
+			nextPage = "/userAdmin/modifyUser.jsp";
+			
+		}else if(action.equals("/updateUser.do")) {
+
+			setPagination(request);
+
+			Map<String, String> multipartMap = uploadFile(request);
+			
+			String userId = multipartMap.get("userId");
+			String userPw = multipartMap.get("userPw");
+			String userName = multipartMap.get("userName");
+			String userPhone = multipartMap.get("userPhone");
+			String userEmail = multipartMap.get("userEmail");
+			String userZipcode = multipartMap.get("userZipcode");
+			String userAddress1 = multipartMap.get("userAddress1");
+			String userAddress2 = multipartMap.get("userAddress2");
+			
+			userVO.setUserId(userId);
+			userVO.setUserPw(userPw);
+			userVO.setUserName(userName);
+			userVO.setUserPhone(userPhone);
+			userVO.setUserEmail(userEmail);
+			userVO.setUserZipcode(userZipcode);
+			userVO.setUserAddress1(userAddress1);
+			userVO.setUserAddress2(userAddress2);
+			
+			int result = userAdminService.updateUser(userVO);
+			String alertMsg = "";
+			
+			if(result > 0) {
+				alertMsg = "정상적으로 수정되었습니다.";		
+				nextPage = "/usrAdm/readUser.do?userId=" + userId;
+			}else if(result == -1){
+				alertMsg = "비밀번호가 일치하지 않습니다.";
+				nextPage = "/usrAdm/modifyUser.do?userId=" + userId;
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+				nextPage = "/usrAdm/readUser.do?userId=" + userId;
+			}
+			
+			request.setAttribute("alertMsg", alertMsg);
+			
+		}else if(action.equals("/deleteUser.do")) {
+
+			setPagination(request);
+			
+			String userId = request.getParameter("userId");
+			
+			int result = userAdminService.deleteUser(userId);
+			String alertMsg = "";
+
+			if(result > 0) {
+				alertMsg = "정상적으로 삭제되었습니다.";				
+			}else {
+				alertMsg = "오류가 발생했습니다.";
+			}
+			
+			request.setAttribute("alertMsg", alertMsg);
+			
+			nextPage = "/usrAdm/listUser.do";
+			
 		}
 				
 		if(!nextPage.equals("")) {

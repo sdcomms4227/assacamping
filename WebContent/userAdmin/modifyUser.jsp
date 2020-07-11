@@ -13,12 +13,12 @@
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
-		<h2 class="mb-0">회원 수정</h2>
+		<h2 class="mb-0">회원 정보 수정</h2>
 	</div>
 </div>
 
 <article class="user">
-	<form action="${contextPath}/camp/updateUser.do" method="post" enctype="multipart/form-data">
+	<form action="${contextPath}/usrAdm/updateUser.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="pageNo" value="${pageNo}" />
 		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 		<table class="table">
@@ -31,7 +31,7 @@
 					<label for="userId" class="m-0">아이디</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userId" id="userId" value="${userId}" required />
+					<input class="form-control" type="text" name="userId" id="userId" value="${userId}" required readonly />
 				</td>
 			</tr>
 			<tr>
@@ -39,15 +39,7 @@
 					<label for="userPw" class="m-0">비밀번호</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userPw" id="userPw" value="${userPw}" required />
-				</td>
-			</tr>
-			<tr>
-				<th class="align-middle">
-					<label for="userPw2" class="m-0">비밀번호 재확인</label>
-				</th>
-				<td>
-					<input class="form-control" type="text" name="userPw2" id="userPw2" value="${userPw2}" required />
+					<input class="form-control" type="text" name="userPw" id="userPw" required placeholder="비밀번호가 일치해야 회원정보수정이 가능합니다." />
 				</td>
 			</tr>
 			<tr>

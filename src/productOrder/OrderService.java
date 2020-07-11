@@ -1,9 +1,8 @@
 package productOrder;
 
 import java.util.List;
-import java.util.Map;
 
-import productCart.productCartVO;
+import productCart.CartVO;
 
 public class OrderService {
 	
@@ -17,7 +16,7 @@ public int orderCount(String userId) {
 	  
 	 }
 	
-   public void addOrder(List<productCartVO> orderList,OrderVO vo) {
+   public void addOrder(List<CartVO> orderList,OrderVO vo) {
 	   
 	   dao.addOrder(orderList, vo); 
    }

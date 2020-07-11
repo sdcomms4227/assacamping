@@ -89,6 +89,7 @@ public class CampingAdminDAO {
 				campingVO.setCampingTitle(rs.getString("campingTitle"));
 				campingVO.setCampingDate(rs.getTimestamp("campingDate"));
 				campingVO.setUserId(rs.getString("userId"));
+				campingVO.setUserId(rs.getString("userName"));
 				
 				String campingCategoryName = rs.getString("campingCategoryName");
 				
@@ -99,7 +100,7 @@ public class CampingAdminDAO {
 			}			
 			
 		} catch(Exception e) {
-			System.out.println("getCampingList(Map)메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getCampingList()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -171,6 +172,7 @@ public class CampingAdminDAO {
 				campingVO.setCampingTitle(rs.getString("campingTitle"));
 				campingVO.setCampingDate(rs.getTimestamp("campingDate"));
 				campingVO.setUserId(rs.getString("userId"));
+				campingVO.setUserId(rs.getString("userName"));
 			}			
 			
 		} catch(Exception e) {
@@ -255,19 +257,20 @@ public class CampingAdminDAO {
 				
 		try {			
 			conn = dbUtil.DBConnection.getConnection();			
-			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingDate, campingCount, campingCategoryNo)"
-					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
+			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, userName, campingRe_ref, campingRe_lev, campingRe_seq, campingDate, campingCount, campingCategoryNo)"
+					+ "values(?,?,?,?,?,?,?,?,?,now(),?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, maxNo);
 			pstmt.setString(2, campingVO.getCampingTitle());
 			pstmt.setString(3, campingVO.getCampingContent());
 			pstmt.setString(4, campingVO.getCampingFileName());
 			pstmt.setString(5, campingVO.getUserId());
-			pstmt.setInt(6, maxNo);
-			pstmt.setInt(7, 0);
+			pstmt.setString(6, campingVO.getUserName());
+			pstmt.setInt(7, maxNo);
 			pstmt.setInt(8, 0);
 			pstmt.setInt(9, 0);
-			pstmt.setInt(10, campingVO.getCampingCategoryNo());
+			pstmt.setInt(10, 0);
+			pstmt.setInt(11, campingVO.getCampingCategoryNo());
 			
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {
@@ -362,19 +365,20 @@ public class CampingAdminDAO {
 		
 		try {			
 			conn = dbUtil.DBConnection.getConnection();			
-			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, campingRe_ref, campingRe_lev, campingRe_seq, campingDate, campingCount, campingCategoryNo)"
-					+ "values(?,?,?,?,?,?,?,?,now(),?,?)";
+			String sql = "insert into camping(campingNo, campingTitle, campingContent, campingFileName, userId, userName, campingRe_ref, campingRe_lev, campingRe_seq, campingDate, campingCount, campingCategoryNo)"
+					+ "values(?,?,?,?,?,?,?,?,?,now(),?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, maxNo);
 			pstmt.setString(2, campingVO.getCampingTitle());
 			pstmt.setString(3, campingVO.getCampingContent());
 			pstmt.setString(4, campingVO.getCampingFileName());
 			pstmt.setString(5, campingVO.getUserId());
-			pstmt.setInt(6, campingVO.getCampingRe_ref());
-			pstmt.setInt(7, campingVO.getCampingRe_lev() + 1);
-			pstmt.setInt(8, campingVO.getCampingRe_seq() + 1);
-			pstmt.setInt(9, 0);
-			pstmt.setInt(10, campingVO.getCampingCategoryNo());
+			pstmt.setString(6, campingVO.getUserName());
+			pstmt.setInt(7, campingVO.getCampingRe_ref());
+			pstmt.setInt(8, campingVO.getCampingRe_lev() + 1);
+			pstmt.setInt(9, campingVO.getCampingRe_seq() + 1);
+			pstmt.setInt(10, 0);
+			pstmt.setInt(11, campingVO.getCampingCategoryNo());
 			
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {

@@ -19,7 +19,7 @@
 </div>
 
 <article class="product">
-	<form action="${contextPath}/proadm/updateProduct.do" method="post" enctype="multipart/form-data" >
+	<form action="${contextPath}/proAdm/updateProduct.do" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="pageNo" value="${pageNo}" />
 		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 		<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />

@@ -28,35 +28,25 @@ public class UserAdminService {
 	}
 
 	public UserVO readUser(String userId) {
-
-		UserVO userVO = userAdminDAO.getUser(userId);
-
-		return userVO;
+		return userAdminDAO.getUser(userId);
 	}
-//
-//	public int insertUser(UserVO userVO) {
-//
-//		int maxNo = userAdminDAO.getUserMaxNo();
-//		userAdminDAO.insertUser(userVO, maxNo);
-//
-//		return maxNo;
-//	}
-//
-//	public int updateUser(UserVO userVO, String deleteFile) {
-//		return userAdminDAO.updateUser(userVO, deleteFile);
-//	}
-//
-//	public int deleteUser(String userId) {
-//		return userAdminDAO.deleteUser(userId);
-//	}
-//
-//	public int insertReplyUser(UserVO userVO) {
-//
-//		userAdminDAO.updateUserSequence(userVO);
-//
-//		int maxNo = userAdminDAO.getUserMaxNo();
-//		userAdminDAO.insertReplyUser(userVO, maxNo);
-//
-//		return maxNo;
-//	}
+
+	public int insertUser(UserVO userVO) {
+		return userAdminDAO.insertUser(userVO);
+	}
+
+	public int updateUser(UserVO userVO) {
+		int result = userAdminDAO.checkUserPw(userVO);
+		
+		if(result > 0) {
+			return userAdminDAO.updateUser(userVO);
+		}
+		
+		return -1;
+	}
+
+	public int deleteUser(String userId) {
+		return userAdminDAO.deleteUser(userId);
+	}
+
 }

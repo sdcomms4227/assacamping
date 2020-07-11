@@ -20,9 +20,7 @@
 <link rel="stylesheet" href="${contextPath}/css/product_responsive.css">
 	   
 	<script type="text/javascript">
-
    		/* function fn_order_pro(obj, userId){
-
    			var form = document.createElement("form");
    			
    		 	form.setAttribute("method", "post");
@@ -32,10 +30,8 @@
 	   	     var IdInput = document.createElement("input");
 	   	     
 	   	     parentNOInput.setAttribute("type","hidden");
-
 	   	     parentNOInput.setAttribute("name","userId");
 	   	     parentNOInput.setAttribute("value", userId);
-
    		 
    	     form.appendChild(parentNOInput);
    	     document.body.appendChild(form);
@@ -43,9 +39,7 @@
    		} */
    		
    		function backToList(obj){
-
    			obj.action="${contextPath}/pro/proList.do";
-
    			obj.submit();
    		}
    </script>

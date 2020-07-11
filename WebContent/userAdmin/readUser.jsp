@@ -95,19 +95,19 @@
 <script>
 function listUser(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/usradm/listUser.do";	
+	form.action = "${contextPath}/usrAdm/listUser.do";	
 	form.submit();
 }
 function modifyUser(userId){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/usradm/modifyUser.do?userId=" + userId;
+	form.action = "${contextPath}/usrAdm/modifyUser.do?userId=" + userId;
 	form.submit();
 }
 function deleteUser(userId){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/usradm/deleteUser.do?userId=" + userId;
+		form.action = "${contextPath}/usrAdm/deleteUser.do?userId=" + userId;
 		form.submit();
 	}
 }

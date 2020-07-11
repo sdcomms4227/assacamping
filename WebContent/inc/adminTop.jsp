@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="top.jsp"%>
 <c:set var="userId" value="${sessionScope.userId}" />
+<c:set var="alertMsg" value="${alertMsg}" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -21,8 +22,14 @@
 <c:if test='${userId != "admin"}'>
 	<script>
 		alert("관리자만 접근할 수 있습니다.");
-		location.href = "${contextPath}/userCon/logout.do";
+		location.href = "${contextPath}/usr/logout.do";
 	</script>
+</c:if>
+<c:if test="${alertMsg!=null}">
+	<script>
+		alert("${alertMsg}");
+	</script>
+	<c:remove var="alertMsg" />
 </c:if>
 </head>
 <body>
@@ -33,7 +40,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<ul class="navbar-nav px-3">
-		<li class="nav-item text-nowrap"><a class="nav-link" href="${contextPath}/userCon/logout.do">Sign out</a></li>
+		<li class="nav-item text-nowrap"><a class="nav-link" href="${contextPath}/usr/logout.do">Sign out</a></li>
 	</ul>
 </nav>
 <div class="container-fluid">
@@ -45,20 +52,20 @@
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/usradm/listUser.do"> <span data-feather="users"></span> 회원 관리 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminOrderList.jsp"> <span data-feather="file"></span> 주문 관리 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/proadm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li> 
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/usrAdm/listUser.do"> <span data-feather="users"></span> 회원 관리 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/ordAdm/listOrder.do"> <span data-feather="file"></span> 주문 관리 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/proAdm/listProduct.do"> <span data-feather="shopping-cart"></span> 상품 관리 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminQnaList.jsp"> <span data-feather="file-text"></span> 상품 문의 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminReviewList.jsp"> <span data-feather="file-text"></span> 상품 후기 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/proReviewAdm/listProductReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/proQnaAdm/listProductQna.do"> <span data-feather="file-text"></span> 상품 문의 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminFaqList.jsp"> <span data-feather="file-text"></span> 자주하는 질문 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/campadm/listCamping.do"> <span data-feather="file-text"></span> 캠핑정보 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/admin/adminEventList.jsp"> <span data-feather="file-text"></span> 이벤트 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/fqAdm/listFaq.do"> <span data-feather="file-text"></span> 자주하는 질문 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/campAdm/listCamping.do"> <span data-feather="file-text"></span> 캠핑정보 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/eveAdm/listEvent.do"> <span data-feather="file-text"></span> 이벤트 </a></li>
 				</ul>
 				<hr />
 			</div>

@@ -54,18 +54,23 @@
 									<img src="${contextPath}/images/avatar.svg" alt="">
 									<div class="avatar_name_container">
 										<div class="avatar_name_inner">
-											<div class="avatar_name">${userId}</div>
+											<div class="avatar_name">${userName}</div>
 										</div>
 									</div>
 								</div>
 							</a>
-							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">								
-								<a class="dropdown-item" href="${contextPath}/cartorder/orderList.do">나의 주문 내역</a>
+							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">
+								<a class="dropdown-item" href="${contextPath}/cartorder/orderList.do">나의 주문 내역(수정전)</a>
 								<hr />
-								<a class="dropdown-item" href="${contextPath}/userCon/userPwCheck.do?userId=${userId}">회원정보수정</a>
-								<a class="dropdown-item" href="${contextPath}/userCon/changePw.do?userId=${userId}">비밀번호변경</a>
-								<a class="dropdown-item" href="${contextPath}/userCon/withdrawal.do?userId=${userId}">회원탈퇴</a>
-								<a class="dropdown-item" href="${contextPath}/userCon/logout.do">로그아웃</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myOrderList.do">나의 주문 내역</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myQnaList.do">내가 쓴 상품문의</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myReviewList.do">내가 쓴 상품후기</a>
+								<a class="dropdown-item" href="${contextPath}/usr/myWishList.do">나의 위시리스트</a>
+								<hr />
+								<a class="dropdown-item" href="${contextPath}/usr/userPwCheck.do?userId=${userId}">회원정보수정</a>
+								<a class="dropdown-item" href="${contextPath}/usr/changePw.do?userId=${userId}">비밀번호변경</a>
+								<a class="dropdown-item" href="${contextPath}/usr/withdrawal.do?userId=${userId}">회원탈퇴</a>
+								<a class="dropdown-item" href="${contextPath}/usr/logout.do">로그아웃</a>
 								<c:if test='${userId=="admin"}'>
 									<hr />
 									<a class="dropdown-item" href="${contextPath}/adm/admin.do">관리자모드</a>
@@ -74,7 +79,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a class="shopping_a" href="${contextPath}/userCon/login.do">
+						<a class="shopping_a" href="${contextPath}/usr/login.do">
 							<div class="avatar">
 								<img src="${contextPath}/images/avatar.svg" alt="">
 							</div>
