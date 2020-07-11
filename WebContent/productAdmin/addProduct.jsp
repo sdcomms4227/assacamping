@@ -8,7 +8,7 @@
 </div>
 
 <article class="product">
-	<form action="${contextPath}/proAdm/insertProduct.do" method="post" enctype="multipart/form-data">
+	<form action="${contextPath}/productAdminServlet/insertProduct.do" method="post" enctype="multipart/form-data">
 		<table class="table">
 			<colgroup>
 				<col style="width:120px" />

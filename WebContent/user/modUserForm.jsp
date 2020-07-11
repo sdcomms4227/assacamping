@@ -58,7 +58,7 @@ function postCode() {
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form class="userForm" action="${contextPath}/usr/modUser.do?userId=${userInfo.userId}" method="post" onsubmit="return check();">
+			<form class="userForm" action="${contextPath}/userServlet/modUser.do?userId=${userInfo.userId}" method="post" onsubmit="return check();">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
 					<input type="text" class="form-control form-control-lg" name="userId" id="userId" value="${userInfo.userId}" disabled>

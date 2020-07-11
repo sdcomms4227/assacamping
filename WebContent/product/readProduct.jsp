@@ -99,12 +99,17 @@
 	
 					<!-- Product Content -->
 					<div class="col-lg-5">
-						<form action="${contextPath}/cart/addCart.do" method="post">
-							<input type="hidden" name="productNo" value="${productNo}" />
-							<input type="hidden" name="userId" value="${userId}" />
+						<form action="${contextPath}/cartServlet/addCart.do?userId=${userId}" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="productNo" value="${productNo}">
+							<input type="hidden" name="productName" value="${productName}">
+							<input type="hidden" name="productPrice" value="${productPrice}">
+							<input type="hidden" name="productImage" value="${productImageName1}">
+							<input type="hidden" name="productCategory" value="${productCategoryNo }">
 
 							<div class="product_content">
+								<hr />
 								<div class="product_name">${productName}</div>
+								<hr />
 								<div class="product_price"><fmt:formatNumber value="${productPrice}" pattern="#,###" /> <small>원</small></div>
 								<div class="rating rating_${productRating}" data-rating="${productRating}">
 									<i class="fa fa-star"></i>
@@ -113,45 +118,65 @@
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 								</div>
-								<div class="product_text">
+								<div class="my-4 p-3 bg-light">
 									<p>${fn:replace(productContent,LF,BR)}</p>
 								</div>
 								<!-- Product Quantity -->
-								<div class="product_quantity_container">
-									<span>수량</span>
-									<c:choose>
-										<c:when test="${productQuantity > 0}">
-											<div class="product_quantity clearfix">
-												<input name="cartQuantity" id="quantity_input" type="text" pattern="[0-9]*" value="1">
-												<div class="quantity_buttons">
-													<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
-													<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+								
+								<div class="row my-4 align-items-center">
+									<div class="col col-2 font-weight-bold">수량</div>
+									<div class="col ml-auto">
+										<c:choose>
+											<c:when test="${productQuantity > 0}">
+												<div class="product_quantity clearfix">
+													<input name="cartQuantity" id="quantity_input" type="text" pattern="[0-9]*" value="1">
+													<div class="quantity_buttons">
+														<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
+														<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+													</div>
 												</div>
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="product_quantity_empty text-danger">품절</div>								
-										</c:otherwise>
-									</c:choose>
+											</c:when>
+											<c:otherwise>
+												<div class="product_quantity_empty text-danger">품절</div>								
+											</c:otherwise>
+										</c:choose>
+									</div>
 								</div>
+								
 								<!-- Product Delivery -->
-								<div class="product_delivery_container">
-									<span>배송비</span>
-									<select name="productDelivery">
-										<option value="2500">주문시 결제(2,500원)</option>
-										<option value="0">수령시 결제(착불)</option>
-									</select>
+								<div class="row my-4 align-items-center">
+									<div class="col col-2 font-weight-bold">배송비</div>
+									<div class="col ml-auto">
+										<select name="productDelivery" class="form-control form-inline-block">
+											<option value="1">주문시 결제(선결제)</option>
+											<option value="2">수령시 결제(착불)</option>
+										</select>
+									</div>
 								</div>
-								<!-- Product Size -->
-								<div class="product_size_container">
-									<c:choose>
-										<c:when test="${productQuantity > 0}">										
-											<div class="button cart_button btn-block"><button type="submit">장바구니 담기</button></div>
-										</c:when>
-										<c:otherwise>
-											<div class="button cart_button"><a href="javascript:alert('준비중입니다.')">재입고 알림</a></div>							
-										</c:otherwise>
-									</c:choose>
+								
+								<hr />
+								<!-- Product Button -->
+								<div class="row my-5">
+									<div class="col-6">
+										<c:choose>
+											<c:when test="${productQuantity > 0}">
+												<c:choose>
+													<c:when test="${userId != null}">
+														<button class="btn btn-primary btn-lg btn-block" type="submit"><small>장바구니 담기</small></button>
+													</c:when>
+													<c:otherwise>
+														<button class="btn btn-primary btn-lg btn-block" type="button" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'"><small>장바구니 담기</small></button>
+													</c:otherwise>
+												</c:choose>											
+											</c:when>
+											<c:otherwise>
+												<a class="btn btn-primary btn-lg btn-block" href="javascript:alert('준비중입니다.')"><small>재입고 알림</small></a>							
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="col-6">
+										<a class="btn btn-secondary btn-lg btn-block" href="javascript:alert('준비중입니다.')"><small>위시리스트 추가하기</small></a>
+									</div>	
 								</div>
 							</div>
 						</form>
@@ -299,7 +324,7 @@ $(document).ready(function(){
 
 // 리뷰 목록 가져와서 보여주기
 function reviewList(){
-	var _url = '${contextPath}/proreview/listReview.do';
+	var _url = '${contextPath}/reviewServlet/listReview.do';
 	var _reviewListInfo = '{"productNo":"'+${productNo}+'"}';
 	var no = ${productNo};
 	
@@ -390,7 +415,7 @@ function reviewSubmit(){
 	}
 	
 	var _reviewInfo = '{"productNo":"'+productNo+'","userId":"'+userId+'","userName":"'+userName+'","reviewContent":"'+reviewContent+'","starRating":"'+starRating+'"}';
-	var _url = '${contextPath}/proreview/insertReview.do';			
+	var _url = '${contextPath}/reviewServlet/insertReview.do';			
 	$.ajax({
 		type : "post",
 		async : "false",
@@ -420,7 +445,7 @@ function reviewDelete(reviewNo){
 
 		var userId = '${userId}';
 		var _reviewDeleteInfo = '{"userId":"'+userId+'","reviewNo":"'+reviewNo+'","productNo":"'+productNo+'"}';
-		var _url = '${contextPath}/proreview/deleteReview.do'; 		
+		var _url = '${contextPath}/reviewServlet/deleteReview.do'; 		
 		$.ajax({
 			type : "post",
 			async : "false",
@@ -467,7 +492,7 @@ $(document).ready(function(){
 
 // 상품문의 목록 가져와서 보여주기
 function qnaList(){
-	var _url = '${contextPath}/proqna/listQna.do';
+	var _url = '${contextPath}/qnaServlet/listQna.do';
 	var _qnaListInfo = '{"productNo":"'+${productNo}+'"}';
 	
     $.ajax({
@@ -512,7 +537,7 @@ function qnaList(){
 					if('${userId}' == 'admin'){
 						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button>';
 						if(answer == null){
-							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/proQnaAdm/answerProductQna.do?qnaNo='+no+'\'">답변</button></div>';
+							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/qnaAdminServlet/answerProductQna.do?qnaNo='+no+'\'">답변</button></div>';
 						} else {
 							a += '<div class="qna_content">';
 							a += '<div class="qna_name"><b>[답변]관리자</b></div>';
@@ -554,7 +579,7 @@ function qnaSubmit(){
 	}
 
 	var _qnaInfo = '{"productNo":"'+productNo+'","userId":"'+userId+'","userName":"'+userName+'","qnaContent":"'+qnaContent+'"}';
-	var _url = '${contextPath}/proqna/insertQna.do';			
+	var _url = '${contextPath}/qnaServlet/insertQna.do';			
 	$.ajax({
 		type : "post",
 		async : "false",
@@ -584,7 +609,7 @@ function qnaDelete(qnaNo){
 
 		var userId = '${userId}';
 		var _qnaDeleteInfo = '{"userId":"'+userId+'","qnaNo":"'+qnaNo+'","productNo":"'+productNo+'"}';
-		var _url = '${contextPath}/proqna/deleteQna.do'; 		
+		var _url = '${contextPath}/qnaServlet/deleteQna.do'; 		
 		$.ajax({
 			type : "post",
 			async : "false",
@@ -632,7 +657,7 @@ function scrollTop(target){
 
 function listProduct(categoryNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/listProduct.do";	
+	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.searchCategoryNo.value = categoryNo;
 	form.submit();
 }
@@ -658,7 +683,7 @@ var form = document.createElement("form");
 }
 
 function backToList(obj){
-	obj.action="${contextPath}/pro/proList.do";
+	obj.action="${contextPath}/productServlet/proList.do";
 	obj.submit();
 }
 </script>

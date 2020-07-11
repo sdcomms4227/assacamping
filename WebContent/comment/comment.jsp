@@ -89,7 +89,7 @@
 		
 		// 댓글 목록 가져와서 보여주기
 		function commentList(){
-			var _url = '${contextPath}/comment/listComment.do';
+			var _url = '${contextPath}/commentServlet/listComment.do';
 			var _commentListInfo = '{"boardCategoryNo":"'+${boardCategoryNo}+'","boardNo":"'+${boardNo}+'"}';
 			
 		    $.ajax({
@@ -164,7 +164,7 @@
 			}
 			
 			var _commentInfo = '{"boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","commentContent":"'+commentContent+'"}';
-			var _url = '${contextPath}/comment/insertComment.do';			
+			var _url = '${contextPath}/commentServlet/insertComment.do';			
 			$.ajax({
 				type : "post",
 				async : "false",
@@ -226,7 +226,7 @@
 			}
 			
 			var _commentReplyInfo = '{"commentNo":"'+commentNo+'","boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","replyContent":"'+replyContent+'"}';
-			var _url = '${contextPath}/comment/replyComment.do';
+			var _url = '${contextPath}/commentServlet/replyComment.do';
 			
 			$.ajax({
 				type : "post",
@@ -281,7 +281,7 @@
 			if(result) {
 				var userId = '${userId}';
 				var _commentUpdateInfo = '{"userId":"'+userId+'","commentNo":"'+commentNo+'","updateContent":"'+updateContent+'"}';
-				var _url = '${contextPath}/comment/updateComment.do';
+				var _url = '${contextPath}/commentServlet/updateComment.do';
 				
 				$.ajax({
 					type : "post",
@@ -326,7 +326,7 @@
 
 				var userId = '${userId}';
 				var _commentDeleteInfo = '{"userId":"'+userId+'","commentNo":"'+commentNo+'"}';
-				var _url = '${contextPath}/comment/deleteComment.do'; 		
+				var _url = '${contextPath}/commentServlet/deleteComment.do'; 		
 				$.ajax({
 					type : "post",
 					async : "false",

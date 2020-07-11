@@ -55,7 +55,7 @@
 	
 	<!-- Camping -->
 	<article class="camping container">
-		<form action="${contextPath}/eve/addEvent.do" name="eventForm" method="post" enctype="multipart/form-data">
+		<form action="${contextPath}/eventServlet/addEvent.do" name="eventForm" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="userId" value="${userId}" />
 			<table class="table">
 				<colgroup>

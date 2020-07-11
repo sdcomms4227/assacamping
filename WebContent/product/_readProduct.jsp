@@ -39,7 +39,7 @@
    		} */
    		
    		function backToList(obj){
-   			obj.action="${contextPath}/pro/proList.do";
+   			obj.action="${contextPath}/productServlet/proList.do";
    			obj.submit();
    		}
    </script>
@@ -87,14 +87,14 @@
 				<div class="col">
 					<div class="current_page">
 						<ul>
-							<li><a href="${contextPath}/pro/proList.do"><!-- Woman's Fashion -->상품목록</a></li>
+							<li><a href="${contextPath}/productServlet/proList.do"><!-- Woman's Fashion -->상품목록</a></li>
 							<li><a href="categories.html">[${productvo.productCategoryName}]</a></li>
 							<li>${onePro.productName}</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<form name="frmPro" method="post" action="${contextPath}/cart/addCart.do?userId=${userId}" enctype="multipart/form-data">
+			<form name="frmPro" method="post" action="${contextPath}/cartServlet/addCart.do?userId=${userId}" enctype="multipart/form-data">
 			
 			
 			<div class="row product_row">

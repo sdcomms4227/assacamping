@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/campcate/*")
+@WebServlet("/campingCategoryServlet/*")
 public class CampingCategoryController extends HttpServlet {
 
 	CampingCategoryService campingCategoryService;
@@ -68,7 +68,7 @@ public class CampingCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/campcate/listCampingCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/campingCategoryServlet/listCampingCategory.do';");
 			out.write("</script>");
 			return;
 
@@ -90,7 +90,7 @@ public class CampingCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/campcate/listCampingCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/campingCategoryServlet/listCampingCategory.do';");
 			out.write("</script>");
 
 			return;
@@ -110,7 +110,7 @@ public class CampingCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/campcate/listCampingCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/campingCategoryServlet/listCampingCategory.do';");
 			out.write("</script>");
 
 			return;

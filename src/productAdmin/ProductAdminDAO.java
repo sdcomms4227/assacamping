@@ -317,7 +317,7 @@ public class ProductAdminDAO {
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			
-			String sql = "update product set ProductQuantity=ProductQuantity-?  where productNo=?";
+			String sql = "update product set productQuantity=productQuantity-?  where productNo=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, cartQuantity);

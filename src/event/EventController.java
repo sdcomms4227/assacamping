@@ -22,10 +22,10 @@ import org.apache.commons.io.FileUtils;
 
 
 @SuppressWarnings("serial")
-@WebServlet("/eve/*")
+@WebServlet("/eventServlet/*")
 public class EventController extends HttpServlet {
 
-	String realPath = "";
+	String realPath;
 
 	EventService eventService;
 	EventVO eventVO;
@@ -84,7 +84,7 @@ public class EventController extends HttpServlet {
 			eventMap.put("search", search);
 			
 			request.setAttribute("eventMap", eventMap);		
-			session.setAttribute("userId", "admin"); //임시
+//			session.setAttribute("userId", "admin"); //임시
 			nextPage =  "/event/listEvent.jsp";	
 			
 		}else if(action.equals("/eventForm.do")) {//새글을 DB에 추가하기위한 폼페이지 요청
@@ -118,7 +118,7 @@ public class EventController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
 			out.print("window.alert('새글을 추가 했습니다.');");
-			out.print(" location.href='" + request.getContextPath() +"/eve/listEvent.do';");
+			out.print(" location.href='" + request.getContextPath() +"/eventServlet/listEvent.do';");
 			out.print("</script>");				
 			return;
 			
@@ -169,7 +169,7 @@ public class EventController extends HttpServlet {
 			pw.print("<script>" 
 					+ "  alert('글을 수정했습니다.');" 
 					+ " location.href='" + request.getContextPath()
-					+ "/eve/readEvent.do?eventNo=" + eventNo + "';" 
+					+ "/eventServlet/readEvent.do?eventNo=" + eventNo + "';" 
 					+ "</script>");
 			return;
 			
@@ -192,7 +192,7 @@ public class EventController extends HttpServlet {
 			pw.print("<script>" 
 					+ " alert('글을 삭제 했습니다.');" 
 					+ " location.href='"
-					+ request.getContextPath() +"/eve/listEvent.do';"
+					+ request.getContextPath() +"/eventServlet/listEvent.do';"
 					+ "</script>");
 			return;
 		}

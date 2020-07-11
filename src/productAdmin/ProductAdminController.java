@@ -24,14 +24,14 @@ import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/proAdm/*")
+@WebServlet("/productAdminServlet/*")
 public class ProductAdminController extends HttpServlet{
 	
 	ProductAdminService proAdminService;
 	ProductVO productVO;	
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
-	String realPath = "";
+	String realPath;
 		
 	@Override
 	public void init() throws ServletException {
@@ -80,7 +80,7 @@ public class ProductAdminController extends HttpServlet{
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg")); 
 			}
 			
-			nextPage = "/proAdmin/listProduct.jsp";
+			nextPage = "/productAdmin/listProduct.jsp";
 			
 		}else if(action.equals("/readProduct.do")) {
 
@@ -94,14 +94,14 @@ public class ProductAdminController extends HttpServlet{
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/proAdmin/readProduct.jsp";
+			nextPage = "/productAdmin/readProduct.jsp";
 			
 		}else if(action.contentEquals("/addProduct.do")) {
 
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 			
-			nextPage = "/proAdmin/addProduct.jsp";
+			nextPage = "/productAdmin/addProduct.jsp";
 			
 		}else if(action.equals("/insertProduct.do")) {
 
@@ -147,7 +147,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/proAdm/readProduct.do?productNo=" + readNo;
+			nextPage = "/productAdminServlet/readProduct.do?productNo=" + readNo;
 			
 		}else if(action.equals("/modifyProduct.do")) {
 
@@ -160,7 +160,7 @@ public class ProductAdminController extends HttpServlet{
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 			
-			nextPage = "/proAdmin/modifyProduct.jsp";
+			nextPage = "/productAdmin/modifyProduct.jsp";
 			
 		}else if(action.equals("/updateProduct.do")) {
 
@@ -233,7 +233,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/proAdm/readProduct.do?productNo=" + productNo;
+			nextPage = "/productAdminServlet/readProduct.do?productNo=" + productNo;
 			
 		}else if(action.equals("/deleteProduct.do")) {
 
@@ -254,7 +254,7 @@ public class ProductAdminController extends HttpServlet{
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/proAdm/listProduct.do";
+			nextPage = "/productAdminServlet/listProduct.do";
 			
 		}
 		

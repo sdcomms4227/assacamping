@@ -123,7 +123,7 @@
 					<button type="button" class="btn btn-primary" onclick="replyCamping(${campingNo})">답글쓰기</button>
 				</c:when>
 				<c:otherwise>
-					<button type="button" class="btn btn-primary" onclick="alert('로그인 후 답글 작성이 가능합니다.');location.href='${contextPath}/usr/login.do'">답글쓰기</button>
+					<button type="button" class="btn btn-primary" onclick="alert('로그인 후 답글 작성이 가능합니다.');location.href='${contextPath}/userServlet/login.do'">답글쓰기</button>
 				</c:otherwise>
 			</c:choose>
 		</div>			
@@ -157,30 +157,30 @@
 <script>
 function listCamping(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/listCamping.do";	
+	form.action = "${contextPath}/campingServlet/listCamping.do";	
 	form.submit();
 }
 function modifyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/modifyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingServlet/modifyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function deleteCamping(campingNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/camp/deleteCamping.do?campingNo=" + campingNo;
+		form.action = "${contextPath}/campingServlet/deleteCamping.do?campingNo=" + campingNo;
 		form.submit();
 	}
 }
 function replyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/replyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingServlet/replyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function downloadCamping(campingNo, campingFileName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
+	form.action = "${contextPath}/campingServlet/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
 	form.submit();
 }
 </script>

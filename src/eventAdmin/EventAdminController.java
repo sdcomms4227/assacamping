@@ -23,12 +23,12 @@ import org.apache.commons.io.FileUtils;
 import event.EventVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/eveAdm/*")
+@WebServlet("/eventAdminServlet/*")
 public class EventAdminController extends HttpServlet {
 	
 	EventAdminService eveAdminService;
 	EventVO eventVO;
-	String realPath = "";
+	String realPath;
 
 	@Override
 	public void init() throws ServletException {
@@ -124,7 +124,7 @@ public class EventAdminController extends HttpServlet {
 				moveFile(readNo, eventFileName);
 			}
 						
-			nextPage = "/eveAdm/readEvent.do?eventNo=" + readNo;
+			nextPage = "/eventAdminServlet/readEvent.do?eventNo=" + readNo;
 			
 		}else if(action.equals("/modifyEvent.do")) {
 
@@ -188,7 +188,7 @@ public class EventAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/eveAdm/readEvent.do?eventNo=" + eventNo;
+			nextPage = "/eventAdminServlet/readEvent.do?eventNo=" + eventNo;
 			
 		}else if(action.equals("/deleteEvent.do")) {
 
@@ -209,7 +209,7 @@ public class EventAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/eveAdm/listEvent.do";
+			nextPage = "/eventAdminServlet/listEvent.do";
 			
 		}else if(action.equals("/replyEvent.do")) {
 			

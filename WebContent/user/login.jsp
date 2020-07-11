@@ -65,7 +65,7 @@
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form name="loginform" class="loginform text-center" action="${contextPath}/usr/loginAction.do" method="post">
+			<form name="loginform" class="loginform text-center" action="${contextPath}/userServlet/loginAction.do" method="post">
 				<div class="form-label-group">
 					<input type="text" class="form-control" placeholder="아이디를 입력하세요." name="userId" id="userId" maxlength="20" required autofocus />
 					<label for="userId">아이디</label>

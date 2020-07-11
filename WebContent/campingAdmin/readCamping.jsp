@@ -104,30 +104,30 @@
 <script>
 function listCamping(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campAdm/listCamping.do";	
+	form.action = "${contextPath}/campingAdminServlet/listCamping.do";	
 	form.submit();
 }
 function modifyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campAdm/modifyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingAdminServlet/modifyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function deleteCamping(campingNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/campAdm/deleteCamping.do?campingNo=" + campingNo;
+		form.action = "${contextPath}/campingAdminServlet/deleteCamping.do?campingNo=" + campingNo;
 		form.submit();
 	}
 }
 function replyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campAdm/replyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingAdminServlet/replyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function downloadCamping(campingNo, campingFileName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campAdm/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
+	form.action = "${contextPath}/campingAdminServlet/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
 	form.submit();
 }
 </script>

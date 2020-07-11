@@ -16,7 +16,7 @@
 </div>
 
 <article class="event">
-	<form action="${contextPath}/camp/updateEvent.do" method="post" enctype="multipart/form-data" >
+	<form action="${contextPath}/campingServlet/updateEvent.do" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="pageNo" value="${pageNo}" />
 		<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 		<input type="hidden" name="eventNo" value="${eventNo}" />	

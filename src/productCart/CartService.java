@@ -3,21 +3,28 @@ package productCart;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 public class CartService {
 	CartDAO dao=new CartDAO();
 	                         
 	public List<CartVO> allcartList(String userId){//전제창바구니 조회
-		System.out.println(userId+"Service");
+//		System.out.println(userId+"Service");
 		return dao.allcartList(userId);
 	}
 	
 
-   public List<Integer> allDeleteCart(String userId) {//전체 장바구니 삭제
+   public List<Integer> allDeleteCart(String userId, HttpServletRequest request) {//전체 장바구니 삭제
 	  
 	   List<Integer> productNoList=dao.selectRemoveCart(userId);
 	   
 	   dao.allDeleteCart(userId);
 	   
+	   HttpSession session = request.getSession();
+
+	   session.setAttribute("cartCount", 0);
+		
 	   return productNoList;
    }
    
@@ -38,7 +45,7 @@ public class CartService {
 	  return dao.TotalPrice(userId);
   }
   
-  public Integer cartTotalCount(String userId) {
+  public int cartTotalCount(String userId) {
 	  
 	  return dao.cartTotalCount(userId);
 	  

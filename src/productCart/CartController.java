@@ -7,23 +7,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.FileUtils;
 
 
 
-@WebServlet("/proCart/*") 
+@WebServlet("/cartServlet/*") 
 public class CartController extends HttpServlet {
 	String realPath=null;
 	CartVO cartVO;
@@ -67,7 +66,7 @@ public class CartController extends HttpServlet {
 					
 					
 					
-					System.out.println(userId+"controller");
+//					System.out.println(userId+"controller");
 					
 
 					List<CartVO> list=cartService.allcartList(userId);
@@ -84,17 +83,19 @@ public class CartController extends HttpServlet {
 					
 					String userId=(String)session.getAttribute("userId"); 
 					
-					List<Integer> productNoList=cartService.allDeleteCart(userId);
+					List<Integer> productNoList=cartService.allDeleteCart(userId, request);
 					
-					for(int product1 : productNoList) {
-						
-						File imgDir = new File(realPath + "\\" + product1);
-						
-						 if(imgDir.exists()) {
-							 
-							 FileUtils.deleteDirectory(imgDir);
-						 }			
-					}
+//					파일이 삭제되면 안됨
+//					for(int product1 : productNoList) {
+//						
+//						File imgDir = new File(realPath + "\\" + product1);
+//						
+//						 if(imgDir.exists()) {
+//							 
+//							 FileUtils.deleteDirectory(imgDir);
+//						 }			
+//					}
+					
 					session.setAttribute("userId", userId);
 					nextPage="/order/productCart.jsp";
 					
@@ -109,11 +110,11 @@ public class CartController extends HttpServlet {
 					
 					
 				    int productTotalPrice=cartQuantity*productPrice;
-				    System.out.println(userId +"update");
-					System.out.println(productName+"update");
-					System.out.println(cartQuantity+"update");
-					System.out.println(productPrice+"update");
-					System.out.println(productTotalPrice+"update");
+//				    System.out.println(userId +"update");
+//					System.out.println(productName+"update");
+//					System.out.println(cartQuantity+"update");
+//					System.out.println(productPrice+"update");
+//					System.out.println(productTotalPrice+"update");
 					
 					cartVO.setUserId(userId);
 					cartVO.setProductName(productName);
@@ -124,28 +125,29 @@ public class CartController extends HttpServlet {
 				    
 				    cartService.update(cartVO);
 				    session.setAttribute("userId", userId);
-				    nextPage="/cart/cart.do";
+				    nextPage="/cartServlet/cart.do";
 				    
 				}else if(action.equals("/allDelete.do")) {
 					
 					String userId=(String)session.getAttribute("userId"); 
 					
-					List<Integer> list=cartService.allDeleteCart(userId);
+					List<Integer> list=cartService.allDeleteCart(userId, request);
 					
-					for(int i=0;i<list.size();i++) {
-						
-						int productNo1=list.get(i);
-						
-						File imgDir = new File(realPath + "\\" + productNo1);
-						
-						 if(imgDir.exists()) {
-							 
-							 FileUtils.deleteDirectory(imgDir);
-					}
-						
-				}
+//					파일이 삭제되면 안됨
+//					for(int i=0;i<list.size();i++) {
+//						
+//						int productNo1=list.get(i);
+//						
+//						File imgDir = new File(realPath + "\\" + productNo1);
+//						
+//						 if(imgDir.exists()) {
+//							 
+//							 FileUtils.deleteDirectory(imgDir);
+//						}
+//					}
+					
 					session.setAttribute("userId", userId);					
-					nextPage="/cart/cart.do";
+					nextPage="/cartServlet/cart.do";
 				}else if(action.equals("/deleteCart.do")) {
 					
 					String userId=(String)session.getAttribute("userId"); 
@@ -154,29 +156,33 @@ public class CartController extends HttpServlet {
 					
 					cartService.deleteCart(userId, productNo);
 					
+//					파일이 삭제되면 안됨
+//					File imgDir = new File(realPath + "\\" + productNo);
+//						
+//						 if(imgDir.exists()) {
+//							 
+//							 FileUtils.deleteDirectory(imgDir);
+//						 		
+//					}
+
+					int cartCount = 0;
+					cartCount = cartService.cartTotalCount(userId);
+					session.setAttribute("cartCount", cartCount);
 					
-				File imgDir = new File(realPath + "\\" + productNo);
-					
-					 if(imgDir.exists()) {
-						 
-						 FileUtils.deleteDirectory(imgDir);
-					 		
-				}
-				
-				PrintWriter pw = response.getWriter();	
-				pw.print("<script>" 
-						+ " alert('상품삭제완료');" 
-						+ " location.href='"
-						+ request.getContextPath() +"/cart/cart.do';"
-						+ "</script>");
-				return;
+					PrintWriter pw = response.getWriter();	
+					pw.print("<script>" 
+							+ " alert('상품삭제완료');" 
+							+ " location.href='"
+							+ request.getContextPath() +"/cartServlet/cart.do';"
+							+ "</script>");
+					return;
 		        	
 					
 				}else if(action.equals("/addCart.do")) {
 					
 					String userId=(String)session.getAttribute("userId");
 					
-					System.out.println(userId);
+//					System.out.println("userId: " + userId);
 					
 					
 				
@@ -184,34 +190,32 @@ public class CartController extends HttpServlet {
 					
 					
 					String productImage = cartMap.get("productImage");
-					System.out.println(productImage);
+//					System.out.println("productImage: " + productImage);
 					String productNo = cartMap.get("productNo");
-					System.out.println(productNo);
+//					System.out.println("productNo: " + productNo);
 					String productPrice1 = cartMap.get("productPrice");
-					System.out.println(productPrice1);
+//					System.out.println("productPrice: " + productPrice1);
 					String productDelivery=cartMap.get("productDelivery");
+//					System.out.println("productDelivery: " + productDelivery);
 					
 					
 				
-				 if (productDelivery.equals("1")) {
+					if (productDelivery.equals("1")) {
+						productDelivery="2500";
+					}else{ 
+						productDelivery="0"; 
+					}
 				 
-				  productDelivery="2500";
-
-				  }else{ 
-					  productDelivery="0"; 
-				  
-				  }
-				 
-					System.out.println(productDelivery);
+//					System.out.println(productDelivery);
 					
 					String cartQuantity1=cartMap.get("cartQuantity");
 					int cartQuantity=Integer.parseInt(cartQuantity1);
 					
-					System.out.println(cartQuantity);
+//					System.out.println(cartQuantity);
 					String productName=cartMap.get("productName");
 					String productCategory=cartMap.get("productCategory");
 					
-					System.out.println("카테고리"+productCategory);
+//					System.out.println("카테고리"+productCategory);
 					int productPrice=Integer.parseInt(productPrice1);
 				
 					int productTotalPrice=cartQuantity*productPrice;
@@ -237,16 +241,17 @@ public class CartController extends HttpServlet {
 				 * FileUtils.moveFileToDirectory(srcFile, destDir, true); srcFile.delete();
 				 * System.out.println("완료"); }
 				 */
-			
-				   PrintWriter pw = response.getWriter(); pw.print("<script>" +
-				  "  alert('장바구니담기완료');" + " location.href='" + request.getContextPath() +
-				 "/cart/cart.do';" + "</script>");
+					
+					int cartCount = 0;
+					cartCount = cartService.cartTotalCount(userId);
+					session.setAttribute("cartCount", cartCount);
+					
+					PrintWriter pw = response.getWriter(); pw.print("<script>" +
+					"  alert('장바구니담기완료');" + " location.href='" + request.getContextPath() +
+					"/cartServlet/cart.do';" + "</script>");
 				 
-					
-					
-					
 					return;
-					//nextPage="/cart/cart.do";
+					//nextPage="/cartServlet/cart.do";
 					
 				}
 			} catch (Exception e) {
@@ -317,50 +322,6 @@ public class CartController extends HttpServlet {
 			}
 			
 			return productMap;
-		}
-		
-	  	private void moveFile(int productNo, String fileName){
-			try {
-				File srcFile = new File(realPath + "\\temp\\" + fileName);
-				File destDir = new File(realPath + "\\" + productNo);
-				Boolean createDestDir = destDir.mkdir();
-				
-				String filePath = realPath + "\\" + productNo + "\\" + fileName;
-				File file = new File(filePath);
-				
-				if(file.exists()) {
-					deleteFile(productNo, fileName);
-				}	
-				FileUtils.moveFileToDirectory(srcFile, destDir, createDestDir);
-			} catch (Exception e) {
-				System.out.println("moveFile()메소드 내부에서 오류 : " + e.toString());
-			}
-		}
-		
-		private void deleteFile(int productNo, String fileName){
-			try {
-				String filePath = realPath + "\\" + productNo + "\\" + fileName;
-				File file = new File(filePath);
-				
-				if(file.exists()) {
-					file.delete();
-				}
-			} catch (Exception e) {
-				System.out.println("deleteFile()메소드 내부에서 오류 : " + e.toString());
-			}
-		}
-		
-		private void deleteDirectory(int productNo){
-			try {
-				String realDirPath = realPath + "\\" + productNo;
-				File realDir = new File(realDirPath);
-				
-				if(realDir.exists()) {
-					FileUtils.deleteDirectory(realDir);
-				}
-			} catch (Exception e) {
-				System.out.println("deleteDirectory()메소드 내부에서 오류 : " + e.toString());
-			}
 		}
 	/*
 	 * private Map<String, String> upload(HttpServletRequest request,

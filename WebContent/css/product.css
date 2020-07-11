@@ -216,7 +216,6 @@
 	overflow: hidden;
 	padding-left: 11px;
 	vertical-align: middle;
-	margin-left: 14px;
 }
 .product_quantity input
 {
@@ -242,6 +241,18 @@
 	padding-left: 11px;
 	vertical-align: middle;
 	line-height: 41px;
+}
+.product_delivery_container
+{
+	margin-top: 43px;
+}
+.product_delivery_container span
+{
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 600;
+	color: #232323;
+	vertical-align: middle;
 }
 .quantity_buttons
 {

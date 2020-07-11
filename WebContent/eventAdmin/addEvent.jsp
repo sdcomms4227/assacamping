@@ -10,7 +10,7 @@
 </div>
 
 <article class="event">
-	<form action="${contextPath}/camp/insertEvent.do" method="post" enctype="multipart/form-data">
+	<form action="${contextPath}/campingServlet/insertEvent.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="userId" value="${userId}" />
 		<table class="table">
 			<colgroup>

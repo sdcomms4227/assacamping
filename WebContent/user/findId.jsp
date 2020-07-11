@@ -26,7 +26,7 @@ String userId =(String)request.getAttribute("userId");
 <body>
 <c:choose>
 	<c:when test="${userId == null }">
-		<form name="f" action="${contextPath}/usr/findId.do" method="post" onsubmit="return check();">
+		<form name="f" action="${contextPath}/userServlet/findId.do" method="post" onsubmit="return check();">
 			<h2>아이디 찾기</h2>
 				<label>이름</label>
 					<input type="text" name="userName" required>	

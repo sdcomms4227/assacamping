@@ -35,7 +35,7 @@
 </c:choose>
 </head>
 <body>
-<form action="${contextPath}/usr/idCheck.do" method="post" name="f">
+<form action="${contextPath}/userServlet/idCheck.do" method="post" name="f">
 	아이디:<input type="text" name="userId" value="<%=userId %>">
 	<input type = "submit" value="중복확인">
 </form>

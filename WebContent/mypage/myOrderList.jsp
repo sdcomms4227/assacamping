@@ -29,7 +29,7 @@
 		  <c:when test="${orderNo !=null}" >
 		     <c:forEach items="${orderNo}" var="order" >
 		      <tr>
-		         <td> <a href="${contextPath}/cartorder/orderInfo.do?orderNo=${order.orderNo}">${order.orderNo}</a></td>
+		         <td> <a href="${contextPath}/orderServlet/orderInfo.do?orderNo=${order.orderNo}">${order.orderNo}</a></td>
 		         <td>${order.orderDate}</td>
 		         <td>${order.orderState}</td>
 		      </tr>                 
@@ -43,11 +43,11 @@
 		     <c:forEach items="${payList}" var="payList" >
 		    
 		           <tr>
-		            <td><a href="${contextPath}/cartorder/orderInfo.do?orderNo=${payList.orderNo}"> ${payList.productName}</a></td>
+		            <td><a href="${contextPath}/orderServlet/orderInfo.do?orderNo=${payList.orderNo}"> ${payList.productName}</a></td>
 		            <td>${payList.cartQuantity}</td>
 		            <td>${payList.orderNo}</td>
 		            <td>${payList.orderDate}</td>
-		            <td><a href="${contextPath}/pro/getOnePro.do?productNo=${payList.productNo}">재구매</a></td>
+		            <td><a href="${contextPath}/productServlet/getOnePro.do?productNo=${payList.productNo}">재구매</a></td>
 		           </tr> 
 		         
 		  </c:forEach>

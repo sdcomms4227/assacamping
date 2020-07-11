@@ -8,12 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
-import dbUtil.DBConnection;
-
 public class CartDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
@@ -22,7 +16,7 @@ public class CartDAO {
   
    public void freeResource() {
 		try {
-			if(conn!=null) { conn.close();}
+			if(conn !=null) { conn.close();}
 			if(pstmt !=null) { pstmt.close();}
 			if(rs !=null) { rs.close();}
 			
@@ -33,7 +27,7 @@ public class CartDAO {
    
   
 	public List<CartVO> allcartList(String userId){//장바구니목록조회
-		  System.out.println(userId+"DAO");
+//		  System.out.println(userId+"DAO");
 		 List<CartVO> list=new ArrayList();
 		
 		try {
@@ -221,13 +215,16 @@ public class CartDAO {
 			
 		} catch (Exception e) {
 			System.out.println("TotalPrice에서 오류"+e.getMessage());
+		}finally {
+			freeResource();
 		}
 		
 		return map;
 	}
 	
-	public Integer cartTotalCount(String userId) {
-		   int totalcount=0;
+	public int cartTotalCount(String userId) {
+		int totalcount=0;
+		
 		try {
                conn=dbUtil.DBConnection.getConnection();
 			

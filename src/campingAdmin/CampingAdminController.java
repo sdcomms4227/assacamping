@@ -28,14 +28,14 @@ import campingCategory.CampingCategoryService;
 import campingCategory.CampingCategoryVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/campAdm/*")
+@WebServlet("/campingAdminServlet/*")
 public class CampingAdminController extends HttpServlet {
 	
 	CampingAdminService campAdminService;
 	CampingVO campingVO;	
 	CampingCategoryService campingCategoryService;
 	CampingCategoryVO campingCategoryVO;
-	String realPath = "";
+	String realPath;
 
 	@Override
 	public void init() throws ServletException {
@@ -57,7 +57,7 @@ public class CampingAdminController extends HttpServlet {
 	
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nextPage = "";
-		realPath = request.getServletContext().getRealPath("/files/camping");
+		String realPath = request.getServletContext().getRealPath("/files/camping");
 		
 		request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=utf-8");
@@ -141,7 +141,7 @@ public class CampingAdminController extends HttpServlet {
 				moveFile(readNo, campingFileName);
 			}
 						
-			nextPage = "/campAdm/readCamping.do?campingNo=" + readNo;
+			nextPage = "/campingAdminServlet/readCamping.do?campingNo=" + readNo;
 			
 		}else if(action.equals("/modifyCamping.do")) {
 
@@ -208,7 +208,7 @@ public class CampingAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/campAdm/readCamping.do?campingNo=" + campingNo;
+			nextPage = "/campingAdminServlet/readCamping.do?campingNo=" + campingNo;
 			
 		}else if(action.equals("/deleteCamping.do")) {
 
@@ -229,7 +229,7 @@ public class CampingAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/campAdm/listCamping.do";
+			nextPage = "/campingAdminServlet/listCamping.do";
 			
 		}else if(action.equals("/replyCamping.do")) {
 			
@@ -277,7 +277,7 @@ public class CampingAdminController extends HttpServlet {
 				moveFile(readNo, campingFileName);
 			}
 			
-			nextPage = "/campAdm/readCamping.do?campingNo=" + readNo;
+			nextPage = "/campingAdminServlet/readCamping.do?campingNo=" + readNo;
 			
 		}else if(action.equals("/download.do")) {
 			

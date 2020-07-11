@@ -27,7 +27,7 @@
 			 <td >
 		     <c:forEach items="${orderInfo}" var="order">
                 
-                 ${order.productName} <a href="${contextPath}/pro/getOnePro.do?productNo=${order.productNo}">재구매</a> <br>
+                 ${order.productName} <a href="${contextPath}/productServlet/getOnePro.do?productNo=${order.productNo}">재구매</a> <br>
                  
 			 
 				 </c:forEach>	
@@ -56,7 +56,7 @@
 		</table>
 	</form>
 	<div align="center">
-	<a href="${contextPath}/cartorder/orderDelete.do?orderNo=${orderInfo[0].orderNo}">주문취소</a>
+	<a href="${contextPath}/orderServlet/orderDelete.do?orderNo=${orderInfo[0].orderNo}">주문취소</a>
 	<a href="${contextPath}/index.jsp">홈</a>
 	</div>
 	

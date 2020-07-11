@@ -348,7 +348,7 @@
 <script>
 function listProduct(pageNo,sortType){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/listProduct.do";	
+	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.pageNo.value = pageNo;
 	form.sortType.value = sortType;
 	form.submit();
@@ -356,13 +356,13 @@ function listProduct(pageNo,sortType){
 
 function readProduct(productNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/readProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/productServlet/readProduct.do?productNo=" + productNo;
 	form.submit();
 }
 
 function changeCategory(categoryNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/listProduct.do";	
+	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.searchCategoryNo.value = categoryNo;
 	form.submit();
 }

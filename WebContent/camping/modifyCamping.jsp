@@ -64,7 +64,7 @@
 	
 	<!-- Camping -->
 	<article class="camping container">
-		<form action="${contextPath}/camp/updateCamping.do" method="post" enctype="multipart/form-data" >
+		<form action="${contextPath}/campingServlet/updateCamping.do" method="post" enctype="multipart/form-data" >
 			<input type="hidden" name="pageNo" value="${pageNo}" />
 			<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 			<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />

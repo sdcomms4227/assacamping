@@ -6,7 +6,7 @@
 		<h2 class="mb-0">상품 카테고리</h2>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/proAdm/listProduct.do'">상품 관리</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/productAdminServlet/listProduct.do'">상품 관리</button>
 	</div>
 </div>
 
@@ -47,7 +47,7 @@
 		</tbody>
 	</table>
 
-	<form class="categoryForm" action="${contextPath}/procate/addProductCategory.do" method="post" name="formProductCategory">
+	<form class="categoryForm" action="${contextPath}/productCategoryServlet/addProductCategory.do" method="post" name="formProductCategory">
 		<input type="hidden" name="productCategoryNo" />
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -64,12 +64,12 @@
 <script>
 	function deleteCategory(productCategoryNo){
 		if(confirm("정말로 삭제하시겠습니까?")){			
-			location.href="${contextPath}/procate/deleteProductCategory.do?productCategoryNo=" + productCategoryNo;
+			location.href="${contextPath}/productCategoryServlet/deleteProductCategory.do?productCategoryNo=" + productCategoryNo;
 		}
 	}
 	function updateCategory(productCategoryNo, productCategoryName){
 		form = document.formProductCategory;
-		form.action = "${contextPath}/procate/updateProductCategory.do";
+		form.action = "${contextPath}/productCategoryServlet/updateProductCategory.do";
 		form.buttonProductCategory.innerText = "수정하기";
 		form.buttonProductCategory.classList.remove("btn-primary");
 		form.buttonProductCategory.classList.add("btn-warning");

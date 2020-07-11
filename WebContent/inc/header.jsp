@@ -6,15 +6,15 @@
 		<div class="logo"><a href="${contextPath}">ASSA</a></div>
 		<nav class="main_nav">
 			<ul>
-				<li><a href="${contextPath}/pro/listProduct.do">캠핑상품</a></li>
-				<li><a href="${contextPath}/camp/listCamping.do">캠핑정보</a></li>
+				<li><a href="${contextPath}/productServlet/listProduct.do">캠핑상품</a></li>
+				<li><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></li>
+				<li><a href="${contextPath}/eventServlet/listEvent.do"">이벤트</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">고객센터</a></li>
-				<li><a href="#">추가메뉴</a></li>
 			</ul>
 		</nav>
 		<div class="header_content ml-auto">
 			<div class="search header_search">
-				<form name="productSearch" action="${contextPath}/pro/listProduct.do" method="post">
+				<form name="productSearch" action="${contextPath}/productServlet/listProduct.do" method="post">
 					<div class="search_input">
 						<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
 						<input type="hidden" name="sortType" value="${sortType}" />
@@ -25,25 +25,29 @@
 			</div>
 			<div class="shopping">
 				<!-- Cart -->
-				<a class="shopping_a" href="${contextPath}/cart/cart.do">
+				<a class="shopping_a" href="${contextPath}/cartServlet/cart.do">
 					<div class="cart">
 						<img src="${contextPath}/images/shopping-bag.svg" alt="">
-						<div class="cart_num_container">
-							<div class="cart_num_inner">
-								<div class="cart_num">1</div>
+						<c:if test="${sessionScope.cartCount != null}">
+							<div class="cart_num_container">
+								<div class="cart_num_inner">
+									<div class="cart_num">${sessionScope.cartCount}</div>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</div>
 				</a>
 				<!-- Star -->
 				<a class="shopping_a" href="javascript:alert('준비중입니다')">
 					<div class="star">
 						<img src="${contextPath}/images/star.svg" alt="">
-						<div class="star_num_container">
-							<div class="star_num_inner">
-								<div class="star_num">0</div>
+						<c:if test="${sessionScope.wishCount != null}">
+							<div class="star_num_container">
+								<div class="star_num_inner">
+									<div class="star_num">${sessionScope.wishCount}</div>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</div>
 				</a>
 				<c:choose>
@@ -60,26 +64,26 @@
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">
-								<a class="dropdown-item" href="${contextPath}/cartorder/orderList.do">나의 주문 내역(수정전)</a>
+								<a class="dropdown-item" href="${contextPath}/orderServlet/orderList.do">나의 주문 내역(수정전)</a>
 								<hr />
-								<a class="dropdown-item" href="${contextPath}/usr/myOrderList.do">나의 주문 내역</a>
-								<a class="dropdown-item" href="${contextPath}/usr/myQnaList.do">내가 쓴 상품문의</a>
-								<a class="dropdown-item" href="${contextPath}/usr/myReviewList.do">내가 쓴 상품후기</a>
-								<a class="dropdown-item" href="${contextPath}/usr/myWishList.do">나의 위시리스트</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/myOrderList.do">나의 주문 내역</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/myQnaList.do">내가 쓴 상품문의</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/myReviewList.do">내가 쓴 상품후기</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/myWishList.do">나의 위시리스트</a>
 								<hr />
-								<a class="dropdown-item" href="${contextPath}/usr/userPwCheck.do?userId=${userId}">회원정보수정</a>
-								<a class="dropdown-item" href="${contextPath}/usr/changePw.do?userId=${userId}">비밀번호변경</a>
-								<a class="dropdown-item" href="${contextPath}/usr/withdrawal.do?userId=${userId}">회원탈퇴</a>
-								<a class="dropdown-item" href="${contextPath}/usr/logout.do">로그아웃</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/userPwCheck.do?userId=${userId}">회원정보수정</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/changePw.do?userId=${userId}">비밀번호변경</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/withdrawal.do?userId=${userId}">회원탈퇴</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/logout.do">로그아웃</a>
 								<c:if test='${userId=="admin"}'>
 									<hr />
-									<a class="dropdown-item" href="${contextPath}/adm/admin.do">관리자모드</a>
+									<a class="dropdown-item" href="${contextPath}/adminServlet/admin.do">관리자모드</a>
 								</c:if>
 							</div>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<a class="shopping_a" href="${contextPath}/usr/login.do">
+						<a class="shopping_a" href="${contextPath}/userServlet/login.do">
 							<div class="avatar">
 								<img src="${contextPath}/images/avatar.svg" alt="">
 							</div>

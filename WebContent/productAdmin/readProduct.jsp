@@ -111,25 +111,25 @@
 <script>
 function listProduct(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proAdm/listProduct.do";	
+	form.action = "${contextPath}/productAdminServlet/listProduct.do";	
 	form.submit();
 }
 function modifyProduct(productNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proAdm/modifyProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/productAdminServlet/modifyProduct.do?productNo=" + productNo;
 	form.submit();
 }
 function deleteProduct(productNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/proAdm/deleteProduct.do?productNo=" + productNo;
+		form.action = "${contextPath}/productAdminServlet/deleteProduct.do?productNo=" + productNo;
 		form.submit();
 	}
 }
 function downloadProduct(productNo, productImageName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proAdm/download.do?productNo=" + productNo + "&fileName=" + productImageName;
+	form.action = "${contextPath}/productAdminServlet/download.do?productNo=" + productNo + "&fileName=" + productImageName;
 	form.submit();
 }
 </script>

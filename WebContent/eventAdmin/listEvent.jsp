@@ -10,7 +10,7 @@
 		<h2 class="mb-0">캠핑정보</h2>
 	</div>
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
-		<form action="${contextPath}/eveAdm/listEvent.do" class="form-inline justify-content-center">
+		<form action="${contextPath}/eventAdminServlet/listEvent.do" class="form-inline justify-content-center">
 			<div class="input-group">
 				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
 				<div class="input-group-append">
@@ -20,7 +20,7 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/eveAdm/addEvent.do'">게시글 등록</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/eventAdminServlet/addEvent.do'">게시글 등록</button>
 	</div>
 </div>
 	
@@ -126,19 +126,19 @@
 <script>
 function listEvent(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/listEvent.do";	
+	form.action = "${contextPath}/eventAdminServlet/listEvent.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
 function readEvent(eventNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/readEvent.do?eventNo=" + eventNo;
+	form.action = "${contextPath}/eventAdminServlet/readEvent.do?eventNo=" + eventNo;
 	form.submit();
 }
 function modifyEvent(eventNo, event){
 	event.stopPropagation();
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/modifyEvent.do?eventNo=" + eventNo;
+	form.action = "${contextPath}/eventAdminServlet/modifyEvent.do?eventNo=" + eventNo;
 	form.submit();
 }
 function deleteEvent(eventNo, event){
@@ -146,7 +146,7 @@ function deleteEvent(eventNo, event){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/eveAdm/deleteEvent.do?eventNo=" + eventNo;
+		form.action = "${contextPath}/eventAdminServlet/deleteEvent.do?eventNo=" + eventNo;
 		form.submit();
 	}
 }

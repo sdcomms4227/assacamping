@@ -86,7 +86,7 @@
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form class="userForm" action="${contextPath}/usr/addUser.do" method="post" onsubmit="return check();">
+			<form name="f" class="userForm" action="${contextPath}/userServlet/addUser.do" method="post" onsubmit="return check();">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
 					<input type="text" class="form-control form-control-lg" name="userId" id="userId" required />

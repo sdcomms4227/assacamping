@@ -10,7 +10,7 @@
 		<h2 class="mb-0">회원 관리</h2>
 	</div>
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
-		<form action="${contextPath}/usrAdm/listUser.do" class="form-inline justify-content-center">
+		<form action="${contextPath}/userAdminServlet/listUser.do" class="form-inline justify-content-center">
 			<div class="input-group">
 				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
 				<div class="input-group-append">
@@ -20,7 +20,7 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/usrAdm/addUser.do'">회원 등록</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/userAdminServlet/addUser.do'">회원 등록</button>
 	</div>
 </div>
 	
@@ -130,19 +130,19 @@
 <script>
 function listUser(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/usrAdm/listUser.do";	
+	form.action = "${contextPath}/userAdminServlet/listUser.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
 function readUser(userId){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/usrAdm/readUser.do?userId=" + userId;
+	form.action = "${contextPath}/userAdminServlet/readUser.do?userId=" + userId;
 	form.submit();
 }
 function modifyUser(userId, event){
 	event.stopPropagation();
 	var form = document.pagingForm;
-	form.action = "${contextPath}/usrAdm/modifyUser.do?userId=" + userId;
+	form.action = "${contextPath}/userAdminServlet/modifyUser.do?userId=" + userId;
 	form.submit();
 }
 function deleteUser(userId, event){
@@ -150,7 +150,7 @@ function deleteUser(userId, event){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/usrAdm/deleteUser.do?userId=" + userId;
+		form.action = "${contextPath}/userAdminServlet/deleteUser.do?userId=" + userId;
 		form.submit();
 	}
 }

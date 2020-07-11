@@ -123,28 +123,30 @@ $(document).ready(function()
 		// Handle product quantity input
 		if($('.product_quantity').length)
 		{
-			var input = $('#quantity_input');
-			var incButton = $('#quantity_inc_button');
-			var decButton = $('#quantity_dec_button');
-
-			var originalVal;
-			var endVal;
-
-			incButton.on('click', function()
-			{
-				originalVal = input.val();
-				endVal = parseFloat(originalVal) + 1;
-				input.val(endVal);
-			});
-
-			decButton.on('click', function()
-			{
-				originalVal = input.val();
-				if(originalVal > 0)
+			$('.product_quantity').each(function(){
+				var input = $(this).find('.quantity_input');
+				var incButton = $(this).find('.quantity_inc');
+				var decButton = $(this).find('.quantity_dec');
+	
+				var originalVal;
+				var endVal;
+	
+				incButton.on('click', function()
 				{
-					endVal = parseFloat(originalVal) - 1;
+					originalVal = input.val();
+					endVal = parseFloat(originalVal) + 1;
 					input.val(endVal);
-				}
+				});
+	
+				decButton.on('click', function()
+				{
+					originalVal = input.val();
+					if(originalVal > 0)
+					{
+						endVal = parseFloat(originalVal) - 1;
+						input.val(endVal);
+					}
+				});
 			});
 		}
 	}

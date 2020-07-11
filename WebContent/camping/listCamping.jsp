@@ -81,9 +81,9 @@
 				
 		<c:choose>
 			<c:when test="${totalCount==0}">			
-					<tr>
-						<td colspan="6">등록된 게시글이 없습니다.</td>
-					</tr>
+				<tr>
+					<td colspan="6">등록된 게시글이 없습니다.</td>
+				</tr>
 			</c:when>	
 			<c:otherwise>
 				<c:forEach var="campingMap" items="${campingList}">
@@ -119,7 +119,7 @@
 		
 		<div class="row my-5">
 			<div class="col-12 col-lg-8">
-				<form action="${contextPath}/camp/listCamping.do" class="form-inline justify-content-center justify-content-lg-start">
+				<form action="${contextPath}/campingServlet/listCamping.do" class="form-inline justify-content-center justify-content-lg-start">
 					<div class="input-group mb-2 mb-sm-0 mr-sm-2">
 						<select class="form-control" name="searchCategoryNo" onchange="this.form.submit()">
 							<option value="0">전체보기</option>
@@ -147,10 +147,10 @@
 				<div class="form-group text-center text-lg-right">				
 					<c:choose>
 						<c:when test="${sessionScope.userId != null}">
-							<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/camp/addCamping.do'">글쓰기</button>
+							<button type="button" class="btn btn-secondary" onclick="location.href='${contextPath}/campingServlet/addCamping.do'">글쓰기</button>
 						</c:when>
 						<c:otherwise>
-							<button type="button" class="btn btn-secondary" onclick="alert('로그인 후 글 작성이 가능합니다.');location.href='${contextPath}/usr/login.do'">글쓰기</button>
+							<button type="button" class="btn btn-secondary" onclick="alert('로그인 후 글 작성이 가능합니다.');location.href='${contextPath}/userServlet/login.do'">글쓰기</button>
 						</c:otherwise>
 					</c:choose>					
 				</div>
@@ -212,8 +212,6 @@
 <script src="${contextPath}/js/bootstrap.min.js"></script>
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
@@ -221,14 +219,14 @@
 <script>
 function listCamping(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/listCamping.do";	
+	form.action = "${contextPath}/campingServlet/listCamping.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
 
 function readCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/camp/readCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingServlet/readCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 </script>

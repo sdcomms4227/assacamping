@@ -27,14 +27,14 @@ import campingCategory.CampingCategoryService;
 import campingCategory.CampingCategoryVO;
 
 @SuppressWarnings("serial")
-@WebServlet("/camp/*")
+@WebServlet("/campingServlet/*")
 public class CampingController extends HttpServlet {
 	
 	CampingService campingService;
 	CampingVO campingVO;	
 	CampingCategoryService campingCategoryService;
 	CampingCategoryVO campingCategoryVO;
-	String realPath = "";
+	String realPath;
 
 	@Override
 	public void init() throws ServletException {
@@ -140,7 +140,7 @@ public class CampingController extends HttpServlet {
 				moveFile(readNo, campingFileName);
 			}
 						
-			nextPage = "/camp/readCamping.do?campingNo=" + readNo;
+			nextPage = "/campingServlet/readCamping.do?campingNo=" + readNo;
 			
 		}else if(action.equals("/modifyCamping.do")) {
 
@@ -207,7 +207,7 @@ public class CampingController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/camp/readCamping.do?campingNo=" + campingNo;
+			nextPage = "/campingServlet/readCamping.do?campingNo=" + campingNo;
 			
 		}else if(action.equals("/deleteCamping.do")) {
 
@@ -228,7 +228,7 @@ public class CampingController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/camp/listCamping.do";
+			nextPage = "/campingServlet/listCamping.do";
 			
 		}else if(action.equals("/replyCamping.do")) {
 			
@@ -276,7 +276,7 @@ public class CampingController extends HttpServlet {
 				moveFile(readNo, campingFileName);
 			}
 			
-			nextPage = "/camp/readCamping.do?campingNo=" + readNo;
+			nextPage = "/campingServlet/readCamping.do?campingNo=" + readNo;
 			
 		}else if(action.equals("/download.do")) {
 			

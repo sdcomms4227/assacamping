@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/usr/*")
+import productCart.CartService;
+
+@WebServlet("/userServlet/*")
 public class UserController extends HttpServlet{
   
 	UserDAO userDAO;
@@ -89,10 +91,10 @@ public class UserController extends HttpServlet{
 				String userId = request.getParameter("userId");    
 				userDAO.delUser(userId);    
 				request.setAttribute("msg", "deleted");
-				nextPage = "/usr/listUsers.do";
+				nextPage = "/userServlet/listUsers.do";
 			
 			}else if(action.equals("/login.do")) {
-				
+								
 				nextPage = "/user/login.jsp";
 			
 			}else if(action.equals("/loginAction.do")) {
@@ -103,6 +105,7 @@ public class UserController extends HttpServlet{
 				String userName = userDAO.getUserName(userId);
 				
 				String msg ="";
+				int cartCount = 0;
 				
 				if(check==0) {
 					request.setAttribute("msg", "id");
@@ -113,6 +116,14 @@ public class UserController extends HttpServlet{
 				}else {
 					session.setAttribute("userId", userId);
 					session.setAttribute("userName", userName);
+
+					CartService cartService = new CartService();
+					cartCount = cartService.cartTotalCount(userId);
+					session.setAttribute("cartCount", cartCount);
+
+//					WishService wishListService = new WishService();
+//					wishCount = wishListService.wishTotalCount(userId);
+					session.setAttribute("wishCount", 0);
 					
 					nextPage = "/";
 				}

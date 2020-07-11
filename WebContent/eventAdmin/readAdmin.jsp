@@ -98,30 +98,30 @@
 <script>
 function listEvent(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/listEvent.do";	
+	form.action = "${contextPath}/eventAdminServlet/listEvent.do";	
 	form.submit();
 }
 function modifyEvent(eventNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/modifyEvent.do?eventNo=" + eventNo;
+	form.action = "${contextPath}/eventAdminServlet/modifyEvent.do?eventNo=" + eventNo;
 	form.submit();
 }
 function deleteEvent(eventNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/eveAdm/deleteEvent.do?eventNo=" + eventNo;
+		form.action = "${contextPath}/eventAdminServlet/deleteEvent.do?eventNo=" + eventNo;
 		form.submit();
 	}
 }
 function replyEvent(eventNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/replyEvent.do?eventNo=" + eventNo;
+	form.action = "${contextPath}/eventAdminServlet/replyEvent.do?eventNo=" + eventNo;
 	form.submit();
 }
 function downloadEvent(eventNo, eventFileName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/eveAdm/download.do?eventNo=" + eventNo + "&fileName=" + eventFileName;
+	form.action = "${contextPath}/eventAdminServlet/download.do?eventNo=" + eventNo + "&fileName=" + eventFileName;
 	form.submit();
 }
 </script>
