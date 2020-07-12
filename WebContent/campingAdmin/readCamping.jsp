@@ -9,6 +9,8 @@
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
+<fmt:formatNumber var="campingFormattedCount" value="${campingCount}" pattern="#,###"/>
+<fmt:formatDate var="campingFormattedDate" value="${campingDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -38,10 +40,6 @@
 						<td>${userId}</td>
 					</tr>
 					<tr>
-						<th>조회수</th>
-						<td><fmt:formatNumber value="${campingCount}" pattern="#,###"/></td>
-					</tr>
-					<tr>
 						<th>제목</th>
 						<td>${campingTitle}</td>
 					</tr>
@@ -50,8 +48,12 @@
 						<td>${fn:replace(campingContent,LF,BR)}</td>
 					</tr>
 					<tr>
+						<th>조회수</th>
+						<td>${campingFormattedCount}</td>
+					</tr>
+					<tr>
 						<th>작성일</th>
-						<td><fmt:formatDate value="${campingDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td>${campingFormattedDate}</td>
 					</tr>
 				</tbody>
 			</table>

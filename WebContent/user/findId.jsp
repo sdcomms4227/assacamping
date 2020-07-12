@@ -48,14 +48,14 @@
 			<c:choose>
 				<c:when test="${userId == null }">
 					<form name="f"class="findIdForm" action="${contextPath}/userServlet/findIdAction.do" method="post" onsubmit="return check();">
-						<h4 class="form-text mb-4">이름과 이메일 주소를 입력해 주세요.</h4>
+						<h4 class="form-text mb-4">이름과 이메일를 입력해 주세요.</h4>
 						<div class="form-label-group">
 							<input type="text" class="form-control" placeholder="이름" name="userName" id="userName" required autofocus />
 							<label for="userName">이름</label>
 						</div>
 						<div class="form-label-group">
-							<input type="email" class="form-control" placeholder="이메일 주소" name="userEmail" id="userEmail" required />
-							<label for="userName">이메일 주소</label>
+							<input type="email" class="form-control" placeholder="이메일" name="userEmail" id="userEmail" required />
+							<label for="userName">이메일</label>
 						</div>
 						<button type="submit" class="btn btn-lg btn-primary btn-block my-5">아이디 찾기</button>
 					</form>

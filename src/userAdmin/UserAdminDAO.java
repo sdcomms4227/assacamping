@@ -162,33 +162,6 @@ public class UserAdminDAO {
 
 		return 0;
 	}
-	
-	public int checkUserPw(UserVO userVO) {
-		String userPw = "";
-		
-		try {
-			conn = dbUtil.DBConnection.getConnection();
-			
-			String sql = "select userPw from user where userId=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userVO.getUserId());
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				userPw = rs.getString("userPw");
-			}
-			
-			if(userPw.equals(userVO.getUserPw())) {
-				return 1;
-			}
-		} catch (Exception e) {
-			System.out.println("checkUserPw()메소드 내부에서 오류 : " + e.toString());
-		} finally {
-			freeResource();
-		}
-
-		return 0;
-	}
 
 	public int updateUser(UserVO userVO) {
 

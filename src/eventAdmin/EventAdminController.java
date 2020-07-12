@@ -26,13 +26,13 @@ import event.EventVO;
 @WebServlet("/eventAdminServlet/*")
 public class EventAdminController extends HttpServlet {
 	
-	EventAdminService eveAdminService;
+	EventAdminService eventAdminService;
 	EventVO eventVO;
 	String realPath;
 
 	@Override
 	public void init() throws ServletException {
-		eveAdminService = new EventAdminService();
+		eventAdminService = new EventAdminService();
 		eventVO = new EventVO();
 	}
 	
@@ -64,14 +64,14 @@ public class EventAdminController extends HttpServlet {
 			searchMap.put("pageNo", request.getAttribute("pageNo"));
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 
-			Map<String, Object> eventListMap = eveAdminService.listEvent(searchMap);			
+			Map<String, Object> eventListMap = eventAdminService.listEvent(searchMap);			
 			request.setAttribute("eventListMap", eventListMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/eveAdmin/listEvent.jsp";
+			nextPage = "/eventAdmin/listEvent.jsp";
 			
 		}else if(action.equals("/readEvent.do")) {
 
@@ -79,13 +79,13 @@ public class EventAdminController extends HttpServlet {
 			
 			int eventNo = Integer.parseInt(request.getParameter("eventNo"));
 			
-			Map<String, Object> eventMap = eveAdminService.readEvent(eventNo);
+			Map<String, Object> eventMap = eventAdminService.readEvent(eventNo);
 
 			eventVO = (EventVO)eventMap.get("eventVO");
-			String eventFileName = eventVO.getEventImageFileName();
+			String eventImageFileName = eventVO.getEventImageFileName();
 
-			if(eventFileName!=null && !eventFileName.equals("")) {
-				String eventFileType = getFileType(eventNo, eventFileName);
+			if(eventImageFileName!=null && !eventImageFileName.equals("")) {
+				String eventFileType = getFileType(eventNo, eventImageFileName);
 				eventMap.put("eventFileType", eventFileType);
 			}
 			
@@ -95,11 +95,11 @@ public class EventAdminController extends HttpServlet {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/eveAdmin/readEvent.jsp";
+			nextPage = "/eventAdmin/readEvent.jsp";
 			
 		}else if(action.contentEquals("/addEvent.do")) {
 						
-			nextPage = "/eveAdmin/addEvent.jsp";
+			nextPage = "/eventAdmin/addEvent.jsp";
 			
 		}else if(action.equals("/insertEvent.do")) {
 			
@@ -107,21 +107,16 @@ public class EventAdminController extends HttpServlet {
 									
 			String eventTitle = multipartMap.get("eventTitle");
 			String eventContent = multipartMap.get("eventContent");
-			String eventFileName = multipartMap.get("eventFileName");
-			String userId = multipartMap.get("userId");
-			String userName = multipartMap.get("userName");
-			
-//			eventVO.setEventTitle(eventTitle);
-//			eventVO.setEventContent(eventContent);
-//			eventVO.eventImageFileName(eventFileName);
-//			eventVO.setUserId(userId);
-//			eventVO.setUserName(userName);
-//			eventVO.setEventCategoryNo(eventCategoryNo);
-			
-			int readNo = eveAdminService.insertEvent(eventVO);			
+			String eventImageFileName = multipartMap.get("eventImageFileName");
 
-			if(eventFileName!=null) {
-				moveFile(readNo, eventFileName);
+			eventVO.setEventTitle(eventTitle);
+			eventVO.setEventContent(eventContent);
+			eventVO.setEventImageFileName(eventImageFileName);
+						
+			int readNo = eventAdminService.insertEvent(eventVO);			
+
+			if(eventImageFileName!=null) {
+				moveFile(readNo, eventImageFileName);
 			}
 						
 			nextPage = "/eventAdminServlet/readEvent.do?eventNo=" + readNo;
@@ -132,19 +127,19 @@ public class EventAdminController extends HttpServlet {
 			
 			int eventNo = Integer.parseInt(request.getParameter("eventNo"));
 
-			Map<String, Object> eventMap = eveAdminService.readEvent(eventNo);
+			Map<String, Object> eventMap = eventAdminService.readEvent(eventNo);
 			
 			eventVO = (EventVO)eventMap.get("eventVO");
-			String eventFileName = eventVO.getEventImageFileName();
+			String eventImageFileName = eventVO.getEventImageFileName();
 
-			if(eventFileName!=null && !eventFileName.equals("")) {
-				String eventFileType = getFileType(eventNo, eventFileName);
+			if(eventImageFileName!=null && !eventImageFileName.equals("")) {
+				String eventFileType = getFileType(eventNo, eventImageFileName);
 				eventMap.put("eventFileType", eventFileType);
 			}
 
 			request.setAttribute("eventMap", eventMap);
 						
-			nextPage = "/eveAdmin/modifyEvent.jsp";
+			nextPage = "/eventAdmin/modifyEvent.jsp";
 			
 		}else if(action.equals("/updateEvent.do")) {
 
@@ -155,32 +150,26 @@ public class EventAdminController extends HttpServlet {
 			int eventNo = Integer.parseInt(multipartMap.get("eventNo"));
 			String eventTitle = multipartMap.get("eventTitle");
 			String eventContent = multipartMap.get("eventContent");
-			String eventFileName = multipartMap.get("eventFileName");
-			String userId = multipartMap.get("userId");
-			String userName = multipartMap.get("userName");
-			int eventCategoryNo = Integer.parseInt(multipartMap.get("eventCategoryNo"));
+			String eventImageFileName = multipartMap.get("eventImageFileName");
 			String deleteFile = multipartMap.get("deleteFile");
 			String oldFileName = multipartMap.get("oldFileName");
 						
-//			eventVO.setEventNo(eventNo);
-//			eventVO.setEventTitle(eventTitle);
-//			eventVO.setEventContent(eventContent);
-//			eventVO.setEventImageFileName(eventFileName);
-//			eventVO.setUserId(userId);
-//			eventVO.setUserName(userName);
-//			eventVO.setEventCategoryNo(eventCategoryNo);
+			eventVO.setEventNo(eventNo);
+			eventVO.setEventTitle(eventTitle);
+			eventVO.setEventContent(eventContent);
+			eventVO.setEventImageFileName(eventImageFileName);
 			
-			int result = eveAdminService.updateEvent(eventVO, deleteFile);
+			int result = eventAdminService.updateEvent(eventVO, deleteFile);
 			String alertMsg = "";
 			
 			if(result > 0) {
 				alertMsg = "정상적으로 수정되었습니다.";
 				
-				if(deleteFile!=null || eventFileName!=null) {
+				if(deleteFile!=null || eventImageFileName!=null) {
 					deleteFile(eventNo, oldFileName);
 				}
-				if(eventFileName!=null) {
-					moveFile(eventNo, eventFileName);
+				if(eventImageFileName!=null) {
+					moveFile(eventNo, eventImageFileName);
 				}
 			}else {
 				alertMsg = "오류가 발생했습니다.";
@@ -196,7 +185,7 @@ public class EventAdminController extends HttpServlet {
 			
 			int eventNo = Integer.parseInt(request.getParameter("eventNo"));
 			
-			int result = eveAdminService.deleteEvent(eventNo);
+			int result = eventAdminService.deleteEvent(eventNo);
 			String alertMsg = "";
 
 			if(result > 0) {
@@ -210,19 +199,6 @@ public class EventAdminController extends HttpServlet {
 			request.setAttribute("alertMsg", alertMsg);
 			
 			nextPage = "/eventAdminServlet/listEvent.do";
-			
-		}else if(action.equals("/replyEvent.do")) {
-			
-			setPagination(request);
-			
-			int eventNo = Integer.parseInt(request.getParameter("eventNo"));
-
-			Map<String, Object> eventMap = eveAdminService.readEvent(eventNo);
-			
-			request.setAttribute("eventMap", eventMap);
-			
-			nextPage = "/eveAdmin/replyEvent.jsp";
-			
 		}
 		
 		if(!nextPage.equals("")) {
@@ -372,57 +348,3 @@ public class EventAdminController extends HttpServlet {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

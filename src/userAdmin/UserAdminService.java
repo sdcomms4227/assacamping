@@ -36,13 +36,7 @@ public class UserAdminService {
 	}
 
 	public int updateUser(UserVO userVO) {
-		int result = userAdminDAO.checkUserPw(userVO);
-		
-		if(result > 0) {
-			return userAdminDAO.updateUser(userVO);
-		}
-		
-		return -1;
+		return userAdminDAO.updateUser(userVO);
 	}
 
 	public int deleteUser(String userId) {

@@ -76,7 +76,7 @@
 						<c:set var="productVO" value="${productMap.productVO}" />
 						<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 						<fmt:formatNumber var="productFmtPrice" value="${productVO.productPrice}" pattern="#,###" />
-						<fmt:formatDate var="productFmtDate" value="${productVO.productDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatDate var="productFormattedDate" value="${productVO.productDate}" pattern="yyyy-MM-dd HH:mm"/>
 						<tr onclick="readProduct(${productVO.productNo})" style="cursor: pointer">
 							<td class="align-middle">${productVO.productNo}</td>
 							<td class="align-middle wbka">${productCategoryName}</td>
@@ -84,7 +84,7 @@
 							<td class="align-middle text-left">${productVO.productName}</td>
 							<td class="align-middle">${productFmtPrice}</td>
 							<td class="align-middle">${productVO.productQuantity}</td>
-							<td class="align-middle">${productFmtDate}</td>
+							<td class="align-middle">${productFormattedDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyProduct(${productVO.productNo}, event)">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteProduct(${productVO.productNo}, event)">삭제</button>

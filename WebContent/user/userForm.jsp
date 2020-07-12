@@ -71,16 +71,16 @@
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userPhone">전화번호</label>
-					<input type="text" class="form-control" name="userPhone" id="userPhone" required />
+					<input type="tel" class="form-control" name="userPhone" id="userPhone" placeholder="010-0000-0000" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required />
 				</div>
 				<div class="form-group mb-3">					
-					<label class="font-weight-bold" for="userEmail">이메일 주소</label>					
+					<label class="font-weight-bold" for="userEmail">이메일</label>
 					<div class="input-group">
-			            <div class="input-group-prepend">
-			              <span class="input-group-text">@</span>
-			            </div>
-			            <input type="text" class="form-control" id="userEmail" required>
-			          </div>
+						<div class="input-group-prepend">
+							<span class="input-group-text">@</span>
+						</div>
+						<input type="email" class="form-control" name="userEmail" id="userEmail" required>
+					</div>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>

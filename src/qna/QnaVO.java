@@ -2,7 +2,7 @@ package qna;
 
 import java.sql.Timestamp;
 
-public class ProductQnaVO {
+public class QnaVO {
 	private int productNo;
 	private int qnaNo;
 	private String qnaContent;

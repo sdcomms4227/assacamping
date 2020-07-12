@@ -8,20 +8,20 @@ import event.EventVO;
 
 public class EventAdminService {
 	
-	EventAdminDAO eveAdminDAO;
+	EventAdminDAO eventAdminDAO;
 	
 	public EventAdminService() {		
-		eveAdminDAO = new EventAdminDAO();
+		eventAdminDAO = new EventAdminDAO();
 	}
 
 	public Map<String, Object> listEvent(Map<String, Object> searchMap) {
 		
 		Map<String, Object> eventListMap = new HashMap<String, Object>();
 		
-		List<Map<String,Object>> eventList = eveAdminDAO.getEventList(searchMap);
+		List<Map<String,Object>> eventList = eventAdminDAO.getEventList(searchMap);
 		eventListMap.put("eventList", eventList);
 		
-		int totalCount = eveAdminDAO.getEventListCount(searchMap);		
+		int totalCount = eventAdminDAO.getEventListCount(searchMap);		
 		eventListMap.put("totalCount", totalCount);
 		
 		return eventListMap;
@@ -31,9 +31,9 @@ public class EventAdminService {
 		
 		Map<String, Object> eventMap = new HashMap<String, Object>();
 		
-		eveAdminDAO.incrementEventCount(eventNo);
+		eventAdminDAO.incrementEventReadCount(eventNo);
 				
-		EventVO eventVO = eveAdminDAO.getEvent(eventNo);
+		EventVO eventVO = eventAdminDAO.getEvent(eventNo);
 		eventMap.put("eventVO", eventVO);
 		
 		return eventMap;
@@ -41,18 +41,18 @@ public class EventAdminService {
 
 	public int insertEvent(EventVO eventVO) {
 
-		int maxNo = eveAdminDAO.getEventMaxNo();		
-		eveAdminDAO.insertEvent(eventVO, maxNo);		
+		int maxNo = eventAdminDAO.getEventMaxNo();		
+		eventAdminDAO.insertEvent(eventVO, maxNo);		
 		
 		return maxNo;
 	}
 
 	public int updateEvent(EventVO eventVO, String deleteFile) {		
-		return eveAdminDAO.updateEvent(eventVO, deleteFile);
+		return eventAdminDAO.updateEvent(eventVO, deleteFile);
 	}
 
 	public int deleteEvent(int eventNo) {		
-		return eveAdminDAO.deleteEvent(eventNo);		
+		return eventAdminDAO.deleteEvent(eventNo);		
 	}
 
 }

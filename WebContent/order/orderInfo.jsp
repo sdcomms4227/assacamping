@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 <link rel="stylesheet" href="${contextPath}/css/common.css">
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
-<link rel="stylesheet" href="${contextPath}/css/checkout.css">
-<link rel="stylesheet" href="${contextPath}/css/checkout_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/order.css">
+<link rel="stylesheet" href="${contextPath}/css/order_responsive.css">
 </head>
 <body>
 
@@ -49,8 +49,8 @@
 		</div>
 	</div>
 
-	<!-- orderInfo -->
-	<article class="orderInfo container">
+	<!-- order -->
+	<article class="order container">
 		<div class="row my-5 p-5 bg-light">
 			<div class="col-12">
 				<h2 class="h2 text-center">주문해주셔서 감사합니다.</h2>
@@ -113,6 +113,6 @@
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
-<script src="${contextPath}/js/checkout_custom.js"></script>
+<script src="${contextPath}/js/order_custom.js"></script>
 </body>
 </html>

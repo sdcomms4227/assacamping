@@ -12,19 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import product.ProductVO;
-import qna.ProductQnaVO;
+import qna.QnaVO;
 
 @SuppressWarnings("serial")
 @WebServlet("/qnaAdminServlet/*")
 public class QnaAdminController extends HttpServlet {
 
 	QnaAdminService qnaAdminService;
-	ProductQnaVO productQnaVO;
+	QnaVO qnaVO;
 
 	@Override
 	public void init() throws ServletException {
 		qnaAdminService = new QnaAdminService();
-		productQnaVO = new ProductQnaVO();
+		qnaVO = new QnaVO();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class QnaAdminController extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action: " + action);
 		
-		if(action == null || action.equals("/listProductQna.do")) {
+		if(action == null || action.equals("/listQna.do")) {
 
 			setPagination(request);
 			
@@ -55,79 +55,79 @@ public class QnaAdminController extends HttpServlet {
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 			searchMap.put("answerCheck", request.getAttribute("answerCheck"));
 
-			Map<String, Object> productQnaListMap = qnaAdminService.listProductQna(searchMap);			
-			request.setAttribute("productQnaListMap", productQnaListMap);
+			Map<String, Object> qnaListMap = qnaAdminService.listQna(searchMap);			
+			request.setAttribute("qnaListMap", qnaListMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/proQnaAdmin/listProductQna.jsp";
+			nextPage = "/qnaAdmin/listQna.jsp";
 			
-		}else if(action.equals("/readProductQna.do")) {
+		}else if(action.equals("/readQna.do")) {
 
 			setPagination(request);
 			
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 			
-			Map<String, Object> productQnaMap = qnaAdminService.readProductQna(qnaNo);			
-			ProductQnaVO productQnaVO = (ProductQnaVO)productQnaMap.get("productQnaVO");			
-			ProductVO productVO = (ProductVO)productQnaMap.get("productVO");
+			Map<String, Object> qnaMap = qnaAdminService.readQna(qnaNo);			
+			QnaVO qnaVO = (QnaVO)qnaMap.get("qnaVO");			
+			ProductVO productVO = (ProductVO)qnaMap.get("productVO");
 			
-			request.setAttribute("productQnaVO", productQnaVO);
+			request.setAttribute("qnaVO", qnaVO);
 			request.setAttribute("productVO", productVO);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/proQnaAdmin/readProductQna.jsp";
+			nextPage = "/qnaAdmin/readQna.jsp";
 			
-		}else if(action.equals("/answerProductQna.do")) {
+		}else if(action.equals("/answerQna.do")) {
 
 			setPagination(request);
 
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 
-			Map<String, Object> productQnaMap = qnaAdminService.readProductQna(qnaNo);			
-			ProductQnaVO productQnaVO = (ProductQnaVO)productQnaMap.get("productQnaVO");			
-			ProductVO productVO = (ProductVO)productQnaMap.get("productVO");
+			Map<String, Object> qnaMap = qnaAdminService.readQna(qnaNo);			
+			QnaVO qnaVO = (QnaVO)qnaMap.get("qnaVO");			
+			ProductVO productVO = (ProductVO)qnaMap.get("productVO");
 			
-			request.setAttribute("productQnaVO", productQnaVO);
+			request.setAttribute("qnaVO", qnaVO);
 			request.setAttribute("productVO", productVO);
 			
-			nextPage = "/proQnaAdmin/answerProductQna.jsp";
+			nextPage = "/qnaAdmin/answerQna.jsp";
 			
-		}else if(action.equals("/updateProductQna.do")) {
+		}else if(action.equals("/updateQna.do")) {
 
 			setPagination(request);
 			
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 			String qnaAnswer = request.getParameter("qnaAnswer");
 			
-			productQnaVO.setQnaNo(qnaNo);
-			productQnaVO.setQnaAnswer(qnaAnswer);
+			qnaVO.setQnaNo(qnaNo);
+			qnaVO.setQnaAnswer(qnaAnswer);
 			
-			int result = qnaAdminService.updateProductQna(productQnaVO);
+			int result = qnaAdminService.updateQna(qnaVO);
 			String alertMsg = "";
 			
 			if(result > 0) {
 				alertMsg = "답변이 완료되었습니다.";		
-				nextPage = "/qnaAdminServlet/readProductQna.do?qnaNo=" + qnaNo;
+				nextPage = "/qnaAdminServlet/readQna.do?qnaNo=" + qnaNo;
 			}else {
 				alertMsg = "오류가 발생했습니다.";
-				nextPage = "/qnaAdminServlet/readProductQna.do?qnaNo=" + qnaNo;
+				nextPage = "/qnaAdminServlet/readQna.do?qnaNo=" + qnaNo;
 			}
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-		}else if(action.equals("/deleteProductQna.do")) {
+		}else if(action.equals("/deleteQna.do")) {
 
 			setPagination(request);
 
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
 			
-			int result = qnaAdminService.deleteProductQna(qnaNo);
+			int result = qnaAdminService.deleteQna(qnaNo);
 			String alertMsg = "";
 
 			if(result > 0) {
@@ -138,7 +138,7 @@ public class QnaAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/qnaAdminServlet/listProductQna.do";
+			nextPage = "/qnaAdminServlet/listQna.do";
 			
 		}
 				

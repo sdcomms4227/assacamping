@@ -5,20 +5,20 @@
 
 [Table of Contents]
 
-6. Checkout
+6. Order
 7. Options
 
 
 ******************************/
 
 /*********************************
-6. Checkout
+6. Order
 *********************************/
 
-.checkout
-{
-	padding-bottom: 111px;
-	background: #FFFFFF;
+.order {
+    padding-top: 94px;
+    padding-bottom: 98px;
+    background: #FFFFFF;
 }
 .checkout_title
 {

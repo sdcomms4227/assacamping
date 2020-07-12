@@ -8,6 +8,7 @@
 <c:set var="eventImageFileName" value="${event.eventImageFileName}" />
 <c:set var="eventWriteDate" value="${event.eventWriteDate}" />
 <c:set var="eventReadCount" value="${event.eventReadCount}" />
+<fmt:formatDate var="eventFormattedWriteDate" value="${eventWriteDate}" pattern="yy-MM-dd"/>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -76,7 +77,7 @@
 				<td colspan="6" class="h4 p-3 readsubject">
 					${eventTitle}																	
 					<div class="h6 mt-3 mb-0 d-lg-none text-right">
-						<small class="text-muted">${userId} | <fmt:formatDate value="${eventWriteDate}" pattern="yy-MM-dd"/> | ${eventReadCount}</small>
+						<small class="text-muted">${userId} | ${eventFormattedWriteDate} | ${eventReadCount}</small>
 					</div>
 				</td>
 			</tr>
@@ -84,7 +85,7 @@
 				<th class="align-middle">제목</th>
 				<td>${event.eventTitle}</td>				
 				<th class="align-middle">작성일</th>
-				<td><fmt:formatDate value="${eventWriteDate}" pattern="yy-MM-dd"/></td>
+				<td>${eventFormattedWriteDate}</td>
 				<th class="align-middle">조회수</th>
 				<td>${eventReadCount}</td>
 			</tr>

@@ -138,13 +138,13 @@ INSERT INTO `product` VALUES (1,'상품1','내용','product_1.jpg',NULL,NULL,320
 UNLOCK TABLES;
 
 --
--- Table structure for table `productQna`
+-- Table structure for table `qna`
 --
 
-DROP TABLE IF EXISTS `productQna`;
+DROP TABLE IF EXISTS `qna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `productQna` (
+CREATE TABLE `qna` (
   `productNo` int(11) DEFAULT NULL,
   `qnaNo` int(11) NOT NULL,
   `qnaContent` varchar(2048) DEFAULT NULL,
@@ -156,22 +156,22 @@ CREATE TABLE `productQna` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productQna`
+-- Dumping data for table `qna`
 --
 
-LOCK TABLES `productQna` WRITE;
-/*!40000 ALTER TABLE `productQna` DISABLE KEYS */;
-/*!40000 ALTER TABLE `productQna` ENABLE KEYS */;
+LOCK TABLES `qna` WRITE;
+/*!40000 ALTER TABLE `qna` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qna` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `productReview`
+-- Table structure for table `review`
 --
 
-DROP TABLE IF EXISTS `productReview`;
+DROP TABLE IF EXISTS `review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `productReview` (
+CREATE TABLE `review` (
   `productNo` int(11) DEFAULT NULL,
   `reviewNo` int(11) NOT NULL,
   `reviewContent` varchar(2048) DEFAULT NULL,
@@ -184,13 +184,13 @@ CREATE TABLE `productReview` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productReview`
+-- Dumping data for table `review`
 --
 
-LOCK TABLES `productReview` WRITE;
-/*!40000 ALTER TABLE `productReview` DISABLE KEYS */;
-INSERT INTO `productReview` VALUES (1,1,'1','hong','홍길동','2020-07-08 10:23:12',NULL),(1,3,'리뷰 테스트3-1','hong','홍길동','2020-07-07 15:00:00',NULL),(1,4,'리뷰 테스트4','hong','홍길동','2020-07-08 10:40:41',NULL),(2,5,'ㅎㅇ','hong','홍길동','2020-07-08 10:43:21',NULL),(2,6,'이거 지려요','hong','홍길동','2020-07-08 10:43:28',NULL);
-/*!40000 ALTER TABLE `productReview` ENABLE KEYS */;
+LOCK TABLES `review` WRITE;
+/*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` VALUES (1,1,'1','hong','홍길동','2020-07-08 10:23:12',NULL),(1,3,'리뷰 테스트3-1','hong','홍길동','2020-07-07 15:00:00',NULL),(1,4,'리뷰 테스트4','hong','홍길동','2020-07-08 10:40:41',NULL),(2,5,'ㅎㅇ','hong','홍길동','2020-07-08 10:43:21',NULL),(2,6,'이거 지려요','hong','홍길동','2020-07-08 10:43:28',NULL);
+/*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

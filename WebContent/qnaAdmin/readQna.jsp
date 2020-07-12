@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<c:set var="productNo" value="${productQnaVO.productNo}" />
-<c:set var="qnaNo" value="${productQnaVO.qnaNo}" />
-<c:set var="qnaContent" value="${productQnaVO.qnaContent}" />
-<c:set var="qnaAnswer" value="${productQnaVO.qnaAnswer}" />
-<c:set var="userId" value="${productQnaVO.userId}" />
-<c:set var="userName" value="${productQnaVO.userName}" />
-<c:set var="qnaDate" value="${productQnaVO.qnaDate}" />
+<c:set var="productNo" value="${qnaVO.productNo}" />
+<c:set var="qnaNo" value="${qnaVO.qnaNo}" />
+<c:set var="qnaContent" value="${qnaVO.qnaContent}" />
+<c:set var="qnaAnswer" value="${qnaVO.qnaAnswer}" />
+<c:set var="userId" value="${qnaVO.userId}" />
+<c:set var="userName" value="${qnaVO.userName}" />
+<c:set var="qnaDate" value="${qnaVO.qnaDate}" />
 <c:set var="productImageName1" value="${productVO.productImageName1}" />
 <c:set var="productName" value="${productVO.productName}" />
+<fmt:formatDate var="qnaFormattedDate" value="${qnaDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -16,7 +17,7 @@
 	</div>
 </div>
 
-<article class="productQna">
+<article class="qnaAdmin">
 	<div class="row">
 		<div class="col-12 col-lg-4 col-xl-3">
 			<table class="table read-table table-layout-fixed">
@@ -76,14 +77,14 @@
 									${fn:replace(qnaAnswer,LF,BR)}				
 								</c:when>
 								<c:otherwise>
-									<button type="button" class="btn btn-warning btn-sm" onclick="answerProductQna(${qnaNo})">답변하기</button>
+									<button type="button" class="btn btn-warning btn-sm" onclick="answerQna(${qnaNo})">답변하기</button>
 								</c:otherwise>
 							</c:choose>
 						</td>
 					</tr>
 					<tr>
 						<th class="align-middle">작성일</th>
-						<td><fmt:formatDate value="${qnaDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td>${qnaFormattedDate}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -91,9 +92,9 @@
 	</div>
 	
 	<div class="text-center my-5">
-		<button type="button" class="btn btn-secondary" onclick="listProductQna()">목록</button>							
-		<button type="button" class="btn btn-warning" onclick="answerProductQna(${qnaNo})">답변하기</button>
-		<button type="button" class="btn btn-danger" onclick="deleteProductQna(${qnaNo})">삭제</button>
+		<button type="button" class="btn btn-secondary" onclick="listQna()">목록</button>							
+		<button type="button" class="btn btn-warning" onclick="answerQna(${qnaNo})">답변하기</button>
+		<button type="button" class="btn btn-danger" onclick="deleteQna(${qnaNo})">삭제</button>
 	</div>			
 </article>
 
@@ -104,22 +105,22 @@
 </form>
 
 <script>
-function listProductQna(){
+function listQna(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/qnaAdminServlet/listProductQna.do";	
+	form.action = "${contextPath}/qnaAdminServlet/listQna.do";	
 	form.submit();
 }
-function answerProductQna(qnaNo){
+function answerQna(qnaNo){
 	event.stopPropagation();
 	var form = document.pagingForm;
-	form.action = "${contextPath}/qnaAdminServlet/answerProductQna.do?qnaNo=" + qnaNo;
+	form.action = "${contextPath}/qnaAdminServlet/answerQna.do?qnaNo=" + qnaNo;
 	form.submit();
 }
-function deleteProductQna(qnaNo){
+function deleteQna(qnaNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/qnaAdminServlet/deleteProductQna.do?qnaNo=" + qnaNo;
+		form.action = "${contextPath}/qnaAdminServlet/deleteQna.do?qnaNo=" + qnaNo;
 		form.submit();
 	}
 }

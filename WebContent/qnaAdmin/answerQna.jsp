@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<c:set var="productNo" value="${productQnaVO.productNo}" />
-<c:set var="qnaNo" value="${productQnaVO.qnaNo}" />
-<c:set var="qnaContent" value="${productQnaVO.qnaContent}" />
-<c:set var="qnaAnswer" value="${productQnaVO.qnaAnswer}" />
-<c:set var="userId" value="${productQnaVO.userId}" />
-<c:set var="userName" value="${productQnaVO.userName}" />
-<c:set var="qnaDate" value="${productQnaVO.qnaDate}" />
+<c:set var="productNo" value="${qnaVO.productNo}" />
+<c:set var="qnaNo" value="${qnaVO.qnaNo}" />
+<c:set var="qnaContent" value="${qnaVO.qnaContent}" />
+<c:set var="qnaAnswer" value="${qnaVO.qnaAnswer}" />
+<c:set var="userId" value="${qnaVO.userId}" />
+<c:set var="userName" value="${qnaVO.userName}" />
+<c:set var="qnaDate" value="${qnaVO.qnaDate}" />
 <c:set var="productImageName1" value="${productVO.productImageName1}" />
 <c:set var="productName" value="${productVO.productName}" />
+<fmt:formatDate var="qnaFormattedDate" value="${qnaDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -16,7 +17,7 @@
 	</div>
 </div>
 
-<article class="productQna">
+<article class="qnaAdmin">
 	<div class="row">
 		<div class="col-12 col-lg-4 col-xl-3">
 			<table class="table read-table table-layout-fixed">
@@ -45,7 +46,7 @@
 			</table>
 		</div>
 		<div class="col-12 col-lg-8 col-xl-9">
-			<form action="${contextPath}/qnaAdminServlet/updateProductQna.do" method="post">
+			<form action="${contextPath}/qnaAdminServlet/updateQna.do" method="post">
 				<input type="hidden" name="pageNo" value="${pageNo}" />
 				<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 				<input type="hidden" name="answerCheck" value="${answerCheck}" />
@@ -85,7 +86,7 @@
 						</tr>
 						<tr>
 							<th class="align-middle">작성일</th>
-							<td><fmt:formatDate value="${qnaDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+							<td>${qnaFormattedDate}</td>
 						</tr>
 					</tbody>
 				</table>

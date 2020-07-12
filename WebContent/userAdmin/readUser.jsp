@@ -10,6 +10,7 @@
 <c:set var="userAddress2" value="${userVO.userAddress2}" />
 <c:set var="userDate" value="${userVO.userDate}" />
 <c:set var="userUse" value="${userVO.userUse}" />
+<fmt:formatDate var="userFormattedDate" value="${userDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -73,7 +74,7 @@
 					</tr>
 					<tr>
 						<th>가입일</th>
-						<td><fmt:formatDate value="${userDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td>${userFormattedDate}</td>
 					</tr>
 				</tbody>
 			</table>

@@ -18,14 +18,14 @@ import org.json.simple.parser.ParseException;
 
 @SuppressWarnings("serial")
 @WebServlet("/reviewServlet/*")
-public class ProductReviewController extends HttpServlet{
+public class ReviewController extends HttpServlet{
 	
-	ProductReviewService productReviewService;
-	ProductReviewVO productReviewVO;
+	ReviewService reviewService;
+	ReviewVO reviewVO;
 	
 	public void init() throws ServletException {
-		productReviewService = new ProductReviewService();
-		productReviewVO = new ProductReviewVO();
+		reviewService = new ReviewService();
+		reviewVO = new ReviewVO();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class ProductReviewController extends HttpServlet{
 					reviewObject = (JSONObject) jsonParser.parse(info);
 					int productNo = Integer.parseInt((String) reviewObject.get("productNo"));
 
-					List<ProductReviewVO> reviewList = productReviewService.getReviewList(productNo);
+					List<ReviewVO> reviewList = reviewService.getReviewList(productNo);
 					
 					if (reviewList.size() > 0) {
 						JSONArray jsonArray = new JSONArray();
@@ -107,13 +107,13 @@ public class ProductReviewController extends HttpServlet{
 					String reviewContent = (String) reviewObject.get("reviewContent");
 					int starRating = Integer.parseInt((String) reviewObject.get("starRating"));
 					
-					productReviewVO.setProductNo(productNo);
-					productReviewVO.setUserId(userId);
-					productReviewVO.setUserName(userName);
-					productReviewVO.setReviewContent(reviewContent);
-					productReviewVO.setStarRating(starRating);
+					reviewVO.setProductNo(productNo);
+					reviewVO.setUserId(userId);
+					reviewVO.setUserName(userName);
+					reviewVO.setReviewContent(reviewContent);
+					reviewVO.setStarRating(starRating);
 					
-					int result = productReviewService.insertReview(productReviewVO);
+					int result = reviewService.insertReview(reviewVO);
 					
 					if (result == 1) {
 						out.print("success");
@@ -134,10 +134,10 @@ public class ProductReviewController extends HttpServlet{
 					int productNo = Integer.parseInt((String) reviewObject.get("productNo"));
 					String userId = (String) reviewObject.get("userId");
 
-					int result = productReviewService.deleteReview(reviewNo, userId);
+					int result = reviewService.deleteReview(reviewNo, userId);
 					
 					if (result == 1) {
-						int reviewCnt = productReviewService.getReviewList(productNo).size();
+						int reviewCnt = reviewService.getReviewList(productNo).size();
 						JSONObject returnObject = new JSONObject();
 						
 						returnObject.put("reviewCnt", Integer.toString(reviewCnt));
@@ -161,7 +161,7 @@ public class ProductReviewController extends HttpServlet{
 					String userId = (String) reviewObject.get("userId");
 					String updateContent = (String) reviewObject.get("updateContent");
 					
-					int result = productReviewService.updateReview(reviewNo, userId, updateContent);
+					int result = reviewService.updateReview(reviewNo, userId, updateContent);
 					
 					if (result == 1) {
 						out.print("success");

@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 <link rel="stylesheet" href="${contextPath}/css/common.css">
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
-<link rel="stylesheet" href="${contextPath}/css/checkout.css">
-<link rel="stylesheet" href="${contextPath}/css/checkout_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/order.css">
+<link rel="stylesheet" href="${contextPath}/css/order_responsive.css">
 </head>
 <body>
 
@@ -41,14 +41,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Checkout</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li><a href="index.html">Shopping Cart</a></li>
-									<li>Shopping Cart</li>
-								</ul>
-							</div>
+							<div class="home_title">주문하기</div>
 						</div>
 					</div>
 				</div>
@@ -56,7 +49,7 @@
 		</div>
 	</div>
 
-	<!-- Checkout -->
+	<!-- order -->
 	<form action="${contextPath}/orderServlet/pay.do" method="post" id="checkout_form">
 		<div class="checkout">
 			<div class="container">
@@ -156,6 +149,6 @@
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
-<script src="${contextPath}/js/checkout_custom.js"></script>
+<script src="${contextPath}/js/order_custom.js"></script>
 </body>
 </html>

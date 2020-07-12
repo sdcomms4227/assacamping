@@ -34,7 +34,7 @@
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-	<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3 text-truncate" href="#">ASSA Camping - 관리자모드</a>
+	<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3 text-truncate" href="${contextPath}">ASSA Camping - 관리자모드</a>
 	<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
 		aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -58,8 +58,8 @@
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/reviewAdminServlet/listProductReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/qnaAdminServlet/listProductQna.do"> <span data-feather="file-text"></span> 상품 문의 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/reviewAdminServlet/listReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/qnaAdminServlet/listQna.do"> <span data-feather="file-text"></span> 상품 문의 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">

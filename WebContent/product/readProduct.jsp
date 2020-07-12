@@ -121,8 +121,8 @@
 								<div class="my-4 p-3 bg-light">
 									<p>${fn:replace(productContent,LF,BR)}</p>
 								</div>
-								<!-- Product Quantity -->
 								
+								<!-- Product Quantity -->								
 								<div class="row my-4 align-items-center">
 									<div class="col col-2 font-weight-bold">수량</div>
 									<div class="col ml-auto">
@@ -537,7 +537,7 @@ function qnaList(){
 					if('${userId}' == 'admin'){
 						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button>';
 						if(answer == null){
-							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/qnaAdminServlet/answerProductQna.do?qnaNo='+no+'\'">답변</button></div>';
+							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/qnaAdminServlet/answerQna.do?qnaNo='+no+'\'">답변</button></div>';
 						} else {
 							a += '<div class="qna_content">';
 							a += '<div class="qna_name"><b>[답변]관리자</b></div>';

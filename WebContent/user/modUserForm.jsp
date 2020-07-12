@@ -49,23 +49,28 @@
 			<form class="userForm" action="${contextPath}/userServlet/modUser.do?userId=${userInfo.userId}" method="post" onsubmit="return check();">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
-					<input type="text" class="form-control form-control-lg" name="userId" id="userId" value="${userInfo.userId}" disabled>
+					<input type="text" class="form-control" name="userId" id="userId" value="${userInfo.userId}" disabled>
 				</div>
 				<div class="form-group mb-3" hidden>
 					<label class="font-weight-bold" for="userPw">비밀번호</label>
-					<input type="password" class="form-control form-control-lg" name="userPw" id="userPw" value="${userInfo.userPw}" required>
+					<input type="password" class="form-control" name="userPw" id="userPw" value="${userInfo.userPw}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userName">이름</label>
-					<input type="text" class="form-control form-control-lg" name="userName" id="userName" value="${userInfo.userName}" required>
+					<input type="text" class="form-control" name="userName" id="userName" value="${userInfo.userName}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userPhone">전화번호</label>
-					<input type="text" class="form-control form-control-lg" name="userPhone" id="userPhone" value="${userInfo.userPhone}" required>
+					<input type="tel" class="form-control" name="userPhone" id="userPhone" value="${userInfo.userPhone}" placeholder="010-0000-0000" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userEmail">이메일</label>
-					<input type="text" class="form-control form-control-lg" name="userEmail" id="userEmail" value="${userInfo.userEmail}" required>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">@</span>
+						</div>
+						<input type="email" class="form-control" name="userEmail" id="userEmail" value="${userInfo.userEmail}" required>
+					</div>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>
@@ -78,11 +83,11 @@
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress1">주소</label>
-					<input type="text" class="form-control form-control-lg" name="userAddress1" id="userAddress1" value="${userInfo.userAddress1}" required>
+					<input type="text" class="form-control" name="userAddress1" id="userAddress1" value="${userInfo.userAddress1}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress2">상세주소</label>
-					<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" value="${userInfo.userAddress2}" required>
+					<input type="text" class="form-control" name="userAddress2" id="userAddress2" value="${userInfo.userAddress2}" required>
 				</div>
 				<button type="submit" class="btn btn-lg btn-primary btn-block my-5">수정하기</button>
 			</form>

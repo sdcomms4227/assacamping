@@ -84,7 +84,7 @@ public class OrderController extends HttpServlet{
 				 request.setAttribute("uservo", uservo);
 				 
 				
-			   	nextPage="/order/checkout.jsp";
+			   	nextPage="/order/order.jsp";
 				
 			}else if(action.equals("/pay.do")) {//상품정보랑 회원배송지 뿌려주는창
 			
@@ -148,8 +148,7 @@ public class OrderController extends HttpServlet{
 					ProductAdminService proAdminservice = new ProductAdminService();
 					proAdminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
 
-				}
-				
+				}				
 				
 				request.setAttribute("orderlist", orderlist);
 
@@ -157,7 +156,7 @@ public class OrderController extends HttpServlet{
 			    
 				nextPage="/order/orderInfo.jsp";
 				
-			} else if(action.equals("/orderList.do")) {
+			} else if(action.equals("/myOrderList.do")) {
 				
 			    String userId=(String)session.getAttribute("userId");
 				
@@ -173,7 +172,7 @@ public class OrderController extends HttpServlet{
 				request.setAttribute("orderNo", orderNo);//distinct orderNo
 				request.setAttribute("payList", payList);//모든주문내역
 				
-				nextPage="/mypage/myOrderList.jsp";
+				nextPage="/order/myOrderList.jsp";
 				
 			}else if(action.equals("/orderInfo.do")) {
 				
@@ -186,7 +185,7 @@ public class OrderController extends HttpServlet{
 				
 				request.setAttribute("orderInfo", orderInfo);
 				
-				nextPage="/mypage/myOrderInfo.jsp";
+				nextPage="/order/myOrderInfo.jsp";
 				
 			}else if(action.equals("/orderDelete.do")) {//결제취소 
 			
@@ -195,8 +194,6 @@ public class OrderController extends HttpServlet{
 				String userId=(String)session.getAttribute("userId");
 				
 				orderservice.orderDelete(userId, orderNo);
-				
-				 session.setAttribute("userId", userId); 
 				 
 				nextPage="/orderServlet/orderList.do";
 		

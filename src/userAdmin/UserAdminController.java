@@ -150,7 +150,6 @@ public class UserAdminController extends HttpServlet {
 			Map<String, String> multipartMap = uploadFile(request);
 			
 			String userId = multipartMap.get("userId");
-			String userPw = multipartMap.get("userPw");
 			String userName = multipartMap.get("userName");
 			String userPhone = multipartMap.get("userPhone");
 			String userEmail = multipartMap.get("userEmail");
@@ -159,7 +158,6 @@ public class UserAdminController extends HttpServlet {
 			String userAddress2 = multipartMap.get("userAddress2");
 			
 			userVO.setUserId(userId);
-			userVO.setUserPw(userPw);
 			userVO.setUserName(userName);
 			userVO.setUserPhone(userPhone);
 			userVO.setUserEmail(userEmail);
@@ -173,9 +171,6 @@ public class UserAdminController extends HttpServlet {
 			if(result > 0) {
 				alertMsg = "정상적으로 수정되었습니다.";		
 				nextPage = "/userAdminServlet/readUser.do?userId=" + userId;
-			}else if(result == -1){
-				alertMsg = "비밀번호가 일치하지 않습니다.";
-				nextPage = "/userAdminServlet/modifyUser.do?userId=" + userId;
 			}else {
 				alertMsg = "오류가 발생했습니다.";
 				nextPage = "/userAdminServlet/readUser.do?userId=" + userId;

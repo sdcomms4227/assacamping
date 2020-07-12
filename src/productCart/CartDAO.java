@@ -33,7 +33,7 @@ public class CartDAO {
 		try {
 			 conn=dbUtil.DBConnection.getConnection();
 			
-			 sql="select * from productcart where userId=? order by productCartDate desc";
+			 sql="select * from cart where userId=? order by productCartDate desc";
 			
 			 pstmt=conn.prepareStatement(sql);
 			 
@@ -69,7 +69,7 @@ public class CartDAO {
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="insert into productcart(productNo, productPrice, cartQuantity, productDelivery, productName, productImage, productCategory ,userId, productCartDate,productTotalPrice)"
+			sql="insert into cart(productNo, productPrice, cartQuantity, productDelivery, productName, productImage, productCategory ,userId, productCartDate,productTotalPrice)"
 				+ " values(?,?,?,?,?,?,?,?,now(),?)";
 			
 			pstmt=conn.prepareStatement(sql);
@@ -97,7 +97,7 @@ public class CartDAO {
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="update productcart set cartQuantity=? ,productTotalPrice=? where userId=? and productName=?  ";
+			sql="update cart set cartQuantity=? ,productTotalPrice=? where userId=? and productName=?  ";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -123,7 +123,7 @@ public class CartDAO {
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select productNo from productcart where userId=?";
+			sql="select productNo from cart where userId=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -147,7 +147,7 @@ public class CartDAO {
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="delete from productcart where userId=?";
+			sql="delete from cart where userId=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -169,7 +169,7 @@ public class CartDAO {
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="delete from productcart where productNo=? and userId=?";
+			sql="delete from cart where productNo=? and userId=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -193,7 +193,7 @@ public class CartDAO {
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select sum(productTotalPrice) ,sum(productDelivery) from productcart where userId=?";
+			sql="select sum(productTotalPrice) ,sum(productDelivery) from cart where userId=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -228,7 +228,7 @@ public class CartDAO {
 		try {
                conn=dbUtil.DBConnection.getConnection();
 			
-			   sql="select count(*) from productcart where userId=?";
+			   sql="select count(*) from cart where userId=?";
 			    
 			   pstmt=conn.prepareStatement(sql);
 			   

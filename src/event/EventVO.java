@@ -3,84 +3,68 @@ package event;
 import java.sql.Timestamp;
 
 public class EventVO {
-	private int eventNo; 
+	private int eventNo;
 	private String eventTitle;
 	private String eventContent;
 	private String eventImageFileName;
-	private String userId;
 	private Timestamp eventWriteDate;
-	private int eventReadCount; 
-	
-  public EventVO() {
-  }
+	private int eventReadCount;
 
-public EventVO(int eventNo, String eventTitle, String eventContent, String eventImageFileName, String userId) {
-	super();
-	this.eventNo = eventNo;
-	this.eventTitle = eventTitle;
-	this.eventContent = eventContent;
-	this.eventImageFileName = eventImageFileName;
-	this.userId = userId;
-}
+	public EventVO() {
+	}
 
-public int getEventNo() {
-	return eventNo;
-}
+	public EventVO(String eventTitle, String eventContent, String eventImageFileName) {
+		this.eventTitle = eventTitle;
+		this.eventContent = eventContent;
+		this.eventImageFileName = eventImageFileName;
+	}
 
-public void setEventNo(int eventNo) {
-	this.eventNo = eventNo;
-}
+	public int getEventNo() {
+		return eventNo;
+	}
 
-public String getEventTitle() {
-	return eventTitle;
-}
+	public void setEventNo(int eventNo) {
+		this.eventNo = eventNo;
+	}
 
-public void setEventTitle(String eventTitle) {
-	this.eventTitle = eventTitle;
-}
+	public String getEventTitle() {
+		return eventTitle;
+	}
 
-public String getEventContent() {
-	return eventContent;
-}
+	public void setEventTitle(String eventTitle) {
+		this.eventTitle = eventTitle;
+	}
 
-public void setEventContent(String eventContent) {
-	this.eventContent = eventContent;
-}
+	public String getEventContent() {
+		return eventContent;
+	}
 
-public String getEventImageFileName() {
-	return eventImageFileName;
-}
+	public void setEventContent(String eventContent) {
+		this.eventContent = eventContent;
+	}
 
-public void setEventImageFileName(String eventImageFileName) {
-	this.eventImageFileName = eventImageFileName;
-}
+	public String getEventImageFileName() {
+		return eventImageFileName;
+	}
 
-public String getUserId() {
-	return userId;
-}
+	public void setEventImageFileName(String eventImageFileName) {
+		this.eventImageFileName = eventImageFileName;
+	}
 
-public void setUserId(String userId) {
-	this.userId = userId;
-}
+	public Timestamp getEventWriteDate() {
+		return eventWriteDate;
+	}
 
+	public void setEventWriteDate(Timestamp eventWriteDate) {
+		this.eventWriteDate = eventWriteDate;
+	}
 
-public Timestamp getEventWriteDate() {
-	return eventWriteDate;
-}
+	public int getEventReadCount() {
+		return eventReadCount;
+	}
 
-public void setEventWriteDate(Timestamp eventWriteDate) {
-	this.eventWriteDate = eventWriteDate;
-}
+	public void setEventReadCount(int eventReadCount) {
+		this.eventReadCount = eventReadCount;
+	}
 
-public int getEventReadCount() {
-	return eventReadCount;
-}
-
-public void setEventReadCount(int eventReadCount) {
-	this.eventReadCount = eventReadCount;
-}
-
-
-
-	
 }

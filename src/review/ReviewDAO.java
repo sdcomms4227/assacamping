@@ -9,7 +9,7 @@ import java.util.List;
 
 
 
-public class ProductReviewDAO {
+public class ReviewDAO {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -29,30 +29,30 @@ public class ProductReviewDAO {
 	}
 	
 	// 리뷰목록 가져오기
-	public List<ProductReviewVO> getReviewList(int productNo) {
+	public List<ReviewVO> getReviewList(int productNo) {
 		String sql = "";
-		List<ProductReviewVO> reviewList = new ArrayList<ProductReviewVO>();
+		List<ReviewVO> reviewList = new ArrayList<ReviewVO>();
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 
-			sql = "select * from productReview where productNo=?";
+			sql = "select * from review where productNo=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				ProductReviewVO productReviewVO = new ProductReviewVO();
+				ReviewVO reviewVO = new ReviewVO();
 
-				productReviewVO.setProductNo(rs.getInt("productNo"));
-				productReviewVO.setReviewContent(rs.getString("reviewContent"));
-				productReviewVO.setReviewDate(rs.getTimestamp("reviewDate"));
-				productReviewVO.setReviewNo(rs.getInt("reviewNo"));
-				productReviewVO.setUserId(rs.getString("userId"));
-				productReviewVO.setUserName(rs.getString("userName"));
-				productReviewVO.setStarRating(rs.getInt("starRating"));
+				reviewVO.setProductNo(rs.getInt("productNo"));
+				reviewVO.setReviewContent(rs.getString("reviewContent"));
+				reviewVO.setReviewDate(rs.getTimestamp("reviewDate"));
+				reviewVO.setReviewNo(rs.getInt("reviewNo"));
+				reviewVO.setUserId(rs.getString("userId"));
+				reviewVO.setUserName(rs.getString("userName"));
+				reviewVO.setStarRating(rs.getInt("starRating"));
 
-				reviewList.add(productReviewVO);
+				reviewList.add(reviewVO);
 			}
 		} catch (Exception e) {
 			System.out.println("getReviewList()메소드 내부에서 예외발생 : " + e.toString());
@@ -64,16 +64,16 @@ public class ProductReviewDAO {
 	}
 
 	// 리뷰달기
-	public int insertReview(ProductReviewVO productReviewVO) {
+	public int insertReview(ReviewVO reviewVO) {
 		String sql = "";
 		int num = 0;
 		
-		if (productReviewVO.getReviewContent() == null || productReviewVO.getReviewContent().equals("")) {
+		if (reviewVO.getReviewContent() == null || reviewVO.getReviewContent().equals("")) {
 			return -1;
 		} else {
 			try {
 				conn = dbUtil.DBConnection.getConnection();
-				sql = "select max(reviewNo) from productReview";
+				sql = "select max(reviewNo) from review";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 
@@ -83,16 +83,16 @@ public class ProductReviewDAO {
 					num = 1;
 				}
 				
-				sql = "insert into productReview(reviewNo,productNo,userId,userName,reviewContent,reviewDate, starRating)"
+				sql = "insert into review(reviewNo,productNo,userId,userName,reviewContent,reviewDate, starRating)"
 						+ "values(?, ?, ?, ?, ?, now(), ?)";
 
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
-				pstmt.setInt(2, productReviewVO.getProductNo());
-				pstmt.setString(3, productReviewVO.getUserId());
-				pstmt.setString(4, productReviewVO.getUserName());
-				pstmt.setString(5, productReviewVO.getReviewContent());
-				pstmt.setInt(6, productReviewVO.getStarRating());
+				pstmt.setInt(2, reviewVO.getProductNo());
+				pstmt.setString(3, reviewVO.getUserId());
+				pstmt.setString(4, reviewVO.getUserName());
+				pstmt.setString(5, reviewVO.getReviewContent());
+				pstmt.setInt(6, reviewVO.getStarRating());
 
 				return pstmt.executeUpdate();
 
@@ -108,7 +108,7 @@ public class ProductReviewDAO {
 
 	// 리뷰삭제
 	public int deleteReview(int reviewNo, String userId) {
-		String sql = "select userId from productReview where reviewNo=?";
+		String sql = "select userId from review where reviewNo=?";
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
@@ -117,7 +117,7 @@ public class ProductReviewDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if (userId.equals(rs.getString("userId")) || userId.equals("admin")) {
-					sql = "delete from productReview where reviewNo=?";
+					sql = "delete from review where reviewNo=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, reviewNo);
 					return pstmt.executeUpdate();
@@ -135,7 +135,7 @@ public class ProductReviewDAO {
 
 	// 리뷰수정
 	public int updateReview(int reviewNo, String userId, String updateContent) {
-String sql = "select userId from productReview where reviewNo=?";
+String sql = "select userId from review where reviewNo=?";
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
@@ -144,7 +144,7 @@ String sql = "select userId from productReview where reviewNo=?";
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if (userId.equals(rs.getString("userId"))) {
-					sql = "update productReview set reviewContent=?, reviewDate=curdate() where reviewNo=?";
+					sql = "update review set reviewContent=?, reviewDate=curdate() where reviewNo=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, updateContent);
 					pstmt.setInt(2, reviewNo);

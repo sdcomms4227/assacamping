@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import qna.ProductQnaVO;
+import qna.QnaVO;
 
 public class QnaAdminService {
 
@@ -14,29 +14,29 @@ public class QnaAdminService {
 		qnaAdminADO = new QnaAdminDAO();
 	}
 
-	public Map<String, Object> listProductQna(Map<String, Object> searchMap) {
+	public Map<String, Object> listQna(Map<String, Object> searchMap) {
 
-		Map<String, Object> productQnaListMap = new HashMap<String, Object>();
+		Map<String, Object> qnaListMap = new HashMap<String, Object>();
 
-		List<Map<String, Object>> productQnaList = qnaAdminADO.getProductQnaList(searchMap);
-		productQnaListMap.put("productQnaList", productQnaList);
+		List<Map<String, Object>> qnaList = qnaAdminADO.getQnaList(searchMap);
+		qnaListMap.put("qnaList", qnaList);
 
-		int totalCount = qnaAdminADO.getProductQnaListCount(searchMap);
-		productQnaListMap.put("totalCount", totalCount);
+		int totalCount = qnaAdminADO.getQnaListCount(searchMap);
+		qnaListMap.put("totalCount", totalCount);
 
-		return productQnaListMap;
+		return qnaListMap;
 	}
 
-	public Map<String, Object> readProductQna(int qnaNo) {
-		return qnaAdminADO.getProductQna(qnaNo);
+	public Map<String, Object> readQna(int qnaNo) {
+		return qnaAdminADO.getQna(qnaNo);
 	}
 
-	public int updateProductQna(ProductQnaVO productQnaVO) {
-		return qnaAdminADO.updateProductQna(productQnaVO);
+	public int updateQna(QnaVO qnaVO) {
+		return qnaAdminADO.updateQna(qnaVO);
 	}
 
-	public int deleteProductQna(int qnaNo) {
-		return qnaAdminADO.deleteProductQna(qnaNo);
+	public int deleteQna(int qnaNo) {
+		return qnaAdminADO.deleteQna(qnaNo);
 	}
 
 }

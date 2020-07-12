@@ -83,8 +83,7 @@ public class EventController extends HttpServlet {
 			eventMap.put("pageNum", pageNum);
 			eventMap.put("search", search);
 			
-			request.setAttribute("eventMap", eventMap);		
-//			session.setAttribute("userId", "admin"); //임시
+			request.setAttribute("eventMap", eventMap);
 			nextPage =  "/event/listEvent.jsp";	
 			
 		}else if(action.equals("/eventForm.do")) {//새글을 DB에 추가하기위한 폼페이지 요청
@@ -102,8 +101,7 @@ public class EventController extends HttpServlet {
 
 			eventVO.setEventTitle(title);
 			eventVO.setEventContent(content);
-			eventVO.setEventImageFileName(imageFileName);		
-			eventVO.setUserId("admin");
+			eventVO.setEventImageFileName(imageFileName);
 		
 			int eventNo =eventService.addEvent(eventVO);
 			
@@ -149,7 +147,6 @@ public class EventController extends HttpServlet {
 			String content = eventMap.get("eventContent");
 			String imageFileName = eventMap.get("imageFileName");
 			
-			eventVO.setUserId("admin");
 			eventVO.setEventTitle(title);
 			eventVO.setEventContent(content);
 			eventVO.setEventImageFileName(imageFileName);			

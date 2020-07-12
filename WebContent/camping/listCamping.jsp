@@ -77,43 +77,41 @@
 					<th>조회수</th>
 				</tr>
 			</thead>
-			<tbody>
-				
-		<c:choose>
-			<c:when test="${totalCount==0}">			
-				<tr>
-					<td colspan="6">등록된 게시글이 없습니다.</td>
-				</tr>
-			</c:when>	
-			<c:otherwise>
-				<c:forEach var="campingMap" items="${campingList}">
-					<c:set var="campingVO" value="${campingMap.campingVO}" />
-					<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-					<fmt:formatDate var="campingFomattedDate" value="${campingVO.campingDate}" pattern="yy-MM-dd" />
-					<tr onclick="readCamping(${campingVO.campingNo})" style="cursor:pointer">
-						<td class="d-none d-lg-table-cell align-middle">${campingVO.campingNo}</td>
-						<td class="d-none d-lg-table-cell align-middle wbka">${campingCategoryName}</td>
-						<td class="text-left">
-							<c:if test="${campingVO.campingRe_lev > 0}">
-								<img src="${contextPath}/images/re.gif" style="margin-left:${campingVO.campingRe_lev*16}px" class="mr-2" />
-							</c:if>
-							${campingVO.campingTitle}
-							<small class="d-lg-none text-muted">[${campingCategoryName}]</small>
-							<c:if test="${campingVO.campingFileName!=null}">
-								<img class="ml-2" style="width:16px;height:16px" src="${contextPath}/images/download.svg" />
-							</c:if>
-							<small class="d-block d-lg-none text-right mt-1 text-muted">
-								${campingVO.userName} | ${campingFomattedDate} | ${campingVO.campingCount}
-							</small>
-						</td>
-						<td class="d-none d-lg-table-cell align-middle">${campingVO.userName}</td>
-						<td class="d-none d-lg-table-cell align-middle">${campingFomattedDate}</td>
-						<td class="d-none d-lg-table-cell align-middle">${campingVO.campingCount}</td>
-					</tr>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-	
+			<tbody>				
+				<c:choose>
+					<c:when test="${totalCount==0}">			
+						<tr>
+							<td colspan="6">등록된 게시글이 없습니다.</td>
+						</tr>
+					</c:when>	
+					<c:otherwise>
+						<c:forEach var="campingMap" items="${campingList}">
+							<c:set var="campingVO" value="${campingMap.campingVO}" />
+							<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
+							<fmt:formatDate var="campingFormattedDate" value="${campingVO.campingDate}" pattern="yy-MM-dd" />
+							<tr onclick="readCamping(${campingVO.campingNo})" class="cursor-pointer">
+								<td class="d-none d-lg-table-cell align-middle">${campingVO.campingNo}</td>
+								<td class="d-none d-lg-table-cell align-middle wbka">${campingCategoryName}</td>
+								<td class="text-left">
+									<c:if test="${campingVO.campingRe_lev > 0}">
+										<img src="${contextPath}/images/re.gif" style="margin-left:${campingVO.campingRe_lev*16}px" class="mr-2" />
+									</c:if>
+									${campingVO.campingTitle}
+									<small class="d-lg-none text-muted">[${campingCategoryName}]</small>
+									<c:if test="${campingVO.campingFileName!=null}">
+										<img class="ml-2" style="width:16px;height:16px" src="${contextPath}/images/download.svg" />
+									</c:if>
+									<small class="d-block d-lg-none text-right mt-1 text-muted">
+										${campingVO.userName} | ${campingFormattedDate} | ${campingVO.campingCount}
+									</small>
+								</td>
+								<td class="d-none d-lg-table-cell align-middle">${campingVO.userName}</td>
+								<td class="d-none d-lg-table-cell align-middle">${campingFormattedDate}</td>
+								<td class="d-none d-lg-table-cell align-middle">${campingVO.campingCount}</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>			
 			</tbody>
 		</table>
 		

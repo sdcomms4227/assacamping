@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp" %>
-<c:set var="productNo" value="${productReviewVO.productNo}" />
-<c:set var="reviewNo" value="${productReviewVO.reviewNo}" />
-<c:set var="reviewContent" value="${productReviewVO.reviewContent}" />
-<c:set var="userId" value="${productReviewVO.userId}" />
-<c:set var="userName" value="${productReviewVO.userName}" />
-<c:set var="reviewDate" value="${productReviewVO.reviewDate}" />
-<c:set var="starRating" value="${productReviewVO.starRating}" />
+<c:set var="productNo" value="${reviewVO.productNo}" />
+<c:set var="reviewNo" value="${reviewVO.reviewNo}" />
+<c:set var="reviewContent" value="${reviewVO.reviewContent}" />
+<c:set var="userId" value="${reviewVO.userId}" />
+<c:set var="userName" value="${reviewVO.userName}" />
+<c:set var="reviewDate" value="${reviewVO.reviewDate}" />
+<c:set var="starRating" value="${reviewVO.starRating}" />
 <c:set var="productImageName1" value="${productVO.productImageName1}" />
 <c:set var="productName" value="${productVO.productName}" />
+<fmt:formatDate var="reviewFormattedDate" value="${reviewDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -16,7 +17,7 @@
 	</div>
 </div>
 
-<article class="productReview">
+<article class="reviewAdmin">
 	<div class="row">
 		<div class="col-12 col-lg-4 col-xl-3">
 			<table class="table read-table table-layout-fixed">
@@ -70,7 +71,7 @@
 					</tr>
 					<tr>
 						<th class="align-middle">작성일</th>
-						<td><fmt:formatDate value="${reviewDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td>${reviewFormattedDate}</td>
 					</tr>
 					<tr>
 						<th class="align-middle">별점</th>
@@ -82,8 +83,8 @@
 	</div>
 	
 	<div class="text-center my-5">
-		<button type="button" class="btn btn-secondary" onclick="listProductReview()">목록</button>
-		<button type="button" class="btn btn-danger" onclick="deleteProductReview(${reviewNo})">삭제</button>
+		<button type="button" class="btn btn-secondary" onclick="listReview()">목록</button>
+		<button type="button" class="btn btn-danger" onclick="deleteReview(${reviewNo})">삭제</button>
 	</div>			
 </article>
 
@@ -93,16 +94,16 @@
 </form>
 
 <script>
-function listProductReview(){
+function listReview(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/reviewAdminServlet/listProductReview.do";	
+	form.action = "${contextPath}/reviewAdminServlet/listReview.do";	
 	form.submit();
 }
-function deleteProductReview(reviewNo){
+function deleteReview(reviewNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/reviewAdminServlet/deleteProductReview.do?reviewNo=" + reviewNo;
+		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo;
 		form.submit();
 	}
 }

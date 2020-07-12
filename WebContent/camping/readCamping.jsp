@@ -10,6 +10,7 @@
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
+<fmt:formatDate var="campingFormattedDate" value="${campingDate}" pattern="yy-MM-dd HH:mm"/>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -73,42 +74,44 @@
 				<col style="width: 70px" />
 				<col style="width: 70px" />
 			</colgroup>
-			<tr>
-				<td colspan="6" class="h4 p-3 readsubject">
-					${campingTitle}									
-					<c:if test="${campingCategoryName!=null}">
-						<small class="text-muted">[${campingCategoryName}]</small>									
-					</c:if>									
-					<div class="h6 mt-3 mb-0 d-lg-none text-right">
-						<small class="text-muted">${userName} | <fmt:formatDate value="${campingDate}" pattern="yy-MM-dd HH:mm"/> | ${campingCount}</small>
-					</div>
-				</td>
-			</tr>
-			<tr class="d-none d-lg-table-row">
-				<th class="align-middle">작성자</th>
-				<td>${userName}</td>
-				<th class="align-middle">작성일</th>
-				<td><fmt:formatDate value="${campingDate}" pattern="yy-MM-dd HH:mm"/></td>
-				<th class="align-middle">조회수</th>
-				<td>${campingCount}</td>
-			</tr>
-			<tr>
-				<td colspan="6" class="py-5">${fn:replace(campingContent,LF,BR)}</td>
-			</tr>
-			<c:if test="${campingFileName != null}">
+			<tbody>
 				<tr>
-					<th class="align-middle">첨부파일</th>
-					<td colspan="5">
-						<div class="d-flex align-items-center">
-							<c:if test="${campingFileType.equals('image')}">
-								<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
-							</c:if>
-							<p class="ml-2 mb-0">${campingFileName}</p>
-							<button type="button" class="btn btn-sm btn-info ml-2" onclick="downloadCamping(${campingNo}, '${campingFileName}')">다운로드</button>
+					<td colspan="6" class="h4 p-3 readsubject">
+						${campingTitle}									
+						<c:if test="${campingCategoryName!=null}">
+							<small class="text-muted">[${campingCategoryName}]</small>									
+						</c:if>									
+						<div class="h6 mt-3 mb-0 d-lg-none text-right">
+							<small class="text-muted">${userName} | ${campingFormattedDate} | ${campingCount}</small>
 						</div>
 					</td>
-				</tr>				
-			</c:if>
+				</tr>
+				<tr class="d-none d-lg-table-row">
+					<th class="align-middle">작성자</th>
+					<td>${userName}</td>
+					<th class="align-middle">작성일</th>
+					<td>${campingFormattedDate}</td>
+					<th class="align-middle">조회수</th>
+					<td>${campingCount}</td>
+				</tr>
+				<tr>
+					<td colspan="6" class="py-5">${fn:replace(campingContent,LF,BR)}</td>
+				</tr>
+				<c:if test="${campingFileName != null}">
+					<tr>
+						<th class="align-middle">첨부파일</th>
+						<td colspan="5">
+							<div class="d-flex align-items-center">
+								<c:if test="${campingFileType.equals('image')}">
+									<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
+								</c:if>
+								<p class="ml-2 mb-0">${campingFileName}</p>
+								<button type="button" class="btn btn-sm btn-info ml-2" onclick="downloadCamping(${campingNo}, '${campingFileName}')">다운로드</button>
+							</div>
+						</td>
+					</tr>				
+				</c:if>
+			</tbody>
 		</table>
 
 		<div class="text-center my-5">

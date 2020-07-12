@@ -301,8 +301,8 @@
 				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_1.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
 					<div class="sidebar_promo_title">30%<span>off</span></div>
-					<div class="sidebar_promo_subtitle">On all shoes</div>
-					<div class="sidebar_promo_button"><a href="checkout.html">check out</a></div>
+					<div class="sidebar_promo_subtitle">텐트 할인</div>
+					<div class="sidebar_promo_button"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=1">바로가기</a></div>
 				</div>
 			</div>
 
@@ -311,8 +311,8 @@
 				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_2.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
 					<div class="sidebar_promo_title">30%<span>off</span></div>
-					<div class="sidebar_promo_subtitle">On all shoes</div>
-					<div class="sidebar_promo_button"><a href="checkout.html">check out</a></div>
+					<div class="sidebar_promo_subtitle">침낭 / 매트 할인</div>
+					<div class="sidebar_promo_button"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=3">바로가기</a></div>
 				</div>
 			</div>
 		</div>

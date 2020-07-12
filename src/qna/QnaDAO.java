@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductQnaDAO {
+public class QnaDAO {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -27,31 +27,31 @@ public class ProductQnaDAO {
 	}
 	
 	// 문의목록 가져오기
-	public List<ProductQnaVO> getQnaList(int productNo) {
+	public List<QnaVO> getQnaList(int productNo) {
 		String sql = "";
-		List<ProductQnaVO> qnaList = new ArrayList<ProductQnaVO>();
+		List<QnaVO> qnaList = new ArrayList<QnaVO>();
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 
-			sql = "select * from productQna where productNo=?";
+			sql = "select * from qna where productNo=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				ProductQnaVO productQnaVO = new ProductQnaVO();
+				QnaVO qnaVO = new QnaVO();
 
-				productQnaVO.setProductNo(rs.getInt("productNo"));
-				productQnaVO.setQnaContent(rs.getString("qnaContent"));
-				productQnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
-				productQnaVO.setQnaNo(rs.getInt("qnaNo"));
-				productQnaVO.setUserId(rs.getString("userId"));
-				productQnaVO.setUserName(rs.getString("userName"));
-				productQnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
-				productQnaVO.setQnaAnswerDate(rs.getTimestamp("qnaAnswerDate"));
+				qnaVO.setProductNo(rs.getInt("productNo"));
+				qnaVO.setQnaContent(rs.getString("qnaContent"));
+				qnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
+				qnaVO.setQnaNo(rs.getInt("qnaNo"));
+				qnaVO.setUserId(rs.getString("userId"));
+				qnaVO.setUserName(rs.getString("userName"));
+				qnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
+				qnaVO.setQnaAnswerDate(rs.getTimestamp("qnaAnswerDate"));
 				
-				qnaList.add(productQnaVO);
+				qnaList.add(qnaVO);
 			}
 		} catch (Exception e) {
 			System.out.println("getQnaList()메소드 내부에서 예외발생 : " + e.toString());
@@ -63,16 +63,16 @@ public class ProductQnaDAO {
 	}
 
 	// 문의등록
-	public int insertQna(ProductQnaVO productQnaVO) {
+	public int insertQna(QnaVO qnaVO) {
 		String sql = "";
 		int num = 0;
 		
-		if (productQnaVO.getQnaContent() == null || productQnaVO.getQnaContent().equals("")) {
+		if (qnaVO.getQnaContent() == null || qnaVO.getQnaContent().equals("")) {
 			return -1;
 		} else {
 			try {
 				conn = dbUtil.DBConnection.getConnection();
-				sql = "select max(qnaNo) from productQna";
+				sql = "select max(qnaNo) from qna";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 
@@ -82,15 +82,15 @@ public class ProductQnaDAO {
 					num = 1;
 				}
 				
-				sql = "insert into productQna(qnaNo,productNo,userId,userName,qnaContent,qnaDate)"
+				sql = "insert into qna(qnaNo,productNo,userId,userName,qnaContent,qnaDate)"
 						+ "values(?, ?, ?, ?, ?, now())";
 
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
-				pstmt.setInt(2, productQnaVO.getProductNo());
-				pstmt.setString(3, productQnaVO.getUserId());
-				pstmt.setString(4, productQnaVO.getUserName());
-				pstmt.setString(5, productQnaVO.getQnaContent());
+				pstmt.setInt(2, qnaVO.getProductNo());
+				pstmt.setString(3, qnaVO.getUserId());
+				pstmt.setString(4, qnaVO.getUserName());
+				pstmt.setString(5, qnaVO.getQnaContent());
 
 				return pstmt.executeUpdate();
 
@@ -105,7 +105,7 @@ public class ProductQnaDAO {
 
 	// 문의삭제
 	public int deleteQna(int qnaNo, String userId) {
-		String sql = "select userId from productQna where qnaNo=?";
+		String sql = "select userId from qna where qnaNo=?";
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
@@ -114,7 +114,7 @@ public class ProductQnaDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if (userId.equals(rs.getString("userId")) || userId.equals("admin")) {
-					sql = "delete from productQna where qnaNo=?";
+					sql = "delete from qna where qnaNo=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, qnaNo);
 					return pstmt.executeUpdate();

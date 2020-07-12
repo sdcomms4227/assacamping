@@ -68,7 +68,7 @@
 		</table>
 		<div class="text-center my-5">
 			<button type="button" class="btn btn-secondary" onclick="history.back()">취소</button>
-			<button type="submit" class="btn btn-primary">글쓰기</button>
+			<button type="submit" class="btn btn-primary">등록하기</button>
 		</div>
 	</form>
 </article>

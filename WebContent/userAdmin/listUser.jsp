@@ -57,8 +57,8 @@
 				</c:when>	
 				<c:otherwise>
 					<c:forEach var="userVO" items="${userList}">
-						<fmt:formatDate var="userFmtDate" value="${userVO.userDate}" pattern="yyyy-MM-dd HH:mm"/>
-						<tr onclick="readUser('${userVO.userId}')" style="cursor:pointer">
+						<fmt:formatDate var="userFormattedDate" value="${userVO.userDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<tr onclick="readUser('${userVO.userId}')" class="cursor-pointer">
 							<td class="align-middle">${userVO.userId}</td>
 							<td class="align-middle">${userVO.userPw}</td>
 							<td class="align-middle">${userVO.userName}</td>
@@ -74,7 +74,7 @@
 									</c:otherwise>
 								</c:choose>
 							</td>
-							<td class="align-middle">${userFmtDate}</td>
+							<td class="align-middle">${userFormattedDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyUser('${userVO.userId}', event)">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteUser('${userVO.userId}', event)">삭제</button>

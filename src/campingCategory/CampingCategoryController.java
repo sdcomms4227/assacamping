@@ -50,7 +50,7 @@ public class CampingCategoryController extends HttpServlet {
 
 			campingCategoryList = campingCategoryService.listCampingCategory();
 			request.setAttribute("campingCategoryList", campingCategoryList);
-			nextPage = "/campAdmin/listCampingCategory.jsp";
+			nextPage = "/campingAdmin/listCampingCategory.jsp";
 
 		} else if (action.contentEquals("/addCampingCategory.do")) {
 

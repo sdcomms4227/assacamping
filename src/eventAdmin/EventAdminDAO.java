@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,25 +55,19 @@ public class EventAdminDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-//				Map<String, Object> eventMap = new HashMap<String, Object>();
-//				EventVO eventVO = new EventVO();
-//				
-//				eventVO.setEventCategoryNo(rs.getInt("eventCategoryNo"));
-//				eventVO.setEventContent(rs.getString("eventContent"));
-//				eventVO.setEventFileName(rs.getString("eventFileName"));
-//				eventVO.setEventNo(rs.getInt("eventNo"));
-//				eventVO.setEventRe_lev(rs.getInt("eventRe_lev"));
-//				eventVO.setEventRe_ref(rs.getInt("eventRe_ref"));
-//				eventVO.setEventRe_seq(rs.getInt("eventRe_seq"));
-//				eventVO.setEventCount(rs.getInt("eventCount"));
-//				eventVO.setEventTitle(rs.getString("eventTitle"));
-//				eventVO.setEventDate(rs.getTimestamp("eventDate"));
-//				eventVO.setUserId(rs.getString("userId"));
-//				eventVO.setUserId(rs.getString("userName"));
-//								
-//				eventMap.put("eventVO", eventVO);
-//								
-//				eventList.add(eventMap);
+				Map<String, Object> eventMap = new HashMap<String, Object>();
+				EventVO eventVO = new EventVO();
+				
+				eventVO.setEventContent(rs.getString("eventContent"));
+				eventVO.setEventImageFileName(rs.getString("eventImageFileName"));
+				eventVO.setEventNo(rs.getInt("eventNo"));
+				eventVO.setEventReadCount(rs.getInt("eventReadCount"));
+				eventVO.setEventTitle(rs.getString("eventTitle"));
+				eventVO.setEventWriteDate(rs.getTimestamp("eventWriteDate"));				
+								
+				eventMap.put("eventVO", eventVO);
+								
+				eventList.add(eventMap);
 			}			
 			
 		} catch(Exception e) {
@@ -126,18 +121,12 @@ public class EventAdminDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-//				eventVO.setEventCategoryNo(rs.getInt("eventCategoryNo"));
-//				eventVO.setEventContent(rs.getString("eventContent"));
-//				eventVO.setEventFileName(rs.getString("eventFileName"));
-//				eventVO.setEventNo(rs.getInt("eventNo"));
-//				eventVO.setEventRe_lev(rs.getInt("eventRe_lev"));
-//				eventVO.setEventRe_ref(rs.getInt("eventRe_ref"));
-//				eventVO.setEventRe_seq(rs.getInt("eventRe_seq"));
-//				eventVO.setEventCount(rs.getInt("eventCount"));
-//				eventVO.setEventTitle(rs.getString("eventTitle"));
-//				eventVO.setEventDate(rs.getTimestamp("eventDate"));
-//				eventVO.setUserId(rs.getString("userId"));
-//				eventVO.setUserId(rs.getString("userName"));
+				eventVO.setEventContent(rs.getString("eventContent"));
+				eventVO.setEventImageFileName(rs.getString("eventImageFileName"));
+				eventVO.setEventNo(rs.getInt("eventNo"));
+				eventVO.setEventReadCount(rs.getInt("eventReadCount"));
+				eventVO.setEventTitle(rs.getString("eventTitle"));
+				eventVO.setEventWriteDate(rs.getTimestamp("eventWriteDate"));
 			}			
 			
 		} catch(Exception e) {
@@ -149,17 +138,17 @@ public class EventAdminDAO {
 		return eventVO;
 	}
 
-	public int incrementEventCount(int eventNo) {
+	public int incrementEventReadCount(int eventNo) {
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			String sql = "update event set eventCount=eventCount+1 where eventNo = ?";
+			String sql = "update event set eventReadCount=eventReadCount+1 where eventNo = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, eventNo);
 			
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {
-			System.out.println("incrementEventCount()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("incrementEventReadCount()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -197,21 +186,15 @@ public class EventAdminDAO {
 				
 		try {			
 			conn = dbUtil.DBConnection.getConnection();			
-//			String sql = "insert into event(eventNo, eventTitle, eventContent, eventFileName, userId, userName, eventRe_ref, eventRe_lev, eventRe_seq, eventDate, eventCount, eventCategoryNo)"
-//					+ "values(?,?,?,?,?,?,?,?,?,now(),?,?)";
-			String sql = "";
+			String sql = "insert into event(eventNo, eventTitle, eventContent, eventImageFileName, eventWriteDate, eventReadCount)"
+					+ "values(?,?,?,?,now(),?)";
+
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, maxNo);
-//			pstmt.setString(2, eventVO.getEventTitle());
-//			pstmt.setString(3, eventVO.getEventContent());
-//			pstmt.setString(4, eventVO.getEventFileName());
-//			pstmt.setString(5, eventVO.getUserId());
-//			pstmt.setString(6, eventVO.getUserName());
-//			pstmt.setInt(7, maxNo);
-//			pstmt.setInt(8, 0);
-//			pstmt.setInt(9, 0);
-//			pstmt.setInt(10, 0);
-//			pstmt.setInt(11, eventVO.getEventCategoryNo());
+			pstmt.setInt(1, maxNo);
+			pstmt.setString(2, eventVO.getEventTitle());
+			pstmt.setString(3, eventVO.getEventContent());
+			pstmt.setString(4, eventVO.getEventImageFileName());
+			pstmt.setInt(5, 0);
 			
 			return pstmt.executeUpdate();			
 		} catch(Exception e) {
@@ -225,60 +208,57 @@ public class EventAdminDAO {
 
 	public int updateEvent(EventVO eventVO, String deleteFile) {
 		
-//		String eventFileName = eventVO.getEventFileName();
-//				
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			
-//			if(eventFileName!=null) {				
-//				String sql = "update event set eventTitle=?, eventContent=?, eventFileName=?, eventCategoryNo=? where eventNo=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, eventVO.getEventTitle());
-//				pstmt.setString(2, eventVO.getEventContent());
-//				pstmt.setString(3, eventFileName);
-//				pstmt.setInt(4, eventVO.getEventCategoryNo());
-//				pstmt.setInt(5, eventVO.getEventNo());				
-//			}else if(deleteFile!=null){				
-//				String sql = "update event set eventTitle=?, eventContent=?, eventFileName=?, eventCategoryNo=? where eventNo=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, eventVO.getEventTitle());
-//				pstmt.setString(2, eventVO.getEventContent());
-//				pstmt.setString(3, null);
-//				pstmt.setInt(4, eventVO.getEventCategoryNo());
-//				pstmt.setInt(5, eventVO.getEventNo());
-//			}else{
-//				String sql = "update event set eventTitle=?, eventContent=?, eventCategoryNo=? where eventNo=?";
-//				pstmt = conn.prepareStatement(sql);
-//				pstmt.setString(1, eventVO.getEventTitle());
-//				pstmt.setString(2, eventVO.getEventContent());
-//				pstmt.setInt(3, eventVO.getEventCategoryNo());
-//				pstmt.setInt(4, eventVO.getEventNo());
-//			}
-//			
-//			return pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("updateEvent()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}
+		String eventImageFileName = eventVO.getEventImageFileName();
+				
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			if(eventImageFileName!=null) {				
+				String sql = "update event set eventTitle=?, eventContent=?, eventImageFileName=? where eventNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, eventVO.getEventTitle());
+				pstmt.setString(2, eventVO.getEventContent());
+				pstmt.setString(3, eventImageFileName);
+				pstmt.setInt(4, eventVO.getEventNo());				
+			}else if(deleteFile!=null){				
+				String sql = "update event set eventTitle=?, eventContent=?, eventImageFileName=? where eventNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, eventVO.getEventTitle());
+				pstmt.setString(2, eventVO.getEventContent());
+				pstmt.setString(3, null);
+				pstmt.setInt(4, eventVO.getEventNo());
+			}else{
+				String sql = "update event set eventTitle=?, eventContent=? where eventNo=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, eventVO.getEventTitle());
+				pstmt.setString(2, eventVO.getEventContent());
+				pstmt.setInt(3, eventVO.getEventNo());
+			}
+			
+			return pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("updateEvent()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
 		
 		return 0;
 	}
 
 	public int deleteEvent(int eventNo) {
 		
-//		try {
-//			conn = dbUtil.DBConnection.getConnection();
-//			String sql = "delete from event where eventNo=?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, eventNo);
-//			
-//			return pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			System.out.println("deleteEvent()메소드 내부에서 오류 : " + e.toString());
-//		} finally {
-//			freeResource();
-//		}		
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "delete from event where eventNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, eventNo);
+			
+			return pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("deleteEvent()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}		
 		
 		return 0;
 	}

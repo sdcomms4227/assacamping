@@ -73,8 +73,8 @@
 					<c:forEach var="campingMap" items="${campingList}">
 						<c:set var="campingVO" value="${campingMap.campingVO}" />
 						<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-						<fmt:formatDate var="campingFmtDate" value="${campingVO.campingDate}" pattern="yyyy-MM-dd HH:mm"/>
-						<tr onclick="readCamping(${campingVO.campingNo})" style="cursor:pointer">
+						<fmt:formatDate var="campingFormattedDate" value="${campingVO.campingDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<tr onclick="readCamping(${campingVO.campingNo})" class="cursor-pointer">
 							<td class="align-middle">${campingVO.campingNo}</td>
 							<td class="align-middle wbka">${campingCategoryName}</td>
 							<td class="align-middle text-left">
@@ -88,7 +88,7 @@
 							</td>
 							<td class="align-middle">${campingVO.userId}</td>
 							<td class="align-middle">${campingVO.campingCount}</td>
-							<td class="align-middle">${campingFmtDate}</td>
+							<td class="align-middle">${campingFormattedDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyCamping(${campingVO.campingNo}, event)">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteCamping(${campingVO.campingNo}, event)">삭제</button>

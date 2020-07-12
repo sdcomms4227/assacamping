@@ -53,7 +53,7 @@
 					<label for="userPhone" class="m-0">전화번호</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userPhone" id="userPhone" required />
+					<input class="form-control" type="tel" name="userPhone" id="userPhone" placeholder="010-0000-0000" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required />
 				</td>
 			</tr>
 			<tr>
@@ -61,7 +61,12 @@
 					<label for="userEmail" class="m-0">이메일</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userEmail" id="userEmail" required />
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">@</span>
+						</div>
+						<input type="email" class="form-control" name="userEmail" id="userEmail" required>
+					</div>
 				</td>
 			</tr>
 			<tr>

@@ -12,19 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import product.ProductVO;
-import review.ProductReviewVO;
+import review.ReviewVO;
 
 @SuppressWarnings("serial")
 @WebServlet("/reviewAdminServlet/*")
 public class ReviewAdminController extends HttpServlet {
 
 	ReviewAdminService reviewAdminService;
-	ProductReviewVO productReviewVO;
+	ReviewVO reviewVO;
 
 	@Override
 	public void init() throws ServletException {
 		reviewAdminService = new ReviewAdminService();
-		productReviewVO = new ProductReviewVO();
+		reviewVO = new ReviewVO();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ReviewAdminController extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action: " + action);
 		
-		if(action == null || action.equals("/listProductReview.do")) {
+		if(action == null || action.equals("/listReview.do")) {
 
 			setPagination(request);
 			
@@ -55,41 +55,41 @@ public class ReviewAdminController extends HttpServlet {
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 			searchMap.put("answerCheck", request.getAttribute("answerCheck"));
 
-			Map<String, Object> productReviewListMap = reviewAdminService.listProductReview(searchMap);			
-			request.setAttribute("productReviewListMap", productReviewListMap);
+			Map<String, Object> reviewListMap = reviewAdminService.listReview(searchMap);			
+			request.setAttribute("reviewListMap", reviewListMap);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/reviewAdmin/listProductReview.jsp";
+			nextPage = "/reviewAdmin/listReview.jsp";
 			
-		}else if(action.equals("/readProductReview.do")) {
+		}else if(action.equals("/readReview.do")) {
 
 			setPagination(request);
 			
 			int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
 			
-			Map<String, Object> productReviewMap = reviewAdminService.readProductReview(reviewNo);			
-			ProductReviewVO productReviewVO = (ProductReviewVO)productReviewMap.get("productReviewVO");			
-			ProductVO productVO = (ProductVO)productReviewMap.get("productVO");
+			Map<String, Object> reviewMap = reviewAdminService.readReview(reviewNo);			
+			ReviewVO reviewVO = (ReviewVO)reviewMap.get("reviewVO");			
+			ProductVO productVO = (ProductVO)reviewMap.get("productVO");
 			
-			request.setAttribute("productReviewVO", productReviewVO);
+			request.setAttribute("reviewVO", reviewVO);
 			request.setAttribute("productVO", productVO);
 			
 			if(request.getAttribute("alertMsg")!=null) {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/reviewAdmin/readProductReview.jsp";
+			nextPage = "/reviewAdmin/readReview.jsp";
 			
-		}else if(action.equals("/deleteProductReview.do")) {
+		}else if(action.equals("/deleteReview.do")) {
 
 			setPagination(request);
 
 			int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
 			
-			int result = reviewAdminService.deleteProductReview(reviewNo);
+			int result = reviewAdminService.deleteReview(reviewNo);
 			String alertMsg = "";
 
 			if(result > 0) {
@@ -100,7 +100,7 @@ public class ReviewAdminController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", alertMsg);
 			
-			nextPage = "/reviewAdminServlet/listProductReview.do";
+			nextPage = "/reviewAdminServlet/listReview.do";
 			
 		}
 				

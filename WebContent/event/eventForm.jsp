@@ -84,7 +84,7 @@
 					</th>
 					<td>
 						<div class="custom-file">
-							<input class="custom-file-input" type="file" name="eventImageFileName" id="eventImageFileName" onchange="showPreview(this)" required />
+							<input class="custom-file-input" type="file" name="eventImageFileName" id="eventImageFileName" onchange="showPreview(this, 'image')" required />
 							<label class="custom-file-label" for="eventImageFileName">선택된 파일 없음</label>
 						</div>
 					</td>

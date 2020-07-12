@@ -18,14 +18,14 @@ import org.json.simple.parser.ParseException;
 
 @SuppressWarnings("serial")
 @WebServlet("/qnaServlet/*")
-public class ProductQnaController extends HttpServlet{
+public class QnaController extends HttpServlet{
 	
-	ProductQnaService productQnaService;
-	ProductQnaVO productQnaVO;
+	QnaService qnaService;
+	QnaVO qnaVO;
 	
 	public void init() throws ServletException {
-		productQnaService = new ProductQnaService();
-		productQnaVO = new ProductQnaVO();
+		qnaService = new QnaService();
+		qnaVO = new QnaVO();
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class ProductQnaController extends HttpServlet{
 					qnaObject = (JSONObject) jsonParser.parse(info);
 					int productNo = Integer.parseInt((String) qnaObject.get("productNo"));
 
-					List<ProductQnaVO> qnaList = productQnaService.getQnaList(productNo);
+					List<QnaVO> qnaList = qnaService.getQnaList(productNo);
 				
 					if (qnaList.size() > 0) {
 						JSONArray jsonArray = new JSONArray();
@@ -109,12 +109,12 @@ public class ProductQnaController extends HttpServlet{
 					String userName = (String) qnaObject.get("userName");
 					String qnaContent = (String) qnaObject.get("qnaContent");
 
-					productQnaVO.setProductNo(productNo);
-					productQnaVO.setUserId(userId);
-					productQnaVO.setUserName(userName);
-					productQnaVO.setQnaContent(qnaContent);
+					qnaVO.setProductNo(productNo);
+					qnaVO.setUserId(userId);
+					qnaVO.setUserName(userName);
+					qnaVO.setQnaContent(qnaContent);
  
-					int result = productQnaService.insertQna(productQnaVO);
+					int result = qnaService.insertQna(qnaVO);
 					
 					if (result == 1) {
 						out.print("success");
@@ -136,10 +136,10 @@ public class ProductQnaController extends HttpServlet{
 					String userId = (String) qnaObject.get("userId");
 					int productNo = Integer.parseInt((String) qnaObject.get("productNo"));
 					
-					int result = productQnaService.deleteQna(qnaNo, userId);
+					int result = qnaService.deleteQna(qnaNo, userId);
 
 					if (result == 1) {
-						int qnaCnt = productQnaService.getQnaList(productNo).size();
+						int qnaCnt = qnaService.getQnaList(productNo).size();
 						JSONObject returnObject = new JSONObject();
 						
 						returnObject.put("qnaCnt", Integer.toString(qnaCnt));

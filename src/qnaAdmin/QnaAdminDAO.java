@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import product.ProductVO;
-import qna.ProductQnaVO;
+import qna.QnaVO;
 
 public class QnaAdminDAO {
 
@@ -31,9 +31,9 @@ public class QnaAdminDAO {
 		}
 	}
 
-	public List<Map<String, Object>> getProductQnaList(Map<String, Object> searchMap) {
+	public List<Map<String, Object>> getQnaList(Map<String, Object> searchMap) {
 
-		List<Map<String, Object>> productQnaList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> qnaList = new ArrayList<Map<String, Object>>();
 
 		int numberPerPage = 10;
 		int pageNo = (int) searchMap.get("pageNo");
@@ -50,7 +50,7 @@ public class QnaAdminDAO {
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			sql = "	select *"
-					+ " from productQna pq"
+					+ " from qna pq"
 					+ " join product pr"
 					+ " on pq.productNo = pr.productNo"
 					+ " where pq.qnaContent like ?"
@@ -65,39 +65,39 @@ public class QnaAdminDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Map<String, Object> productQnaMap = new HashMap<String, Object>();
-				ProductQnaVO productQnaVO = new ProductQnaVO();
+				Map<String, Object> qnaMap = new HashMap<String, Object>();
+				QnaVO qnaVO = new QnaVO();
 				ProductVO productVO = new ProductVO();
 				
-				productQnaVO.setProductNo(rs.getInt("productNo"));
-				productQnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
-				productQnaVO.setQnaContent(rs.getString("qnaContent"));
-				productQnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
-				productQnaVO.setQnaNo(rs.getInt("qnaNo"));
-				productQnaVO.setUserId(rs.getString("userId"));
-				productQnaVO.setUserName(rs.getString("userName"));
+				qnaVO.setProductNo(rs.getInt("productNo"));
+				qnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
+				qnaVO.setQnaContent(rs.getString("qnaContent"));
+				qnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
+				qnaVO.setQnaNo(rs.getInt("qnaNo"));
+				qnaVO.setUserId(rs.getString("userId"));
+				qnaVO.setUserName(rs.getString("userName"));
 				
-				productQnaMap.put("productQnaVO", productQnaVO);
+				qnaMap.put("qnaVO", qnaVO);
 				
 				productVO.setProductImageName1(rs.getString("productImageName1"));
 				productVO.setProductName(rs.getString("productName"));
 				
-				productQnaMap.put("productVO", productVO);
+				qnaMap.put("productVO", productVO);
 				
-				productQnaList.add(productQnaMap);
+				qnaList.add(qnaMap);
 				
 			}
 
 		} catch (Exception e) {
-			System.out.println("getProductQnaList()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getQnaList()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
 
-		return productQnaList;
+		return qnaList;
 	}
 
-	public int getProductQnaListCount(Map<String, Object> searchMap) {
+	public int getQnaListCount(Map<String, Object> searchMap) {
 
 		String searchKeyword = (String) searchMap.get("searchKeyword");
 		String answerCheck = (String) searchMap.get("answerCheck");
@@ -112,7 +112,7 @@ public class QnaAdminDAO {
 			conn = dbUtil.DBConnection.getConnection();
 
 			sql = "select count(qnaNo)"
-					+ " from productQna"
+					+ " from qna"
 					+ " where qnaContent like ?"
 					+ sqlFilter;
 
@@ -125,7 +125,7 @@ public class QnaAdminDAO {
 				return rs.getInt(1);
 			}
 		} catch (Exception e) {
-			System.out.println("getProductQnaListCount()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getQnaListCount()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -133,14 +133,14 @@ public class QnaAdminDAO {
 		return 0;
 	}
 
-	public Map<String, Object> getProductQna(int qnaNo) {
+	public Map<String, Object> getQna(int qnaNo) {
 		
-		Map<String, Object> productQnaMap = new HashMap<String, Object>();
+		Map<String, Object> qnaMap = new HashMap<String, Object>();
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			String sql = "select *"
-					+ " from productQna pq"
+					+ " from qna pq"
 					+ " join product pr"
 					+ " on pq.productNo = pr.productNo"
 					+ " where pq.qnaNo = ?";
@@ -151,47 +151,47 @@ public class QnaAdminDAO {
 
 			if (rs.next()) {
 				
-				ProductQnaVO productQnaVO = new ProductQnaVO();
+				QnaVO qnaVO = new QnaVO();
 				ProductVO productVO = new ProductVO();
 				
-				productQnaVO.setProductNo(rs.getInt("productNo"));
-				productQnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
-				productQnaVO.setQnaContent(rs.getString("qnaContent"));
-				productQnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
-				productQnaVO.setQnaNo(rs.getInt("qnaNo"));
-				productQnaVO.setUserId(rs.getString("userId"));
-				productQnaVO.setUserName(rs.getString("userName"));
+				qnaVO.setProductNo(rs.getInt("productNo"));
+				qnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
+				qnaVO.setQnaContent(rs.getString("qnaContent"));
+				qnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
+				qnaVO.setQnaNo(rs.getInt("qnaNo"));
+				qnaVO.setUserId(rs.getString("userId"));
+				qnaVO.setUserName(rs.getString("userName"));
 				
-				productQnaMap.put("productQnaVO", productQnaVO);
+				qnaMap.put("qnaVO", qnaVO);
 				
 				productVO.setProductImageName1(rs.getString("productImageName1"));
 				productVO.setProductName(rs.getString("productName"));
 				
-				productQnaMap.put("productVO", productVO);	
+				qnaMap.put("productVO", productVO);	
 			}
 
 		} catch (Exception e) {
-			System.out.println("getProductQna()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getQna()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
 
-		return productQnaMap;
+		return qnaMap;
 	}
 
-	public int updateProductQna(ProductQnaVO productQnaVO) {
+	public int updateQna(QnaVO qnaVO) {
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 
-			String sql = "update productQna set qnaAnswer=? where qnaNo=?";
+			String sql = "update qna set qnaAnswer=? where qnaNo=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productQnaVO.getQnaAnswer());
-			pstmt.setInt(2, productQnaVO.getQnaNo());
+			pstmt.setString(1, qnaVO.getQnaAnswer());
+			pstmt.setInt(2, qnaVO.getQnaNo());
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("updateProductQna()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("updateQna()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
@@ -199,17 +199,17 @@ public class QnaAdminDAO {
 		return 0;
 	}
 
-	public int deleteProductQna(int qnaNo) {
+	public int deleteQna(int qnaNo) {
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-			String sql = "delete from productQna where qnaNo=?";
+			String sql = "delete from qna where qnaNo=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, qnaNo);
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("deleteProductQna()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("deleteQna()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}

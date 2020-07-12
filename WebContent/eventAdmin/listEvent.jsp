@@ -7,7 +7,7 @@
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-3 mb-2 mb-lg-0">
-		<h2 class="mb-0">캠핑정보</h2>
+		<h2 class="mb-0">이벤트</h2>
 	</div>
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
 		<form action="${contextPath}/eventAdminServlet/listEvent.do" class="form-inline justify-content-center">
@@ -20,7 +20,7 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/eventAdminServlet/addEvent.do'">게시글 등록</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/eventAdminServlet/addEvent.do'">이벤트 등록</button>
 	</div>
 </div>
 	
@@ -32,15 +32,13 @@
 			<col />
 			<col style="width: 100px" />
 			<col style="width: 100px" />
-			<col style="width: 100px" />
 			<col style="width: 140px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
 				<th>번호</th>
-				<th>카테고리</th>
+				<th>이미지</th>
 				<th>제목</th>
-				<th>작성자</th>
 				<th>조회수</th>
 				<th>작성일</th>
 				<th>관리</th>
@@ -50,27 +48,19 @@
 			<c:choose>
 				<c:when test="${totalCount==0}">			
 					<tr>
-						<td colspan="7">등록된 게시글이 없습니다.</td>
+						<td colspan="6">등록된 이벤트가 없습니다.</td>
 					</tr>
 				</c:when>	
 				<c:otherwise>
 					<c:forEach var="eventMap" items="${eventList}">
 						<c:set var="eventVO" value="${eventMap.eventVO}" />
-						<fmt:formatDate var="eventFmtDate" value="${eventVO.eventDate}" pattern="yyyy-MM-dd HH:mm"/>
-						<tr onclick="readEvent(${eventVO.eventNo})" style="cursor:pointer">
+						<fmt:formatDate var="eventFormattedWriteDate" value="${eventVO.eventWriteDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<tr onclick="readEvent(${eventVO.eventNo})" class="cursor-pointer">
 							<td class="align-middle">${eventVO.eventNo}</td>
-							<td class="align-middle text-left">
-								<c:if test="${eventVO.eventRe_lev > 0}">
-									<img src="${contextPath}/images/re.gif" style="margin-left:${eventVO.eventRe_lev*16}px" class="mr-2" />
-								</c:if>
-								${eventVO.eventTitle}
-								<c:if test="${eventVO.eventFileName!=null}">
-									<img class="ml-2" style="width:16px;height:16px" src="${contextPath}/images/download.svg" />
-								</c:if>
-							</td>
-							<td class="align-middle">${eventVO.userId}</td>
-							<td class="align-middle">${eventVO.eventCount}</td>
-							<td class="align-middle">${eventFmtDate}</td>
+							<td class="align-middle"><img src="${contextPath}/files/event/${eventVO.eventNo}/${eventVO.eventImageFileName}" alt="${eventVO.eventTitle}" style="height: 40px" /></td>
+							<td class="align-middle text-left">${eventVO.eventTitle}</td>
+							<td class="align-middle">${eventVO.eventReadCount}</td>
+							<td class="align-middle">${eventFormattedWriteDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyEvent(${eventVO.eventNo}, event)">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteEvent(${eventVO.eventNo}, event)">삭제</button>

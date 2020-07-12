@@ -31,7 +31,7 @@ import campingCategory.CampingCategoryVO;
 @WebServlet("/campingAdminServlet/*")
 public class CampingAdminController extends HttpServlet {
 	
-	CampingAdminService campAdminService;
+	CampingAdminService campingAdminService;
 	CampingVO campingVO;	
 	CampingCategoryService campingCategoryService;
 	CampingCategoryVO campingCategoryVO;
@@ -39,7 +39,7 @@ public class CampingAdminController extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		campAdminService = new CampingAdminService();
+		campingAdminService = new CampingAdminService();
 		campingVO = new CampingVO();
 		campingCategoryService = new CampingCategoryService();
 		campingCategoryVO = new CampingCategoryVO();
@@ -74,7 +74,7 @@ public class CampingAdminController extends HttpServlet {
 			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 
-			Map<String, Object> campingListMap = campAdminService.listCamping(searchMap);			
+			Map<String, Object> campingListMap = campingAdminService.listCamping(searchMap);			
 			request.setAttribute("campingListMap", campingListMap);
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
@@ -84,7 +84,7 @@ public class CampingAdminController extends HttpServlet {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/campAdmin/listCamping.jsp";
+			nextPage = "/campingAdmin/listCamping.jsp";
 			
 		}else if(action.equals("/readCamping.do")) {
 
@@ -92,7 +92,7 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			
-			Map<String, Object> campingMap = campAdminService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingAdminService.readCamping(campingNo);
 
 			campingVO = (CampingVO)campingMap.get("campingVO");
 			String campingFileName = campingVO.getCampingFileName();
@@ -108,14 +108,14 @@ public class CampingAdminController extends HttpServlet {
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			
-			nextPage = "/campAdmin/readCamping.jsp";
+			nextPage = "/campingAdmin/readCamping.jsp";
 			
 		}else if(action.contentEquals("/addCamping.do")) {
 			
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
 			
-			nextPage = "/campAdmin/addCamping.jsp";
+			nextPage = "/campingAdmin/addCamping.jsp";
 			
 		}else if(action.equals("/insertCamping.do")) {
 			
@@ -135,7 +135,7 @@ public class CampingAdminController extends HttpServlet {
 			campingVO.setUserName(userName);
 			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
-			int readNo = campAdminService.insertCamping(campingVO);			
+			int readNo = campingAdminService.insertCamping(campingVO);			
 
 			if(campingFileName!=null) {
 				moveFile(readNo, campingFileName);
@@ -149,7 +149,7 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingMap = campAdminService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingAdminService.readCamping(campingNo);
 			
 			campingVO = (CampingVO)campingMap.get("campingVO");
 			String campingFileName = campingVO.getCampingFileName();
@@ -164,7 +164,7 @@ public class CampingAdminController extends HttpServlet {
 			List<CampingCategoryVO> campingCategoryList = campingCategoryService.listCampingCategory();			
 			request.setAttribute("campingCategoryList", campingCategoryList);
 			
-			nextPage = "/campAdmin/modifyCamping.jsp";
+			nextPage = "/campingAdmin/modifyCamping.jsp";
 			
 		}else if(action.equals("/updateCamping.do")) {
 
@@ -190,7 +190,7 @@ public class CampingAdminController extends HttpServlet {
 			campingVO.setUserName(userName);
 			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
-			int result = campAdminService.updateCamping(campingVO, deleteFile);
+			int result = campingAdminService.updateCamping(campingVO, deleteFile);
 			String alertMsg = "";
 			
 			if(result > 0) {
@@ -216,7 +216,7 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 			
-			int result = campAdminService.deleteCamping(campingNo);
+			int result = campingAdminService.deleteCamping(campingNo);
 			String alertMsg = "";
 
 			if(result > 0) {
@@ -237,11 +237,11 @@ public class CampingAdminController extends HttpServlet {
 			
 			int campingNo = Integer.parseInt(request.getParameter("campingNo"));
 
-			Map<String, Object> campingMap = campAdminService.readCamping(campingNo);
+			Map<String, Object> campingMap = campingAdminService.readCamping(campingNo);
 			
 			request.setAttribute("campingMap", campingMap);
 			
-			nextPage = "/campAdmin/replyCamping.jsp";
+			nextPage = "/campingAdmin/replyCamping.jsp";
 			
 		}else if(action.equals("/insertReplyCamping.do")) {
 
@@ -271,7 +271,7 @@ public class CampingAdminController extends HttpServlet {
 			campingVO.setCampingRe_seq(campingRe_seq);
 			campingVO.setCampingCategoryNo(campingCategoryNo);
 			
-			int readNo = campAdminService.insertReplyCamping(campingVO);
+			int readNo = campingAdminService.insertReplyCamping(campingVO);
 
 			if(campingFileName!=null) {
 				moveFile(readNo, campingFileName);

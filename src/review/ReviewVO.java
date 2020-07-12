@@ -2,7 +2,7 @@ package review;
 
 import java.sql.Timestamp;
 
-public class ProductReviewVO {
+public class ReviewVO {
 	
 	private int productNo;
 	private int reviewNo;
