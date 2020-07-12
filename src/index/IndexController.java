@@ -30,7 +30,7 @@ public class IndexController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		
-		System.out.println("IndexController - /index.do");
+		System.out.println("[IndexController] /index.do");
 		
 		HttpSession session = request.getSession();
 		
@@ -38,14 +38,14 @@ public class IndexController extends HttpServlet {
 		if(session.getAttribute("cartCount") != null) {
 			cartCount = (int)session.getAttribute("cartCount");
 		}				
-		System.out.println("index.do - cartCount: " + cartCount);		
+		System.out.println("[IndexController] cartCount: " + cartCount);		
 		request.setAttribute("cartCount", cartCount);
 
 		int wishCount = 0;		
 		if(session.getAttribute("wishCount") != null) {
 			wishCount = (int)session.getAttribute("wishCount");
 		}				
-		System.out.println("index.do - wishCount: " + wishCount);		
+		System.out.println("[IndexController] wishCount: " + wishCount);		
 		request.setAttribute("wishCount", wishCount);
 		
 		nextPage = "/index.jsp";

@@ -162,20 +162,20 @@
 											<c:when test="${productQuantity > 0}">
 												<c:choose>
 													<c:when test="${userId != null}">
-														<button class="btn btn-primary btn-lg btn-block" type="submit"><small>장바구니 담기</small></button>
+														<button class="btn btn-primary btn-lg btn-block" type="submit">장바구니 담기</button>
 													</c:when>
 													<c:otherwise>
-														<button class="btn btn-primary btn-lg btn-block" type="button" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'"><small>장바구니 담기</small></button>
+														<button class="btn btn-primary btn-lg btn-block" type="button" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">장바구니 담기</button>
 													</c:otherwise>
 												</c:choose>											
 											</c:when>
 											<c:otherwise>
-												<a class="btn btn-primary btn-lg btn-block" href="javascript:alert('준비중입니다.')"><small>재입고 알림</small></a>							
+												<a class="btn btn-primary btn-lg btn-block" href="javascript:alert('준비중입니다.')">재입고 알림</a>							
 											</c:otherwise>
 										</c:choose>
 									</div>
 									<div class="col-6">
-										<a class="btn btn-secondary btn-lg btn-block" href="javascript:alert('준비중입니다.')"><small>위시리스트 추가하기</small></a>
+										<a class="btn btn-secondary btn-lg btn-block" href="javascript:alert('준비중입니다.')">위시리스트 추가하기</a>
 									</div>	
 								</div>
 							</div>

@@ -165,9 +165,6 @@
 <script src="${contextPath}/js/bootstrap.min.js"></script>
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
-<script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>

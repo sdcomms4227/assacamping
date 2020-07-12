@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="${contextPath}/css/product.css">
 <link rel="stylesheet" href="${contextPath}/css/product_responsive.css">
 	   
-	<script type="text/javascript">
+	<script>
    		/* function fn_order_pro(obj, userId){
    			var form = document.createElement("form");
    			

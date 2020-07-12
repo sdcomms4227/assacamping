@@ -24,41 +24,64 @@
 				</form>
 			</div>
 			<div class="shopping">
-				<!-- Cart -->
-				<a class="shopping_a" href="${contextPath}/cartServlet/cart.do">
-					<div class="cart">
-						<img src="${contextPath}/images/shopping-bag.svg" alt="">
-						<c:if test="${sessionScope.cartCount != null}">
-							<div class="cart_num_container">
-								<div class="cart_num_inner">
-									<div class="cart_num">${sessionScope.cartCount}</div>
-								</div>
-							</div>
-						</c:if>
-					</div>
-				</a>
-				<!-- Star -->
-				<a class="shopping_a" href="javascript:alert('준비중입니다')">
-					<div class="star">
-						<img src="${contextPath}/images/star.svg" alt="">
-						<c:if test="${sessionScope.wishCount != null}">
-							<div class="star_num_container">
-								<div class="star_num_inner">
-									<div class="star_num">${sessionScope.wishCount}</div>
-								</div>
-							</div>
-						</c:if>
-					</div>
-				</a>
+				<!-- Cart -->				
 				<c:choose>
-					<c:when test="${userId!=null}">					
+					<c:when test="${sessionScope.userId!=null}">				
+						<a class="shopping_a" href="${contextPath}/cartServlet/cart.do">
+							<div class="cart">
+								<img src="${contextPath}/images/shopping-bag.svg" alt="">
+								<c:if test="${sessionScope.cartCount != null}">
+									<div class="cart_num_container">
+										<div class="cart_num_inner">
+											<div class="cart_num">${sessionScope.cartCount}</div>
+										</div>
+									</div>
+								</c:if>
+							</div>
+						</a>
+					</c:when>
+					<c:otherwise>				
+						<a class="shopping_a" href="javascript:alert('로그인 후  장바구니를 사용할 수 있습니다.');location.href='${contextPath}/userServlet/login.do'">
+							<div class="cart">
+								<img src="${contextPath}/images/shopping-bag.svg" alt="">
+							</div>
+						</a>
+					</c:otherwise>
+				</c:choose>
+				
+				<!-- Star -->				
+				<c:choose>
+					<c:when test="${sessionScope.userId!=null}">
+						<a class="shopping_a" href="javascript:alert('준비중입니다')">
+							<div class="star">
+								<img src="${contextPath}/images/star.svg" alt="">
+								<c:if test="${sessionScope.wishCount != null}">
+									<div class="star_num_container">
+										<div class="star_num_inner">
+											<div class="star_num">${sessionScope.wishCount}</div>
+										</div>
+									</div>
+								</c:if>
+							</div>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a class="shopping_a" href="javascript:alert('로그인 후  위시리스트를 사용할 수 있습니다.');location.href='${contextPath}/userServlet/login.do'">
+							<div class="star">
+								<img src="${contextPath}/images/star.svg" alt="">
+							</div>
+						</a>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${sessionScope.userId!=null}">					
 						<div class="d-inline-block position-relative">
 							<a class="shopping_a" id="loggedDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<div class="avatar">
 									<img src="${contextPath}/images/avatar.svg" alt="">
 									<div class="avatar_name_container">
 										<div class="avatar_name_inner">
-											<div class="avatar_name">${userName}</div>
+											<div class="avatar_name">${sessionScope.userName}</div>
 										</div>
 									</div>
 								</div>
@@ -67,13 +90,14 @@
 								<a class="dropdown-item" href="${contextPath}/orderServlet/orderList.do">나의 주문 내역(수정전)</a>
 								<hr />
 								<a class="dropdown-item" href="${contextPath}/userServlet/myOrderList.do">나의 주문 내역</a>
-								<a class="dropdown-item" href="${contextPath}/userServlet/myQnaList.do">내가 쓴 상품문의</a>
-								<a class="dropdown-item" href="${contextPath}/userServlet/myReviewList.do">내가 쓴 상품후기</a>
 								<a class="dropdown-item" href="${contextPath}/userServlet/myWishList.do">나의 위시리스트</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/myReviewList.do">내가 쓴 상품후기</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/myQnaList.do">내가 쓴 상품문의</a>
 								<hr />
 								<a class="dropdown-item" href="${contextPath}/userServlet/userPwCheck.do?userId=${userId}">회원정보수정</a>
 								<a class="dropdown-item" href="${contextPath}/userServlet/changePw.do?userId=${userId}">비밀번호변경</a>
 								<a class="dropdown-item" href="${contextPath}/userServlet/withdrawal.do?userId=${userId}">회원탈퇴</a>
+								<hr />
 								<a class="dropdown-item" href="${contextPath}/userServlet/logout.do">로그아웃</a>
 								<c:if test='${userId=="admin"}'>
 									<hr />
