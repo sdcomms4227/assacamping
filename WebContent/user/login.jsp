@@ -15,26 +15,6 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
-<c:choose>
-	<c:when test='${msg=="id"}'>
-		<script type="text/javascript">
-			window.onload = function(){
-			window.alert("존재하지 않는 아이디 입니다.");}
-		</script>
-	</c:when>
-	<c:when test='${msg=="pw"}'>
-		<script type="text/javascript">
-			window.onload = function(){
-			window.alert("비밀번호가 일치하지 않습니다.");}
-		</script>
-	</c:when>
-	<c:when test='${requestScope.msg == "addUser" }'>
-		<script type="text/javascript">
-			window.onload = function(){
-			window.alert("회원가입이 완료되었습니다.");}		
-		</script>
-	</c:when>	
-</c:choose>
 </head>
 <body>
 
@@ -54,7 +34,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Login</div>
+							<div class="home_title">로그인</div>
 						</div>
 					</div>
 				</div>
@@ -65,7 +45,7 @@
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form name="loginform" class="loginform text-center" action="${contextPath}/userServlet/loginAction.do" method="post">
+			<form name="loginform" class="loginForm text-center" action="${contextPath}/userServlet/loginAction.do" method="post">
 				<div class="form-label-group">
 					<input type="text" class="form-control" placeholder="아이디를 입력하세요." name="userId" id="userId" maxlength="20" required autofocus />
 					<label for="userId">아이디</label>
@@ -76,11 +56,11 @@
 				</div>
 				<button type="submit" class="btn btn-xl btn-primary btn-block mb-5">로그인</button>
 				<hr />
-				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/findId.jsp">아이디 찾기</a>
+				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/userServlet/findId.do">아이디 찾기</a>
 				<span class="text-muted">|</span>
 				<a class="btn btn-sm btn-secondary-link" href="javascript:alert('준비중입니다.')">비밀번호 찾기</a>
 				<span class="text-muted">|</span>
-				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/regFormImpl.jsp">회원가입</a>
+				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/userServlet/agreeForm.do">회원가입</a>
 			</form>
 		</div>
 	</section>
@@ -96,5 +76,28 @@
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/user_custom.js"></script>
+<c:choose>
+	<c:when test='${msg=="id"}'>
+		<script>
+			window.onload = function(){
+				window.alert("존재하지 않는 아이디 입니다.");
+			}
+		</script>
+	</c:when>
+	<c:when test='${msg=="pw"}'>
+		<script>
+			window.onload = function(){
+				window.alert("비밀번호가 일치하지 않습니다.");
+			}
+		</script>
+	</c:when>
+	<c:when test='${msg == "addUser"}'>
+		<script>
+			window.onload = function(){
+				window.alert("회원가입이 완료되었습니다.");
+			}		
+		</script>
+	</c:when>	
+</c:choose>
 </body>
 </html>

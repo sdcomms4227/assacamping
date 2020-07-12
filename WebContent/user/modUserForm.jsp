@@ -16,18 +16,6 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-function postCode() {
-		new daum.Postcode({
-			oncomplete:function(data) { 				
-				$('[name=userZipcode]').val(data.zonecode);
-				$('[name=userAddress1]').val(data.address);
-				$('[name=userAddress2]').val(data.buildingName);
-			}
-		}).open();
-}
-</script>
 </head>
 <body>
 
@@ -47,7 +35,7 @@ function postCode() {
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Join</div>
+							<div class="home_title">회원정보수정</div>
 						</div>
 					</div>
 				</div>
@@ -81,10 +69,12 @@ function postCode() {
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>
-					<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" value="${userInfo.userZipcode}" required>
-				</div>
-				<div class="form-group mb-3">
-						<button class="font-weight-bold" type="button" onclick="postCode()">우편번호검색</button>
+					<div class="input-group">
+						<input type="text" class="form-control" name="userZipcode" id="userZipcode" value="${userInfo.userZipcode}" required />
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="button" onclick="postCode()">우편번호 검색</button>
+						</div>
+					</div>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress1">주소</label>
@@ -94,7 +84,7 @@ function postCode() {
 					<label class="font-weight-bold" for="userAddress2">상세주소</label>
 					<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" value="${userInfo.userAddress2}" required>
 				</div>
-				<button type="submit" class="btn btn-xl btn-primary btn-block">수정하기</button>
+				<button type="submit" class="btn btn-lg btn-primary btn-block my-5">수정하기</button>
 			</form>
 		</div>
 	</section>
@@ -113,5 +103,17 @@ function postCode() {
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/user_custom.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function postCode() {
+		new daum.Postcode({
+			oncomplete:function(data) { 				
+				$('[name=userZipcode]').val(data.zonecode);
+				$('[name=userAddress1]').val(data.address);
+				$('[name=userAddress2]').val(data.buildingName);
+			}
+		}).open();
+}
+</script>
 </body>
 </html>
