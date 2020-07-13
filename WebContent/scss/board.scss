@@ -82,7 +82,7 @@ img {
 	background-color: #fafafa;
 }
 
-.gallery-grid {
+.event-grid {
 	margin: 0 -8px;
 	opacity: 0;
 	transition:opacity .3s ease;
@@ -91,7 +91,7 @@ img {
 	}
 }
 
-.gallery-grid-item {
+.event-grid-item {
 	width: 50%;
 	padding: 8px;
 	.caption {
@@ -126,7 +126,7 @@ img {
 	.d-lg-table-header-group {
 		display: table-header-group !important;
 	}
-	.gallery-grid-item {
+	.event-grid-item {
 		width: 33.33%;
 		&:hover .caption-inner {
 			top: 0;

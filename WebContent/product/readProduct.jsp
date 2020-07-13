@@ -168,7 +168,7 @@
 										</c:choose>
 									</div>
 									<div class="col-6">
-										<a class="btn btn-secondary btn-lg btn-block" href="javascript:alert('준비중입니다.')">위시리스트 추가하기</a>
+										<a class="btn btn-secondary btn-lg btn-block" href="javascript:alert('준비중입니다.')">위시리스트 추가</a>
 									</div>	
 								</div>
 							</div>
