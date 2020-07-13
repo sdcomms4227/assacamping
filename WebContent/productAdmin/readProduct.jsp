@@ -25,7 +25,7 @@
 		<div class="col-12 col-lg-4">
 			<table class="table table-layout-fixed text-center">
 				<thead>
-					<tr>
+					<tr class="bg-light">
 						<th>이미지1</th>
 						<th>이미지2</th>
 						<th>이미지3</th>
@@ -64,6 +64,11 @@
 					<col style="width:120px" />
 					<col />
 				</colgroup>
+				<thead>
+					<tr class="bg-light text-center">
+						<th colspan="2">상품 정보</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
 						<th>번호</th>

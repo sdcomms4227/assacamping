@@ -236,17 +236,24 @@
 												</c:choose>
 											</div>
 											<div class="product_options">
-												<c:if test="${productVO.productQuantity > 0}">
-													<form name="productCartForm${status.index}" class="d-inline-block" action="${contextPath}/cartServlet/addCart.do?userId=${userId}" method="post" enctype="multipart/form-data">
-														<input type="hidden" name="productNo" value="${productVO.productNo}">
-														<input type="hidden" name="productName" value="${productVO.productName}">
-														<input type="hidden" name="productPrice" value="${productVO.productPrice}">
-														<input type="hidden" name="productImage" value="${productVO.productImageName1}">
-														<input type="hidden" name="productCategory" value="${productVO.productCategoryNo}">
-														<input type="hidden" name="cartQuantity" value="1">
-														<input type="hidden" name="productDelivery" value="1">
-														<div class="product_buy product_option" onclick="document.productCartForm${status.index}.submit()"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
-													</form>
+												<c:if test="${productVO.productQuantity > 0}">										
+													<c:choose>
+														<c:when test="${userId != null}">
+															<form name="productCartForm${status.index}" class="d-inline-block" action="${contextPath}/cartServlet/addCart.do?userId=${userId}" method="post" enctype="multipart/form-data">
+																<input type="hidden" name="productNo" value="${productVO.productNo}">
+																<input type="hidden" name="productName" value="${productVO.productName}">
+																<input type="hidden" name="productPrice" value="${productVO.productPrice}">
+																<input type="hidden" name="productImage" value="${productVO.productImageName1}">
+																<input type="hidden" name="productCategory" value="${productVO.productCategoryNo}">
+																<input type="hidden" name="cartQuantity" value="1">
+																<input type="hidden" name="productDelivery" value="1">
+																<div class="product_buy product_option" onclick="document.productCartForm${status.index}.submit()"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
+															</form>
+														</c:when>
+														<c:otherwise>
+															<button class="btn btn-primary btn-lg btn-block" type="button" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">장바구니 담기</button>
+														</c:otherwise>
+													</c:choose>
 												</c:if>
 												<div class="product_fav product_option">+</div>
 											</div>
