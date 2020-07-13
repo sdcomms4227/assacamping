@@ -251,11 +251,18 @@
 															</form>
 														</c:when>
 														<c:otherwise>
-															<button class="btn btn-primary btn-lg btn-block" type="button" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">장바구니 담기</button>
+															<div class="product_buy product_option" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
 														</c:otherwise>
 													</c:choose>
 												</c:if>
-												<div class="product_fav product_option">+</div>
+												<c:choose>
+													<c:when test="${userId != null}">
+														<div class="product_fav product_option" onclick="addWish(${productVO.productNo})">+</div>
+													</c:when>
+													<c:otherwise>
+														<div class="product_fav product_option" onclick="alert('로그인 후  위시리스트 추가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">+</div>
+													</c:otherwise>
+												</c:choose>												
 											</div>
 										</div>
 									</div>
@@ -375,6 +382,22 @@ function changeCategory(categoryNo){
 	var form = document.pagingForm;
 	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.searchCategoryNo.value = categoryNo;
+	form.submit();
+}
+
+//위시리스트 ------------------------------------------------------------
+function addWish(productNo) {
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");
+	form.setAttribute("action", "${contextPath}/wishListServlet/addWish.do");
+	
+	var input1 = document.createElement("input");	
+	input1.setAttribute("type","hidden");
+	input1.setAttribute("name","productNo");
+	input1.setAttribute("value", productNo);
+	
+	form.appendChild(input1);
+	document.body.appendChild(form);
 	form.submit();
 }
 </script>

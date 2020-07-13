@@ -67,7 +67,7 @@
 					<td>
 						<c:forEach items="${orderInfo}" var="order">
 			                ${order.productName}
-			                <a class="btn btn-sm btn-secondary ml-2" href="${contextPath}/productServlet/getOnePro.do?productNo=${order.productNo}">재구매</a>
+			                <a class="btn btn-sm btn-secondary ml-2" href="${contextPath}/productServlet/readProduct.do?productNo=${order.productNo}">재구매</a>
 						</c:forEach>
 					</td>
 				</tr>

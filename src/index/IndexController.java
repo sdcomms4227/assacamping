@@ -55,11 +55,11 @@ public class IndexController extends HttpServlet {
 		request.setAttribute("cartCount", cartCount);
 
 		// wishCount
-//		int wishCount = 0;		
-//		if(session.getAttribute("wishCount") != null) {
-//			wishCount = (int)session.getAttribute("wishCount");
-//		}		
-//		request.setAttribute("wishCount", wishCount);
+		int wishCount = 0;		
+		if(session.getAttribute("wishCount") != null) {
+			wishCount = (int)session.getAttribute("wishCount");
+		}		
+		request.setAttribute("wishCount", wishCount);
 		
 		nextPage = "/index.jsp";
 

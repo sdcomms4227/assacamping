@@ -64,11 +64,6 @@ public class CartController extends HttpServlet {
 				
 					String userId=(String)session.getAttribute("userId"); 
 					
-					
-					
-//					System.out.println(userId+"controller");
-					
-
 					List<CartVO> list=cartService.allcartList(userId);
 
 					 Map<String, Integer> map=cartService.TotalPrice(userId);
@@ -84,18 +79,7 @@ public class CartController extends HttpServlet {
 					String userId=(String)session.getAttribute("userId"); 
 					
 					List<Integer> productNoList=cartService.allDeleteCart(userId, request);
-					
-//					파일이 삭제되면 안됨
-//					for(int product1 : productNoList) {
-//						
-//						File imgDir = new File(realPath + "\\" + product1);
-//						
-//						 if(imgDir.exists()) {
-//							 
-//							 FileUtils.deleteDirectory(imgDir);
-//						 }			
-//					}
-					
+										
 					session.setAttribute("userId", userId);
 					nextPage="/order/cart.jsp";
 					
@@ -110,11 +94,6 @@ public class CartController extends HttpServlet {
 					
 					
 				    int productTotalPrice=cartQuantity*productPrice;
-//				    System.out.println(userId +"update");
-//					System.out.println(productName+"update");
-//					System.out.println(cartQuantity+"update");
-//					System.out.println(productPrice+"update");
-//					System.out.println(productTotalPrice+"update");
 					
 					cartVO.setUserId(userId);
 					cartVO.setProductName(productName);
@@ -132,20 +111,7 @@ public class CartController extends HttpServlet {
 					String userId=(String)session.getAttribute("userId"); 
 					
 					List<Integer> list=cartService.allDeleteCart(userId, request);
-					
-//					파일이 삭제되면 안됨
-//					for(int i=0;i<list.size();i++) {
-//						
-//						int productNo1=list.get(i);
-//						
-//						File imgDir = new File(realPath + "\\" + productNo1);
-//						
-//						 if(imgDir.exists()) {
-//							 
-//							 FileUtils.deleteDirectory(imgDir);
-//						}
-//					}
-					
+										
 					session.setAttribute("userId", userId);					
 					nextPage="/cartServlet/cart.do";
 				}else if(action.equals("/deleteCart.do")) {
@@ -156,15 +122,6 @@ public class CartController extends HttpServlet {
 					
 					cartService.deleteCart(userId, productNo);
 					
-//					파일이 삭제되면 안됨
-//					File imgDir = new File(realPath + "\\" + productNo);
-//						
-//						 if(imgDir.exists()) {
-//							 
-//							 FileUtils.deleteDirectory(imgDir);
-//						 		
-//					}
-
 					int cartCount = 0;
 					cartCount = cartService.cartTotalCount(userId);
 					session.setAttribute("cartCount", cartCount);
@@ -181,24 +138,13 @@ public class CartController extends HttpServlet {
 				}else if(action.equals("/addCart.do")) {
 					
 					String userId=(String)session.getAttribute("userId");
-					
-//					System.out.println("userId: " + userId);
-					
-					
-				
-					Map<String, String> cartMap = uploadFile(request,response);
-					
+									
+					Map<String, String> cartMap = uploadFile(request,response);					
 					
 					String productImage = cartMap.get("productImage");
-//					System.out.println("productImage: " + productImage);
 					String productNo = cartMap.get("productNo");
-//					System.out.println("productNo: " + productNo);
 					String productPrice1 = cartMap.get("productPrice");
-//					System.out.println("productPrice: " + productPrice1);
 					String productDelivery=cartMap.get("productDelivery");
-//					System.out.println("productDelivery: " + productDelivery);
-					
-					
 				
 					if (productDelivery.equals("1")) {
 						productDelivery="2500";
@@ -206,16 +152,12 @@ public class CartController extends HttpServlet {
 						productDelivery="0"; 
 					}
 				 
-//					System.out.println(productDelivery);
-					
 					String cartQuantity1=cartMap.get("cartQuantity");
 					int cartQuantity=Integer.parseInt(cartQuantity1);
 					
-//					System.out.println(cartQuantity);
 					String productName=cartMap.get("productName");
 					String productCategory=cartMap.get("productCategory");
 					
-//					System.out.println("카테고리"+productCategory);
 					int productPrice=Integer.parseInt(productPrice1);
 				
 					int productTotalPrice=cartQuantity*productPrice;
@@ -234,24 +176,17 @@ public class CartController extends HttpServlet {
 					
 					cartService.addcart(cartVO);
 					
-				/*
-				 * if (productImage != null && productImage.length() != 0) { File srcFile = new
-				 * File(realPath + "\\" + "temp" + "\\" + productImage); File destDir = new
-				 * File(realPath + "\\" + productNo); destDir.mkdirs();
-				 * FileUtils.moveFileToDirectory(srcFile, destDir, true); srcFile.delete();
-				 * System.out.println("완료"); }
-				 */
-					
 					int cartCount = 0;
 					cartCount = cartService.cartTotalCount(userId);
 					session.setAttribute("cartCount", cartCount);
 					
-					PrintWriter pw = response.getWriter(); pw.print("<script>" +
-					"  alert('장바구니담기완료');" + " location.href='" + request.getContextPath() +
-					"/cartServlet/cart.do';" + "</script>");
+					PrintWriter pw = response.getWriter();
+					pw.print("<script>");
+					pw.print("	alert('장바구니담기완료');");
+					pw.print("	location.href='" + request.getContextPath() + "/cartServlet/cart.do';");
+					pw.print("</script>");
 				 
 					return;
-					//nextPage="/cartServlet/cart.do";
 					
 				}
 			} catch (Exception e) {
@@ -323,37 +258,5 @@ public class CartController extends HttpServlet {
 			
 			return productMap;
 		}
-	/*
-	 * private Map<String, String> upload(HttpServletRequest request,
-	 * HttpServletResponse response) throws ServletException, IOException{
-	 * 
-	 * Map<String, String> cartMap = new HashMap<String, String>(); String encoding
-	 * = "utf-8"; File currentDirPath = new File(PRO_IMG_REPO); DiskFileItemFactory
-	 * factory = new DiskFileItemFactory(); factory.setRepository(currentDirPath);
-	 * factory.setSizeThreshold(1024*1024*1); ServletFileUpload upload = new
-	 * ServletFileUpload(factory); try { List items = upload.parseRequest(request);
-	 * for(int i = 0; i<items.size(); i++) { FileItem fileItem = (FileItem)
-	 * items.get(i); if(fileItem.isFormField()) {
-	 * System.out.println(fileItem.getFieldName() + "=" +
-	 * fileItem.getString(encoding)); cartMap.put(fileItem.getFieldName(),
-	 * fileItem.getString(encoding)); }else { System.out.println("파일이름: " +
-	 * fileItem.getFieldName()); System.out.println("파일크기: " + fileItem.getSize() +
-	 * "bytes");
-	 * 
-	 * if(fileItem.getSize()>0) { int idx = fileItem.getName().lastIndexOf("\\");
-	 * if(idx == -1) { idx = fileItem.getName().lastIndexOf("/"); }
-	 * 
-	 * String fileName = fileItem.getName().substring(idx + 1);
-	 * System.out.println("파일이름: " + fileName); cartMap.put(fileItem.getFieldName(),
-	 * fileName); File uploadFile = new File(currentDirPath + "\\temp\\" +
-	 * fileName); fileItem.write(uploadFile);
-	 * 
-	 * }
-	 * 
-	 * } } } catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * return cartMap;
-	 * 
-	 * }
-	 */
+	  	
 }

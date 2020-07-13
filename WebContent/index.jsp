@@ -225,7 +225,7 @@
 											</c:choose>
 										</div>
 										<div class="product_options">
-											<c:if test="${productVO.productQuantity > 0}">
+											<c:if test="${productVO.productQuantity > 0}">										
 												<c:choose>
 													<c:when test="${userId != null}">
 														<form name="productCartForm${status.index}" class="d-inline-block" action="${contextPath}/cartServlet/addCart.do?userId=${userId}" method="post" enctype="multipart/form-data">
@@ -244,7 +244,14 @@
 													</c:otherwise>
 												</c:choose>
 											</c:if>
-											<div class="product_fav product_option">+</div>
+											<c:choose>
+												<c:when test="${userId != null}">
+													<div class="product_fav product_option" onclick="addWish(${productVO.productNo})">+</div>
+												</c:when>
+												<c:otherwise>
+													<div class="product_fav product_option" onclick="alert('로그인 후  위시리스트 추가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">+</div>
+												</c:otherwise>
+											</c:choose>												
 										</div>
 									</div>
 								</div>
@@ -424,5 +431,22 @@
 <script src="${contextPath}/plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/index_custom.js"></script>
+<script>
+//위시리스트 ------------------------------------------------------------
+function addWish(productNo) {
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");
+	form.setAttribute("action", "${contextPath}/wishListServlet/addWish.do");
+	
+	var input1 = document.createElement("input");	
+	input1.setAttribute("type","hidden");
+	input1.setAttribute("name","productNo");
+	input1.setAttribute("value", productNo);
+	
+	form.appendChild(input1);
+	document.body.appendChild(form);
+	form.submit();
+}
+</script>
 </body>
 </html>
