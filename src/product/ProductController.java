@@ -88,6 +88,7 @@ public class ProductController extends HttpServlet{
 				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
 			}
 			session.setAttribute("userId", session.getAttribute("userId"));
+			
 			nextPage = "/product/readProduct.jsp";
 			
 		}
