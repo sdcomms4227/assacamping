@@ -120,7 +120,6 @@ public class ProductDAO {
 		return productList;		
 	}
 
-
 	public int getProductCount(Map<String, Object> searchMap) {
 
 		String searchKeyword = (String)searchMap.get("searchKeyword");
