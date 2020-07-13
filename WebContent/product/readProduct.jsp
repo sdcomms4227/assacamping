@@ -57,14 +57,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Woman</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Woman</li>
-									<li>Swimsuits</li>
-								</ul>
-							</div>
+							<div class="home_title">캠핑상품</div>
 						</div>
 					</div>
 				</div>

@@ -40,13 +40,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Shopping Cart</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Shopping Cart</li>
-								</ul>
-							</div>
+							<div class="home_title">장바구니</div>
 						</div>
 					</div>
 				</div>

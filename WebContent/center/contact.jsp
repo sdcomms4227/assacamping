@@ -37,12 +37,6 @@
 					<div class="home_container">
 						<div class="home_content">
 							<div class="home_title">Contact</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Contact</li>
-								</ul>
-							</div>
 						</div>
 					</div>
 				</div>

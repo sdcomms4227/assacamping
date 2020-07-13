@@ -63,7 +63,6 @@
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/faqAdminServlet/listFaq.do"> <span data-feather="file-text"></span> 자주하는 질문 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/campingAdminServlet/listCamping.do"> <span data-feather="file-text"></span> 캠핑정보 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/eventAdminServlet/listEvent.do"> <span data-feather="file-text"></span> 이벤트 </a></li>
 				</ul>
