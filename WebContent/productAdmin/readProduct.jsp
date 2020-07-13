@@ -22,48 +22,10 @@
 
 <article class="product">
 	<div class="row">
-		<div class="col-12 col-lg-6">
-			<table class="table read-table table-layout-fixed">
-				<colgroup>
-					<col style="width:120px" />
-					<col />
-				</colgroup>
-				<tbody>
-					<tr>
-						<th>번호</th>
-						<td class="text-danger">${productNo}</td>
-					</tr>
-					<tr>
-						<th>카테고리</th>
-						<td>${productCategoryName}</td>
-					</tr>
-					<tr>
-						<th>상품명</th>
-						<td>${productName}</td>
-					</tr>
-					<tr>
-						<th>가격</th>
-						<td>${productFormattedPrice}</td>
-					</tr>
-					<tr>
-						<th>수량</th>
-						<td>${productFormattedQuantity}</td>
-					</tr>
-					<tr>
-						<th>상세정보</th>
-						<td>${fn:replace(productContent,LF,BR)}</td>
-					</tr>
-					<tr>
-						<th>등록일</th>
-						<td>${productFormattedDate}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-12 col-lg-6">
+		<div class="col-12 col-lg-4">
 			<table class="table table-layout-fixed text-center">
 				<thead>
-					<tr>
+					<tr class="bg-light">
 						<th>이미지1</th>
 						<th>이미지2</th>
 						<th>이미지3</th>
@@ -96,8 +58,50 @@
 				</tbody>
 			</table>
 		</div>
-	</div>
-	
+		<div class="col-12 col-lg-8">
+			<table class="table read-table table-layout-fixed">
+				<colgroup>
+					<col style="width:120px" />
+					<col />
+				</colgroup>
+				<thead>
+					<tr class="bg-light text-center">
+						<th colspan="2">상품 정보</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>번호</th>
+						<td class="text-danger">${productNo}</td>
+					</tr>
+					<tr>
+						<th>카테고리</th>
+						<td>${productCategoryName}</td>
+					</tr>
+					<tr>
+						<th>상품명</th>
+						<td>${productName}</td>
+					</tr>
+					<tr>
+						<th>가격</th>
+						<td>${productFormattedPrice}</td>
+					</tr>
+					<tr>
+						<th>수량</th>
+						<td>${productFormattedQuantity}</td>
+					</tr>
+					<tr>
+						<th>상세정보</th>
+						<td>${fn:replace(productContent,LF,BR)}</td>
+					</tr>
+					<tr>
+						<th>등록일</th>
+						<td>${productFormattedDate}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>	
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listProduct()">목록</button>							
 		<button type="button" class="btn btn-warning" onclick="modifyProduct(${productNo})">수정</button>

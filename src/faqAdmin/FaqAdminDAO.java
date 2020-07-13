@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import faq.FaqVO;
-
 public class FaqAdminDAO {
 	
 	private Connection conn;

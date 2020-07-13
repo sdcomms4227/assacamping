@@ -1,4 +1,4 @@
-package faq;
+package faqAdmin;
 
 import java.sql.Timestamp;
 

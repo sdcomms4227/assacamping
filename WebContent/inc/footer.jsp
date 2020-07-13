@@ -7,9 +7,10 @@
 				<div class="footer_logo"><a href="${contextPath}">ASSA</a></div>
 				<nav class="footer_nav">
 					<ul>
-				<li><a href="${contextPath}/productServlet/proList.do">캠핑상품</a></li>
-				<li><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></li>
-				<li><a href="${contextPath}/center/contact.jsp">고객센터</a></li>
+						<li><a href="${contextPath}/productServlet/listProduct.do">캠핑상품</a></li>
+						<li><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></li>
+						<li><a href="${contextPath}/eventServlet/listEvent.do"">이벤트</a></li>
+						<li><a href="${contextPath}/contactServlet/contact.do">고객센터</a></li>
 					</ul>
 				</nav>
 				<div class="footer_social">

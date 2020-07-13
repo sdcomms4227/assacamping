@@ -74,7 +74,12 @@
 					<label for="userZipcode" class="m-0">우편번호</label>
 				</th>
 				<td>
-					<input class="form-control" type="text" name="userZipcode" id="userZipcode" required />
+					<div class="input-group">
+						<input type="text" class="form-control" name="userZipcode" id="userZipcode" value="${userZipcode}" required />
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="button" onclick="postCode()">우편번호 검색</button>
+						</div>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -103,11 +108,21 @@
 
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>
 <script src="${contextPath}/js/lmw-custom-preview.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
 	$(document).ready(function() {
 		bsCustomFileInput.init()
 	});
+	function postCode() {
+		new daum.Postcode({
+			oncomplete:function(data) { 				
+				$('[name=userZipcode]').val(data.zonecode);
+				$('[name=userAddress1]').val(data.address);
+				$('[name=userAddress2]').val(data.buildingName);
+			}
+		}).open();
+	}
 </script>
 
 <%@ include file="../inc/adminBottom.jsp"%>

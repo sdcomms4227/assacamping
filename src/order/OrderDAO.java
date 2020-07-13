@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import productCart.CartVO;
+import cart.CartVO;
 
 public class OrderDAO implements Serializable{
 
@@ -61,7 +61,7 @@ public class OrderDAO implements Serializable{
 		  
 		  CartVO vo1=orderList.get(i);
 				
-		       sql=" insert into order(productPayment,userZipcode,"
+		       sql=" insert into productOrder(productPayment,userZipcode,"
 		       		+ "userAddress1,userAddress2,"
 		       		+ "productName,userName,"
 		       		+ "userPhone,userComment,"
@@ -110,7 +110,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-            sql =" select max(orderNo) from `order`";
+            sql =" select max(orderNo) from productOrder";
 			
 			pstmt = conn.prepareStatement(sql);
 			rs=pstmt.executeQuery();
@@ -136,7 +136,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select * from `order` where userId=? and orderNo=?";
+			sql="select * from productOrder where userId=? and orderNo=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -171,7 +171,7 @@ public class OrderDAO implements Serializable{
 			
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="update `order` set orderstate=? where userId=?  and orderNo=? ";
+			sql="update productOrder set orderstate=? where userId=?  and orderNo=? ";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -195,7 +195,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select orderState from `order` where userId=? and orderNo=?";
+			sql="select orderState from productOrder where userId=? and orderNo=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -224,7 +224,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="update `order` set orderState=? where userId=? and orderNo=?";
+			sql="update productOrder set orderState=? where userId=? and orderNo=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			
@@ -244,7 +244,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select * from `order`";
+			sql="select * from productOrder";
 			
 			pstmt= conn.prepareStatement(sql);
 			
@@ -272,7 +272,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select * from `order` where userId=? order by orderNo desc ";
+			sql="select * from productOrder where userId=? order by orderNo desc ";
 			
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -309,7 +309,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select distinct orderNo,orderDate,orderState  from `order` where userId=? order by orderNo desc";
+			sql="select distinct orderNo,orderDate,orderState from productOrder where userId=? order by orderNo desc";
 			
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -343,7 +343,7 @@ public class OrderDAO implements Serializable{
 		try {
 			conn=dbUtil.DBConnection.getConnection();
 			
-			sql="select * from `order` where userId=? and orderNo=?";
+			sql="select * from productOrder where userId=? and orderNo=?";
 			
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, userId);

@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import faq.FaqVO;
-
 @SuppressWarnings("serial")
 @WebServlet("/faqAdminServlet/*")
 public class FaqAdminController extends HttpServlet {

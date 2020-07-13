@@ -9,7 +9,7 @@
 				<li><a href="${contextPath}/productServlet/listProduct.do">캠핑상품</a></li>
 				<li><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></li>
 				<li><a href="${contextPath}/eventServlet/listEvent.do"">이벤트</a></li>
-				<li><a href="${contextPath}/center/contact.jsp">고객센터</a></li>
+				<li><a href="${contextPath}/contactServlet/contact.do">고객센터</a></li>
 			</ul>
 		</nav>
 		<div class="header_content ml-auto">
@@ -52,10 +52,10 @@
 				<!-- Star -->				
 				<c:choose>
 					<c:when test="${sessionScope.userId!=null}">
-						<a class="shopping_a" href="javascript:alert('준비중입니다')">
+						<a class="shopping_a" href="${contextPath}/wishListServlet/wishList.do">
 							<div class="star">
 								<img src="${contextPath}/images/star.svg" alt="">
-								<c:if test="${sessionScope.wishCount != null}">
+ 								<c:if test="${sessionScope.wishCount != null}">
 									<div class="star_num_container">
 										<div class="star_num_inner">
 											<div class="star_num">${sessionScope.wishCount}</div>
@@ -88,9 +88,6 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="loggedDropdown">
 								<a class="dropdown-item" href="${contextPath}/orderServlet/myOrderList.do">나의 주문 내역</a>
-								<a class="dropdown-item" href="${contextPath}/wishServlet/myWishList.do">나의 위시리스트</a>
-								<a class="dropdown-item" href="${contextPath}/reviewServlet/myReviewList.do">내가 쓴 상품후기</a>
-								<a class="dropdown-item" href="${contextPath}/qnaServlet/myQnaList.do">내가 쓴 상품문의</a>
 								<hr />
 								<a class="dropdown-item" href="${contextPath}/userServlet/userPwCheck.do?userId=${userId}">회원정보수정</a>
 								<a class="dropdown-item" href="${contextPath}/userServlet/changePw.do?userId=${userId}">비밀번호변경</a>

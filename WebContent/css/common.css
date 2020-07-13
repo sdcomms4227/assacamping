@@ -298,7 +298,8 @@ section
 {
 	color: #232323;
 }
-.cursor-pointer{
+.cursor-pointer,
+[onclick] {
 	cursor: pointer;
 }
 

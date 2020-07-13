@@ -47,14 +47,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Woman</div>
-							<div class="breadcrumbs">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>Woman</li>
-									<li>Accessories</li>
-								</ul>
-							</div>
+							<div class="home_title">이벤트</div>
 						</div>
 					</div>
 				</div>
@@ -75,20 +68,20 @@
 			</colgroup>
 			<tr>
 				<td colspan="6" class="h4 p-3 readsubject">
-					${eventTitle}																	
-					<div class="h6 mt-3 mb-0 d-lg-none text-right">
+					s${eventTitle}																	
+					<%-- <div class="h6 mt-3 mb-0 d-lg-none text-right">
 						<small class="text-muted">${userId} | ${eventFormattedWriteDate} | ${eventReadCount}</small>
-					</div>
+					</div> --%>
 				</td>
 			</tr>
-			<tr class="d-none d-lg-table-row">
+			<%-- <tr class="d-none d-lg-table-row">
 				<th class="align-middle">제목</th>
 				<td>${event.eventTitle}</td>				
 				<th class="align-middle">작성일</th>
 				<td>${eventFormattedWriteDate}</td>
 				<th class="align-middle">조회수</th>
 				<td>${eventReadCount}</td>
-			</tr>
+			</tr> --%>
 			<tr>
 				<td colspan="6" class="py-5">
 				     <input  type= "hidden"   name="originalFileName" value="${eventImageFileName}" />
@@ -101,21 +94,21 @@
 					<th class="align-middle">첨부파일</th>
 					<td colspan="5">
 						<div class="d-flex align-items-center">
-<%-- 								<div class="preview" style="background-image:url(${contextPath}/files/event/${event.eventNo}/${event.eventImageFileName})"></div>
- --%>							
  							<p class="ml-2 mb-0">${eventImageFileName}</p>
 						</div>
 					</td>
 				</tr>				
 			</c:if>
 		</table>
-		<form>
+		
+		<jsp:include page="../comment/comment.jsp" />
+		
 		<div class="text-center my-5">
 			<a href="${contextPath}/eventServlet/listEvent.do">
 			<button type="button" class="btn btn-secondary">목록</button></a>
 			<c:if test="${userId eq 'admin'}">							
-				<a href="${contextPath}/eventServlet/modEvent.do?eventNo=${eventNo}" class="btn btn-warning">수정</a>
-				<a href="${contextPath}/eventServlet/delEvent.do?eventNo=${eventNo}" class="btn btn-warning">삭제</a>	    
+				<a href="${contextPath}/eventServlet/modEvent.do?eventNo=${eventNo}" class="btn btn-warning">관리자 수정</a>
+				<a href="${contextPath}/eventServlet/delEvent.do?eventNo=${eventNo}" class="btn btn-danger">관리자 삭제</a>	    
 			</c:if>
 		</div>			
 	</article>

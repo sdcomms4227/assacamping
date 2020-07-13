@@ -153,5 +153,37 @@ public class WishListDAO {
 		return 0;
 	}
 
+	public int wishTotalCount(String userId) {
+		String sql = "";
+		int totalcount=0;
+		
+		try {
+               conn=dbUtil.DBConnection.getConnection();
+			
+			   sql="select count(*) from wishList where userId=?";
+			    
+			   pstmt=conn.prepareStatement(sql);
+			   
+			   pstmt.setString(1, userId);
+			   rs=pstmt.executeQuery();
+			   if(rs.next()) {
+				   
+				   totalcount= rs.getInt(1);
+				   
+			   }
+			
+		} catch (Exception e) {
+			
+			System.out.println("cartTotalCount에서 오류"+e.getMessage());
+			
+		}finally {
+			freeResource();
+		}
+		
+		
+		
+		return totalcount;
+	}
+
 	
 }

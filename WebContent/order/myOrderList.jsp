@@ -114,7 +114,7 @@
 								<td>${payList.orderNo}</td>
 								<td>${payList.orderDate}</td>
 								<td>
-									<a href="${contextPath}/productServlet/getOnePro.do?productNo=${payList.productNo}">재구매</a>
+									<a href="${contextPath}/productServlet/readProduct.do?productNo=${payList.productNo}">재구매</a>
 								</td>
 							</tr>
 						</c:forEach>

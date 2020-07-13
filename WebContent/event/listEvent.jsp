@@ -39,114 +39,135 @@
 </head>
 <body>
 
-	<div class="super_container">
+<div class="super_container">
 
-		<!-- Header -->
-		<jsp:include page="../inc/header.jsp" />
+	<!-- Header -->
+	<jsp:include page="../inc/header.jsp" />
 
-		<!-- Menu -->
-		<jsp:include page="../inc/menu.jsp" />
+	<!-- Menu -->
+	<jsp:include page="../inc/menu.jsp" />
 
-		<!-- Home -->
-		<div class="home">
-			<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="home_container">
-							<div class="home_content">
-								<div class="home_title">Woman</div>
-								<div class="breadcrumbs">
-									<ul>
-										<li><a href="index.html">Home</a></li>
-										<li>Woman</li>
-										<li>Accessories</li>
-									</ul>
-								</div>
-							</div>
+	<!-- Home -->
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="home_container">
+						<div class="home_content">
+							<div class="home_title">이벤트</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- Event -->
-		<article class="event container">
-			<div class="row">
-				<c:choose>
-					<c:when test="${eventList == null }">
-						<div class="col-md-4">
-							<p align="center">
-								<b>등록된 글이 없습니다.</b>
-							</p>
-						</div>
-					</c:when>
-					<c:when test="${eventList != null}">
-						<c:forEach var="event" items="${eventList}">
-							<div class="col-md-4">	
-								<a href="${contextPath}/eventServlet/readEvent.do?eventNo=${event.eventNo}" class="thumbnail">
-									<img src="${contextPath}/files/event/${event.eventNo}/${event.eventImageFileName}" style="width: 250px; height: 180px">
-									<br />${event.eventTitle}
-								</a>
-							</div>
-						</c:forEach>
-					</c:when>
-				</c:choose>
-			</div>
-			<div class="cls2">
-				<c:if test="${totEvents != null}">
-					<c:choose>
-						<c:when test="${totEvents > 100}">
-							<c:forEach var="page" begin="1" end="10" step="1">
-								<c:if test="${section > 1 && page=1}">
-									<a href="${contextPath}/eventServlet/listEvent.do?section=${section-1}&pageNum=${(section-1)*10+1}&search=${search}"> &nbsp;이전</a>
-								</c:if>
-								<a href="${contextPath}/eventServlet/listEvent.do?section=${section}&pageNum=${page}&search=${search}">${(section-1)*10}</a>
-								<c:if test="${page==10}">
-									<a href="${contextPath}/eventServlet/listEvent.do?section=${section+1}&pageNum=${section*10+1}&search=${search}&search=${search}"> &nbsp;다음</a>
-								</c:if>
-							</c:forEach>
-						</c:when>
-						<c:when test="${totEvents ==100}">
-							<c:forEach var="page" begin="1" end="10" step="1">
-								<a href="#">${page}</a>
-							</c:forEach>
-						</c:when>
-						<c:when test="${totEvents < 100 }">
-							<c:forEach var="page" begin="1" end="${totEvents/10+1}" step="1">
-								<c:choose>
-									<c:when test="${page==pageNum}">
-										<a class="sel-page" href="${contextPath}/eventServlet/listEvent.do?section=${section}&pageNum=${page}&search=${search}"> ${page} </a>
-									</c:when>
-									<c:otherwise>
-										<a class="no-unline" href="${contextPath}/eventServlet/listEvent.do?section=${section}&pageNum=${page}&search=${search}"> ${page} </a>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</c:when>
-					</c:choose>
-				</c:if>
-			</div>
-			<div class="row my-5">
-				<div class="col-12 col-lg-8">
-					<form action="${contextPath}/eventServlet/listEvent.do" class="form-inline justify-content-center justify-content-lg-start">
-						<div class="input-group">
-							<input type="hidden" name="section" value="${section}">
-							<input type="hidden" name="pageNum" value="${pageNum}">
-							<input type="search" name="search" value="${search}" size="24" maxlength="24" class="form-control">
-							<div class="input-group-append">
-								<button type="submit" class="btn btn-secondary">검색</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="col-12 col-lg-4 mt-3 mt-lg-0">
-					<div class="form-group text-center text-lg-right">				
-						<a class="btn btn-secondary" href="${contextPath}/eventServlet/listEvent.do">전체보기</a>			
-						<c:if test="${userId eq 'admin'}">
-							<a class="btn btn-primary" href="${contextPath}/eventServlet/eventForm.do">관리자 : 글쓰기</a>
-						</c:if>
+	<!-- Event -->
+	<article class="event container">
+		<div class="event-grid">
+			<c:choose>
+				<c:when test="${eventList == null }">
+					<div class="event-grid-item">
+						등록된 이벤트가 없습니다.
 					</div>
+				</c:when>
+				<c:when test="${eventList != null}">
+					<c:forEach var="event" items="${eventList}">					
+						<div class="event-grid-item cursor-pointer" onclick="location.href='${contextPath}/eventServlet/readEvent.do?eventNo=${event.eventNo}'">
+							<img src="${contextPath}/files/event/${event.eventNo}/${event.eventImageFileName}" class="d-block w-100" />
+							<div class="caption">
+								<div class="caption-inner text-center">
+									<div>
+										<p class="h4">${event.eventTitle}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+			</c:choose>
+		</div>
+		
+		
+		
+		<c:if test="${totEvents != null}">
+			<div class="row">
+				<div class="col-12">
+					<ul class="pagination justify-content-center">
+					
+					
+					
+						<c:choose>
+							<c:when test="${totEvents > 100}">
+								<c:forEach var="page" begin="1" end="10" step="1">
+									<c:if test="${section > 1 && page=1}">
+										<li class="page-item">
+											<a class="page-link" href="${contextPath}/eventServlet/listEvent.do?section=${section-1}&pageNum=${(section-1)*10+1}&search=${search}"> &nbsp;이전</a>
+										</li>
+									</c:if>
+									<li class="page-item">
+										<a class="page-link" href="${contextPath}/eventServlet/listEvent.do?section=${section}&pageNum=${page}&search=${search}">${(section-1)*10}</a>
+									</li>
+									<c:if test="${page==10}">
+										<li class="page-item">
+											<a class="page-link" href="${contextPath}/eventServlet/listEvent.do?section=${section+1}&pageNum=${section*10+1}&search=${search}&search=${search}"> &nbsp;다음</a>
+										</li>
+									</c:if>
+								</c:forEach>
+							</c:when>
+							<c:when test="${totEvents ==100}">
+								<c:forEach var="page" begin="1" end="10" step="1">
+									<li class="page-item">
+										<a class="page-link" href="#">${page}</a>
+									</li>
+								</c:forEach>
+							</c:when>
+							<c:when test="${totEvents < 100 }">
+								<c:forEach var="page" begin="1" end="${totEvents/10+1}" step="1">
+									<c:choose>
+										<c:when test="${page==pageNum}">
+											<li class="page-item active">
+												<a class="page-link" href="${contextPath}/eventServlet/listEvent.do?section=${section}&pageNum=${page}&search=${search}"> ${page} </a>
+											</li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item">
+												<a class="page-link" href="${contextPath}/eventServlet/listEvent.do?section=${section}&pageNum=${page}&search=${search}"> ${page} </a>
+											</li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+				
+				
+					</ul>
+				</div>
+			</div>
+		</c:if>
+		
+		
+		
+		<div class="row my-5">
+			<div class="col-12 col-lg-8">
+				<form action="${contextPath}/eventServlet/listEvent.do" class="form-inline justify-content-center justify-content-lg-start">
+					<div class="input-group">
+						<input type="hidden" name="section" value="${section}">
+						<input type="hidden" name="pageNum" value="${pageNum}">
+						<input type="search" name="search" value="${search}" size="24" maxlength="24" class="form-control">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-secondary">검색</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-12 col-lg-4 mt-3 mt-lg-0">
+				<div class="form-group text-center text-lg-right">				
+					<a class="btn btn-secondary" href="${contextPath}/eventServlet/listEvent.do">전체보기</a>			
+					<c:if test="${userId eq 'admin'}">
+						<a class="btn btn-primary" href="${contextPath}/eventServlet/eventForm.do">관리자 글쓰기</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -168,5 +189,15 @@
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/event_custom.js"></script>
+<script src="${contextPath}/js/masonry.pkgd.min.js"></script>
+<script>
+	$(document).ready(function(){
+		setTimeout(function(){
+			$(".event-grid").masonry({
+				itemSelector : '.event-grid-item'
+			}).addClass("active");
+		},200)
+	})
+</script>
 </body>
 </html>

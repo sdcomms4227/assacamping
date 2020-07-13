@@ -18,12 +18,35 @@
 
 <article class="event">
 	<div class="row">
-		<div class="col-12 col-lg-6">
+		<div class="col-12 col-lg-4 col-xl-3">
+			<table class="table table-layout-fixed text-center">
+				<thead>
+					<tr>
+						<th class="bg-light text-center">이미지</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="p-3">
+							<c:if test="${eventImageFileName != null}">
+								<img src="${contextPath}/files/event/${eventNo}/${eventImageFileName}" alt="${eventTitle}"/>
+							</c:if>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-12 col-lg-8 col-xl-9">
 			<table class="table read-table table-layout-fixed">
 				<colgroup>
 					<col style="width:120px" />
 					<col />
 				</colgroup>
+				<thead>
+					<tr>
+						<th class="bg-light text-center" colspan="2">이벤트 정보</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
 						<th>번호</th>
@@ -48,26 +71,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-12 col-lg-6">
-			<table class="table table-layout-fixed text-center">
-				<thead>
-					<tr>
-						<th>이미지</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="p-3">
-							<c:if test="${eventImageFileName != null}">
-								<img src="${contextPath}/files/event/${eventNo}/${eventImageFileName}" alt="${eventTitle}"/>
-							</c:if>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	
+	</div>	
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listEvent()">목록</button>				
 		<button type="button" class="btn btn-warning" onclick="modifyEvent(${eventNo})">수정</button>

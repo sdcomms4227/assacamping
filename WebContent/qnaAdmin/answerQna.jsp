@@ -3,13 +3,15 @@
 <c:set var="productNo" value="${qnaVO.productNo}" />
 <c:set var="qnaNo" value="${qnaVO.qnaNo}" />
 <c:set var="qnaContent" value="${qnaVO.qnaContent}" />
-<c:set var="qnaAnswer" value="${qnaVO.qnaAnswer}" />
 <c:set var="userId" value="${qnaVO.userId}" />
 <c:set var="userName" value="${qnaVO.userName}" />
 <c:set var="qnaDate" value="${qnaVO.qnaDate}" />
+<c:set var="qnaAnswer" value="${qnaVO.qnaAnswer}" />
+<c:set var="qnaAnswerDate" value="${qnaVO.qnaAnswerDate}" />
 <c:set var="productImageName1" value="${productVO.productImageName1}" />
 <c:set var="productName" value="${productVO.productName}" />
 <fmt:formatDate var="qnaFormattedDate" value="${qnaDate}" pattern="yyyy-MM-dd HH:mm" />
+<fmt:formatDate var="qnaFormattedAnswerDate" value="${qnaAnswerDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -51,7 +53,7 @@
 				<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 				<input type="hidden" name="answerCheck" value="${answerCheck}" />
 				<input type="hidden" name="qnaNo" value="${qnaNo}" />
-				<table class="table">
+				<table class="table table-layout-fixed">
 					<colgroup>
 						<col style="width:120px" />
 						<col />
@@ -62,10 +64,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th class="align-middle">상품 번호</th>
-							<td>${productNo}</td>
-						</tr>
 						<tr>
 							<th class="align-middle">문의 번호</th>
 							<td class="text-danger">${qnaNo}</td>
@@ -79,15 +77,21 @@
 							<td>${fn:replace(qnaContent,LF,BR)}</td>
 						</tr>
 						<tr>
+							<th class="align-middle">작성일</th>
+							<td>${qnaFormattedDate}</td>
+						</tr>
+						<tr>
 							<th class="align-middle">답변 내용</th>
 							<td>
 								<textarea class="form-control" name="qnaAnswer" id="qnaAnswer" cols="40" rows="13" required autofocus>${qnaAnswer}</textarea>
 							</td>
 						</tr>
-						<tr>
-							<th class="align-middle">작성일</th>
-							<td>${qnaFormattedDate}</td>
-						</tr>
+						<c:if test="${qnaAnswerDate != null}">
+							<tr>
+								<th class="align-middle">답변일</th>
+								<td>${qnaFormattedAnswerDate}</td>
+							</tr>
+						</c:if>
 					</tbody>
 				</table>
 				<div class="text-center my-5">

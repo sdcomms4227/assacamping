@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
+<c:set var="newArrivalsList" value="${newArrivalsListMap.productList}" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -134,10 +135,10 @@
 							<img src="${contextPath}/images/promo_1.jpg" alt="">
 							<div class="promo_content promo_content_1">
 								<div class="promo_title">-30% off</div>
-								<div class="promo_subtitle">on all bags</div>
+								<div class="promo_subtitle">텐트 할인</div>
 							</div>
 						</div>
-						<div class="promo_link"><a href="#">Shop Now</a></div>
+						<div class="promo_link"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=1">Shop Now</a></div>
 					</div>
 				</div>
 
@@ -148,10 +149,10 @@
 							<img src="${contextPath}/images/promo_2.jpg" alt="">
 							<div class="promo_content promo_content_2">
 								<div class="promo_title">-30% off</div>
-								<div class="promo_subtitle">coats & jackets</div>
+								<div class="promo_subtitle">침낭 / 매트 할인</div>
 							</div>
 						</div>
-						<div class="promo_link"><a href="#">Shop Now</a></div>
+						<div class="promo_link"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=3">Shop Now</a></div>
 					</div>
 				</div>
 
@@ -162,10 +163,10 @@
 							<img src="${contextPath}/images/promo_3.jpg" alt="">
 							<div class="promo_content promo_content_3">
 								<div class="promo_title">-25% off</div>
-								<div class="promo_subtitle">on Sandals</div>
+								<div class="promo_subtitle">캠핑소품 할인</div>
 							</div>
 						</div>
-						<div class="promo_link"><a href="#">Shop Now</a></div>
+						<div class="promo_link"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=8">Shop Now</a></div>
 					</div>
 				</div>
 
@@ -186,85 +187,78 @@
 				</div>
 			</div>
 			<div class="row products_container">
-
-				<!-- Product -->
-				<div class="col-lg-4 product_col">
-					<div class="product">
-						<div class="product_image">
-							<img src="${contextPath}/images/product_1.jpg" alt="">
-						</div>
-						<div class="rating rating_4">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-						<div class="product_content clearfix">
-							<div class="product_info">
-								<div class="product_name"><a href="product.html">Woman's Long Dress</a></div>
-								<div class="product_price">$45.00</div>
-							</div>
-							<div class="product_options">
-								<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
-								<div class="product_fav product_option">+</div>
+				<c:choose>
+					<c:when test="${totalCount==0}">
+						<div class="col-12">
+							<div class="static-empty p-5 border text-center">
+								<p class="p-5 text-danger">등록된 상품이 없습니다.</p>
 							</div>
 						</div>
-					</div>
-				</div>
-
-				<!-- Product -->
-				<div class="col-lg-4 product_col">
-					<div class="product">
-						<div class="product_image">
-							<img src="${contextPath}/images/product_2.jpg" alt="">
-						</div>
-						<div class="rating rating_4">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-						<div class="product_content clearfix">
-							<div class="product_info">
-								<div class="product_name"><a href="product.html">2 Piece Swimsuit</a></div>
-								<div class="product_price">$35.00</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="productMap" items="${newArrivalsList}" begin="0" end="2" varStatus="status">
+							<c:set var="productVO" value="${productMap.productVO}" />
+							<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
+							<div class="col-lg-4 product_col">
+								<!-- Product -->
+								<div class="product">
+									<div class="product_image"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productVO.productNo}"><img src="${contextPath}/files/product/${productVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}"></a></div>
+									<div class="rating rating_${productVO.productRating}" data-rating="${productVO.productRating}">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+									</div>
+									<div class="product_content clearfix">
+										<div class="product_info">
+											<div class="product_name"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productNo}">${productVO.productName}</a></div>
+											<c:choose>
+												<c:when test="${productVO.productQuantity > 0}">
+													<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /> <small>원</small></div>
+												</c:when>
+												<c:otherwise>
+													<div class="product_empty">
+														<div class="text-danger">품절</div>
+													</div>
+												</c:otherwise>												
+											</c:choose>
+										</div>
+										<div class="product_options">
+											<c:if test="${productVO.productQuantity > 0}">										
+												<c:choose>
+													<c:when test="${userId != null}">
+														<form name="productCartForm${status.index}" class="d-inline-block" action="${contextPath}/cartServlet/addCart.do?userId=${userId}" method="post" enctype="multipart/form-data">
+															<input type="hidden" name="productNo" value="${productVO.productNo}">
+															<input type="hidden" name="productName" value="${productVO.productName}">
+															<input type="hidden" name="productPrice" value="${productVO.productPrice}">
+															<input type="hidden" name="productImage" value="${productVO.productImageName1}">
+															<input type="hidden" name="productCategory" value="${productVO.productCategoryNo}">
+															<input type="hidden" name="cartQuantity" value="1">
+															<input type="hidden" name="productDelivery" value="1">
+															<div class="product_buy product_option" onclick="document.productCartForm${status.index}.submit()"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
+														</form>
+													</c:when>
+													<c:otherwise>
+														<div class="product_buy product_option" onclick="alert('로그인 후  장바구니 담기가 가능합니다.');location.href='${contextPath}/userServlet/login.do'"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<c:choose>
+												<c:when test="${userId != null}">
+													<div class="product_fav product_option" onclick="addWish(${productVO.productNo})">+</div>
+												</c:when>
+												<c:otherwise>
+													<div class="product_fav product_option" onclick="alert('로그인 후  위시리스트 추가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">+</div>
+												</c:otherwise>
+											</c:choose>												
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="product_options">
-								<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
-								<div class="product_fav product_option">+</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Product -->
-				<div class="col-lg-4 product_col">
-					<div class="product">
-						<div class="product_image">
-							<img src="${contextPath}/images/product_3.jpg" alt="">
-						</div>
-						<div class="rating rating_4">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-						<div class="product_content clearfix">
-							<div class="product_info">
-								<div class="product_name"><a href="product.html">Man Blue Jacket</a></div>
-								<div class="product_price">$145.00</div>
-							</div>
-							<div class="product_options">
-								<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
-								<div class="product_fav product_option">+</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
@@ -437,5 +431,22 @@
 <script src="${contextPath}/plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/index_custom.js"></script>
+<script>
+//위시리스트 ------------------------------------------------------------
+function addWish(productNo) {
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");
+	form.setAttribute("action", "${contextPath}/wishListServlet/addWish.do");
+	
+	var input1 = document.createElement("input");	
+	input1.setAttribute("type","hidden");
+	input1.setAttribute("name","productNo");
+	input1.setAttribute("value", productNo);
+	
+	form.appendChild(input1);
+	document.body.appendChild(form);
+	form.submit();
+}
+</script>
 </body>
 </html>

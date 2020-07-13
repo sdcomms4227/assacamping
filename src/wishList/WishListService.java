@@ -7,7 +7,7 @@ import java.util.Map;
 public class WishListService {
 
 	WishListDAO wishListDAO;
-	
+
 	public WishListService() {
 		wishListDAO = new WishListDAO();
 	}
@@ -16,14 +16,14 @@ public class WishListService {
 		Map<String, Object> wListMap = new HashMap<>();
 		List<Map<String, Object>> wList = wishListDAO.getWishList(userId);
 		wListMap.put("wList", wList);
-		
+
 		// totalCount 수정해야함
 		int totalCount = wList.size();
 		wListMap.put("totalCount", totalCount);
-		
+
 		return wListMap;
 	}
-	
+
 	public int addWishList(String userId, int productNo) {
 		return wishListDAO.addWishList(userId, productNo);
 	}
@@ -36,7 +36,8 @@ public class WishListService {
 		return wishListDAO.wishCheck(userId, productNo);
 	}
 
-	
-	
+	public int wishTotalCount(String userId) {
+		return wishListDAO.wishTotalCount(userId);
+	}
 
 }

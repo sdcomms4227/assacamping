@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import productCart.CartService;
+import cart.CartService;
+import wishList.WishListService;
 
 @SuppressWarnings("serial")
 @WebServlet("/userServlet/*")
@@ -114,6 +115,7 @@ public class UserController extends HttpServlet {
 
 			String msg = "";
 			int cartCount = 0;
+			int wishCount = 0;
 
 			if (check == 0) {
 				request.setAttribute("msg", "id");
@@ -129,9 +131,9 @@ public class UserController extends HttpServlet {
 				cartCount = cartService.cartTotalCount(userId);
 				session.setAttribute("cartCount", cartCount);
 
-//					WishService wishListService = new WishService();
-//					wishCount = wishListService.wishTotalCount(userId);
-				session.setAttribute("wishCount", 0);
+				WishListService wishListService = new WishListService();
+				wishCount = wishListService.wishTotalCount(userId);
+				session.setAttribute("wishCount", wishCount);
 				nextPage = "/";
 			}
 
