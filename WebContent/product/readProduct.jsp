@@ -332,7 +332,7 @@ function reviewList(){
         		a += '<li class=" review clearfix">';
        			a += '<p>등록된 리뷰가 없습니다.</p>';
        			a += '</li>';
-       			$(".reviews_container").html(a);	
+       			$(".reviews_container ul").html(a);	
        			return;
        		}
         	
@@ -370,7 +370,7 @@ function reviewList(){
 					a += '</div>';
 					a += '</li>';
 					
-					$(".reviews_container").html(a);	
+					$(".reviews_container ul").html(a);	
 				
            		});
         		var rCount = entry.length;
@@ -451,14 +451,14 @@ function reviewDelete(reviewNo){
 					var str = "<td class='alert alert-danger text-center' colspan='3'>리뷰가 삭제되었습니다.</td>";						
 					$("#review" + reviewNo).html(str).fadeOut(1000, function(){
 						$(this).remove();
-						if($(".reviews_container").find("li").length == 0){
+						if($(".reviews_container ul").find("li").length == 0){
 							
 							var emptyStr = "";
 							emptyStr += '<li class=" review clearfix">';
 							emptyStr += '<p>등록된 리뷰가 없습니다.</p>';
 							emptyStr += '</li>';
 							
-							$(".reviews_container").append(emptyStr);
+							$(".reviews_container ul").append(emptyStr);
 						}
 					});
 					
@@ -499,7 +499,7 @@ function qnaList(){
         		a += '<li class=" qna clearfix">';
        			a += '<p>등록된 문의가 없습니다.</p>';
        			a += '</li>';
-       			$(".qnas_container").html(a);	
+       			$(".qnas_container ul").html(a);	
        			return;
        		}
         	
@@ -544,7 +544,7 @@ function qnaList(){
 					a += '</div>';
 					a += '</li>';
 					
-					$(".qnas_container").html(a);
+					$(".qnas_container ul").html(a);
            		});
 	        	var qCount = entry.length;
         		$("#qCount").html(qCount);
@@ -615,7 +615,7 @@ function qnaDelete(qnaNo){
 					var str = "<td class='alert alert-danger text-center' colspan='3'>문의가 삭제되었습니다.</td>";						
 					$("#qna" + qnaNo).html(str).fadeOut(1000, function(){
 						$(this).remove();
-						if($(".qnas_container").find("li").length == 0){
+						if($(".qnas_container ul").find("li").length == 0){
 							
 							var emptyStr = "";
 							
@@ -623,7 +623,7 @@ function qnaDelete(qnaNo){
 							emptyStr += '<p>등록된 문의가 없습니다.</p>';
 							emptyStr += '</li>';
 							
-							$(".qnas_container").append(emptyStr);
+							$(".qnas_container ul").append(emptyStr);
 						}
 					});
 					
