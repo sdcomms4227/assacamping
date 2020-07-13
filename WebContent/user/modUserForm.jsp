@@ -16,18 +16,6 @@
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
 <link rel="stylesheet" href="${contextPath}/css/user.css">
 <link rel="stylesheet" href="${contextPath}/css/user_responsive.css">
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-function postCode() {
-		new daum.Postcode({
-			oncomplete:function(data) { 				
-				$('[name=userZipcode]').val(data.zonecode);
-				$('[name=userAddress1]').val(data.address);
-				$('[name=userAddress2]').val(data.buildingName);
-			}
-		}).open();
-}
-</script>
 </head>
 <body>
 
@@ -47,7 +35,7 @@ function postCode() {
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">Join</div>
+							<div class="home_title">회원정보수정</div>
 						</div>
 					</div>
 				</div>
@@ -58,43 +46,50 @@ function postCode() {
 	<!-- user-->
 	<section class="section-user">
 		<div class="container body-container my-5 py-5">
-			<form name="f" class="userForm" action="${contextPath}/userCon/modUser.do?userId=${userInfo.userId}" method="post" onsubmit="return check();">
+			<form class="userForm" action="${contextPath}/userServlet/modUser.do?userId=${userInfo.userId}" method="post" onsubmit="return check();">
 				<div class="form-group mb-3">
 					<label class="font-weight-bold" for="userId">아이디</label>
-					<input type="text" class="form-control form-control-lg" name="userId" id="userId" value="${userInfo.userId}" disabled>
+					<input type="text" class="form-control" name="userId" id="userId" value="${userInfo.userId}" disabled>
 				</div>
 				<div class="form-group mb-3" hidden>
 					<label class="font-weight-bold" for="userPw">비밀번호</label>
-					<input type="password" class="form-control form-control-lg" name="userPw" id="userPw" value="${userInfo.userPw}" required>
+					<input type="password" class="form-control" name="userPw" id="userPw" value="${userInfo.userPw}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userName">이름</label>
-					<input type="text" class="form-control form-control-lg" name="userName" id="userName" value="${userInfo.userName}" required>
+					<input type="text" class="form-control" name="userName" id="userName" value="${userInfo.userName}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userPhone">전화번호</label>
-					<input type="text" class="form-control form-control-lg" name="userPhone" id="userPhone" value="${userInfo.userPhone}" required>
+					<input type="tel" class="form-control" name="userPhone" id="userPhone" value="${userInfo.userPhone}" placeholder="010-0000-0000" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userEmail">이메일</label>
-					<input type="text" class="form-control form-control-lg" name="userEmail" id="userEmail" value="${userInfo.userEmail}" required>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">@</span>
+						</div>
+						<input type="email" class="form-control" name="userEmail" id="userEmail" value="${userInfo.userEmail}" required>
+					</div>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userZipcode">우편번호</label>
-					<input type="text" class="form-control form-control-lg" name="userZipcode" id="userZipcode" value="${userInfo.userZipcode}" required>
-				</div>
-				<div class="form-group mb-3">
-						<button class="font-weight-bold" type="button" onclick="postCode()">우편번호검색</button>
+					<div class="input-group">
+						<input type="text" class="form-control" name="userZipcode" id="userZipcode" value="${userInfo.userZipcode}" required />
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="button" onclick="postCode()">우편번호 검색</button>
+						</div>
+					</div>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress1">주소</label>
-					<input type="text" class="form-control form-control-lg" name="userAddress1" id="userAddress1" value="${userInfo.userAddress1}" required>
+					<input type="text" class="form-control" name="userAddress1" id="userAddress1" value="${userInfo.userAddress1}" required>
 				</div>
 				<div class="form-group mb-3">					
 					<label class="font-weight-bold" for="userAddress2">상세주소</label>
-					<input type="text" class="form-control form-control-lg" name="userAddress2" id="userAddress2" value="${userInfo.userAddress2}" required>
+					<input type="text" class="form-control" name="userAddress2" id="userAddress2" value="${userInfo.userAddress2}" required>
 				</div>
-				<button type="submit" class="btn btn-xl btn-primary btn-block">수정하기</button>
+				<button type="submit" class="btn btn-lg btn-primary btn-block my-5">수정하기</button>
 			</form>
 		</div>
 	</section>
@@ -113,13 +108,17 @@ function postCode() {
 <script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/user_custom.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function postCode() {
+		new daum.Postcode({
+			oncomplete:function(data) { 				
+				$('[name=userZipcode]').val(data.zonecode);
+				$('[name=userAddress1]').val(data.address);
+				$('[name=userAddress2]').val(data.buildingName);
+			}
+		}).open();
+}
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-

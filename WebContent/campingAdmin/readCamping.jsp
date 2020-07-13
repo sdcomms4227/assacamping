@@ -9,7 +9,8 @@
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
+<fmt:formatNumber var="campingFormattedCount" value="${campingCount}" pattern="#,###"/>
+<fmt:formatDate var="campingFormattedDate" value="${campingDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
@@ -39,10 +40,6 @@
 						<td>${userId}</td>
 					</tr>
 					<tr>
-						<th>조회수</th>
-						<td><fmt:formatNumber value="${campingCount}" pattern="#,###"/></td>
-					</tr>
-					<tr>
 						<th>제목</th>
 						<td>${campingTitle}</td>
 					</tr>
@@ -51,8 +48,12 @@
 						<td>${fn:replace(campingContent,LF,BR)}</td>
 					</tr>
 					<tr>
+						<th>조회수</th>
+						<td>${campingFormattedCount}</td>
+					</tr>
+					<tr>
 						<th>작성일</th>
-						<td><fmt:formatDate value="${campingDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+						<td>${campingFormattedDate}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -105,30 +106,30 @@
 <script>
 function listCamping(){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/listCamping.do";	
+	form.action = "${contextPath}/campingAdminServlet/listCamping.do";	
 	form.submit();
 }
 function modifyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/modifyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingAdminServlet/modifyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function deleteCamping(campingNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/campadm/deleteCamping.do?campingNo=" + campingNo;
+		form.action = "${contextPath}/campingAdminServlet/deleteCamping.do?campingNo=" + campingNo;
 		form.submit();
 	}
 }
 function replyCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/replyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingAdminServlet/replyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function downloadCamping(campingNo, campingFileName){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
+	form.action = "${contextPath}/campingAdminServlet/download.do?campingNo=" + campingNo + "&fileName=" + campingFileName;
 	form.submit();
 }
 </script>

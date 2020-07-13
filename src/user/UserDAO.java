@@ -1,22 +1,13 @@
-
 package user;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.sql.DataSource;
-
 public class UserDAO {
-	private DataSource dataFactory;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
@@ -31,22 +22,13 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}//resourceClose
-	
-	public UserDAO() {
-		try {
-			Context ctx = new InitialContext();
-			Context envContext = (Context)ctx.lookup("java:/comp/env");
-			dataFactory = (DataSource)envContext.lookup("jdbc/assa");
-		}catch (Exception e) {
-			System.out.println("커넥션풀 얻기 실패: " + e.getMessage());		}
-	}//UserDAO
-	
+		
 	//회원목록
 	public List<UserVO> listUsers() {
 		
 		List<UserVO> usersList = new ArrayList<UserVO>();
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user order by userDate desc";
 			
 			pstmt = conn.prepareStatement(query);
@@ -78,7 +60,7 @@ public class UserDAO {
 	//회원가입
 	public void addUser(UserVO userVO) {
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			
 			String query = "insert into user(userId, userPw, userName, userPhone, userEmail, userZipcode, userAddress1, userAddress2, userDate, userUse)"
 					+ " values(?,?,?,?,?,?,?,?,now(),1)";
@@ -107,7 +89,7 @@ public class UserDAO {
 		
 		UserVO userInfo = null;
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user where userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -137,7 +119,7 @@ public class UserDAO {
 	public void modUser(UserVO userVO) {
 		
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "update user set userPw=?, userName=?, userPhone=?, userEmail=?, userZipcode=?, userAddress1=?, userAddress2=? where userId=?";
 		
 			pstmt = conn.prepareStatement(query);
@@ -161,7 +143,7 @@ public class UserDAO {
 	public void delUser(String userId) {
 		
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "delete from user where userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -178,7 +160,7 @@ public class UserDAO {
 		
 		int check = 0;
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user where userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -202,11 +184,32 @@ public class UserDAO {
 		}
 		return check;
 	}//login 메소드
+	
+	public String getUserName(String userId) {
+		String userName = "";
+
+		try {
+			conn=dbUtil.DBConnection.getConnection();
+			String query = "select userName from user where userId=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				userName = rs.getString("userName");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getUserName메소드 내부에서 SQL 실행 오류: " + e);
+		}finally {
+			resourceClose();
+		}
+		return userName;
+	}
 
 	public int idCheck(String userId) {
 		int check = 0;
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user where userId=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -225,7 +228,7 @@ public class UserDAO {
 	public String findId(String userName, String userEmail) {
 		String userId ="";
 		try{
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select userId from user where userName=? and userEmail=?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userName);
@@ -246,7 +249,7 @@ public class UserDAO {
 	public int withdrawlUser(String userId, String userPw) {
 		int check = 0;
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user where userId = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -273,7 +276,7 @@ public class UserDAO {
 	public int checkAction(String userId, String userPw) {
 		int check = 0;
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user where userId = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -296,7 +299,7 @@ public class UserDAO {
 	public int changePw(String userId, String userPw, String userPw1 ) {
 		int check = 0;
 		try {
-			conn = dataFactory.getConnection();
+			conn=dbUtil.DBConnection.getConnection();
 			String query = "select * from user where userId=?";
 			pstmt=conn.prepareStatement(query);
 			pstmt.setString(1, userId);

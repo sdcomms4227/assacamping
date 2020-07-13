@@ -61,7 +61,7 @@
 	
 	<!-- Camping -->
 	<article class="camping container">
-		<form action="${contextPath}/eve/updateEvent.do" method="post" enctype="multipart/form-data" >
+		<form action="${contextPath}/eventServlet/updateEvent.do" method="post" enctype="multipart/form-data" >
 			<input type="hidden" name="eventNo" value="${eventNo}" />	
 			<input type="hidden" name="userId" value="${userId}" />
 			<input type="hidden" name="originalFileName" value="${eventImageFileName}" />

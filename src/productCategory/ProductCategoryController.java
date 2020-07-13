@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/procate/*")
+@WebServlet("/productCategoryServlet/*")
 public class ProductCategoryController extends HttpServlet {
 
 	ProductCategoryService productCategoryService;
@@ -50,7 +50,7 @@ public class ProductCategoryController extends HttpServlet {
 
 			productCategoryList = productCategoryService.listProductCategory();
 			request.setAttribute("productCategoryList", productCategoryList);
-			nextPage = "/productAdmin/listProductCategory.jsp";
+			nextPage = "/proAdmin/listProductCategory.jsp";
 
 		} else if (action.contentEquals("/addProductCategory.do")) {
 
@@ -68,7 +68,7 @@ public class ProductCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/procate/listProductCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/productCategoryServlet/listProductCategory.do';");
 			out.write("</script>");
 			return;
 
@@ -90,7 +90,7 @@ public class ProductCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/procate/listProductCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/productCategoryServlet/listProductCategory.do';");
 			out.write("</script>");
 
 			return;
@@ -110,7 +110,7 @@ public class ProductCategoryController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write("<script>");
 			out.write("alert('" + msg + "');");
-			out.write("location.href='" + request.getContextPath() + "/procate/listProductCategory.do';");
+			out.write("location.href='" + request.getContextPath() + "/productCategoryServlet/listProductCategory.do';");
 			out.write("</script>");
 
 			return;

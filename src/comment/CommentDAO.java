@@ -272,8 +272,6 @@ public class CommentDAO {
 					num = 1;
 				}
 				
-				System.out.println(num);
-				
 				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_seq, commentRe_lev)"
 						+ "values(?, ?, ?, ?, ?, ?, now(), ?, ?, ?)";
 

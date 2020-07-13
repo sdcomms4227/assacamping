@@ -5,12 +5,12 @@
 <c:set var="campingContent" value="${campingMap.campingVO.campingContent}" />
 <c:set var="campingFileName" value="${campingMap.campingVO.campingFileName}" />
 <c:set var="userId" value="${campingMap.campingVO.userId}" />
+<c:set var="userName" value="${campingMap.campingVO.userName}" />
 <c:set var="campingDate" value="${campingMap.campingVO.campingDate}" />
 <c:set var="campingCount" value="${campingMap.campingVO.campingCount}" />
 <c:set var="campingCategoryNo" value="${campingMap.campingVO.campingCategoryNo}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
 <c:set var="campingFileType" value="${campingMap.campingFileType}" />
-<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -64,7 +64,7 @@
 	
 	<!-- Camping -->
 	<article class="camping container">
-		<form action="${contextPath}/camp/updateCamping.do" method="post" enctype="multipart/form-data" >
+		<form action="${contextPath}/campingServlet/updateCamping.do" method="post" enctype="multipart/form-data" >
 			<input type="hidden" name="pageNo" value="${pageNo}" />
 			<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 			<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
@@ -165,9 +165,6 @@
 <script src="${contextPath}/js/bootstrap.min.js"></script>
 <script src="${contextPath}/plugins/easing/easing.js"></script>
 <script src="${contextPath}/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="${contextPath}/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="${contextPath}/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js"></script>
-<script src="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/camping_custom.js"></script>
 <script src="${contextPath}/js/bs-custom-file-input.js"></script>

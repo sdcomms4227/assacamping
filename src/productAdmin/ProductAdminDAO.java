@@ -30,7 +30,8 @@ public class ProductAdminDAO {
 	public List<Map<String,Object>> getProductList(Map<String, Object> searchMap) {
 
 		List<Map<String,Object>> productList = new ArrayList<Map<String,Object>>();
-		
+
+		int numberPerPage = 10;
 		int pageNo = (int)searchMap.get("pageNo");
 		int offset = (pageNo - 1)*10;
 		String searchKeyword = (String)searchMap.get("searchKeyword");
@@ -48,11 +49,12 @@ public class ProductAdminDAO {
 						+ " on pr.productCategoryNo = ct.productCategoryNo"
 						+ " where pr.productName like ?"
 						+ " order by pr.productNo desc"
-						+ "	limit ?, 10";
+						+ "	limit ?, ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, '%' + searchKeyword + '%');
 				pstmt.setInt(2, offset);
+				pstmt.setInt(3, numberPerPage);
 			}else {
 				sql = "	select *"
 						+ " from product pr"
@@ -61,12 +63,13 @@ public class ProductAdminDAO {
 						+ " where pr.productName like ?"
 						+ " and pr.productCategoryNo = ?"
 						+ " order by pr.productNo desc"
-						+ "	limit ?, 10";		
+						+ "	limit ?, ?";		
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, '%' + searchKeyword + '%');
 				pstmt.setInt(2, searchCategoryNo);
 				pstmt.setInt(3, offset);
+				pstmt.setInt(4, numberPerPage);
 			}
 			
 			rs = pstmt.executeQuery();
@@ -314,7 +317,7 @@ public class ProductAdminDAO {
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 			
-			String sql = "update product set ProductQuantity=ProductQuantity-?  where productNo=?";
+			String sql = "update product set productQuantity=productQuantity-?  where productNo=?";
 			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, cartQuantity);

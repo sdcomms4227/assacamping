@@ -21,10 +21,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
 
-@WebServlet("/eve/*")
+@SuppressWarnings("serial")
+@WebServlet("/eventServlet/*")
 public class EventController extends HttpServlet {
 
-	String realPath = "";
+	String realPath;
 
 	EventService eventService;
 	EventVO eventVO;
@@ -61,9 +62,7 @@ public class EventController extends HttpServlet {
 		String action = request.getPathInfo();  
 		
 		System.out.println("action : " + action);
-		
-		List<EventVO> eventList = null;
-		
+				
 		if(action == null || action.equals("/listEvent.do")) {// DB에 전체 글을 조회 			
 			String _search = request.getParameter("search");			
 			String _section = request.getParameter("section");
@@ -73,19 +72,18 @@ public class EventController extends HttpServlet {
 			int pageNum = Integer.parseInt(((_pageNum == null) ? "1" : _pageNum));
 			String search = (_search == null) ? "" : _search;
 			
-			Map pagingMap = new HashMap();
+			Map<String, Object> pagingMap = new HashMap<String, Object>();
 			pagingMap.put("section", section);
 			pagingMap.put("pageNum", pageNum);
 			pagingMap.put("search", search);
 					
-			Map eventMap = eventService.listEvent(pagingMap);
+			Map<String, Object> eventMap = eventService.listEvent(pagingMap);
 			
 			eventMap.put("section", section);
 			eventMap.put("pageNum", pageNum);
 			eventMap.put("search", search);
 			
-			request.setAttribute("eventMap", eventMap);		
-			session.setAttribute("userId", "admin"); //임시
+			request.setAttribute("eventMap", eventMap);
 			nextPage =  "/event/listEvent.jsp";	
 			
 		}else if(action.equals("/eventForm.do")) {//새글을 DB에 추가하기위한 폼페이지 요청
@@ -103,8 +101,7 @@ public class EventController extends HttpServlet {
 
 			eventVO.setEventTitle(title);
 			eventVO.setEventContent(content);
-			eventVO.setEventImageFileName(imageFileName);		
-			eventVO.setUserId("admin");
+			eventVO.setEventImageFileName(imageFileName);
 		
 			int eventNo =eventService.addEvent(eventVO);
 			
@@ -119,7 +116,7 @@ public class EventController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
 			out.print("window.alert('새글을 추가 했습니다.');");
-			out.print(" location.href='" + request.getContextPath() +"/eve/listEvent.do';");
+			out.print(" location.href='" + request.getContextPath() +"/eventServlet/listEvent.do';");
 			out.print("</script>");				
 			return;
 			
@@ -150,7 +147,6 @@ public class EventController extends HttpServlet {
 			String content = eventMap.get("eventContent");
 			String imageFileName = eventMap.get("imageFileName");
 			
-			eventVO.setUserId("admin");
 			eventVO.setEventTitle(title);
 			eventVO.setEventContent(content);
 			eventVO.setEventImageFileName(imageFileName);			
@@ -170,7 +166,7 @@ public class EventController extends HttpServlet {
 			pw.print("<script>" 
 					+ "  alert('글을 수정했습니다.');" 
 					+ " location.href='" + request.getContextPath()
-					+ "/eve/readEvent.do?eventNo=" + eventNo + "';" 
+					+ "/eventServlet/readEvent.do?eventNo=" + eventNo + "';" 
 					+ "</script>");
 			return;
 			
@@ -193,7 +189,7 @@ public class EventController extends HttpServlet {
 			pw.print("<script>" 
 					+ " alert('글을 삭제 했습니다.');" 
 					+ " location.href='"
-					+ request.getContextPath() +"/eve/listEvent.do';"
+					+ request.getContextPath() +"/eventServlet/listEvent.do';"
 					+ "</script>");
 			return;
 		}

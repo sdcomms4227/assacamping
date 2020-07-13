@@ -22,7 +22,7 @@ $(document).ready(function(){
 
 // 리뷰 목록 가져와서 보여주기
 function reviewList(){
-	var _url = '${contextPath}/proreview/listReview.do';
+	var _url = '${contextPath}/reviewServlet/listReview.do';
 	var _reviewListInfo = '{"productNo":"'+${productNo}+'"}';
 	var no = ${productNo};
 	console.log(no);
@@ -100,7 +100,7 @@ function reviewSubmit(){
 	}
 	
 	var _commentInfo = '{"boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","commentContent":"'+commentContent+'"}';
-	var _url = '${contextPath}/comment/insertComment.do';			
+	var _url = '${contextPath}/commentServlet/insertComment.do';			
 	$.ajax({
 		type : "post",
 		async : "false",
@@ -162,7 +162,7 @@ function commentReplyProc(commentNo) {
 	}
 	
 	var _commentReplyInfo = '{"commentNo":"'+commentNo+'","boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","replyContent":"'+replyContent+'"}';
-	var _url = '${contextPath}/comment/replyComment.do';
+	var _url = '${contextPath}/commentServlet/replyComment.do';
 	
 	$.ajax({
 		type : "post",
@@ -217,7 +217,7 @@ function commentUpdateProc(commentNo) {
 	if(result) {
 		var userId = '${userId}';
 		var _commentUpdateInfo = '{"userId":"'+userId+'","commentNo":"'+commentNo+'","updateContent":"'+updateContent+'"}';
-		var _url = '${contextPath}/comment/updateComment.do';
+		var _url = '${contextPath}/commentServlet/updateComment.do';
 		
 		$.ajax({
 			type : "post",
@@ -262,7 +262,7 @@ function commentDelete(commentNo){
 
 		var userId = '${userId}';
 		var _commentDeleteInfo = '{"userId":"'+userId+'","commentNo":"'+commentNo+'"}';
-		var _url = '${contextPath}/comment/deleteComment.do'; 		
+		var _url = '${contextPath}/commentServlet/deleteComment.do'; 		
 		$.ajax({
 			type : "post",
 			async : "false",

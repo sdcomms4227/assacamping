@@ -9,6 +9,7 @@ public class CampingVO {
 	private String campingContent;
 	private String campingFileName;
 	private String userId;
+	private String userName;
 	private int campingRe_ref;
 	private int campingRe_lev;
 	private int campingRe_seq;
@@ -18,18 +19,12 @@ public class CampingVO {
 		
 	public CampingVO() {}
 
-	public CampingVO(int campingNo, String campingTitle, String campingContent, String campingFileName, String userId, int campingRe_ref, int campingRe_lev, int campingRe_seq, Timestamp campingDate,
-			int campingCount, int campingCategoryNo) {
-		this.campingNo = campingNo;
+	public CampingVO(String campingTitle, String campingContent, String campingFileName, String userId, String userName, int campingCategoryNo) {
 		this.campingTitle = campingTitle;
 		this.campingContent = campingContent;
 		this.campingFileName = campingFileName;
 		this.userId = userId;
-		this.campingRe_ref = campingRe_ref;
-		this.campingRe_lev = campingRe_lev;
-		this.campingRe_seq = campingRe_seq;
-		this.campingDate = campingDate;
-		this.campingCount = campingCount;
+		this.userName = userName;
 		this.campingCategoryNo = campingCategoryNo;
 	}
 
@@ -71,6 +66,14 @@ public class CampingVO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public int getCampingRe_ref() {

@@ -5,14 +5,12 @@
 <c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
 <c:set var="endNo" value="${beginNo + 9}" />
 
-<jsp:include page="../inc/alert.jsp" />
-
 <div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-3 mb-2 mb-lg-0">
 		<h2 class="mb-0">상품 관리</h2>
 	</div>
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
-		<form action="${contextPath}/proadm/listProduct.do" class="form-inline justify-content-center">
+		<form action="${contextPath}/productAdminServlet/listProduct.do" class="form-inline justify-content-center">
 			<div class="input-group mb-2 mb-sm-0 mr-sm-2">
 				<select class="form-control form-control-sm categorySelect" name="searchCategoryNo" onchange="this.form.submit()">
 					<option value="0">전체보기</option>
@@ -37,8 +35,8 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/proadm/writeProduct.do'">상품 등록</button>
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/procate/listProductCategory.do'">카테고리 관리</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/productAdminServlet/addProduct.do'">상품 등록</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/productCategoryServlet/listProductCategory.do'">카테고리 관리</button>
 	</div>
 </div>
 
@@ -67,7 +65,6 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<c:choose>
 				<c:when test="${totalCount==0}">
 					<tr>
@@ -79,7 +76,7 @@
 						<c:set var="productVO" value="${productMap.productVO}" />
 						<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 						<fmt:formatNumber var="productFmtPrice" value="${productVO.productPrice}" pattern="#,###" />
-						<fmt:formatDate var="productFmtDate" value="${productVO.productDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatDate var="productFormattedDate" value="${productVO.productDate}" pattern="yyyy-MM-dd HH:mm"/>
 						<tr onclick="readProduct(${productVO.productNo})" style="cursor: pointer">
 							<td class="align-middle">${productVO.productNo}</td>
 							<td class="align-middle wbka">${productCategoryName}</td>
@@ -87,7 +84,7 @@
 							<td class="align-middle text-left">${productVO.productName}</td>
 							<td class="align-middle">${productFmtPrice}</td>
 							<td class="align-middle">${productVO.productQuantity}</td>
-							<td class="align-middle">${productFmtDate}</td>
+							<td class="align-middle">${productFormattedDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyProduct(${productVO.productNo}, event)">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteProduct(${productVO.productNo}, event)">삭제</button>
@@ -96,7 +93,6 @@
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
-
 		</tbody>
 	</table>
 
@@ -145,19 +141,19 @@
 <script>
 function listProduct(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proadm/listProduct.do";	
+	form.action = "${contextPath}/productAdminServlet/listProduct.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
 function readProduct(productNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proadm/readProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/productAdminServlet/readProduct.do?productNo=" + productNo;
 	form.submit();
 }
 function modifyProduct(productNo, event){
 	event.stopPropagation();
 	var form = document.pagingForm;
-	form.action = "${contextPath}/proadm/modifyProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/productAdminServlet/modifyProduct.do?productNo=" + productNo;
 	form.submit();
 }
 function deleteProduct(productNo, event){
@@ -165,7 +161,7 @@ function deleteProduct(productNo, event){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/proadm/deleteProduct.do?productNo=" + productNo;
+		form.action = "${contextPath}/productAdminServlet/deleteProduct.do?productNo=" + productNo;
 		form.submit();
 	}
 }

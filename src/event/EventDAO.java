@@ -27,7 +27,7 @@ public List selectAllEvent(){
 
 	try {
 		conn = dbUtil.DBConnection.getConnection();		
-		sql = "select * from event";
+		sql = "select * from event order by eventNo desc";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		while (rs.next()) {		 
@@ -35,7 +35,6 @@ public List selectAllEvent(){
 			 event.setEventNo(rs.getInt("eventNo"));
 			 event.setEventTitle(rs.getString("eventTitle"));
 			 event.setEventContent(rs.getString("eventContent"));
-			 event.setUserId(rs.getString("userId"));
 			 event.setEventReadCount(rs.getInt("eventReadCount"));
 			 event.setEventWriteDate(rs.getTimestamp("eventWriteDate"));			
 			 eventList.add(event);	
@@ -79,19 +78,17 @@ public int insertNewEvent(EventVO event) {
 		conn = dbUtil.DBConnection.getConnection();		
 		String eventTitle = event.getEventTitle();
 		String eventContent= event.getEventContent();
-		String userId = event.getUserId();
 		String eventImageFileName = event.getEventImageFileName();
 		
 	String sql = "insert into event(eventNo, eventTitle,"
-			   +" eventContent, eventImageFileName, userId,eventReadCount)"
-			   +" values(?,?,?,?,?,0)";
+			   +" eventContent, eventImageFileName, eventReadCount)"
+			   +" values(?,?,?,?,0)";
 	
 	pstmt = conn.prepareStatement(sql);		
 	pstmt.setInt(1, eventNo);
 	pstmt.setString(2, eventTitle);
 	pstmt.setString(3, eventContent);
 	pstmt.setString(4, eventImageFileName);
-	pstmt.setString(5, userId);
 
 	pstmt.executeUpdate();	
 			   
@@ -113,7 +110,7 @@ public EventVO selectEvent(int eventNo) {
 		conn = dbUtil.DBConnection.getConnection();
 				
 		 String sql = "select eventNo, eventTitle,"
-				   +"eventContent, eventImageFileName, userId, eventReadCount, eventWriteDate"
+				   +"eventContent, eventImageFileName, eventReadCount, eventWriteDate"
 				   +" from event where eventNo=?";
 		
 		pstmt = conn.prepareStatement(sql);
@@ -126,14 +123,12 @@ public EventVO selectEvent(int eventNo) {
 		String eventContent = rs.getString("eventContent");
 		int eventReadCount = rs.getInt("eventReadCount")+1;
 		String eventImageFileName = rs.getString("eventImageFileName");
-		String userId = rs.getString("userId");
 		Timestamp eventWriteDate = rs.getTimestamp("eventWriteDate");	
 				
 		event.setEventNo(_eventNo);
 		event.setEventTitle(eventTitle);
 		event.setEventContent(eventContent);
 		event.setEventImageFileName(eventImageFileName);
-		event.setUserId(userId);
 		event.setEventWriteDate(eventWriteDate);
 		event.setEventReadCount(eventReadCount);
 
@@ -251,6 +246,7 @@ public List selectAllEvents(Map pagingMap) {
 		conn = dbUtil.DBConnection.getConnection();
 		String sql = "select * from event"
 					+ " where eventTitle like ?"
+					+ " order by eventNo desc"
 					+ " limit ?, 9";
 					
 		pstmt = conn.prepareStatement(sql);
@@ -265,7 +261,6 @@ public List selectAllEvents(Map pagingMap) {
 			 event.setEventNo(rs.getInt("eventNo"));
 			 event.setEventTitle(rs.getString("eventTitle"));
 			 event.setEventContent(rs.getString("eventContent"));
-			 event.setUserId(rs.getString("userId"));
 			 event.setEventImageFileName(rs.getString("eventImageFileName"));
 			 event.setEventReadCount(rs.getInt("eventReadCount"));
 			 event.setEventWriteDate(rs.getTimestamp("eventWriteDate"));

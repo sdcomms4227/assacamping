@@ -8,50 +8,49 @@ import product.ProductVO;
 
 public class ProductAdminService {
 	
-	ProductAdminDAO productDAO;
+	ProductAdminDAO proAdminDAO;
 	
 	public ProductAdminService() {		
-		productDAO = new ProductAdminDAO();
+		proAdminDAO = new ProductAdminDAO();
 	}
 
 	public Map<String, Object> listProduct(Map<String, Object> searchMap) {
 		
 		Map<String, Object> productListMap = new HashMap<String, Object>();
 		
-		List<Map<String,Object>> productList = productDAO.getProductList(searchMap);
+		List<Map<String,Object>> productList = proAdminDAO.getProductList(searchMap);
 		productListMap.put("productList", productList);
 		
-		int totalCount = productDAO.getProductCount(searchMap);
+		int totalCount = proAdminDAO.getProductCount(searchMap);
 		productListMap.put("totalCount", totalCount);
 		
 		return productListMap;
 	}
 
 	public Map<String, Object> readProduct(int productNo) {						
-		return productDAO.getProduct(productNo);
+		return proAdminDAO.getProduct(productNo);
 	}
 
 	public int insertProduct(ProductVO productVO) {
 		
 		int readNo = 0;
-		int result = productDAO.insertProduct(productVO);
+		int result = proAdminDAO.insertProduct(productVO);
 		if(result>0) {
-			readNo = productDAO.getProductLastNo();
+			readNo = proAdminDAO.getProductLastNo();
 		}
 		
 		return readNo;
 	}
 
 	public int updateProduct(ProductVO productVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
-		return productDAO.updateProduct(productVO, originalImageNameMap, deleteFileMap);
+		return proAdminDAO.updateProduct(productVO, originalImageNameMap, deleteFileMap);
 	}
 
 	public int deleteProduct(int productNo) {
-		return productDAO.deleteProduct(productNo);		
+		return proAdminDAO.deleteProduct(productNo);		
 	}
 	
 	public void updateProductQuantity(int productNo,int cartQuantity) {
-		
-		productDAO.updateProductQuantity(productNo, cartQuantity);
+		proAdminDAO.updateProductQuantity(productNo, cartQuantity);
 	}
 }

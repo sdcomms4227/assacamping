@@ -6,7 +6,7 @@
 		<h2 class="mb-0">캠핑정보 카테고리</h2>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campadm/listCamping.do'">캠핑정보</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campingAdminServlet/listCamping.do'">캠핑정보</button>
 	</div>
 </div>
 
@@ -47,7 +47,7 @@
 		</tbody>
 	</table>
 
-	<form class="categoryForm" action="${contextPath}/campcate/addCampingCategory.do" method="post" name="formCampingCategory">
+	<form class="categoryForm" action="${contextPath}/campingCategoryServlet/addCampingCategory.do" method="post" name="formCampingCategory">
 		<input type="hidden" name="campingCategoryNo" />
 		<div class="input-group">
 			<div class="input-group-prepend">
@@ -64,12 +64,12 @@
 <script>
 	function deleteCategory(campingCategoryNo){
 		if(confirm("정말로 삭제하시겠습니까?")){			
-			location.href="${contextPath}/campcate/deleteCampingCategory.do?campingCategoryNo=" + campingCategoryNo;
+			location.href="${contextPath}/campingCategoryServlet/deleteCampingCategory.do?campingCategoryNo=" + campingCategoryNo;
 		}
 	}
 	function updateCategory(campingCategoryNo, campingCategoryName){
 		form = document.formCampingCategory;
-		form.action = "${contextPath}/campcate/updateCampingCategory.do";
+		form.action = "${contextPath}/campingCategoryServlet/updateCampingCategory.do";
 		form.buttonCampingCategory.innerText = "수정하기";
 		form.buttonCampingCategory.classList.remove("btn-primary");
 		form.buttonCampingCategory.classList.add("btn-warning");
