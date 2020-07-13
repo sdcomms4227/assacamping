@@ -18,7 +18,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 @SuppressWarnings("serial")
-@WebServlet("/comment/*")
+@WebServlet("/commentServlet/*")
 public class CommentController extends HttpServlet {
 
 	CommentService commentService;

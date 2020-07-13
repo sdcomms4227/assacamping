@@ -7,8 +7,8 @@
 				<div class="footer_logo"><a href="${contextPath}">ASSA</a></div>
 				<nav class="footer_nav">
 					<ul>
-				<li><a href="${contextPath}/pro/proList.do">캠핑상품</a></li>
-				<li><a href="${contextPath}/camp/listCamping.do">캠핑정보</a></li>
+				<li><a href="${contextPath}/productServlet/proList.do">캠핑상품</a></li>
+				<li><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></li>
 				<li><a href="${contextPath}/center/contact.jsp">고객센터</a></li>
 					</ul>
 				</nav>

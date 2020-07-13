@@ -17,14 +17,14 @@ import productCategory.ProductCategoryService;
 import productCategory.ProductCategoryVO;
 
 @SuppressWarnings("serial")
-//@WebServlet("/pro/*")
+@WebServlet("/productServlet/*")
 public class ProductController extends HttpServlet{
 	
 	ProductService productService;
 	ProductVO productVO;	
 	ProductCategoryService productCategoryService;
 	ProductCategoryVO productCategoryVO;
-	String realPath = "";
+	String realPath;
 	
 	@Override
 	public void init() throws ServletException {
@@ -131,10 +131,6 @@ public class ProductController extends HttpServlet{
 			if(request.getAttribute("sortType")==null) {
 				request.setAttribute("sortType", sortType);
 			}
-			System.out.println("pageNo: " + pageNo);
-			System.out.println("searchKeyword: " + searchKeyword);
-			System.out.println("searchCategoryNo: " + searchCategoryNo);
-			System.out.println("sortType: " + sortType);
 		} catch (Exception e) {
 			System.out.println("setPagination()메소드 내부에서 오류 : " + e.toString());
 		}

@@ -7,8 +7,6 @@
 <c:set var="campingRe_seq" value="${campingMap.campingVO.campingRe_seq}" />
 <c:set var="campingCategoryNo" value="${campingMap.campingVO.campingCategoryNo}" />
 <c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-<c:set var="userId" value="hong" />
-<c:set var="userName" value="홍길동" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -62,7 +60,7 @@
 	
 	<!-- Camping -->
 	<article class="camping container">
-		<form action="${contextPath}/camp/insertReplyCamping.do" method="post" enctype="multipart/form-data">
+		<form action="${contextPath}/campingServlet/insertReplyCamping.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="pageNo" value="${pageNo}" />
 			<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 			<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />

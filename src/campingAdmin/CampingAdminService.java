@@ -8,20 +8,20 @@ import camping.CampingVO;
 
 public class CampingAdminService {
 	
-	CampingAdminDAO campingDAO;
+	CampingAdminDAO campingAdminDAO;
 	
 	public CampingAdminService() {		
-		campingDAO = new CampingAdminDAO();
+		campingAdminDAO = new CampingAdminDAO();
 	}
 
 	public Map<String, Object> listCamping(Map<String, Object> searchMap) {
 		
 		Map<String, Object> campingListMap = new HashMap<String, Object>();
 		
-		List<Map<String,Object>> campingList = campingDAO.getCampingList(searchMap);
+		List<Map<String,Object>> campingList = campingAdminDAO.getCampingList(searchMap);
 		campingListMap.put("campingList", campingList);
 		
-		int totalCount = campingDAO.getCampingListCount(searchMap);		
+		int totalCount = campingAdminDAO.getCampingListCount(searchMap);		
 		campingListMap.put("totalCount", totalCount);
 		
 		return campingListMap;
@@ -31,13 +31,13 @@ public class CampingAdminService {
 		
 		Map<String, Object> campingMap = new HashMap<String, Object>();
 		
-		campingDAO.incrementCampingCount(campingNo);
+		campingAdminDAO.incrementCampingCount(campingNo);
 				
-		CampingVO campingVO = campingDAO.getCamping(campingNo);
+		CampingVO campingVO = campingAdminDAO.getCamping(campingNo);
 		campingMap.put("campingVO", campingVO);
 		
 		int campingCategoryNo = campingVO.getCampingCategoryNo();		
-		String campingCategoryName = campingDAO.getCategoryName(campingCategoryNo);		
+		String campingCategoryName = campingAdminDAO.getCategoryName(campingCategoryNo);		
 		campingMap.put("campingCategoryName", campingCategoryName);
 		
 		return campingMap;
@@ -45,26 +45,26 @@ public class CampingAdminService {
 
 	public int insertCamping(CampingVO campingVO) {
 
-		int maxNo = campingDAO.getCampingMaxNo();		
-		campingDAO.insertCamping(campingVO, maxNo);		
+		int maxNo = campingAdminDAO.getCampingMaxNo();		
+		campingAdminDAO.insertCamping(campingVO, maxNo);		
 		
 		return maxNo;
 	}
 
 	public int updateCamping(CampingVO campingVO, String deleteFile) {		
-		return campingDAO.updateCamping(campingVO, deleteFile);
+		return campingAdminDAO.updateCamping(campingVO, deleteFile);
 	}
 
 	public int deleteCamping(int campingNo) {		
-		return campingDAO.deleteCamping(campingNo);		
+		return campingAdminDAO.deleteCamping(campingNo);		
 	}
 
 	public int insertReplyCamping(CampingVO campingVO) {
 				
-		campingDAO.updateCampingSequence(campingVO);
+		campingAdminDAO.updateCampingSequence(campingVO);
 
-		int maxNo = campingDAO.getCampingMaxNo();		
-		campingDAO.insertReplyCamping(campingVO, maxNo);
+		int maxNo = campingAdminDAO.getCampingMaxNo();		
+		campingAdminDAO.insertReplyCamping(campingVO, maxNo);
 		
 		return maxNo;
 	}

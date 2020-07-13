@@ -12,14 +12,14 @@
 	<nav class="menu_nav">
 		<hr />
 		<ul>
-			<li><a href="${contextPath}/pro/listProduct.do">캠핑상품</a></li>
-			<li><a href="${contextPath}/camp/listCamping.do">캠핑정보</a></li>
+			<li><a href="${contextPath}/productServlet/listProduct.do">캠핑상품</a></li>
+			<li><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></li>
 			<li><a href="${contextPath}/center/contact.jsp">고객센터</a></li>
 			<li><a href="#">추가메뉴</a></li>
 		</ul>
 		<hr />
 		<ul>
-			<li><a href="${contextPath}/adm/admin.do">관리자모드</a></li>
+			<li><a href="${contextPath}/adminServlet/admin.do">관리자모드</a></li>
 		</ul>
 		<hr />
 	</nav>

@@ -15,11 +15,7 @@ public class UserVO {
 	private Timestamp userDate;
 	private int userUse;
 	
-	public UserVO() {
-		System.out.println("객체 생성시 UserVO 생성자가 호출됨");
-	}
-	
-	
+	public UserVO() {}
 	
 	public UserVO(String userId, String userPw, String userName, String userPhone, String userEmail, String userZipcode,
 			String userAddress1, String userAddress2, int userUse) {

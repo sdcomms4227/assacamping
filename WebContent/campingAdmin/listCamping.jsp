@@ -5,14 +5,12 @@
 <c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
 <c:set var="endNo" value="${beginNo + 9}" />
 
-<jsp:include page="../inc/alert.jsp" />
-
 <div class="row mb-3 align-items-center">
 	<div class="col-12 col-lg-3 mb-2 mb-lg-0">
 		<h2 class="mb-0">캠핑정보</h2>
 	</div>
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
-		<form action="${contextPath}/campadm/listCamping.do" class="form-inline justify-content-center">
+		<form action="${contextPath}/campingAdminServlet/listCamping.do" class="form-inline justify-content-center">
 			<div class="input-group mb-2 mb-sm-0 mr-sm-2">
 				<select class="form-control form-control-sm categorySelect" name="searchCategoryNo" onchange="this.form.submit()">
 					<option value="0">전체보기</option>
@@ -37,8 +35,8 @@
 		</form>
 	</div>
 	<div class="col-12 col-lg-3 text-right">
-		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/campadm/writeCamping.do'">게시글 등록</button>
-		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campcate/listCampingCategory.do'">카테고리 관리</button>
+		<button type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/campingAdminServlet/addCamping.do'">게시글 등록</button>
+		<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='${contextPath}/campingCategoryServlet/listCampingCategory.do'">카테고리 관리</button>
 	</div>
 </div>
 	
@@ -75,8 +73,8 @@
 					<c:forEach var="campingMap" items="${campingList}">
 						<c:set var="campingVO" value="${campingMap.campingVO}" />
 						<c:set var="campingCategoryName" value="${campingMap.campingCategoryName}" />
-						<fmt:formatDate var="campingFmtDate" value="${campingVO.campingDate}" pattern="yyyy-MM-dd HH:mm"/>
-						<tr onclick="readCamping(${campingVO.campingNo})" style="cursor:pointer">
+						<fmt:formatDate var="campingFormattedDate" value="${campingVO.campingDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<tr onclick="readCamping(${campingVO.campingNo})" class="cursor-pointer">
 							<td class="align-middle">${campingVO.campingNo}</td>
 							<td class="align-middle wbka">${campingCategoryName}</td>
 							<td class="align-middle text-left">
@@ -90,7 +88,7 @@
 							</td>
 							<td class="align-middle">${campingVO.userId}</td>
 							<td class="align-middle">${campingVO.campingCount}</td>
-							<td class="align-middle">${campingFmtDate}</td>
+							<td class="align-middle">${campingFormattedDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyCamping(${campingVO.campingNo}, event)">수정</button>
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteCamping(${campingVO.campingNo}, event)">삭제</button>
@@ -147,19 +145,19 @@
 <script>
 function listCamping(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/listCamping.do";	
+	form.action = "${contextPath}/campingAdminServlet/listCamping.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
 function readCamping(campingNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/readCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingAdminServlet/readCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function modifyCamping(campingNo, event){
 	event.stopPropagation();
 	var form = document.pagingForm;
-	form.action = "${contextPath}/campadm/modifyCamping.do?campingNo=" + campingNo;
+	form.action = "${contextPath}/campingAdminServlet/modifyCamping.do?campingNo=" + campingNo;
 	form.submit();
 }
 function deleteCamping(campingNo, event){
@@ -167,7 +165,7 @@ function deleteCamping(campingNo, event){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/campadm/deleteCamping.do?campingNo=" + campingNo;
+		form.action = "${contextPath}/campingAdminServlet/deleteCamping.do?campingNo=" + campingNo;
 		form.submit();
 	}
 }

@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/adm/*")
+@SuppressWarnings("serial")
+@WebServlet("/adminServlet/*")
 public class AdminController extends HttpServlet {
 
 	@Override

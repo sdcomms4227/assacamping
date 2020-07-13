@@ -214,40 +214,40 @@
 									<p class="p-5 text-danger">등록된 상품이 없습니다.</p>
 								</div>
 							</c:when>
-						<c:otherwise>
-							<c:forEach var="productMap" items="${productList}">
-								<c:set var="productVO" value="${productMap.productVO}" />
-								<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
-								<!-- Product -->
-								<div class="product">
-									<div class="product_image"><a href="javascript:readProduct(${productVO.productNo})"><img src="${contextPath}/files/product/${productVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}"></a></div>
-									<div class="rating rating_${productVO.productRating}" data-rating="${productVO.productRating}">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-									</div>
-									<div class="product_content clearfix">
-										<div class="product_info">
-											<div class="product_name"><a href="javascript:readProduct(${productVO.productNo})">${productVO.productName}</a></div>
-											<c:choose>
-												<c:when test="${productVO.productQuantity > 0}">
-													<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /> <small>원</small></div>
-												</c:when>
-												<c:otherwise>
-													<div class="product_empty">
-														<div class="text-danger">품절</div>
-													</div>
-												</c:otherwise>												
-											</c:choose>
+							<c:otherwise>
+								<c:forEach var="productMap" items="${productList}">
+									<c:set var="productVO" value="${productMap.productVO}" />
+									<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
+									<!-- Product -->
+									<div class="product">
+										<div class="product_image"><a href="javascript:readProduct(${productVO.productNo})"><img src="${contextPath}/files/product/${productVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}"></a></div>
+										<div class="rating rating_${productVO.productRating}" data-rating="${productVO.productRating}">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
 										</div>
-										<div class="product_options">
-											<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
-											<div class="product_fav product_option">+</div>
+										<div class="product_content clearfix">
+											<div class="product_info">
+												<div class="product_name"><a href="javascript:readProduct(${productVO.productNo})">${productVO.productName}</a></div>
+												<c:choose>
+													<c:when test="${productVO.productQuantity > 0}">
+														<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /> <small>원</small></div>
+													</c:when>
+													<c:otherwise>
+														<div class="product_empty">
+															<div class="text-danger">품절</div>
+														</div>
+													</c:otherwise>												
+												</c:choose>
+											</div>
+											<div class="product_options">
+												<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
+												<div class="product_fav product_option">+</div>
+											</div>
 										</div>
 									</div>
-								</div>
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
@@ -301,8 +301,8 @@
 				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_1.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
 					<div class="sidebar_promo_title">30%<span>off</span></div>
-					<div class="sidebar_promo_subtitle">On all shoes</div>
-					<div class="sidebar_promo_button"><a href="checkout.html">check out</a></div>
+					<div class="sidebar_promo_subtitle">텐트 할인</div>
+					<div class="sidebar_promo_button"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=1">바로가기</a></div>
 				</div>
 			</div>
 
@@ -311,8 +311,8 @@
 				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_2.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
 					<div class="sidebar_promo_title">30%<span>off</span></div>
-					<div class="sidebar_promo_subtitle">On all shoes</div>
-					<div class="sidebar_promo_button"><a href="checkout.html">check out</a></div>
+					<div class="sidebar_promo_subtitle">침낭 / 매트 할인</div>
+					<div class="sidebar_promo_button"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=3">바로가기</a></div>
 				</div>
 			</div>
 		</div>
@@ -348,7 +348,7 @@
 <script>
 function listProduct(pageNo,sortType){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/listProduct.do";	
+	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.pageNo.value = pageNo;
 	form.sortType.value = sortType;
 	form.submit();
@@ -356,13 +356,13 @@ function listProduct(pageNo,sortType){
 
 function readProduct(productNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/readProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/productServlet/readProduct.do?productNo=" + productNo;
 	form.submit();
 }
 
 function changeCategory(categoryNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/pro/listProduct.do";	
+	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.searchCategoryNo.value = categoryNo;
 	form.submit();
 }
