@@ -208,7 +208,7 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-								<c:forEach var="productMap" items="${productList}">
+								<c:forEach var="productMap" items="${productList}" varStatus="status">
 									<c:set var="productVO" value="${productMap.productVO}" />
 									<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 									<!-- Product -->
@@ -236,7 +236,18 @@
 												</c:choose>
 											</div>
 											<div class="product_options">
-												<div class="product_buy product_option"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
+												<c:if test="${productVO.productQuantity > 0}">
+													<form name="productCartForm${status.index}" class="d-inline-block" action="${contextPath}/cartServlet/addCart.do?userId=${userId}" method="post" enctype="multipart/form-data">
+														<input type="hidden" name="productNo" value="${productVO.productNo}">
+														<input type="hidden" name="productName" value="${productVO.productName}">
+														<input type="hidden" name="productPrice" value="${productVO.productPrice}">
+														<input type="hidden" name="productImage" value="${productVO.productImageName1}">
+														<input type="hidden" name="productCategory" value="${productVO.productCategoryNo}">
+														<input type="hidden" name="cartQuantity" value="1">
+														<input type="hidden" name="productDelivery" value="1">
+														<div class="product_buy product_option" onclick="document.productCartForm${status.index}.submit()"><img src="${contextPath}/images/shopping-bag-white.svg" alt=""></div>
+													</form>
+												</c:if>
 												<div class="product_fav product_option">+</div>
 											</div>
 										</div>

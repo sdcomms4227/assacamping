@@ -22,7 +22,43 @@
 
 <article class="product">
 	<div class="row">
-		<div class="col-12 col-lg-6">
+		<div class="col-12 col-lg-4">
+			<table class="table table-layout-fixed text-center">
+				<thead>
+					<tr>
+						<th>이미지1</th>
+						<th>이미지2</th>
+						<th>이미지3</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<c:if test="${productImageName1!=null}">
+								<div class="border">
+									<img src="${contextPath}/files/product/${productNo}/${productImageName1}" alt="${productName}"/>
+								</div>
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${productImageName2!=null}">
+								<div class="border">
+									<img src="${contextPath}/files/product/${productNo}/${productImageName2}" alt="${productName}"/>
+								</div>
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${productImageName3!=null}">
+								<div class="border">
+									<img src="${contextPath}/files/product/${productNo}/${productImageName3}" alt="${productName}"/>
+								</div>
+							</c:if>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-12 col-lg-8">
 			<table class="table read-table table-layout-fixed">
 				<colgroup>
 					<col style="width:120px" />
@@ -60,44 +96,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-12 col-lg-6">
-			<table class="table table-layout-fixed text-center">
-				<thead>
-					<tr>
-						<th>이미지1</th>
-						<th>이미지2</th>
-						<th>이미지3</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<c:if test="${productImageName1!=null}">
-								<div class="border">
-									<img src="${contextPath}/files/product/${productNo}/${productImageName1}" alt="${productName}"/>
-								</div>
-							</c:if>
-						</td>
-						<td>
-							<c:if test="${productImageName2!=null}">
-								<div class="border">
-									<img src="${contextPath}/files/product/${productNo}/${productImageName2}" alt="${productName}"/>
-								</div>
-							</c:if>
-						</td>
-						<td>
-							<c:if test="${productImageName3!=null}">
-								<div class="border">
-									<img src="${contextPath}/files/product/${productNo}/${productImageName3}" alt="${productName}"/>
-								</div>
-							</c:if>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	
+	</div>	
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listProduct()">목록</button>							
 		<button type="button" class="btn btn-warning" onclick="modifyProduct(${productNo})">수정</button>

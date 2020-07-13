@@ -71,6 +71,7 @@ public class QnaAdminDAO {
 				
 				qnaVO.setProductNo(rs.getInt("productNo"));
 				qnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
+				qnaVO.setQnaAnswerDate(rs.getTimestamp("qnaAnswerDate"));
 				qnaVO.setQnaContent(rs.getString("qnaContent"));
 				qnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
 				qnaVO.setQnaNo(rs.getInt("qnaNo"));
@@ -156,6 +157,7 @@ public class QnaAdminDAO {
 				
 				qnaVO.setProductNo(rs.getInt("productNo"));
 				qnaVO.setQnaAnswer(rs.getString("qnaAnswer"));
+				qnaVO.setQnaAnswerDate(rs.getTimestamp("qnaAnswerDate"));
 				qnaVO.setQnaContent(rs.getString("qnaContent"));
 				qnaVO.setQnaDate(rs.getTimestamp("qnaDate"));
 				qnaVO.setQnaNo(rs.getInt("qnaNo"));
@@ -184,7 +186,7 @@ public class QnaAdminDAO {
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 
-			String sql = "update qna set qnaAnswer=? where qnaNo=?";
+			String sql = "update qna set qnaAnswer=? qnaAnswerDate=now() where qnaNo=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, qnaVO.getQnaAnswer());
 			pstmt.setInt(2, qnaVO.getQnaNo());

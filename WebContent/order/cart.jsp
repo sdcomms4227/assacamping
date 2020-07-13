@@ -72,11 +72,16 @@
 					<div class="cart_products">
 						<c:choose>
 							<c:when test="${ list == null ||map == null}">
-								<br>
-								<div align="center">장바구니가 비어있습니다</div>
-								<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/index.jsp'">continue shopping</button>
+								<div class="p-5 text-center bg-light">등록된 상품이 없습니다.</div>											
+								<div class="row">
+									<div class="col">
+										<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
+											<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
+										</div>
+									</div>
+								</div>
 							</c:when>
-							<c:when test="${list != null  }">
+							<c:when test="${list != null}">
 								<c:forEach var="cartList" items="${list}" varStatus="status">
 									<ul>
 										<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
@@ -146,10 +151,10 @@
 				<div class="row">
 					<div class="col">
 						<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-						<form action="${contextPath}/cartServlet/allDelte.do" method="post" name="delete">
-							<button type="submit" class="button_clear cart_button">장바구니 비우기</button>
-						</form>
-						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/proList.do'">쇼핑 계속하기</button>
+							<form action="${contextPath}/cartServlet/allDelte.do" method="post" name="delete">
+								<button type="submit" class="button_clear cart_button">장바구니 비우기</button>
+							</form>
+							<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
 						</div>
 					</div>
 				</div>

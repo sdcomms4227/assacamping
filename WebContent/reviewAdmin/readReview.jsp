@@ -42,6 +42,11 @@
 						<th class="align-middle">상품명</th>
 						<td>${productName}</td>
 					</tr>
+					<tr>
+						<td class="text-center" colspan="2">
+							<a class="btn btn-sm btn-info" href="${contextPath}/productAdminServlet/readProduct.do?productNo=${productNo}">상품정보 바로가기</a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -81,11 +86,10 @@
 			</table>
 		</div>
 	</div>
-	
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listReview()">목록</button>
 		<button type="button" class="btn btn-danger" onclick="deleteReview(${reviewNo})">삭제</button>
-	</div>			
+	</div>
 </article>
 
 <form method="post" name="pagingForm">

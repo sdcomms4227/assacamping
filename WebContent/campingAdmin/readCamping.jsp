@@ -20,12 +20,54 @@
 
 <article class="camping">
 	<div class="row">
-		<div class="col-12 col-lg-6">
+		<div class="col-12 col-lg-4 col-xl-3">
+			<table class="table table-layout-fixed text-center">
+				<thead>
+					<tr>
+						<th class="bg-light text-center">첨부파일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${campingFileName == null}">
+							<tr>
+								<td class="p-3">
+									<div>등록된 첨부파일이 없습니다.</div>
+								</td>
+							</tr>
+						</c:when> 
+						<c:otherwise>
+							<tr>
+								<td class="p-3">
+									<div class="d-flex align-items-center">
+										<c:if test="${campingFileType.equals('image')}">
+											<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
+										</c:if>
+										<p class="ml-2 mb-0">${campingFileName}</p>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="p-3">
+									<button type="button" class="btn btn-sm btn-info" onclick="downloadCamping(${campingNo}, '${campingFileName}')">다운로드</button>
+								</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-12 col-lg-8 col-xl-9">
 			<table class="table read-table table-layout-fixed">
 				<colgroup>
 					<col style="width:120px" />
 					<col />
 				</colgroup>
+				<thead>
+					<tr>
+						<th class="bg-light text-center" colspan="2">게시글 정보</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
 						<th>번호</th>
@@ -57,38 +99,8 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div class="col-12 col-lg-6">
-			<table class="table table-layout-fixed text-center">
-				<thead>
-					<tr>
-						<th>첨부파일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="p-3">
-							<c:choose>
-								<c:when test="${campingFileName == null}">
-									<div>등록된 첨부파일이 없습니다.</div>
-								</c:when> 
-								<c:otherwise>
-									<div class="d-flex align-items-center">
-										<c:if test="${campingFileType.equals('image')}">
-											<div class="preview" style="background-image:url(${contextPath}/files/camping/${campingNo}/${campingFileName})"></div>
-										</c:if>
-										<p class="ml-2 mb-0">${campingFileName}</p>
-										<button type="button" class="btn btn-sm btn-info ml-2" onclick="downloadCamping(${campingNo}, '${campingFileName}')">다운로드</button>
-									</div>
-								</c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	
+		</div>		
+	</div>	
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listCamping()">목록</button>							
 		<button type="button" class="btn btn-warning" onclick="modifyCamping(${campingNo})">수정</button>

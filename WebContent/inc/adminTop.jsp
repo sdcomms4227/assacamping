@@ -58,8 +58,8 @@
 				</ul>
 				<hr />
 				<ul class="nav flex-column">
-					<li class="nav-item"><a class="nav-link" href="${contextPath}/reviewAdminServlet/listReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
 					<li class="nav-item"><a class="nav-link" href="${contextPath}/qnaAdminServlet/listQna.do"> <span data-feather="file-text"></span> 상품 문의 </a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextPath}/reviewAdminServlet/listReview.do"> <span data-feather="file-text"></span> 상품 후기 </a></li>
 				</ul>
 				<hr />
 				<ul class="nav flex-column">

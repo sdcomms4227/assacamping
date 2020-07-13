@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
-@WebServlet("/index.do/*")
+@WebServlet("/index.do")
 public class IndexController extends HttpServlet {
 
 	@Override
@@ -38,11 +38,11 @@ public class IndexController extends HttpServlet {
 		}	
 		request.setAttribute("cartCount", cartCount);
 
-		int wishCount = 0;		
-		if(session.getAttribute("wishCount") != null) {
-			wishCount = (int)session.getAttribute("wishCount");
-		}		
-		request.setAttribute("wishCount", wishCount);
+//		int wishCount = 0;		
+//		if(session.getAttribute("wishCount") != null) {
+//			wishCount = (int)session.getAttribute("wishCount");
+//		}		
+//		request.setAttribute("wishCount", wishCount);
 		
 		nextPage = "/index.jsp";
 

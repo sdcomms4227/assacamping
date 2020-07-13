@@ -55,13 +55,13 @@
 						<a class="shopping_a" href="javascript:alert('준비중입니다')">
 							<div class="star">
 								<img src="${contextPath}/images/star.svg" alt="">
-								<c:if test="${sessionScope.wishCount != null}">
+<%-- 								<c:if test="${sessionScope.wishCount != null}">
 									<div class="star_num_container">
 										<div class="star_num_inner">
 											<div class="star_num">${sessionScope.wishCount}</div>
 										</div>
 									</div>
-								</c:if>
+								</c:if> --%>
 							</div>
 						</a>
 					</c:when>

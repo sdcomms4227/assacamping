@@ -131,7 +131,7 @@ public class UserController extends HttpServlet {
 
 //					WishService wishListService = new WishService();
 //					wishCount = wishListService.wishTotalCount(userId);
-				session.setAttribute("wishCount", 0);
+//					session.setAttribute("wishCount", 0);
 				nextPage = "/";
 			}
 

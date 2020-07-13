@@ -77,7 +77,7 @@ public class CartController extends HttpServlet {
 					 }
 					request.setAttribute("map", map);
 					session.setAttribute("userId", userId);
-					nextPage="/order/productCart.jsp";
+					nextPage="/order/cart.jsp";
 					
 				}else if(action.equals("/allDelte.do")) {
 					
@@ -97,7 +97,7 @@ public class CartController extends HttpServlet {
 //					}
 					
 					session.setAttribute("userId", userId);
-					nextPage="/order/productCart.jsp";
+					nextPage="/order/cart.jsp";
 					
 				}else if(action.equals("/update.do")) {
 					String userId=(String)session.getAttribute("userId"); 
