@@ -40,9 +40,9 @@ public class WishListDAO {
 			conn = DBConnection.getConnection();
 
 			sql = "select * from wishList wl"
-				+ "join product pr"
-				+ "on wl.productNo = pr.productNo"
-				+ "where userId = ?";
+				+ " join product pr"
+				+ " on wl.productNo = pr.productNo"
+				+ " where userId = ?";
 			   
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -62,6 +62,7 @@ public class WishListDAO {
 				productVO.setProductImageName1(rs.getString("productImageName1"));
 				productVO.setProductName(rs.getString("productName"));
 				productVO.setProductPrice(rs.getInt("productPrice"));
+				productVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
 				wListMap.put("productVO", productVO);
 				
 				wList.add(wListMap);
@@ -80,6 +81,15 @@ public class WishListDAO {
 		int num = 0;
 		try {
 			conn = DBConnection.getConnection();
+			sql = "select * from wishList where userId=? and productNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, productNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 2;
+			}
+			
 			sql = "select max(wishNo) from wishList";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -116,6 +126,27 @@ public class WishListDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("deleteWish() 메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return 0;
+	}
+
+	public int wishCheck(String userId, int productNo) {
+		String sql = "";
+		try {
+			conn = DBConnection.getConnection();
+			sql = "select * from wishList where userId=? and productNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, productNo);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 1;
+			}
+		} catch (Exception e) {
+			System.out.println("wishCheck() 메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}

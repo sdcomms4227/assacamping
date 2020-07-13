@@ -2,6 +2,7 @@
 <%@ include file="../inc/top.jsp"%>
 <c:set var="wList" value="${wListMap.wList}" />
 <c:set var="totalCount" value="${wListMap.totalCount}" />
+<c:set var="userId" value="${sessionScope.userId}" />
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -82,15 +83,15 @@
 							<c:set var="wishListVO" value="${wMap.wishListVO}" />
 							<c:set var="productVO" value="${wMap.productVO}" />
 							<fmt:formatDate var="wishFormattedDate" value="${wishListVO.wishDate}" pattern="yyyy-MM-dd"/>
-							<tr onclick="readReview(${reviewVO.reviewNo})" class="cursor-pointer">
+							<tr class="cursor-pointer">
 								<td class="align-middle"><img src="${contextPath}/files/product/${wishListVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}" style="height: 40px" /></td>
 								<td class="align-middle">${productVO.productName}</td>
 								<td class="align-middle">${productVO.productPrice}</td>
 								<td class="align-middle">
-									<button type="button" class="btn btn-danger btn-sm" onclick="addCart(${wishListVO.wishNo}, event)">장바구니 담기</button>
+									<button type="button" class="btn btn-danger btn-sm" onclick="addCart(${wishListVO.productNo}, '${productVO.productName}', ${productVO.productPrice}, '${productVO.productImageName1}', ${productVO.productCategoryNo})">장바구니 담기</button>
 								</td>
 								<td class="align-middle">
-									<button type="button" class="btn btn-danger btn-sm" onclick="deleteWish(${wishVO.wishNo}, event)">삭제</button>
+									<button type="button" class="btn btn-danger btn-sm" onclick="deleteWish(${wishListVO.wishNo})">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -118,13 +119,53 @@
 <script src="${contextPath}/js/index_custom.js"></script>
 
 <script>
-function deleteWish(wishNo, event){
-	event.stopPropagation();
+
+// 장바구니 담기 경로 수정해야함
+function addCart(productNo, productName, productPrice, productImageName1, productCategoryNo) {
+	var result = confirm("장바구니에 담으시겠습니까?");
+	
+	if(result){
+		
+		var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "${contextPath}/cartServlet/addCart.do");
+		form.setAttribute("enctype", "multipart/form-data");
+		var IdInput = document.createElement("input");
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","userId");
+		IdInput.setAttribute("value", "${userId}");
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","productNo");
+		IdInput.setAttribute("value", productNo);
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","productNo");
+		IdInput.setAttribute("value", productName);
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","productNo");
+		IdInput.setAttribute("value", productPrice);
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","productNo");
+		IdInput.setAttribute("value", productImageName1);
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","productNo");
+		IdInput.setAttribute("value", productCategoryNo);
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","cartQuantity");
+		IdInput.setAttribute("value", 1);
+		IdInput.setAttribute("type","hidden");
+		IdInput.setAttribute("name","productDelivery");
+		IdInput.setAttribute("value", 1);
+		
+		form.appendChild(IdInput);
+		document.body.appendChild(form);
+		form.submit();
+	}
+}
+
+function deleteWish(wishNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
-		var form = document.pagingForm;
-		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo;
-		form.submit();
+		window.location.href = "${contextPath}/wishlist/deleteWish.do?wishNo=" + wishNo;
 	}
 }
 </script>

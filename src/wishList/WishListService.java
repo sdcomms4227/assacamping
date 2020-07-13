@@ -32,6 +32,10 @@ public class WishListService {
 		return wishListDAO.deleteWish(wishNo);
 	}
 
+	public int wishCheck(String userId, int productNo) {
+		return wishListDAO.wishCheck(userId, productNo);
+	}
+
 	
 	
 

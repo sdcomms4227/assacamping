@@ -182,10 +182,10 @@
 											<c:when test="${productQuantity > 0}">
 												<c:choose>
 													<c:when test="${userId != null}">
-														<button class="btn btn-secondary btn-lg btn-block" onclick="location.href='${contextPath}/wishlist/addWish.do?productNo=${productNo}'">위시리스트 추가</button>
+														<button class="btn btn-secondary btn-lg btn-block" type="button" onclick="addWish(${productNo}, '${userId}')">위시리스트 추가</button>
 													</c:when>
 													<c:otherwise>
-														<button class="btn btn-primary btn-lg btn-block" type="button" onclick="alert('로그인 후  위시리스트 추가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">위시리스트 추가</button>
+														<button class="btn btn-secondary btn-lg btn-block" type="button" onclick="alert('로그인 후  위시리스트 추가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">위시리스트 추가</button>
 													</c:otherwise>
 												</c:choose>											
 											</c:when>
@@ -699,6 +699,25 @@ var form = document.createElement("form");
 function backToList(obj){
 	obj.action="${contextPath}/productServlet/proList.do";
 	obj.submit();
+}
+
+// 위시리스트 ------------------------------------------------------------
+
+function addWish(productNo, userId) {
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");
+	form.setAttribute("action", "${contextPath}/wishlist/addWish.do");
+	var IdInput = document.createElement("input");
+	IdInput.setAttribute("type","hidden");
+	IdInput.setAttribute("name","userId");
+	IdInput.setAttribute("value", userId);
+	IdInput.setAttribute("type","hidden");
+	IdInput.setAttribute("name","productNo");
+	IdInput.setAttribute("value", productNo);
+	
+	form.appendChild(IdInput);
+	document.body.appendChild(form);
+	form.submit();
 }
 </script>
 </body>

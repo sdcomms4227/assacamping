@@ -2,7 +2,6 @@ package wishList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -63,22 +62,25 @@ public class WishListController extends HttpServlet {
 			
 			nextPage = "/wishList.jsp";
 
-		} else if (action.equals("addWish.do")) {
+		} else if (action.equals("/addWish.do")) {
 			
 			String userId = (String) session.getAttribute("userId");
 			int productNo = Integer.parseInt((String) request.getParameter("productNo"));
-
+			
 			int result = wishListService.addWishList(userId, productNo);
 
 			if (result == 1) {
-				pw.print("<script>" + "  alert('장바구니 담기 완료');" + "</script>");
-			} else {
-				pw.print("<script>" + "  alert('장바구니 담기 실패');" + "</script>");
+				pw.print("<script>" + "  alert('위시리스트 추가 완료'); history.go(-1);" + "</script>");
+			} else if (result == 0){
+				pw.print("<script>" + "  alert('위시리스트 추가 실패');" + "</script>");
+			} else if (result == 2) {
+				pw.print("<script>" + "  alert('이미 추가된 위시리스트 입니다.'); history.go(-1);" + "</script>");
 			}
 			
-		} else if (action.equals("deleteWish.do")) {
 			
-			int wishNo = Integer.parseInt(request.getParameter("wishNo"));
+		} else if (action.equals("/deleteWish.do")) {
+			
+			int wishNo = Integer.parseInt((String) request.getParameter("wishNo"));
 			int result = wishListService.deleteWish(wishNo);
 			String alertMsg = "";
 			if (result > 0) {
