@@ -40,7 +40,7 @@ public class UserController extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String action = request.getPathInfo();
-		System.out.println("[UserController] action: " + action);
+		System.out.println("action: " + action);
 
 		String nextPage = null;
 		if (action == null) {
