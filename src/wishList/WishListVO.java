@@ -1,13 +1,14 @@
 package wishList;
 
+import java.sql.Timestamp;
+
 public class WishListVO {
 	
 	private int wishNo;
 	private String userId;
 	private int productNo;
-	private String productImageName1;
-	private int productPrice;
-	
+	private Timestamp wishDate; 
+		
 	// getter, setter method
 	public int getWishNo() {
 		return wishNo;
@@ -27,18 +28,10 @@ public class WishListVO {
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
 	}
-	public String getProductImageName1() {
-		return productImageName1;
+	public Timestamp getWishDate() {
+		return wishDate;
 	}
-	public void setProductImageName1(String productImageName1) {
-		this.productImageName1 = productImageName1;
+	public void setWishDate(Timestamp wishDate) {
+		this.wishDate = wishDate;
 	}
-	public int getProductPrice() {
-		return productPrice;
-	}
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-	
-	
 }

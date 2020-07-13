@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
+<c:set var="wList" value="${wListMap.wList}" />
+<c:set var="totalCount" value="${wListMap.totalCount}" />
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -68,21 +71,35 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1,001</td>
-					<td>Lorem</td>
-					<td>ipsum</td>
-					<td>dolor</td>
-					<td>sit</td>
-				</tr>
+				<c:choose>
+					<c:when test="${totalCount == 0}">
+						<tr>
+							<td colspan="5">위시리스트가 없습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="wMap" items="${wList}">
+							<c:set var="wishListVO" value="${wMap.wishListVO}" />
+							<c:set var="productVO" value="${wMap.productVO}" />
+							<fmt:formatDate var="wishFormattedDate" value="${wishListVO.wishDate}" pattern="yyyy-MM-dd"/>
+							<tr onclick="readReview(${reviewVO.reviewNo})" class="cursor-pointer">
+								<td class="align-middle"><img src="${contextPath}/files/product/${wishListVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}" style="height: 40px" /></td>
+								<td class="align-middle">${productVO.productName}</td>
+								<td class="align-middle">${productVO.productPrice}</td>
+								<td class="align-middle">
+									<button type="button" class="btn btn-danger btn-sm" onclick="addCart(${wishListVO.wishNo}, event)">장바구니 담기</button>
+								</td>
+								<td class="align-middle">
+									<button type="button" class="btn btn-danger btn-sm" onclick="deleteWish(${wishVO.wishNo}, event)">삭제</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 				
 			</tbody>
 		</table>
 	</div>
-
-	
-
-	
 
 
 	<!-- Footer -->
@@ -99,5 +116,17 @@
 <script src="${contextPath}/plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="${contextPath}/js/custom.js"></script>
 <script src="${contextPath}/js/index_custom.js"></script>
+
+<script>
+function deleteWish(wishNo, event){
+	event.stopPropagation();
+	var result = confirm("정말로 삭제하시겠습니까?");	
+	if(result){
+		var form = document.pagingForm;
+		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo;
+		form.submit();
+	}
+}
+</script>
 </body>
 </html>
