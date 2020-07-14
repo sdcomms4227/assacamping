@@ -66,14 +66,7 @@
 				<div class="wishList_products">
 					<c:choose>
 						<c:when test="${totalCount == 0}">
-							<div class="p-5 text-center bg-light">등록된 상품이 없습니다.</div>											
-							<div class="row">
-								<div class="col">
-									<div class="wishList_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-										<button class="button_update wishList_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
-									</div>
-								</div>
-							</div>
+							<div class="p-5 text-center bg-light">등록된 상품이 없습니다.</div>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="wMap" items="${wList}">
@@ -116,18 +109,15 @@
 					</c:choose>
 				</div>
 			</div>
-		</div>
-		
-		<c:if test="${wList != null}">
-			<div class="row">
-				<div class="col">
-					<div class="wishList_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-						<button class="button_clear wishList_button" type="button" onclick="deleteAllWish()">위시리스트 비우기</button>
-						<button class="button_update wishList_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
-					</div>
+		</div>		
+		<div class="row">
+			<div class="col">
+				<div class="wishList_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
+					<button class="button_clear wishList_button" type="button" onclick="deleteAllWish()">위시리스트 비우기</button>
+					<button class="button_update wishList_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
 				</div>
 			</div>
-		</c:if>
+		</div>
 	</div>
 
 	<!-- Newsletter -->

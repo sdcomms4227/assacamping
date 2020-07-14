@@ -69,14 +69,7 @@
 				<div class="cart_products">
 					<c:choose>
 						<c:when test="${ list == null ||map == null}">
-							<div class="p-5 text-center bg-light">등록된 상품이 없습니다.</div>											
-							<div class="row">
-								<div class="col">
-									<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-										<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
-									</div>
-								</div>
-							</div>
+							<div class="p-5 text-center bg-light">등록된 상품이 없습니다.</div>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="cartList" items="${list}" varStatus="status">
@@ -143,17 +136,20 @@
 			</div>
 		</div>
 		
-		<c:if test="${list != null}">			
-			<div class="row">
-				<div class="col">
-					<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
+		<div class="row">
+			<div class="col">
+				<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
+					<c:if test="${list != null}">	
 						<form action="${contextPath}/cartServlet/allDelete.do" method="post" name="delete">
 							<button type="submit" class="button_clear cart_button">장바구니 비우기</button>
 						</form>
-						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
-					</div>
+					</c:if>
+					<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
 				</div>
 			</div>
+		</div>
+		
+		<c:if test="${list != null}">			
 			<div class="row cart_extra">
 				<!-- Cart Coupon -->
 				<div class="col-lg-6">
