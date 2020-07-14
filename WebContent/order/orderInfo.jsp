@@ -73,7 +73,7 @@
 					<c:when test="${orderlist != null }">
 						<c:forEach var="order" items="${orderlist}">
 							<tr align="center">
-								<td><a href="cartorder/orderDetail.do?productNo=${order.productNo}">${order.productName}</a></td>
+								<td><a href="${contextPath}/productServlet/readProduct.do?productNo=${order.productNo}">${order.productName}</a></td>
 								<td>${order.cartQuantity}</td>
 							</tr>
 						</c:forEach>					
@@ -95,7 +95,7 @@
 	<div class="row my-5">
 		<div class="col-12 text-center">
 			<a class="btn btn-secondary" href="${contextPath}">홈</a>
-			<a class="btn btn-secondary" href="${contextPath}">마이페이지</a>
+			<a class="btn btn-secondary" href="${contextPath}/orderServlet/myOrderList.do">나의 주문 내역</a>
 		</div>
 	</div>
 

@@ -14,9 +14,9 @@
 		</nav>
 		<div class="header_content ml-auto">
 			<div class="search header_search">
-				<form name="productSearch" action="${contextPath}/productServlet/listProduct.do" method="post">
+				<form name="headerSearch" action="${contextPath}/productServlet/listProduct.do" method="post">
 					<div class="search_input">
-						<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
+						<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo!=null?searchCategoryNo:0}" />
 						<input type="hidden" name="sortType" value="${sortType}" />
 						<input type="search" name="searchKeyword" value="${searchKeyword}">
 						<button type="submit" id="search_button" class="search_button"><img src="${contextPath}/images/magnifying-glass.svg" alt=""></button>
@@ -96,7 +96,7 @@
 								<a class="dropdown-item" href="${contextPath}/userServlet/logout.do">로그아웃</a>
 								<c:if test='${userId=="admin"}'>
 									<hr />
-									<a class="dropdown-item" href="${contextPath}/adminServlet/admin.do">관리자모드</a>
+									<a class="dropdown-item text-danger" href="${contextPath}/adminServlet/admin.do">관리자모드</a>
 								</c:if>
 							</div>
 						</div>

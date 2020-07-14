@@ -25,13 +25,13 @@ import order.OrderVO;
 @WebServlet("/orderAdminServlet/*")
 public class OrderAdminController extends HttpServlet{
 	
-	OrderAdminService proAdminService;
+	OrderAdminService orderAdminService;
 	OrderVO orderVO;
 	String realPath;
 		
 	@Override
 	public void init() throws ServletException {
-		proAdminService = new OrderAdminService();
+		orderAdminService = new OrderAdminService();
 		orderVO = new OrderVO();
 	}	
 
@@ -64,7 +64,7 @@ public class OrderAdminController extends HttpServlet{
 //			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
 //			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
 //
-//			Map<String, Object> productListMap = proAdminService.listOrder(searchMap);			
+//			Map<String, Object> productListMap = orderAdminService.listOrder(searchMap);			
 //			request.setAttribute("productListMap", productListMap);
 //			
 //			List<OrderCategoryVO> productCategoryList = productCategoryService.listOrderCategory();			
@@ -81,7 +81,7 @@ public class OrderAdminController extends HttpServlet{
 //			setPagination(request);
 //			
 //			int productNo = Integer.parseInt(request.getParameter("productNo"));			
-//			Map<String, Object> productMap = proAdminService.readOrder(productNo);			
+//			Map<String, Object> productMap = orderAdminService.readOrder(productNo);			
 //			request.setAttribute("productMap", productMap);
 //			
 //			if(request.getAttribute("alertMsg")!=null) {
@@ -119,7 +119,7 @@ public class OrderAdminController extends HttpServlet{
 //			orderVO.setOrderQuantity(productQuantity);
 //			orderVO.setOrderCategoryNo(productCategoryNo);
 //			
-//			int readNo = proAdminService.insertOrder(orderVO);
+//			int readNo = orderAdminService.insertOrder(orderVO);
 //			
 //			String alertMsg = "";
 //			
@@ -148,7 +148,7 @@ public class OrderAdminController extends HttpServlet{
 //			setPagination(request);
 //			
 //			int productNo = Integer.parseInt(request.getParameter("productNo"));
-//			Map<String, Object> productMap = proAdminService.readOrder(productNo);
+//			Map<String, Object> productMap = orderAdminService.readOrder(productNo);
 //			request.setAttribute("productMap", productMap);
 //
 //			List<OrderCategoryVO> productCategoryList = productCategoryService.listOrderCategory();			
@@ -196,7 +196,7 @@ public class OrderAdminController extends HttpServlet{
 //			deleteFileMap.put("deleteFile2", deleteFile2);
 //			deleteFileMap.put("deleteFile3", deleteFile3);
 //			
-//			int result = proAdminService.updateOrder(orderVO, originalImageNameMap, deleteFileMap);
+//			int result = orderAdminService.updateOrder(orderVO, originalImageNameMap, deleteFileMap);
 //			String alertMsg = "";
 //			
 //			if(result > 0) {
@@ -235,7 +235,7 @@ public class OrderAdminController extends HttpServlet{
 //			
 //			int productNo = Integer.parseInt(request.getParameter("productNo"));
 //			
-//			int result = proAdminService.deleteOrder(productNo);
+//			int result = orderAdminService.deleteOrder(productNo);
 //			String alertMsg = "";
 //
 //			if(result > 0) {

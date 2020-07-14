@@ -4,9 +4,13 @@
 	<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
 	<div class="logo menu_mm"><a href="${contextPath}">ASSA</a></div>
 	<div class="search">
-		<form action="#">
-			<input type="search" class="search_input menu_mm" required="required">
-			<button type="submit" id="search_button_menu" class="search_button menu_mm"><img src="${contextPath}/images/magnifying-glass.svg" alt=""></button>
+		<form name="menuSearch" action="${contextPath}/productServlet/listProduct.do" method="post">
+			<div class="search_input">
+				<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo!=null?searchCategoryNo:0}" />
+				<input type="hidden" name="sortType" value="${sortType}" />
+				<input type="search" name="searchKeyword" value="${searchKeyword}" class="search_input menu_mm" />
+				<button type="submit" id="search_button_menu" class="search_button menu_mm"><img src="${contextPath}/images/magnifying-glass.svg" alt=""></button>
+			</div>
 		</form>
 	</div>
 	<nav class="menu_nav">
@@ -20,7 +24,7 @@
 		<c:if test='${userId=="admin"}'>
 			<hr />
 			<ul>
-				<li><a href="${contextPath}/adminServlet/admin.do">관리자모드</a></li>
+				<li><a href="${contextPath}/adminServlet/admin.do" class="text-danger">관리자모드</a></li>
 			</ul>
 		</c:if>
 		<hr />
