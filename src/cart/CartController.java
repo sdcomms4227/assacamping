@@ -74,16 +74,7 @@ public class CartController extends HttpServlet {
 					session.setAttribute("userId", userId);
 					nextPage="/order/cart.jsp";
 					
-				}else if(action.equals("/allDelte.do")) {
-					
-					String userId=(String)session.getAttribute("userId"); 
-					
-					List<Integer> productNoList=cartService.allDeleteCart(userId, request);
-										
-					session.setAttribute("userId", userId);
-					nextPage="/order/cart.jsp";
-					
-				}else if(action.equals("/update.do")) {
+			}else if(action.equals("/update.do")) {
 					String userId=(String)session.getAttribute("userId"); 
 					
 					String productName=request.getParameter("productName"); 
@@ -112,8 +103,10 @@ public class CartController extends HttpServlet {
 					
 					List<Integer> list=cartService.allDeleteCart(userId, request);
 										
-					session.setAttribute("userId", userId);					
+					session.setAttribute("userId", userId);	
+					
 					nextPage="/cartServlet/cart.do";
+					
 				}else if(action.equals("/deleteCart.do")) {
 					
 					String userId=(String)session.getAttribute("userId"); 
