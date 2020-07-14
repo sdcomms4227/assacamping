@@ -1,7 +1,16 @@
 package user;
 
 import java.io.IOException;
-
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Properties;
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -248,9 +257,70 @@ public class UserController extends HttpServlet {
 				request.setAttribute("userInfo", userInfo);
 				request.setAttribute("msg", "fail");
 				nextPage = "/user/changePw.jsp";
+			}	
+			}else if(action.equals("/changePwAction.do")) {
+				String userId = request.getParameter("userId");
+				String userPw = request.getParameter("userPw");
+				String userPw1 = request.getParameter("userPw1");
+				int check = userDAO.changePw(userId, userPw, userPw1);
+				if(check ==1) {
+					request.setAttribute("msg", "modified");
+					nextPage = "/";
+				}else {
+					userId = request.getParameter("userId");
+					UserVO userInfo = userDAO.findUser(userId);
+					request.setAttribute("userInfo", userInfo);
+					request.setAttribute("msg", "fail");
+					nextPage = "/user/changePw.jsp";
+				}
+			}else if(action.equals("/findPw.do")){
+				String userId = request.getParameter("userId");
+				String userEmail = request.getParameter("userEmail");
+				String userPw = userDAO.findPw(userId,userEmail);
+				request.setAttribute("userEmail", userEmail);
+				request.setAttribute("userPw", userPw);
+				nextPage = "/userCon/sendMail.do";
+			}else if(action.equals("/sendMail.do")) {
+				Object userEmail = request.getAttribute("userEmail");
+				Object userPw = request.getAttribute("userPw");
+				String subject ="고객님의 비밀번호 입니다.";
+				PrintWriter out = response.getWriter();
+				Properties p = new Properties(); // 정보를 담을 객체
+				 
+				p.put("mail.smtp.host","gmail-smtp.l.google.com"); // 네이버 SMTP
+				 
+				p.put("mail.smtp.port", "465");
+				p.put("mail.smtp.starttls.enable", "true");
+				p.put("mail.smtp.auth", "true");
+				p.put("mail.smtp.debug", "true");
+				p.put("mail.smtp.socketFactory.port", "465");
+				p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				p.put("mail.smtp.socketFactory.fallback", "false");
+				
+				try{
+				    Authenticator auth = new SMTPAuthenticator();
+				    Session ses = Session.getInstance(p, auth);
+				     
+				    ses.setDebug(true);
+				    
+				    MimeMessage msg = new MimeMessage(ses); 
+				    msg.setSubject(subject);
+				    
+				    Address toAddr = new InternetAddress((String) userEmail);
+				    msg.addRecipient(Message.RecipientType.TO, toAddr); 
+				     
+				    msg.setContent(userPw, "text/html;charset=UTF-8"); 
+				     
+				    Transport.send(msg); // 전송
+				} catch(Exception e){
+				    e.printStackTrace();
+				    out.println("<script>alert('메일발송에 실패하였습니다.');history.back();</script>");
+				    // 오류 발생시 뒤로 돌아가도록
+				    return;
+				}
+				request.setAttribute("msg", "userPw");  
+				nextPage = "/user/findPw.jsp";
 			}
-			
-		}
 		
 		if(!nextPage.equals("")) {
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
