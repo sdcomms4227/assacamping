@@ -6,21 +6,11 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
-<%--
-<c:set var="boardCategoryNo" value="${sessionScope.boardCategoryNo}" />
-<c:set var="boardNo" value="${requestScope.boardNo}" />
-
 <c:set var="userId" value="${sessionScope.userId}" />
-<c:set var="userName" value="${requestScope.userName}" />
---%>
+<c:set var="userName" value="${sessionScope.userName}" />
 
-<c:set var="commentList" value="${requestScope.commentList}" />
-<c:set var="boardCategoryNo" value="1" />
-<c:set var="boardNo" value="1" />
-<c:set var="userId" value="${'hong'}" />
-<c:set var="userName" value="${'홍길동'}" />
-
+<c:set var="eventNo" value="${sessionScope.eventNo}" />
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,7 +80,9 @@
 		// 댓글 목록 가져와서 보여주기
 		function commentList(){
 			var _url = '${contextPath}/commentServlet/listComment.do';
-			var _commentListInfo = '{"boardCategoryNo":"'+${boardCategoryNo}+'","boardNo":"'+${boardNo}+'"}';
+			var _commentListInfo = '{"eventNo":"'+${eventNo}+'"}';
+			
+			console.log(${eventNo});
 			
 		    $.ajax({
 		        url : _url,
@@ -121,8 +113,12 @@
 			           		
 				           	a += '<tr id="comment'+no+'">';
 				           	a += '<td class="d-none d-lg-table-cell align-middle">';
+				           	
 				           	for(var i = 0; i < value.commentRe_lev; i++) {
-				           		a += '&nbsp;&nbsp;';
+				           		a += '&nbsp;&nbsp;&nbsp;&nbsp;'; 
+				           	}
+				           	if(lev > 0) {
+				           		a += '<object type="image/svg+xml" data="../images/commentArrow.svg" style="width:15px"></object>&nbsp;';
 				           	}
 				           	a += name+'</td>';
 							a += '<td class="text-left align-middle">';
@@ -142,7 +138,7 @@
 	           		});
 		       },
 		       error: function(err) {
-		    	   alert("ajax 통신에러");
+		    	   alert("댓글목록 통신에러");
 		           console.log(err);
 		       }
 		    });
@@ -151,8 +147,7 @@
 		// 댓글 등록
 		function commentSubmit(){
 			
-			var boardCategoryNo = ${boardCategoryNo};
-			var boardNo = ${boardNo};
+			var eventNo = ${eventNo};
 			var userId = '${userId}';
 			var userName = '${userName}';
 			var commentContent = document.commentform.commentContent.value; 
@@ -163,7 +158,7 @@
 				return;
 			}
 			
-			var _commentInfo = '{"boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","commentContent":"'+commentContent+'"}';
+			var _commentInfo = '{"eventNo":"'+eventNo+'","userId":"'+userId+'","userName":"'+userName+'","commentContent":"'+commentContent+'"}';
 			var _url = '${contextPath}/commentServlet/insertComment.do';			
 			$.ajax({
 				type : "post",
@@ -182,7 +177,7 @@
 						
 				},
 				error : function(){
-					alert("통신에러가 발생했습니다.");	
+					alert("댓글등록 통신에러");	
 				}				
 			});
 		}
@@ -213,8 +208,7 @@
 		// 대댓글 달기
 		function commentReplyProc(commentNo) {
 			
-			var boardCategoryNo = ${boardCategoryNo};
-			var boardNo = ${boardNo};
+			var eventNo = ${eventNo};
 			var userId = '${userId}';
 			var userName = '${userName}';
 			var replyContent = document.commentform.replyContent.value; 
@@ -225,7 +219,7 @@
 				return;
 			}
 			
-			var _commentReplyInfo = '{"commentNo":"'+commentNo+'","boardCategoryNo":"'+boardCategoryNo+'","boardNo":"'+boardNo+'","userId":"'+userId+'","userName":"'+userName+'","replyContent":"'+replyContent+'"}';
+			var _commentReplyInfo = '{"commentNo":"'+commentNo+'","eventNo":"'+eventNo+'","userId":"'+userId+'","userName":"'+userName+'","replyContent":"'+replyContent+'"}';
 			var _url = '${contextPath}/commentServlet/replyComment.do';
 			
 			$.ajax({
@@ -245,7 +239,7 @@
 						
 				},
 				error : function(){
-					alert("통신에러가 발생했습니다.");	
+					alert("대댓글달기 통신에러");	
 				}				
 			});
 		}
@@ -311,7 +305,7 @@
 						commentList();
 					},
 					error : function(){
-						alert("통신에러가 발생했습니다.");	
+						alert("댓글수정 통신에러");	
 					}
 				});
 			}
@@ -353,7 +347,7 @@
 						}
 					},
 					error : function(){
-						alert("통신에러가 발생했습니다.");	
+						alert("댓글삭제 통신에러");	
 					}				
 				});
 			}

@@ -57,17 +57,16 @@ public class CommentDAO {
 					num2 = 0;
 				}
 				
-				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_lev, commentRe_seq)"
-						+ "values(?,?,?,?,?,?,now(), ?, 0, 0)";
+				sql = "insert into comment(commentNo,eventNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_lev, commentRe_seq)"
+						+ "values(?,?,?,?,?,now(), ?, 0, 0)";
 
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
-				pstmt.setInt(2, commentVO.getBoardCategoryNo());
-				pstmt.setInt(3, commentVO.getBoardNo());
-				pstmt.setString(4, commentVO.getUserId());
-				pstmt.setString(5, commentVO.getUserName());
-				pstmt.setString(6, commentVO.getCommentContent());
-				pstmt.setInt(7, num2);
+				pstmt.setInt(2, commentVO.getEventNo());
+				pstmt.setString(3, commentVO.getUserId());
+				pstmt.setString(4, commentVO.getUserName());
+				pstmt.setString(5, commentVO.getCommentContent());
+				pstmt.setInt(6, num2);
 
 				return pstmt.executeUpdate();
 
@@ -109,24 +108,22 @@ public class CommentDAO {
 	} // deleteComment
 
 	// 댓글 리스트
-	public List<CommentVO> getCommentList(int boardCategoryNo, int boardNo) {
+	public List<CommentVO> getCommentList(int eventNo) {
 		String sql = "";
 		List<CommentVO> commentList = new ArrayList<CommentVO>();
 
 		try {
 			conn = dbUtil.DBConnection.getConnection();
 
-			sql = "select * from comment where boardCategoryNo=? and boardNo=? order by commentRe_ref ASC, commentRe_seq ASC";
+			sql = "select * from comment where eventNo=? order by commentRe_ref ASC, commentRe_seq ASC";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardCategoryNo);
-			pstmt.setInt(2, boardNo);
+			pstmt.setInt(1, eventNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				CommentVO commentVO = new CommentVO();
 
-				commentVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
-				commentVO.setBoardNo(rs.getInt("boardNo"));
+				commentVO.setEventNo(rs.getInt("eventNo"));
 				commentVO.setCommentContent(rs.getString("commentContent"));
 				commentVO.setCommentWriteDate(rs.getTimestamp("commentWriteDate"));
 				commentVO.setCommentNo(rs.getInt("commentNo"));
@@ -160,8 +157,8 @@ public class CommentDAO {
 
 			if (rs.next()) {
 				CommentVO commentVO = new CommentVO();
-				commentVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
-				commentVO.setBoardNo(rs.getInt("boardNo"));
+				
+				commentVO.setEventNo(rs.getInt("eventNo"));
 				commentVO.setCommentContent(rs.getString("commentContent"));
 				commentVO.setCommentWriteDate(rs.getTimestamp("commentWriteDate"));
 				commentVO.setCommentNo(rs.getInt("commentNo"));
@@ -204,8 +201,7 @@ public class CommentDAO {
 
 			if (rs.next()) {
 				CommentVO commentVO = new CommentVO();
-				commentVO.setBoardCategoryNo(rs.getInt("boardCategoryNo"));
-				commentVO.setBoardNo(rs.getInt("boardNo"));
+				commentVO.setEventNo(rs.getInt("eventNo"));
 				commentVO.setCommentContent(rs.getString("commentContent"));
 				commentVO.setCommentWriteDate(rs.getTimestamp("commentWriteDate"));
 				commentVO.setCommentNo(rs.getInt("commentNo"));
@@ -272,19 +268,18 @@ public class CommentDAO {
 					num = 1;
 				}
 				
-				sql = "insert into comment(commentNo,boardCategoryNo,boardNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_seq, commentRe_lev)"
-						+ "values(?, ?, ?, ?, ?, ?, now(), ?, ?, ?)";
+				sql = "insert into comment(commentNo,eventNo,userId,userName,commentContent,commentWriteDate, commentRe_ref, commentRe_seq, commentRe_lev)"
+						+ "values(?, ?, ?, ?, ?, now(), ?, ?, ?)";
 
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
-				pstmt.setInt(2, commentVO.getBoardCategoryNo());
-				pstmt.setInt(3, commentVO.getBoardNo());
-				pstmt.setString(4, commentVO.getUserId());
-				pstmt.setString(5, commentVO.getUserName());
-				pstmt.setString(6, commentVO.getCommentContent());
-				pstmt.setInt(7, parentVO.getCommentRe_ref());
-				pstmt.setInt(8, parentVO.getCommentRe_seq() + 1);
-				pstmt.setInt(9, parentVO.getCommentRe_lev() + 1);
+				pstmt.setInt(2, commentVO.getEventNo());
+				pstmt.setString(3, commentVO.getUserId());
+				pstmt.setString(4, commentVO.getUserName());
+				pstmt.setString(5, commentVO.getCommentContent());
+				pstmt.setInt(6, parentVO.getCommentRe_ref());
+				pstmt.setInt(7, parentVO.getCommentRe_seq() + 1);
+				pstmt.setInt(8, parentVO.getCommentRe_lev() + 1);
 
 				return pstmt.executeUpdate();
 

@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public class CommentVO {
 
-	private int boardCategoryNo;
-	private int boardNo;
+	
+	private int eventNo;
 	private int commentNo;
 	private String commentContent;
 	private String userId;
@@ -16,17 +16,12 @@ public class CommentVO {
 	private Timestamp commentWriteDate;
 	
 	
-	public int getBoardCategoryNo() {
-		return boardCategoryNo;
+	// getter, setter method
+	public int getEventNo() {
+		return eventNo;
 	}
-	public void setBoardCategoryNo(int boardCategoryNo) {
-		this.boardCategoryNo = boardCategoryNo;
-	}
-	public int getBoardNo() {
-		return boardNo;
-	}
-	public void setBoardNo(int boardNo) {
-		this.boardNo = boardNo;
+	public void setEventNo(int eventNo) {
+		this.eventNo = eventNo;
 	}
 	public int getCommentNo() {
 		return commentNo;
