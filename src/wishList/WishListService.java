@@ -25,19 +25,32 @@ public class WishListService {
 	}
 
 	public int addWishList(String userId, int productNo) {
-		return wishListDAO.addWishList(userId, productNo);
+		int check = 0;
+		int result = 0;
+		
+		check = wishListDAO.checkWish(userId, productNo);
+		
+		if(check == 1) {
+			result = 2;
+			return result;
+		} else {
+			int wishNo = wishListDAO.getMaxWishNo();
+			result = wishListDAO.addWishList(userId, productNo, wishNo);
+		}
+		
+		return result; 
 	}
 
 	public int deleteWish(int wishNo) {
 		return wishListDAO.deleteWish(wishNo);
 	}
 
-	public int wishCheck(String userId, int productNo) {
-		return wishListDAO.wishCheck(userId, productNo);
-	}
-
 	public int wishTotalCount(String userId) {
 		return wishListDAO.wishTotalCount(userId);
+	}
+
+	public int deleteAllWish(String userId) {
+		return wishListDAO.deleteAllWish(userId);
 	}
 
 }
