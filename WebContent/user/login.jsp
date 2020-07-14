@@ -58,7 +58,7 @@
 				<hr />
 				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/userServlet/findId.do">아이디 찾기</a>
 				<span class="text-muted">|</span>
-				<a class="btn btn-sm btn-secondary-link" href="javascript:alert('준비중입니다.')">비밀번호 찾기</a>
+				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/user/findPw.jsp">비밀번호 찾기</a>
 				<span class="text-muted">|</span>
 				<a class="btn btn-sm btn-secondary-link" href="${contextPath}/userServlet/agreeForm.do">회원가입</a>
 			</form>
