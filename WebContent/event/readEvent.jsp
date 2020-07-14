@@ -69,20 +69,9 @@
 			</colgroup>
 			<tr>
 				<td colspan="6" class="h4 p-3 readsubject">
-					s${eventTitle}																	
-					<%-- <div class="h6 mt-3 mb-0 d-lg-none text-right">
-						<small class="text-muted">${userId} | ${eventFormattedWriteDate} | ${eventReadCount}</small>
-					</div> --%>
+					${eventTitle}
 				</td>
 			</tr>
-			<%-- <tr class="d-none d-lg-table-row">
-				<th class="align-middle">제목</th>
-				<td>${event.eventTitle}</td>				
-				<th class="align-middle">작성일</th>
-				<td>${eventFormattedWriteDate}</td>
-				<th class="align-middle">조회수</th>
-				<td>${eventReadCount}</td>
-			</tr> --%>
 			<tr>
 				<td colspan="6" class="py-5">
 				     <input  type= "hidden"   name="originalFileName" value="${eventImageFileName}" />
