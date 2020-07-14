@@ -21,8 +21,8 @@
 <link rel="stylesheet" href="${contextPath}/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 <link rel="stylesheet" href="${contextPath}/css/common.css">
 <link rel="stylesheet" href="${contextPath}/css/common_responsive.css">
-<link rel="stylesheet" href="${contextPath}/css/categories.css">
-<link rel="stylesheet" href="${contextPath}/css/categories_responsive.css">
+<link rel="stylesheet" href="${contextPath}/css/listProduct.css">
+<link rel="stylesheet" href="${contextPath}/css/listProduct_responsive.css">
 </head>
 <body>
 
@@ -226,7 +226,7 @@
 												<div class="product_name"><a href="javascript:readProduct(${productVO.productNo})">${productVO.productName}</a></div>
 												<c:choose>
 													<c:when test="${productVO.productQuantity > 0}">
-														<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /> <small>원</small></div>
+														<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /></div>
 													</c:when>
 													<c:otherwise>
 														<div class="product_empty">
