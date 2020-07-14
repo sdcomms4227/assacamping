@@ -10,8 +10,8 @@ public class CommentService {
 		commentDAO = new CommentDAO();
 	}
 	
-	public List<CommentVO> getCommentList(int boardCategoryNo, int boardNo){
-		return commentDAO.getCommentList(boardCategoryNo, boardNo);
+	public List<CommentVO> getCommentList(int eventNo){
+		return commentDAO.getCommentList(eventNo);
 	}
 
 	public int insertComment(CommentVO commentVO) {

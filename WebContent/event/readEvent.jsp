@@ -2,6 +2,7 @@
 <%@ include file="../inc/top.jsp"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 <c:set var="userId" value="${sessionScope.userId}" />
+<c:set var="userName" value="${sessionScope.userName}" />
 <c:set var="eventNo" value="${event.eventNo}" />
 <c:set var="eventTitle" value="${event.eventTitle}" />
 <c:set var="eventContent" value="${event.eventContent}" />
@@ -101,6 +102,9 @@
 			</c:if>
 		</table>
 		
+		<!--
+			Comment
+		-->
 		<jsp:include page="../comment/comment.jsp" />
 		
 		<div class="text-center my-5">
