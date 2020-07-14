@@ -76,33 +76,15 @@ public class WishListDAO {
 	}	
 	
 	// 위시리스트 추가
-	public int addWishList(String userId, int productNo) {
+	public int addWishList(String userId, int productNo, int wishNo) {
 		String sql = "";
-		int num = 0;
 		try {
 			conn = DBConnection.getConnection();
-			sql = "select * from wishList where userId=? and productNo=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setInt(2, productNo);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return 2;
-			}
-			
-			sql = "select max(wishNo) from wishList";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				num = rs.getInt(1) + 1;
-			} else {
-				num = 1;
-			}
 			
 			sql="insert into wishList(wishNo, userId, productNo, wishDate)"
 				+ " values(?,?,?,now())";
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
+			pstmt.setInt(1, wishNo);
 			pstmt.setString(2, userId);
 			pstmt.setInt(3, productNo);
 			
@@ -132,7 +114,8 @@ public class WishListDAO {
 		return 0;
 	}
 
-	public int wishCheck(String userId, int productNo) {
+	// 위시리스트 추가된 상품인지 확인
+	public int checkWish(String userId, int productNo) {
 		String sql = "";
 		try {
 			conn = DBConnection.getConnection();
@@ -153,6 +136,7 @@ public class WishListDAO {
 		return 0;
 	}
 
+	// 사용자의 위시리스트 총 갯수
 	public int wishTotalCount(String userId) {
 		String sql = "";
 		int totalcount=0;
@@ -185,5 +169,45 @@ public class WishListDAO {
 		return totalcount;
 	}
 
-	
+	// 위시리스트 추가시 가져올 wishNo 값
+	public int getMaxWishNo() {
+		String sql = "";
+		int num = 0;
+		try {
+			conn = DBConnection.getConnection();
+			
+			sql = "select max(wishNo) from wishList";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				num = rs.getInt(1) + 1;
+			} else {
+				num = 1;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getMaxWishNo() 에서오류 : "+e.toString());
+		}finally {
+			freeResource();
+		}
+		return num;
+		
+	}
+
+	public int deleteAllWish(String userId) {
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "delete from wishList where userId = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("deleteAllWish() 메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return 0;
+	}
+
 }
