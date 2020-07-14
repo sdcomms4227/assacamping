@@ -1,6 +1,6 @@
 package order;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OrderVO {
 	private int productNo;
@@ -20,7 +20,7 @@ public class OrderVO {
 	private String userName;
 	private String userPhone;
 	private String userComment;
-	private Date orderDate;
+	private Timestamp orderDate;
 
 	public int getProductNo() {
 		return productNo;
@@ -158,11 +158,11 @@ public class OrderVO {
 		this.userComment = userComment;
 	}
 
-	public Date getOrderDate() {
+	public Timestamp getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(Timestamp orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -191,7 +191,7 @@ public class OrderVO {
 	}
 
 	public OrderVO(int productNo, int cartQuantity, int productDelivery, int productPayment, int orderNo, String userZipcode, String userAddress1, String userAddress2, String productName,
-			String userId, String productCategory, String orderState, String userEmail, String userName, String userPhone, String userComment, Date orderDate) {
+			String userId, String productCategory, String orderState, String userEmail, String userName, String userPhone, String userComment, Timestamp orderDate) {
 
 		this.productNo = productNo;
 		this.cartQuantity = cartQuantity;

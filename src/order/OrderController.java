@@ -103,7 +103,7 @@ public class OrderController extends HttpServlet{
 				int productDelivery = Integer.parseInt(request.getParameter("productDelivery"));
 //				System.out.println(userComment);
 //				System.out.println(productDelivery);
-				String orderState = "구매완료";
+				String orderState = "결제대기";
 				int orderNo = orderservice.orderNoCount();
 
 				vo.setProductPayment(productPayment);

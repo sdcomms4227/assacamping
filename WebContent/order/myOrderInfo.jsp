@@ -66,8 +66,10 @@
 					<th class="align-middle">상품명</th>
 					<td>
 						<c:forEach items="${orderInfo}" var="order">
-			                ${order.productName}
-			                <a class="btn btn-sm btn-secondary ml-2" href="${contextPath}/productServlet/readProduct.do?productNo=${order.productNo}">재구매</a>
+							<div class="my-1">
+				                ${order.productName}
+				                <a class="btn btn-sm btn-secondary ml-2" href="${contextPath}/productServlet/readProduct.do?productNo=${order.productNo}">재구매</a>
+			                </div>
 						</c:forEach>
 					</td>
 				</tr>

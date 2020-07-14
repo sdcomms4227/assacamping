@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/adminTop.jsp"%>
-<c:set var="productList" value="${productListMap.productList}" />
-<c:set var="totalCount" value="${productListMap.totalCount}" />
+<c:set var="orderList" value="${orderListMap.orderList}" />
+<c:set var="totalCount" value="${orderListMap.totalCount}" />
 <c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
 <c:set var="endNo" value="${beginNo + 9}" />
 
@@ -12,7 +12,7 @@
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
 		<form action="${contextPath}/orderAdminServlet/listOrder.do" class="form-inline justify-content-center">
 			<div class="input-group">
-				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
+				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm" placeholder="주문자 이름">
 				<div class="input-group-append">
 					<button type="submit" class="btn btn-secondary btn-sm">검색</button>
 				</div>
@@ -21,61 +21,60 @@
 	</div>
 </div>
 
-<article class="product">
-	<%-- <table class="table table-hover text-center">
+<article class="order">
+	<table class="table table-hover text-center">
 		<colgroup>
-			<col style="width: 80px" />
-			<col style="width: 160px" />
-			<col style="width: 100px" />
+			<col style="width: 120px" />
 			<col />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 140px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 160px" />
 		</colgroup>
 		<thead class="thead-light">
 			<tr>
 				<th>번호</th>
-				<th>카테고리</th>
-				<th>이미지</th>
 				<th>상품명</th>
 				<th>가격</th>
-				<th>수량</th>
-				<th>등록일</th>
-				<th>관리</th>
+				<th>주문자 이름</th>
+				<th>주문일</th>
+				<th>주문상태</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:choose>
 				<c:when test="${totalCount==0}">
 					<tr>
-						<td colspan="8">등록된 주문이 없습니다.</td>
+						<td colspan="6">등록된 주문이 없습니다.</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="productMap" items="${productList}">
-						<c:set var="productVO" value="${productMap.productVO}" />
-						<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
-						<fmt:formatNumber var="productFmtPrice" value="${productVO.productPrice}" pattern="#,###" />
-						<fmt:formatDate var="productFormattedDate" value="${productVO.productDate}" pattern="yyyy-MM-dd HH:mm"/>
-						<tr onclick="readProduct(${productVO.productNo})" style="cursor: pointer">
-							<td class="align-middle">${productVO.productNo}</td>
-							<td class="align-middle wbka">${productCategoryName}</td>
-							<td class="align-middle"><img src="${contextPath}/files/product/${productVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}" style="height: 40px" /></td>
-							<td class="align-middle text-left">${productVO.productName}</td>
-							<td class="align-middle">${productFmtPrice}</td>
-							<td class="align-middle">${productVO.productQuantity}</td>
+					<c:forEach var="orderMap" items="${orderList}">
+						<c:set var="orderVO" value="${orderMap.orderVO}" />
+						<c:set var="cnt" value="${orderMap.cnt - 1}" />
+						<fmt:formatNumber var="productFmtPayment" value="${orderVO.productPayment}" pattern="#,###" />
+						<fmt:formatDate var="productFormattedDate" value="${orderVO.orderDate}" pattern="yyyy-MM-dd HH:mm"/>
+						<tr onclick="readOrder(${orderVO.orderNo})" style="cursor: pointer">
+							<td class="align-middle">${orderVO.orderNo}</td>
+							<td class="align-middle text-left">
+								${orderVO.productName}
+								<c:if test="${cnt > 0}">
+									<span class="text-danger">외 ${cnt}개</span>
+								</c:if>
+							</td>
+							<td class="align-middle">${productFmtPayment}</td>
+							<td class="align-middle">${orderVO.userName}</td>
 							<td class="align-middle">${productFormattedDate}</td>
-							<td class="align-middle">
-								<button type="button" class="btn btn-warning btn-sm" onclick="modifyProduct(${productVO.productNo}, event)">수정</button>
-								<button type="button" class="btn btn-danger btn-sm" onclick="deleteProduct(${productVO.productNo}, event)">삭제</button>
+							<td class="align-middle ${orderVO.orderState eq '결제취소' ? 'text-danger' : ''}">
+								${orderVO.orderState}
+								<button type="button" class="btn btn-warning btn-sm ml-2" onclick="changeOrderState(event)">변경</button>
 							</td>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
 		</tbody>
-	</table> --%>
+	</table>
 
 	<c:if test="${totalCount != null}">
 		<div class="row">
@@ -116,35 +115,23 @@
 <form method="post" name="pagingForm">
 	<input type="hidden" name="pageNo" value="${pageNo}" />
 	<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
-	<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
 </form>
 
 <script>
 function listProduct(pageNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/productAdminServlet/listProduct.do";	
+	form.action = "${contextPath}/orderAdminServlet/listOrder.do";	
 	form.pageNo.value = pageNo;
 	form.submit();
 }
-function readProduct(productNo){
+function readOrder(orderNo){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/productAdminServlet/readProduct.do?productNo=" + productNo;
+	form.action = "${contextPath}/orderAdminServlet/readOrder.do?orderNo=" + orderNo;
 	form.submit();
 }
-function modifyProduct(productNo, event){
+function changeOrderState(event){
 	event.stopPropagation();
-	var form = document.pagingForm;
-	form.action = "${contextPath}/productAdminServlet/modifyProduct.do?productNo=" + productNo;
-	form.submit();
-}
-function deleteProduct(productNo, event){
-	event.stopPropagation();
-	var result = confirm("정말로 삭제하시겠습니까?");	
-	if(result){
-		var form = document.pagingForm;
-		form.action = "${contextPath}/productAdminServlet/deleteProduct.do?productNo=" + productNo;
-		form.submit();
-	}
+	alert("준비중입니다.");
 }
 </script>
 

@@ -170,15 +170,15 @@
 						<ul>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">가격</div>
-								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice}" /> <small>원</small></div>
+								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice}" /></div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">배송비</div>
-								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3"  value="${totalDelivery}" /> <small>원</small></div>
+								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3"  value="${totalDelivery}" /></div>
 							</li>
 							<li class="d-flex flex-row align-items-center justify-content-start">
 								<div class="cart_total_title">합계</div>
-								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice+totalDelivery}" /> <small>원</small></div>
+								<div class="cart_total_price ml-auto"><fmt:formatNumber type="number" maxFractionDigits="3" value="${map.totalPrice+totalDelivery}" /></div>
 							</li>
 						</ul>
 						<input type="submit" class="cart_total_button" value="주문하기">
