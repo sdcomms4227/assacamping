@@ -30,9 +30,7 @@
 	<!-- Menu -->
 	<jsp:include page="../inc/menu.jsp" />
 
-	<!-- Home -->
-
-	
+	<!-- Home -->	
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/cart.jpg" data-speed="0.8"></div>
 		<div class="container">

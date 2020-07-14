@@ -3,7 +3,6 @@
 <c:set var="wList" value="${wListMap.wList}" />
 <c:set var="totalCount" value="${wListMap.totalCount}" />
 <c:set var="userId" value="${sessionScope.userId}" />
-
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -176,22 +175,22 @@ function addCart(productNo, productName, productPrice, productImageName1, produc
 
 		var input3 = document.createElement("input");
 		input3.setAttribute("type","hidden");
-		input3.setAttribute("name","productNo");
+		input3.setAttribute("name","productName");
 		input3.setAttribute("value", productName);		
 
 		var input4 = document.createElement("input");
 		input4.setAttribute("type","hidden");
-		input4.setAttribute("name","productNo");
+		input4.setAttribute("name","productPrice");
 		input4.setAttribute("value", productPrice);		
 
 		var input5 = document.createElement("input");
 		input5.setAttribute("type","hidden");
-		input5.setAttribute("name","productNo");
+		input5.setAttribute("name","productImage");
 		input5.setAttribute("value", productImageName1);
 
 		var input6 = document.createElement("input");
 		input6.setAttribute("type","hidden");
-		input6.setAttribute("name","productNo");
+		input6.setAttribute("name","productCategoryNo");
 		input6.setAttribute("value", productCategoryNo);
 
 		var input7 = document.createElement("input");
