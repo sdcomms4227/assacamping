@@ -127,7 +127,11 @@ public class EventController extends HttpServlet {
 			String eventNo = request.getParameter("eventNo");			
 			eventVO = eventService.viewEvent(Integer.parseInt(eventNo));					
 			eventDAO.updateReadCount(Integer.parseInt(eventNo));  			
-			request.setAttribute("event", eventVO);			
+			request.setAttribute("event", eventVO);	
+			
+			// comment 위해 추가
+			session.setAttribute("eventNo", eventNo);
+			
 			nextPage ="/event/readEvent.jsp"; 
 										
 		}else if (action.equals("/modEvent.do")) { //글 수정요청시 수정폼으로

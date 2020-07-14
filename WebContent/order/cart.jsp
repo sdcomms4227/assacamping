@@ -147,7 +147,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-						<form action="${contextPath}/cartServlet/allDelte.do" method="post" name="delete">
+						<form action="${contextPath}/cartServlet/allDelete.do" method="post" name="delete">
 							<button type="submit" class="button_clear cart_button">장바구니 비우기</button>
 						</form>
 						<button class="button_update cart_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
