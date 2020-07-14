@@ -112,6 +112,27 @@ public class WishListController extends HttpServlet {
 			session.setAttribute("wishCount", wishCount);
 			
 			return;
+		} else if (action.equals("/deleteAllWish.do")) {
+			String userId = (String) session.getAttribute("userId");
+			int result = wishListService.deleteAllWish(userId);
+			
+			if (result > 0) {
+				pw.print("<script>");
+				pw.print("	alert('위시리스트가 전부 삭제되었습니다.');");
+				pw.print("	location.href='" + contextPath + "/wishListServlet/wishList.do';");
+				pw.print("</script>");
+			} else {
+				pw.print("<script>");
+				pw.print("	alert('오류가 발생했습니다.');");
+				pw.print("	location.href='" + contextPath + "/wishListServlet/wishList.do';");
+				pw.print("</script>");
+			}
+
+			int wishCount = 0;
+			wishCount = wishListService.wishTotalCount(userId);
+			session.setAttribute("wishCount", wishCount);
+			
+			return;
 		}
 
 		if (!nextPage.equals("")) {

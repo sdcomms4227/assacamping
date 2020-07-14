@@ -123,9 +123,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="wishList_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
-						<form action="${contextPath}/wishListServlet/allDelete.do" method="post" name="delete">
-							<button type="submit" class="button_clear wishList_button">위시리스트 비우기</button>
-						</form>
+						<button class="button_clear wishList_button" type="button" onclick="deleteAllWish()">위시리스트 비우기</button>
 						<button class="button_update wishList_button_2 ml-md-auto" onclick="location.href='${contextPath}/productServlet/listProduct.do'">쇼핑 계속하기</button>
 					</div>
 				</div>
@@ -153,7 +151,6 @@
 
 <script>
 
-// 장바구니 담기 경로 수정해야함
 function addCart(productNo, productName, productPrice, productImageName1, productCategoryNo) {
 	var result = confirm("장바구니에 담으시겠습니까?");
 	
@@ -221,6 +218,17 @@ function deleteWish(wishNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		window.location.href = "${contextPath}/wishListServlet/deleteWish.do?wishNo=" + wishNo;
+	}
+}
+
+function deleteAllWish() {
+	if(${totalCount} == 0) {
+		window.alert("위시리스트가 비어있습니다.");
+		return;
+	}
+	var result = confirm("위시리스트를 전부 삭제하시겠습니까?");	
+	if(result){
+		window.location.href = "${contextPath}/wishListServlet/deleteAllWish.do";
 	}
 }
 </script>
