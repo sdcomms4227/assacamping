@@ -8,49 +8,30 @@ import order.OrderVO;
 
 public class OrderAdminService {
 	
-	OrderAdminDAO proAdminDAO;
+	OrderAdminDAO orderAdminDAO;
 	
 	public OrderAdminService() {		
-		proAdminDAO = new OrderAdminDAO();
+		orderAdminDAO = new OrderAdminDAO();
 	}
 
 	public Map<String, Object> listOrder(Map<String, Object> searchMap) {
 		
-		Map<String, Object> productListMap = new HashMap<String, Object>();
+		Map<String, Object> orderListMap = new HashMap<String, Object>();
 		
-		List<Map<String,Object>> productList = proAdminDAO.getOrderList(searchMap);
-		productListMap.put("productList", productList);
+		List<Map<String, Object>> orderList = orderAdminDAO.getOrderList(searchMap);
+		orderListMap.put("orderList", orderList);
 		
-		int totalCount = proAdminDAO.getOrderCount(searchMap);
-		productListMap.put("totalCount", totalCount);
+		int totalCount = orderAdminDAO.getOrderCount(searchMap);
+		orderListMap.put("totalCount", totalCount);
 		
-		return productListMap;
+		return orderListMap;
 	}
 
-	public Map<String, Object> readOrder(int productNo) {						
-		return proAdminDAO.getOrder(productNo);
+	public List<OrderVO> readOrder(int productNo) {						
+		return orderAdminDAO.getOrder(productNo);
 	}
 
-	public int insertOrder(OrderVO orderVO) {
-		
-		int readNo = 0;
-		int result = proAdminDAO.insertOrder(orderVO);
-		if(result>0) {
-			readNo = proAdminDAO.getOrderLastNo();
-		}
-		
-		return readNo;
-	}
-
-	public int updateOrder(OrderVO orderVO, Map<String, String> originalImageNameMap, Map<String, String> deleteFileMap) {
-		return proAdminDAO.updateOrder(orderVO, originalImageNameMap, deleteFileMap);
-	}
-
-	public int deleteOrder(int productNo) {
-		return proAdminDAO.deleteOrder(productNo);		
-	}
-	
-	public void updateOrderQuantity(int productNo,int cartQuantity) {
-		proAdminDAO.updateOrderQuantity(productNo, cartQuantity);
+	public int changeOrderState(OrderVO orderVO) {
+		return orderAdminDAO.changeOrderState(orderVO);
 	}
 }

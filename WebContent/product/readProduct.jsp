@@ -103,7 +103,7 @@
 								<hr />
 								<div class="product_name">${productName}</div>
 								<hr />
-								<div class="product_price"><fmt:formatNumber value="${productPrice}" pattern="#,###" /> <small>원</small></div>
+								<div class="product_price"><fmt:formatNumber value="${productPrice}" pattern="#,###" /></div>
 								<div class="rating rating_${productRating}" data-rating="${productRating}">
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>

@@ -44,6 +44,11 @@
 						<th class="align-middle">상품명</th>
 						<td>${productName}</td>
 					</tr>
+					<tr>
+						<td class="text-center" colspan="2">
+							<a class="btn btn-sm btn-info" href="${contextPath}/productAdminServlet/readProduct.do?productNo=${productNo}">상품정보 바로가기</a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

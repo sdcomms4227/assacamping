@@ -11,7 +11,6 @@
 <c:set var="productQuantity" value="${productMap.productVO.productQuantity}" />
 <c:set var="productCategoryName" value="${productMap.productCategoryName}" />
 <fmt:formatNumber var="productFormattedPrice" value="${productPrice}" pattern="#,###"/>
-<fmt:formatNumber var="productFormattedQuantity" value="${productQuantity}" pattern="#,###"/>
 <fmt:formatDate var="productFormattedDate" value="${productDate}" pattern="yyyy-MM-dd HH:mm" />
 
 <div class="row mb-3 align-items-center">
@@ -88,7 +87,7 @@
 					</tr>
 					<tr>
 						<th>수량</th>
-						<td>${productFormattedQuantity}</td>
+						<td>${productQuantity}</td>
 					</tr>
 					<tr>
 						<th>상세정보</th>

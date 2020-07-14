@@ -215,7 +215,7 @@
 											<div class="product_name"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productNo}">${productVO.productName}</a></div>
 											<c:choose>
 												<c:when test="${productVO.productQuantity > 0}">
-													<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /> <small>원</small></div>
+													<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /></div>
 												</c:when>
 												<c:otherwise>
 													<div class="product_empty">

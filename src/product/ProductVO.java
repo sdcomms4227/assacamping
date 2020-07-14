@@ -3,7 +3,7 @@ package product;
 import java.sql.Timestamp;
 
 public class ProductVO {
-	
+
 	private int productNo;
 	private String productName;
 	private String productContent;
@@ -11,14 +11,16 @@ public class ProductVO {
 	private String productImageName2;
 	private String productImageName3;
 	private int productPrice;
-	private Timestamp productDate;
 	private int productQuantity;
+	private Timestamp productDate;
 	private int productCategoryNo;
 	private int productRating;
-	
-	public ProductVO() {}
 
-	public ProductVO(String productName, String productContent, String productImageName1, String productImageName2, String productImageName3, int productPrice, int productQuantity, int productCategoryNo) {
+	public ProductVO() {
+	}
+
+	public ProductVO(String productName, String productContent, String productImageName1, String productImageName2, String productImageName3, int productPrice, int productQuantity,
+			int productCategoryNo) {
 		this.productName = productName;
 		this.productContent = productContent;
 		this.productImageName1 = productImageName1;
@@ -60,19 +62,19 @@ public class ProductVO {
 	public void setProductImageName1(String productImageName1) {
 		this.productImageName1 = productImageName1;
 	}
-	
+
 	public String getProductImageName2() {
 		return productImageName2;
 	}
-	
+
 	public void setProductImageName2(String productImageName2) {
 		this.productImageName2 = productImageName2;
 	}
-	
+
 	public String getProductImageName3() {
 		return productImageName3;
 	}
-	
+
 	public void setProductImageName3(String productImageName3) {
 		this.productImageName3 = productImageName3;
 	}
@@ -85,20 +87,20 @@ public class ProductVO {
 		this.productPrice = productPrice;
 	}
 
-	public Timestamp getProductDate() {
-		return productDate;
-	}
-
-	public void setProductDate(Timestamp productDate) {
-		this.productDate = productDate;
-	}
-
 	public int getProductQuantity() {
 		return productQuantity;
 	}
 
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
+	}
+
+	public Timestamp getProductDate() {
+		return productDate;
+	}
+
+	public void setProductDate(Timestamp productDate) {
+		this.productDate = productDate;
 	}
 
 	public int getProductCategoryNo() {
@@ -116,5 +118,5 @@ public class ProductVO {
 	public void setProductRating(int productRating) {
 		this.productRating = productRating;
 	}
-	
+
 }

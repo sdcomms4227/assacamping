@@ -68,15 +68,15 @@
 				<col style="width: 70px" />
 			</colgroup>
 			<tr>
-				<td colspan="6" class="h4 p-3 readsubject">
-					${eventTitle}
-				</td>
+				<td colspan="6" class="h4 p-3 readsubject">${eventTitle}</td>
 			</tr>
 			<tr>
 				<td colspan="6" class="py-5">
-				     <input  type= "hidden"   name="originalFileName" value="${eventImageFileName}" />
-   						 <img src="${contextPath}/files/event/${eventNo}/${eventImageFileName}" align="center"/><br><br>				
-						 ${fn:replace(eventContent,LF,BR)}
+					<input type="hidden" name="originalFileName" value="${eventImageFileName}" />
+					<img src="${contextPath}/files/event/${eventNo}/${eventImageFileName}"/>
+					<br>
+					<br>
+					${fn:replace(eventContent,LF,BR)}
 				</td>
 			</tr>
 			<c:if test="${not empty eventImageFileName && eventImageFileName!='null'}">
@@ -91,9 +91,7 @@
 			</c:if>
 		</table>
 		
-		<!--
-			Comment
-		-->
+		<!-- Comment -->
 		<jsp:include page="../comment/comment.jsp" />
 		
 		<div class="text-center my-5">

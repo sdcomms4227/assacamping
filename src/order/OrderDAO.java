@@ -70,7 +70,7 @@ public class OrderDAO implements Serializable{
 		       		+ "userId,userEmail,"
 		       		+ "productDelivery,productPrice,"
 		       		+ "productCategory,orderNo)"
-				 +" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?)";
+		       		+" values(?,?,?,?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?)";
 				
 				pstmt=conn.prepareStatement(sql);
 				
@@ -207,9 +207,8 @@ public class OrderDAO implements Serializable{
 			if(rs.next()) {
 				vo.setOrderState(rs.getString("orderState"));
 				vo.setOrderNo(rs.getInt("orderNo"));
-				vo.setOrderDate(rs.getDate("orderDate"));
+				vo.setOrderDate(rs.getTimestamp("orderDate"));
 				vo.setUserName(rs.getString("userName"));
-				
 			}
 		} catch (Exception e) {
 			System.out.println("selectOrderState"+e.getMessage());
@@ -256,7 +255,7 @@ public class OrderDAO implements Serializable{
 			    		                    rs.getString("userAddress1"),  rs.getString("userAddress2"), rs.getString("productName"), 
 			    		                    rs.getString("userId"), rs.getString("productCategory"), rs.getString("orderState"), 
 			    		                    rs.getString("userEmail"),  rs.getString("userName"), rs.getString("userPhone"), 
-			    		                    rs.getString("userComment"), rs.getDate("orderDate"));
+			    		                    rs.getString("userComment"), rs.getTimestamp("orderDate"));
 			         	list.add(vo);
 			}
 		} catch (Exception e) {
@@ -281,7 +280,7 @@ public class OrderDAO implements Serializable{
 			
 			while(rs.next()) {
 			       OrderVO vo = new OrderVO();
-			           vo.setOrderDate(rs.getDate("orderDate"));
+			           vo.setOrderDate(rs.getTimestamp("orderDate"));
 			           vo.setProductName(rs.getString("productName"));
 			           vo.setOrderNo(rs.getInt("orderNo"));
 			           vo.setProductPayment(rs.getInt("productPayment"));
@@ -289,7 +288,7 @@ public class OrderDAO implements Serializable{
 			           vo.setOrderState(rs.getString("orderState"));
 			           vo.setCartQuantity(rs.getInt("cartQuantity"));
 			           vo.setUserName(rs.getString("userName"));
-			           vo.setOrderDate(rs.getDate("orderDate"));
+			           vo.setOrderDate(rs.getTimestamp("orderDate"));
 			           vo.setProductNo(rs.getInt("productNo"));
 			           list.add(vo);
 			}
@@ -320,7 +319,7 @@ public class OrderDAO implements Serializable{
 			       OrderVO vo = new OrderVO();
 			           
 			           vo.setOrderNo(rs.getInt("orderNo"));
-			           vo.setOrderDate(rs.getDate("orderDate"));
+			           vo.setOrderDate(rs.getTimestamp("orderDate"));
 			           vo.setOrderState(rs.getString("orderState"));
 			           list.add(vo);
 			}
@@ -356,7 +355,7 @@ public class OrderDAO implements Serializable{
 			    		                    rs.getString("userAddress1"),  rs.getString("userAddress2"), rs.getString("productName"), 
 			    		                    rs.getString("userId"), rs.getString("productCategory"), rs.getString("orderState"), 
 			    		                    rs.getString("userEmail"),  rs.getString("userName"), rs.getString("userPhone"), 
-			    		                    rs.getString("userComment"), rs.getDate("orderDate"));
+			    		                    rs.getString("userComment"), rs.getTimestamp("orderDate"));
 			         	list.add(vo);
 			 
 			}

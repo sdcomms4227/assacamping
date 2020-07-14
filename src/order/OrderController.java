@@ -103,7 +103,7 @@ public class OrderController extends HttpServlet{
 				int productDelivery = Integer.parseInt(request.getParameter("productDelivery"));
 //				System.out.println(userComment);
 //				System.out.println(productDelivery);
-				String orderState = "구매완료";
+				String orderState = "결제대기";
 				int orderNo = orderservice.orderNoCount();
 
 				vo.setProductPayment(productPayment);
@@ -146,9 +146,9 @@ public class OrderController extends HttpServlet{
 
 					OrderVO productvo = orderlist.get(i);
 					System.out.println(productvo);
-					ProductAdminService proAdminservice = new ProductAdminService();
+					ProductAdminService productAdminService = new ProductAdminService();
 					
-					proAdminservice.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
+					productAdminService.updateProductQuantity(productvo.getProductNo(), productvo.getCartQuantity());
 
 				}				
 				

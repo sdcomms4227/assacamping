@@ -42,7 +42,7 @@
 			<col style="width: 80px" />
 			<col style="width: 80px" />
 			<col style="width: 100px" />
-			<col style="width: 100px" />
+			<col style="width: 200px" />
 			<col />
 			<col style="width: 100px" />
 			<col style="width: 100px" />
@@ -51,11 +51,11 @@
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
-				<th>문의번호</th>
-				<th>상품번호</th>
+				<th>번호</th>
+				<th>상품 번호</th>
 				<th>이미지</th>
 				<th>상품명</th>
-				<th>문의내용</th>
+				<th>문의 내용</th>
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>상태</th>

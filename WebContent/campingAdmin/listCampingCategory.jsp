@@ -10,7 +10,7 @@
 	</div>
 </div>
 
-<article>
+<article class="camping">
 	<table class="table table-hover text-center">
 		<colgroup>
 			<col style="width: 80px" />
