@@ -197,7 +197,7 @@ public class OrderController extends HttpServlet{
 				
 				orderservice.orderDelete(userId, orderNo);
 				 
-				nextPage="/orderServlet/orderList.do";
+				nextPage="/orderServlet/myOrderList.do";
 		
 			}else if(action.equals("/adminOrderList.do")) {
 				
