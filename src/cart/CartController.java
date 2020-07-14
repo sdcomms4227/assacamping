@@ -154,7 +154,7 @@ public class CartController extends HttpServlet {
 					int productPrice=Integer.parseInt(productPrice1);
 				
 					int productTotalPrice=cartQuantity*productPrice;
-					
+				
 					cartVO=new CartVO(
 							Integer.parseInt(productNo), 
 							productPrice, 
