@@ -23,7 +23,12 @@ public class ReviewService {
 	}
 
 	public int deleteReview(int reviewNo, String userId) {
-		return reviewDAO.deleteReview(reviewNo, userId);
+		int productNo = reviewDAO.getProductNo(reviewNo);
+		int result = reviewDAO.deleteReview(reviewNo, userId);
+		if(result == 1) {
+			return (int) Math.round(reviewDAO.getAvgRating(productNo));
+		}
+		return -1;
 	}
 
 	public int updateReview(int reviewNo, String userId, String updateContent) {

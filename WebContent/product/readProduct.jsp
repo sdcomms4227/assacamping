@@ -326,7 +326,7 @@ $(document).ready(function(){
 function reviewList(){
 	var _url = '${contextPath}/reviewServlet/listReview.do';
 	var _reviewListInfo = '{"productNo":"'+${productNo}+'"}';
-	var no = ${productNo};
+	var productNo = ${productNo};
 	
     $.ajax({
         url : _url,
@@ -427,16 +427,18 @@ function reviewSubmit(){
 		data : {reviewInfo : _reviewInfo},
 		success : function(data, status){
 			if(data != 'fail') {
-				var avgRating = data;
+				
+				// 정상적으로 리뷰가 등록되었다면 상품별점 UPDATE
+				var jsonInfo = JSON.parse(data);
+        		var avgRating = jsonInfo.avgRating;
+        		$(".product_content .rating").removeClass().addClass("rating rating_" + avgRating);
+				$(".product_content .rating").attr("data-rating", avgRating);
+        		
 				// 정상적으로 리뷰가 등록되었다면 리뷰목록을 reload
 				reviewList();
 				
-				// 정상적으로 리뷰가 등록되었다면 상품별점 update
-				updateProductRating(productNo, avgRating);
-				
 				$("#review_form_text").val("");
-			} 
-			
+			}		
 		},
 		error : function(){
 			alert("통신에러가 발생했습니다.");	
@@ -482,6 +484,11 @@ function reviewDelete(reviewNo){
 					var rCount = jsonInfo.reviewCnt;
 					$("#rCount").html(rCount);
 	        		$("#rCount2").html(rCount);
+	        		
+	        		// 정상적으로 삭제되었다면 상품별점 UPDATE
+	        		var avgRating = jsonInfo.avgRating;
+	        		$(".product_content .rating").removeClass().addClass("rating rating_" + avgRating);
+					$(".product_content .rating").attr("data-rating", avgRating);
 				}
 			},
 			error : function(){
@@ -671,11 +678,6 @@ function listProduct(categoryNo){
 	form.submit();
 }
 
-function updateProductRating(productNo, avgRating){
-	var form = document.pagingForm;
-	form.action = "${contextPath}/productServlet/updateProductRating.do?productNo="+productNo+"&avgRating="+avgRating;
-	form.submit();
-}
 
 function  checkQuantity(obj){
 	var quantity = obj.value;
