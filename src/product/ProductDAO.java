@@ -221,5 +221,31 @@ public class ProductDAO {
 			
 		return 0;
 	}
-	
+
+	public int checkProductQuantity(int productNo) {
+
+		String sql = "";
+				
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+
+			sql = "select productQuantity from product"
+					+ " where productNo=?";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch(Exception e) {
+			System.out.println("getProductCount()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return 0;		
+	}
 }
