@@ -91,19 +91,6 @@ public class ProductController extends HttpServlet{
 						
 			nextPage = "/product/readProduct.jsp";
 			
-		}else if(action.equals("/updateProductRating.do")) { 
-			
-			setPagination(request);
-			
-			int productNo = Integer.parseInt(request.getParameter("productNo"));
-			int avgRating = Integer.parseInt(request.getParameter("avgRating"));
-			
-			productService.updateProductRating(productNo, avgRating);
-						
-			request.setAttribute("productNo", productNo);
-			
-			nextPage = "/product/readProduct.jsp";
-			
 		}
 		
 		if(!nextPage.equals("")) {
