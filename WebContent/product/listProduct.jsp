@@ -163,10 +163,10 @@
 			<div class="row products_sort">								
 				<div class="col text-right">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						<label class='btn ${sortType=="new"?"btn-primary":"btn-light"}'>
+						<label class='btn ${sortType=="new" or sortType==""?"btn-primary":"btn-light"}'>
 							<input type="radio" name="sort" onclick="listProduct(1,'new')" ${sortType=="new" or sortType==""?"checked":""} /> 신상품순
 						</label>
-						<label class='btn ${sortType=="best" or sortType==""?"btn-primary":"btn-light"}'>
+						<label class='btn ${sortType=="best"?"btn-primary":"btn-light"}'>
 							<input type="radio" name="sort" onclick="listProduct(1,'best')" ${sortType=="best"?"checked":""} /> 인기상품순
 						</label>
 						<label class='btn ${sortType=="minprice"?"btn-primary":"btn-light"}'>

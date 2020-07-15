@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import product.ProductService;
+import review.ReviewDAO;
+
 public class ReviewAdminService {
 
 	ReviewAdminDAO reviewAdminDAO;
@@ -29,8 +32,18 @@ public class ReviewAdminService {
 		return reviewAdminDAO.getReview(reviewNo);
 	}
 
-	public int deleteReview(int reviewNo) {
-		return reviewAdminDAO.deleteReview(reviewNo);
+	public int deleteReview(int reviewNo, int productNo) {
+		int result = reviewAdminDAO.deleteReview(reviewNo);
+		
+		if(result > 0) {
+			ReviewDAO reviewDAO = new ReviewDAO();
+			int avgRating = (int) Math.round(reviewDAO.getAvgRating(productNo));
+			
+			ProductService productService = new ProductService();
+			productService.updateProductRating(productNo, avgRating);
+		}
+		
+		return result;
 	}
 
 }

@@ -3,13 +3,15 @@
 <c:set var="productNo" value="${productMap.productVO.productNo}" />
 <c:set var="productName" value="${productMap.productVO.productName}" />
 <c:set var="productContent" value="${productMap.productVO.productContent}" />
-<c:set var="productPrice" value="${productMap.productVO.productPrice}" />
 <c:set var="productImageName1" value="${productMap.productVO.productImageName1}" />
 <c:set var="productImageName2" value="${productMap.productVO.productImageName2}" />
 <c:set var="productImageName3" value="${productMap.productVO.productImageName3}" />
-<c:set var="productDate" value="${productMap.productVO.productDate}" />
+<c:set var="productPrice" value="${productMap.productVO.productPrice}" />
 <c:set var="productQuantity" value="${productMap.productVO.productQuantity}" />
+<c:set var="productDate" value="${productMap.productVO.productDate}" />
+<c:set var="productCategoryNo" value="${productMap.productVO.productCategoryNo}" />
 <c:set var="productCategoryName" value="${productMap.productCategoryName}" />
+<c:set var="productRating" value="${productMap.productVO.productRating}" />
 <fmt:formatNumber var="productFormattedPrice" value="${productPrice}" pattern="#,###"/>
 <fmt:formatDate var="productFormattedDate" value="${productDate}" pattern="yyyy-MM-dd HH:mm" />
 
@@ -88,6 +90,18 @@
 					<tr>
 						<th>수량</th>
 						<td>${productQuantity}</td>
+					</tr>
+					<tr>
+						<th>별점</th>
+						<td>
+							<div class="rating rating_${productRating}" data-rating="${productRating}">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th>상세정보</th>

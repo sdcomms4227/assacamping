@@ -79,7 +79,7 @@
 							<td class="align-middle">${reviewVO.userName}</td>
 							<td class="align-middle">${reviewFormattedDate}</td>
 							<td class="align-middle">
-								<button type="button" class="btn btn-danger btn-sm" onclick="deleteReview(${reviewVO.reviewNo}, event)">삭제</button>
+								<button type="button" class="btn btn-danger btn-sm" onclick="deleteReview(${reviewVO.reviewNo}, ${reviewVO.productNo}, event)">삭제</button>
 							</td>
 						</tr>
 					</c:forEach>
@@ -141,12 +141,12 @@ function readReview(reviewNo){
 	form.action = "${contextPath}/reviewAdminServlet/readReview.do?reviewNo=" + reviewNo;
 	form.submit();
 }
-function deleteReview(reviewNo, event){
+function deleteReview(reviewNo, productNo, event){
 	event.stopPropagation();
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo;
+		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo + "&productNo=" + productNo;
 		form.submit();
 	}
 }
