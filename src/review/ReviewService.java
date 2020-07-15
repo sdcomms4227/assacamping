@@ -15,7 +15,11 @@ public class ReviewService {
 	}
 
 	public int insertReview(ReviewVO reviewVO) {
-		return reviewDAO.insertReview(reviewVO);
+		int result = reviewDAO.insertReview(reviewVO);
+		if(result == 1) {
+			return (int) Math.round(reviewDAO.getAvgRating(reviewVO.getProductNo()));
+		}
+		return 0; 
 	}
 
 	public int deleteReview(int reviewNo, String userId) {

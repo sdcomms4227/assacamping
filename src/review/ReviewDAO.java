@@ -135,7 +135,7 @@ public class ReviewDAO {
 
 	// 리뷰수정
 	public int updateReview(int reviewNo, String userId, String updateContent) {
-String sql = "select userId from review where reviewNo=?";
+		String sql = "select userId from review where reviewNo=?";
 		
 		try {
 			conn = dbUtil.DBConnection.getConnection();
@@ -155,6 +155,25 @@ String sql = "select userId from review where reviewNo=?";
 			}
 		} catch (Exception e) {
 			System.out.println("updateReview()메소드 내부에서 예외발생 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return 0;
+	}
+
+	public double getAvgRating(int productNo) {
+		String sql = "";
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			sql = "select avg(starRating) from review where productNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getDouble(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getAvgRating()메소드 내부에서 예외발생 : " + e.toString());
 		} finally {
 			freeResource();
 		}

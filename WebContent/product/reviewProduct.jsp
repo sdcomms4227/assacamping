@@ -16,7 +16,6 @@
 
 //페이지 로딩시 리뷰 목록 출력 
 $(document).ready(function(){
-	console.log(1);
     reviewList(); 
 });
 
