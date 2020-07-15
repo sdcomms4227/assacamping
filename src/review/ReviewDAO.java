@@ -180,4 +180,23 @@ public class ReviewDAO {
 		return 0;
 	}
 
+	public int getProductNo(int reviewNo) {
+		String sql = "";
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			sql = "select productNo from review where reviewNo=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reviewNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("getProductNo()메소드 내부에서 예외발생 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		return 0;
+	}
+
 }

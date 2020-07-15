@@ -16,16 +16,20 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import product.ProductService;
+
 @SuppressWarnings("serial")
 @WebServlet("/reviewServlet/*")
 public class ReviewController extends HttpServlet{
 	
 	ReviewService reviewService;
 	ReviewVO reviewVO;
+	ProductService productService;
 	
 	public void init() throws ServletException {
 		reviewService = new ReviewService();
 		reviewVO = new ReviewVO();
+		productService = new ProductService();
 	}
 
 	@Override
@@ -113,10 +117,15 @@ public class ReviewController extends HttpServlet{
 					reviewVO.setReviewContent(reviewContent);
 					reviewVO.setStarRating(starRating);
 					
-					int result = reviewService.insertReview(reviewVO);
+					int avgRating = reviewService.insertReview(reviewVO);
 					
-					if (result > 0) {
-						out.print(Integer.toString(result));
+					productService.updateProductRating(productNo, avgRating);
+					
+					if (avgRating > 0) {
+						JSONObject returnObject = new JSONObject();
+						
+						returnObject.put("avgRating", Integer.toString(avgRating));
+						out.print(returnObject.toString());
 					} else {
 						out.print("fail");
 					}
@@ -134,13 +143,16 @@ public class ReviewController extends HttpServlet{
 					int productNo = Integer.parseInt((String) reviewObject.get("productNo"));
 					String userId = (String) reviewObject.get("userId");
 
-					int result = reviewService.deleteReview(reviewNo, userId);
+					int avgRating = reviewService.deleteReview(reviewNo, userId);
 					
-					if (result == 1) {
+					productService.updateProductRating(productNo, avgRating);
+					
+					if (avgRating >= 0) {
 						int reviewCnt = reviewService.getReviewList(productNo).size();
 						JSONObject returnObject = new JSONObject();
 						
 						returnObject.put("reviewCnt", Integer.toString(reviewCnt));
+						returnObject.put("avgRating", Integer.toString(avgRating));
 						out.print(returnObject.toString());
 						
 					} else {
