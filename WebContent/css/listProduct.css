@@ -555,10 +555,15 @@
 	height: 74px;
 	float: left;
 }
+.best_image a {
+	display: block;
+}
+.best_image img {
+	max-width:100%;
+}
 .best_content
 {
-	padding-left: 93px;
-	padding-top: 8px;
+	margin-left: 93px;
 }
 .best_title a
 {

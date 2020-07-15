@@ -15,7 +15,7 @@
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
-		<h2 class="mb-0">상품 정보</h2>
+		<h2 class="mb-0">상품 관리</h2>
 	</div>
 </div>
 

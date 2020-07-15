@@ -6,6 +6,7 @@
 <c:set var="endNo" value="${beginNo + 9}" />
 <c:set var="numberPerPage" value="12" />
 <c:set var="sortType" value="${sortType}" />
+<c:set var="bestSellersList" value="${bestSellersListMap.productList}" />
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -88,47 +89,28 @@
 				<div class="sidebar_section">
 					<div class="sidebar_title">Best Sellers</div>
 					<div class="sidebar_section_content bestsellers_content">
-						<ul>
+						<ul>					
+						
 							<!-- Best Seller Item -->
-							<li class="clearfix">
-								<div class="best_image"><img src="${contextPath}/images/best_1.jpg" alt=""></div>
-								<div class="best_content">
-									<div class="best_title"><a href="javascript:readProduct(1)">Blue dress with dots</a></div>
-									<div class="best_price">$45</div>
-								</div>
-								<div class="best_buy">+</div>
-							</li>
-
-							<!-- Best Seller Item -->
-							<li class="clearfix">
-								<div class="best_image"><img src="${contextPath}/images/best_2.jpg" alt=""></div>
-								<div class="best_content">
-									<div class="best_title"><a href="javascript:readProduct(1)">White t-shirt</a></div>
-									<div class="best_price">$45</div>
-								</div>
-								<div class="best_buy">+</div>
-							</li>
-
-							<!-- Best Seller Item -->
-							<li class="clearfix">
-								<div class="best_image"><img src="${contextPath}/images/best_3.jpg" alt=""></div>
-								<div class="best_content">
-									<div class="best_title"><a href="javascript:readProduct(1)">Blue dress with dots</a></div>
-									<div class="best_price">$45</div>
-								</div>
-								<div class="best_buy">+</div>
-							</li>
-
-							<!-- Best Seller Item -->
-							<li class="clearfix">
-								<div class="best_image"><img src="${contextPath}/images/best_4.jpg" alt=""></div>
-								<div class="best_content">
-									<div class="best_title"><a href="javascript:readProduct(1)">White t-shirt</a></div>
-									<div class="best_price">$45</div>
-								</div>
-								<div class="best_buy">+</div>
-							</li>
-
+							<c:forEach var="productMap" items="${bestSellersList}" begin="0" end="2" varStatus="status">
+								<c:set var="productVO" value="${productMap.productVO}" />
+								<fmt:formatNumber var="productFormattedPrice" value="${productVO.productPrice}" pattern="#,###" />
+								<li class="clearfix">
+									<div class="best_image"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productVO.productNo}"><img src="${contextPath}/files/product/${productVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}"></a></div>
+									<div class="best_content">
+										<div class="best_title"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productVO.productNo}">${productVO.productName}</a></div>
+										<div class="best_price">${productFormattedPrice}</div>
+									</div>
+									<c:choose>
+										<c:when test="${userId != null}">
+											<div class="best_buy" onclick="addWish(${productVO.productNo})">+</div>
+										</c:when>
+										<c:otherwise>
+											<div class="best_buy" onclick="alert('로그인 후  위시리스트 추가 가능합니다.');location.href='${contextPath}/userServlet/login.do'">+</div>
+										</c:otherwise>
+									</c:choose>	
+								</li>							
+							</c:forEach>
 						</ul>
 					</div>
 				</div>
@@ -181,11 +163,11 @@
 			<div class="row products_sort">								
 				<div class="col text-right">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						<label class='btn ${sortType=="best" or sortType==""?"btn-primary":"btn-light"}'>
-							<input type="radio" name="sort" onclick="listProduct(1,'best')" ${sortType=="best" or sortType==""?"checked":""} /> 인기상품순
-						</label>
 						<label class='btn ${sortType=="new"?"btn-primary":"btn-light"}'>
-							<input type="radio" name="sort" onclick="listProduct(1,'new')" ${sortType=="new"?"checked":""} /> 신상품순
+							<input type="radio" name="sort" onclick="listProduct(1,'new')" ${sortType=="new" or sortType==""?"checked":""} /> 신상품순
+						</label>
+						<label class='btn ${sortType=="best" or sortType==""?"btn-primary":"btn-light"}'>
+							<input type="radio" name="sort" onclick="listProduct(1,'best')" ${sortType=="best"?"checked":""} /> 인기상품순
 						</label>
 						<label class='btn ${sortType=="minprice"?"btn-primary":"btn-light"}'>
 							<input type="radio" name="sort" onclick="listProduct(1,'minprice')" ${sortType=="minprice"?"checked":""} /> 낮은가격순

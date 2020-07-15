@@ -70,10 +70,15 @@ public class ProductController extends HttpServlet{
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 
-			if(request.getAttribute("alertMsg")!=null) {
-				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
-			}
-			session.setAttribute("userId", session.getAttribute("userId"));
+			// Best Sellers
+			searchMap.put("pageNo", 1);
+			searchMap.put("searchKeyword", "");
+			searchMap.put("searchCategoryNo", 0);
+			searchMap.put("sortType", "best");
+
+			Map<String, Object> bestSellersListMap = productService.listProduct(searchMap);			
+			request.setAttribute("bestSellersListMap", bestSellersListMap);
+			
 			nextPage = "/product/listProduct.jsp";
 			
 		}else if(action.equals("/readProduct.do")) {
@@ -83,12 +88,7 @@ public class ProductController extends HttpServlet{
 			int productNo = Integer.parseInt(request.getParameter("productNo"));			
 			Map<String, Object> productMap = productService.readProduct(productNo);			
 			request.setAttribute("productMap", productMap);
-			
-			if(request.getAttribute("alertMsg")!=null) {
-				request.setAttribute("alertMsg", request.getAttribute("alertMsg"));
-			}
-			session.setAttribute("userId", session.getAttribute("userId"));
-			
+						
 			nextPage = "/product/readProduct.jsp";
 			
 		}
