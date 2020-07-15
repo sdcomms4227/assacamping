@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ASSA Camping - 관리자모드</title>
 <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${contextPath}/css/admin.css">
 <link rel="stylesheet" href="${contextPath}/css/board.css" />
 <script src="${contextPath}/js/jquery-3.2.1.min.js"></script>

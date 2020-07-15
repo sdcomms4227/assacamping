@@ -27,7 +27,7 @@
 				</select>
 			</div>
 			<div class="input-group">
-				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
+				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm" placeholder="제목">
 				<div class="input-group-append">
 					<button type="submit" class="btn btn-secondary btn-sm">검색</button>
 				</div>
@@ -43,13 +43,13 @@
 <article class="camping">
 	<table class="table table-hover text-center">
 		<colgroup class="d-none d-lg-table-column-group">
-			<col style="width: 80px" />
-			<col style="width: 100px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
 			<col />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 140px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 160px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>

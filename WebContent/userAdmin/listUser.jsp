@@ -12,7 +12,7 @@
 	<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
 		<form action="${contextPath}/userAdminServlet/listUser.do" class="form-inline justify-content-center">
 			<div class="input-group">
-				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
+				<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm" placeholder="이름">
 				<div class="input-group-append">
 					<button type="submit" class="btn btn-secondary btn-sm">검색</button>
 				</div>
@@ -27,14 +27,15 @@
 <article class="user">
 	<table class="table table-hover text-center">
 		<colgroup class="d-none d-lg-table-column-group">
-			<col style="width: 160px" />
-			<col style="width: 160px" />
-			<col style="width: 160px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
 			<col style="width: 160px" />
 			<col />
+			<col />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
 			<col style="width: 160px" />
-			<col style="width: 100px" />
-			<col style="width: 140px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
@@ -43,6 +44,7 @@
 				<th>이름</th>
 				<th>전화번호</th>
 				<th>이메일</th>
+				<th>주소</th>
 				<th>회원상태</th>
 				<th>가입일</th>
 				<th>관리</th>
@@ -52,7 +54,7 @@
 			<c:choose>
 				<c:when test="${totalCount==0}">			
 					<tr>
-						<td colspan="8">등록된 회원이 없습니다.</td>
+						<td colspan="9">등록된 회원이 없습니다.</td>
 					</tr>
 				</c:when>	
 				<c:otherwise>
@@ -64,6 +66,7 @@
 							<td class="align-middle">${userVO.userName}</td>
 							<td class="align-middle">${userVO.userPhone}</td>
 							<td class="align-middle">${userVO.userEmail}</td>
+							<td class="align-middle">${userVO.userAddress1}</td>
 							<td class="align-middle">							
 								<c:choose>
 									<c:when test="${userVO.userUse==1}">

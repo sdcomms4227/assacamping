@@ -13,7 +13,7 @@
 		<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
 			<div class="d-inline-block">
 				<div class="input-group">
-					<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
+					<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm" placeholder="문의 내용">
 					<div class="input-group-append">
 						<button type="submit" class="btn btn-secondary btn-sm">검색</button>
 					</div>
@@ -39,15 +39,15 @@
 <article class="qnaAdmin">
 	<table class="table table-hover text-center">
 		<colgroup class="d-none d-lg-table-column-group">
-			<col style="width: 80px" />
-			<col style="width: 80px" />
-			<col style="width: 100px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
 			<col style="width: 200px" />
 			<col />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 140px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 160px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
@@ -78,7 +78,7 @@
 							<td class="align-middle">${qnaVO.qnaNo}</td>
 							<td class="align-middle">${qnaVO.productNo}</td>
 							<td class="align-middle"><img src="${contextPath}/files/product/${qnaVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}" style="height: 40px" /></td>
-							<td class="align-middle">${productVO.productName}</td>
+							<td class="align-middle wbka">${productVO.productName}</td>
 							<td class="align-middle text-left">${qnaVO.qnaContent}</td>
 							<td class="align-middle">${qnaVO.userName}</td>
 							<td class="align-middle">${qnaFormattedDate}</td>
