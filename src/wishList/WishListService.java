@@ -17,7 +17,6 @@ public class WishListService {
 		List<Map<String, Object>> wList = wishListDAO.getWishList(userId);
 		wListMap.put("wList", wList);
 
-		// totalCount 수정해야함
 		int totalCount = wList.size();
 		wListMap.put("totalCount", totalCount);
 

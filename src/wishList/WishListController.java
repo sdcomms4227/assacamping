@@ -112,6 +112,7 @@ public class WishListController extends HttpServlet {
 			session.setAttribute("wishCount", wishCount);
 			
 			return;
+			
 		} else if (action.equals("/deleteAllWish.do")) {
 			String userId = (String) session.getAttribute("userId");
 			int result = wishListService.deleteAllWish(userId);

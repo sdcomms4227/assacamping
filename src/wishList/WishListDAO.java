@@ -63,6 +63,7 @@ public class WishListDAO {
 				productVO.setProductName(rs.getString("productName"));
 				productVO.setProductPrice(rs.getInt("productPrice"));
 				productVO.setProductCategoryNo(rs.getInt("productCategoryNo"));
+				productVO.setProductQuantity(rs.getInt("productQuantity"));
 				wListMap.put("productVO", productVO);
 				
 				wList.add(wListMap);

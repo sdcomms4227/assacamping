@@ -90,12 +90,21 @@
 
 												<!-- Product Price -->
 												<div class="wishList_product_price" name="productPrice">${wishFormattedProductPrice}</div>
-
+												
 												<!-- Products Add Cart Button -->
-												<div class="wishList_product_cart">
-													<button type="button" class="btn btn-secondary" onclick="addCart(${wishListVO.productNo}, '${productVO.productName}', ${productVO.productPrice}, '${productVO.productImageName1}', ${productVO.productCategoryNo})">장바구니 담기</button>
-												</div>
-
+												<c:choose>
+													<c:when test="${productVO.productQuantity > 0}">
+														<div class="wishList_product_cart">
+															<button type="button" class="btn btn-secondary" onclick="addCart(${wishListVO.productNo}, '${productVO.productName}', ${productVO.productPrice}, '${productVO.productImageName1}', ${productVO.productCategoryNo})">장바구니 담기</button>
+														</div>
+													</c:when>
+													<c:otherwise>
+														<div class="wishList_product_cart text-danger">
+															품절
+														</div>
+													</c:otherwise>
+												</c:choose>
+												
 												<!-- Product WishList Trash Button -->
 												<div class="wishList_product_button">
 													<div class="wishList_prod uct_remove" onclick="deleteWish(${wishListVO.wishNo})"><img src="${contextPath}/images/trash.png"></div>
