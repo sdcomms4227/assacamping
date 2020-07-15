@@ -13,7 +13,7 @@
 		<div class="col-12 col-lg-6 mb-2 mb-lg-0 text-center">
 			<div class="d-inline-block">
 				<div class="input-group">
-					<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm">
+					<input type="search" name="searchKeyword" value="${searchKeyword}" size="24" maxlength="24" class="form-control form-control-sm" placeholder="후기 내용">
 					<div class="input-group-append">
 						<button type="submit" class="btn btn-secondary btn-sm">검색</button>
 					</div>
@@ -26,15 +26,15 @@
 <article class="reviewAdmin">
 	<table class="table table-hover text-center">
 		<colgroup class="d-none d-lg-table-column-group">
-			<col style="width: 80px" />
-			<col style="width: 80px" />
-			<col style="width: 100px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
 			<col style="width: 200px" />
 			<col />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 100px" />
-			<col style="width: 140px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 120px" />
+			<col style="width: 160px" />
 		</colgroup>
 		<thead class="thead-light d-none d-lg-table-header-group">
 			<tr>
@@ -43,9 +43,9 @@
 				<th>이미지</th>
 				<th>상품명</th>
 				<th>후기 내용</th>
+				<th>별점</th>
 				<th>작성자</th>
 				<th>작성일</th>
-				<th>별점</th>
 				<th>관리</th>
 			</tr>
 		</thead>
@@ -65,11 +65,19 @@
 							<td class="align-middle">${reviewVO.reviewNo}</td>
 							<td class="align-middle">${reviewVO.productNo}</td>
 							<td class="align-middle"><img src="${contextPath}/files/product/${reviewVO.productNo}/${productVO.productImageName1}" alt="${productVO.productName}" style="height: 40px" /></td>
-							<td class="align-middle">${productVO.productName}</td>
+							<td class="align-middle wbka">${productVO.productName}</td>
 							<td class="align-middle text-left">${reviewVO.reviewContent}</td>
+							<td class="align-middle">
+								<div class="rating rating_${reviewVO.starRating}" data-rating="${reviewVO.starRating}">
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+								</div>
+							</td>
 							<td class="align-middle">${reviewVO.userName}</td>
 							<td class="align-middle">${reviewFormattedDate}</td>
-							<td class="align-middle">${reviewVO.starRating}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-danger btn-sm" onclick="deleteReview(${reviewVO.reviewNo}, event)">삭제</button>
 							</td>

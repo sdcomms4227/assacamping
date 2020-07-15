@@ -116,3 +116,32 @@ body {
 .categorySelect {
 	width: 160px;
 }
+
+/*
+ * Admin listReview rating
+*/
+.rating i
+{
+	font-size: 10px;
+	margin-right: 1px;
+	color: #e0e3e4;
+}
+.rating i:last-child
+{
+	margin-right: 0px;
+}
+.rating_1 i:first-child{color: #f5c06f;}
+.rating_2 i:first-child{color: #f5c06f;}
+.rating_2 i:nth-child(2){color: #f5c06f;}
+.rating_3 i:first-child{color: #f5c06f;}
+.rating_3 i:nth-child(2){color: #f5c06f;}
+.rating_3 i:nth-child(3){color: #f5c06f;}
+.rating_4 i:first-child{color: #f5c06f;}
+.rating_4 i:nth-child(2){color: #f5c06f;}
+.rating_4 i:nth-child(3){color: #f5c06f;}
+.rating_4 i:nth-child(4){color: #f5c06f;}
+.rating_5 i:first-child{color: #f5c06f;}
+.rating_5 i:nth-child(2){color: #f5c06f;}
+.rating_5 i:nth-child(3){color: #f5c06f;}
+.rating_5 i:nth-child(4){color: #f5c06f;}
+.rating_5 i:nth-child(5){color: #f5c06f;}
