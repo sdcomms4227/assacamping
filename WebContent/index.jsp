@@ -199,6 +199,7 @@
 						<c:forEach var="productMap" items="${newArrivalsList}" begin="0" end="2" varStatus="status">
 							<c:set var="productVO" value="${productMap.productVO}" />
 							<c:set var="productCategoryName" value="${productMap.productCategoryName}" />
+							<fmt:formatNumber var="productFormattedPrice" value="${productVO.productPrice}" pattern="#,###" />
 							<div class="col-lg-4 product_col">
 								<!-- Product -->
 								<div class="product">
@@ -215,7 +216,7 @@
 											<div class="product_name"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productNo}">${productVO.productName}</a></div>
 											<c:choose>
 												<c:when test="${productVO.productQuantity > 0}">
-													<div class="product_price"><fmt:formatNumber value="${productVO.productPrice}" pattern="#,###" /></div>
+													<div class="product_price">${productFormattedPrice}</div>
 												</c:when>
 												<c:otherwise>
 													<div class="product_empty">

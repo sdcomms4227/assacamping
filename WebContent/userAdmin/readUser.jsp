@@ -14,7 +14,7 @@
 
 <div class="row mb-3 align-items-center">
 	<div class="col-12">
-		<h2 class="mb-0">회원 정보</h2>
+		<h2 class="mb-0">회원 관리</h2>
 	</div>
 </div>
 

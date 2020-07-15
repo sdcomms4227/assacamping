@@ -38,16 +38,16 @@ public class ProductDAO {
 		String orderByString = "";
 		String sql = "";
 
-		if (sortType.equals("best")) {
-			orderByString = "pr.productRating desc, pr.productNo desc";
-		} else if (sortType.equals("new")) {
+		if (sortType.equals("new")) {
 			orderByString = "pr.productNo desc";
+		} else if (sortType.equals("best")) {
+			orderByString = "pr.productRating desc, pr.productNo desc";
 		} else if (sortType.equals("minprice")) {
 			orderByString = "pr.productPrice asc";
 		} else if (sortType.equals("maxprice")) {
 			orderByString = "pr.productPrice desc";
 		} else {
-			orderByString = "pr.productRating desc, pr.productNo desc";
+			orderByString = "pr.productNo desc";
 		}
 		
 		try {
@@ -201,6 +201,25 @@ public class ProductDAO {
 		}
 		
 		return productMap;
+	}
+
+	public int updateProductRating(int productNo, int avgRating) {
+					
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			String sql = "update product set productRating=? where productNo = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, avgRating);
+			pstmt.setInt(2, productNo);
+			
+			return pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("updateProductRating()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+			
+		return 0;
 	}
 	
 }

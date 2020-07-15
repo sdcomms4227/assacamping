@@ -28,4 +28,8 @@ public class ProductService {
 	public Map<String, Object> readProduct(int productNo) {						
 		return productDAO.getProduct(productNo);
 	}
+
+	public int updateProductRating(int productNo, int avgRating) {
+		return productDAO.updateProductRating(productNo, avgRating);
+	}
 }

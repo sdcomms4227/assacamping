@@ -53,7 +53,7 @@ public class OrderAdminDAO {
 					+ " where userName like ?"
 					+ " group by orderNo"
 					+ " order by orderNo desc"
-					+ "	limit ?, ?";			
+					+ "	limit ?, ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, '%' + searchKeyword + '%');
