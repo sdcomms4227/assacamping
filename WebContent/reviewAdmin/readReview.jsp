@@ -88,7 +88,7 @@
 	</div>
 	<div class="text-center my-5">
 		<button type="button" class="btn btn-secondary" onclick="listReview()">목록</button>
-		<button type="button" class="btn btn-danger" onclick="deleteReview(${reviewNo})">삭제</button>
+		<button type="button" class="btn btn-danger" onclick="deleteReview(${reviewNo}, ${productNo})">삭제</button>
 	</div>
 </article>
 
@@ -103,11 +103,11 @@ function listReview(){
 	form.action = "${contextPath}/reviewAdminServlet/listReview.do";	
 	form.submit();
 }
-function deleteReview(reviewNo){
+function deleteReview(reviewNo, productNo){
 	var result = confirm("정말로 삭제하시겠습니까?");	
 	if(result){
 		var form = document.pagingForm;
-		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo;
+		form.action = "${contextPath}/reviewAdminServlet/deleteReview.do?reviewNo=" + reviewNo + "&productNo=" + productNo;
 		form.submit();
 	}
 }

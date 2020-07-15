@@ -50,6 +50,7 @@
 			<col style="width: 120px" />
 			<col style="width: 120px" />
 			<col style="width: 120px" />
+			<col style="width: 120px" />
 			<col style="width: 160px" />
 		</colgroup>
 		<thead class="thead-light">
@@ -60,6 +61,7 @@
 				<th>상품명</th>
 				<th>가격</th>
 				<th>수량</th>
+				<th>별점</th>
 				<th>등록일</th>
 				<th>관리</th>
 			</tr>
@@ -68,7 +70,7 @@
 			<c:choose>
 				<c:when test="${totalCount==0}">
 					<tr>
-						<td colspan="8">등록된 상품이 없습니다.</td>
+						<td colspan="9">등록된 상품이 없습니다.</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
@@ -84,6 +86,15 @@
 							<td class="align-middle text-left">${productVO.productName}</td>
 							<td class="align-middle">${productFmtPrice}</td>
 							<td class="align-middle">${productVO.productQuantity}</td>
+							<td class="align-middle">
+								<div class="rating rating_${productVO.productRating}" data-rating="${productVO.productRating}">
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+								</div>
+							</td>
 							<td class="align-middle">${productFormattedDate}</td>
 							<td class="align-middle">
 								<button type="button" class="btn btn-warning btn-sm" onclick="modifyProduct(${productVO.productNo}, event)">수정</button>

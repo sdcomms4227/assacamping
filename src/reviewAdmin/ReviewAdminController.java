@@ -88,8 +88,9 @@ public class ReviewAdminController extends HttpServlet {
 			setPagination(request);
 
 			int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
+			int productNo = Integer.parseInt(request.getParameter("productNo"));
 			
-			int result = reviewAdminService.deleteReview(reviewNo);
+			int result = reviewAdminService.deleteReview(reviewNo, productNo);
 			String alertMsg = "";
 
 			if(result > 0) {
