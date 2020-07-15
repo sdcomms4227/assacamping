@@ -35,7 +35,7 @@
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">비밀번호 변경</div>
+							<div class="home_title">비밀번호수정</div>
 						</div>
 					</div>
 				</div>

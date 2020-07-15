@@ -90,7 +90,7 @@
 								<a class="dropdown-item" href="${contextPath}/orderServlet/myOrderList.do">나의 주문 내역</a>
 								<hr />
 								<a class="dropdown-item" href="${contextPath}/userServlet/userPwCheck.do?userId=${userId}">회원정보수정</a>
-								<a class="dropdown-item" href="${contextPath}/userServlet/changePw.do?userId=${userId}">비밀번호변경</a>
+								<a class="dropdown-item" href="${contextPath}/userServlet/changePw.do?userId=${userId}">비밀번호수정</a>
 								<a class="dropdown-item" href="${contextPath}/userServlet/withdrawal.do?userId=${userId}">회원탈퇴</a>
 								<hr />
 								<a class="dropdown-item" href="${contextPath}/userServlet/logout.do">로그아웃</a>
