@@ -334,6 +334,7 @@ function reviewList(){
         data : {reviewListInfo : _reviewListInfo},
         success : function(data){
         	var a = '';
+        	var b = '';
         	
         	if(data == null || data == '') {
         		a += '<li class=" review clearfix">';
@@ -346,7 +347,9 @@ function reviewList(){
        		var jsonInfo = JSON.parse(data);
        	
         	$.each(jsonInfo, function(index, entry){
-	        	$.each(entry, function(key, value){
+        	
+	        	
+        		$.each(entry, function(key, value){
 	            		
 	    	    	var no = value.reviewNo;
 		    	    var name = value.userName;
@@ -355,7 +358,7 @@ function reviewList(){
 	           		var id = value.userId;
 					var rating = value.starRating;
 	           		var num = value.reviewNum;
-					
+	           		
 					a += '<li class=" review clearfix" id="review'+no+'">';
 					a += '<div class="review_image"><img src="${contextPath}/images/review_1.jpg" alt=""></div>';
 					a += '<div class="review_content">';
@@ -378,8 +381,9 @@ function reviewList(){
 					a += '</li>';
 					
 					$(".reviews_container ul").html(a);	
-				
+					
            		});
+
         		var rCount = entry.length;
         		$("#rCount").html(rCount);
         		$("#rCount2").html(rCount);
@@ -422,12 +426,17 @@ function reviewSubmit(){
 		url : _url,
 		data : {reviewInfo : _reviewInfo},
 		success : function(data, status){
-			
-			// 정상적으로 리뷰가 등록되었다면 리뷰목록을 reload
-			reviewList();
-			
-			$("#review_form_text").val("");
+			if(data != 'fail') {
+				var avgRating = data;
+				// 정상적으로 리뷰가 등록되었다면 리뷰목록을 reload
+				reviewList();
 				
+				// 정상적으로 리뷰가 등록되었다면 상품별점 update
+				updateProductRating(productNo, avgRating);
+				
+				$("#review_form_text").val("");
+			} 
+			
 		},
 		error : function(){
 			alert("통신에러가 발생했습니다.");	
@@ -659,6 +668,12 @@ function listProduct(categoryNo){
 	var form = document.pagingForm;
 	form.action = "${contextPath}/productServlet/listProduct.do";	
 	form.searchCategoryNo.value = categoryNo;
+	form.submit();
+}
+
+function updateProductRating(productNo, avgRating){
+	var form = document.pagingForm;
+	form.action = "${contextPath}/productServlet/updateProductRating.do?productNo="+productNo+"&avgRating="+avgRating;
 	form.submit();
 }
 

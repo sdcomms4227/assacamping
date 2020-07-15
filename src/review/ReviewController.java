@@ -115,8 +115,8 @@ public class ReviewController extends HttpServlet{
 					
 					int result = reviewService.insertReview(reviewVO);
 					
-					if (result == 1) {
-						out.print("success");
+					if (result > 0) {
+						out.print(Integer.toString(result));
 					} else {
 						out.print("fail");
 					}
