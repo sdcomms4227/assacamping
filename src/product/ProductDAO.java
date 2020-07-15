@@ -222,26 +222,68 @@ public class ProductDAO {
 		return 0;
 	}
 
-	public int checkProductQuantity(int productNo) {
+	public int getProductQuantity(int productNo) {
 
 		String sql = "";
 				
 		try {
 			conn = dbUtil.DBConnection.getConnection();
-
-			sql = "select productQuantity from product"
-					+ " where productNo=?";
-					
+			sql = "select productQuantity from product where productNo=?";					
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, productNo);
-			
+			pstmt.setInt(1, productNo);			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				return rs.getInt(1);
 			}
 		} catch(Exception e) {
-			System.out.println("getProductCount()메소드 내부에서 오류 : " + e.toString());
+			System.out.println("getProductQuantity()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return 0;		
+	}
+
+	public int incrementProductQuantity(int productNo, int quantityCount) {
+
+		String sql = "";
+				
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+			
+			sql = "update product set productQuantity = productQuantity + ? where productNo=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, quantityCount);
+			pstmt.setInt(2, productNo);
+			
+			return pstmt.executeUpdate();			
+		} catch(Exception e) {
+			System.out.println("incrementProductQuantity()메소드 내부에서 오류 : " + e.toString());
+		} finally {
+			freeResource();
+		}
+		
+		return 0;
+	}
+
+	public int decrementProductQuantity(int productNo, int quantityCount) {
+
+		String sql = "";
+				
+		try {
+			conn = dbUtil.DBConnection.getConnection();
+
+			sql = "update product set productQuantity = productQuantity - ? where productNo=?";
+					
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, quantityCount);
+			pstmt.setInt(2, productNo);
+			
+			return pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("decrementProductQuantity()메소드 내부에서 오류 : " + e.toString());
 		} finally {
 			freeResource();
 		}
