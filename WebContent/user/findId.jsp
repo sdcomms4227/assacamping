@@ -28,7 +28,7 @@
 	
 	<!-- Home -->	
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/user.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -47,7 +47,7 @@
 		<div class="container body-container my-5 py-5">
 			<c:choose>
 				<c:when test="${userId == null }">
-					<form name="f"class="findIdForm" action="${contextPath}/userServlet/findIdAction.do" method="post" onsubmit="return check();">
+					<form name="f" class="findIdForm" action="${contextPath}/userServlet/findIdAction.do" method="post" onsubmit="return check();">
 						<h4 class="form-text mb-4">이름과 이메일를 입력해 주세요.</h4>
 						<div class="form-label-group">
 							<input type="text" class="form-control" placeholder="이름" name="userName" id="userName" required autofocus />

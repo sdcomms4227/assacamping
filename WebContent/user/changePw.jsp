@@ -29,13 +29,13 @@
 	
 	<!-- Home -->	
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/user.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					<div class="home_container">
 						<div class="home_content">
-							<div class="home_title">비밀번호 변경</div>
+							<div class="home_title">비밀번호수정</div>
 						</div>
 					</div>
 				</div>

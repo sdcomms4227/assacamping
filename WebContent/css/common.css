@@ -340,9 +340,15 @@ section
 
 .logo a
 {
+	display: block;
+	width: 80px;
 	font-family: 'Lucida', serif;
 	font-size: 30px;
 	color: #2f2f2f;
+}
+.logo a img
+{
+	max-width: 100%;
 }
 
 /*********************************
