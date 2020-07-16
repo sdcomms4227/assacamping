@@ -3,7 +3,7 @@
 
 <header class="header">
 	<div class="header_inner d-flex flex-row align-items-center justify-content-start">
-		<div class="logo"><a href="${contextPath}">ASSA</a></div>
+		<div class="logo"><a href="${contextPath}"><img src="${contextPath}/images/logo.jpg" alt="ASSA Camping" /></a></div>
 		<nav class="main_nav">
 			<ul>
 				<li><a href="${contextPath}/productServlet/listProduct.do">캠핑상품</a></li>

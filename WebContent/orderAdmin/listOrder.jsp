@@ -65,10 +65,7 @@
 							<td class="align-middle">${productFmtPayment}</td>
 							<td class="align-middle">${orderVO.userName}</td>
 							<td class="align-middle">${productFormattedDate}</td>
-							<td class="align-middle ${orderVO.orderState eq '결제취소' ? 'text-danger' : ''}">
-								${orderVO.orderState}
-								<button type="button" class="btn btn-warning btn-sm ml-2" onclick="changeOrderState(event)">변경</button>
-							</td>
+							<td class="align-middle ${orderVO.orderState eq '결제취소' ? 'text-danger' : ''}">${orderVO.orderState}</td>
 						</tr>
 					</c:forEach>
 				</c:otherwise>

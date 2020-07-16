@@ -57,33 +57,30 @@
 				
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(${contextPath}/images/main2.jpg)"></div>
+					<div class="home_slider_background" style="background-image:url(${contextPath}/images/home_slider_1.jpg)"></div>
 					<div class="home_slider_content">
 						<div class="home_slider_content_inner">
-							<div class="home_slider_subtitle">Promo Prices</div>
-							<div class="home_slider_title">New Collection</div>
+							<div class="home_slider_title">ASSA Camping</div>
 						</div>	
 					</div>
 				</div>
 
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(${contextPath}/images/main3.jpg)"></div>
+					<div class="home_slider_background" style="background-image:url(${contextPath}/images/home_slider_2.jpg)"></div>
 					<div class="home_slider_content">
 						<div class="home_slider_content_inner">
-							<div class="home_slider_subtitle">Promo Prices</div>
-							<div class="home_slider_title">New Collection</div>
+							<div class="home_slider_title">ASSA Camping</div>
 						</div>	
 					</div>
 				</div>
 
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(${contextPath}/images/main4.jpg)"></div>
+					<div class="home_slider_background" style="background-image:url(${contextPath}/images/home_slider_3.jpg)"></div>
 					<div class="home_slider_content">
 						<div class="home_slider_content_inner">
-							<div class="home_slider_subtitle">Promo Prices</div>
-							<div class="home_slider_title">New Collection</div>
+							<div class="home_slider_title">ASSA Camping</div>
 						</div>	
 					</div>
 				</div>
@@ -132,7 +129,7 @@
 				<div  class="col-lg-4 promo_col">
 					<div class="promo_item">
 						<div class="promo_image">
-							<img class="img1" src="${contextPath}/files/main/1.jpg" alt="">
+							<img class="img1" src="${contextPath}/images/promo_1.jpg" alt="텐트 할인">
 							<div class="promo_content promo_content_1">
 								<div class="promo_title">-30% off</div>
 								<div class="promo_subtitle">텐트 할인</div>
@@ -146,7 +143,7 @@
 				<div class="col-lg-4 promo_col">
 					<div class="promo_item">
 						<div class="promo_image">
-							<img src="${contextPath}/files/main/2.png" alt="">
+							<img src="${contextPath}/images/promo_2.jpg" alt="침낭 / 매트 할인">
 							<div class="promo_content promo_content_2">
 								<div class="promo_title">-30% off</div>
 								<div class="promo_subtitle">침낭 / 매트 할인</div>
@@ -160,7 +157,7 @@
 				<div class="col-lg-4 promo_col">
 					<div class="promo_item">
 						<div class="promo_image">
-							<img src="${contextPath}/files/main/3.jpg"  alt="">
+							<img src="${contextPath}/images/promo_3.jpg"  alt="캠핑소품 할인">
 							<div class="promo_content promo_content_3">
 								<div class="promo_title">-25% off</div>
 								<div class="promo_subtitle">캠핑소품 할인</div>
@@ -268,16 +265,16 @@
 
 	<div class="extra clearfix">
 		<div class="extra_promo extra_promo_1">
-			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra1.jpg)"></div>
+			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra_1.jpg)"></div>
 			<div class="extra_1_content d-flex flex-column align-items-center justify-content-center text-center">
 				<div class="extra_1_price">30%<span>off</span></div>
 				<div class="extra_1_title">On all shoes</div>
 				<div class="extra_1_text">*Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra.</div>
-				<div class="button extra_1_button"><a href="checkout.html">check out</a></div>
+				<div class="button extra_1_button"><a href="${contextPath}/productServlet/listProduct.do">check out</a></div>
 			</div>
 		</div>
 		<div class="extra_promo extra_promo_2">
-			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra2.jpg)"></div>
+			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra_2.jpg)"></div>
 			<div class="extra_2_content d-flex flex-column align-items-center justify-content-center text-center">
 				<div class="extra_2_title">
 					<div class="extra_2_center">&</div>
@@ -285,7 +282,7 @@
 					<div class="extra_2_bottom">Match</div>
 				</div>
 				<div class="extra_2_text">*Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra.</div>
-				<div class="button extra_2_button"><a href="checkout.html">check out</a></div>
+				<div class="button extra_2_button"><a href="${contextPath}/productServlet/listProduct.do">check out</a></div>
 			</div>
 		</div>
 	</div>
@@ -293,7 +290,7 @@
 	<!-- Gallery -->
 
 	<div class="gallery">
-		<div class="gallery_image" style="background-image:url(${contextPath}/files/main/12.jpg)"></div>
+		<div class="gallery_image" style="background-image:url(${contextPath}/images/gallery.jpg)"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -305,7 +302,7 @@
 						</ul>
 					</div>
 					<div class="gallery_text text-center">*Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra.</div>
-					<div class="button gallery_button"><a href="#">submit</a></div>
+					<div class="button gallery_button"><a href="${contextPath}/campingServlet/listCamping.do">캠핑정보</a></div>
 				</div>
 			</div>
 		</div>	
@@ -316,43 +313,43 @@
 				
 				<!-- Gallery Item -->
 				<div class="owl-item gallery_item">
-					<a class="colorbox" href="${contextPath}/files/main/10.jpg">
-						<img src="${contextPath}/files/main/10.jpg" alt="">
+					<a class="colorbox" href="${contextPath}/images/gallery_1.jpg">
+						<img src="${contextPath}/images/gallery_1.jpg" alt="">
 					</a>
 				</div>
 
 				<!-- Gallery Item -->
 				<div class="owl-item gallery_item">
-					<a class="colorbox" href="${contextPath}/files/main/11.jpg">
-						<img src="${contextPath}/files/main/11.jpg" alt="">
+					<a class="colorbox" href="${contextPath}/images/gallery_2.jpg">
+						<img src="${contextPath}/images/gallery_2.jpg" alt="">
 					</a>
 				</div>
 
 				<!-- Gallery Item -->
 				<div class="owl-item gallery_item">
-					<a class="colorbox" href="${contextPath}/files/main/6.jpg">
-						<img src="${contextPath}/files/main/6.jpg" alt="">
+					<a class="colorbox" href="${contextPath}/images/gallery_3.jpg">
+						<img src="${contextPath}/images/gallery_3.jpg" alt="">
 					</a>
 				</div>
 
 				<!-- Gallery Item -->
 				<div class="owl-item gallery_item">
-					<a class="colorbox" href="${contextPath}/files/main/7.jpg">
-						<img src="${contextPath}/files/main/7.jpg" alt="">
+					<a class="colorbox" href="${contextPath}/images/gallery_4.jpg">
+						<img src="${contextPath}/images/gallery_4.jpg" alt="">
 					</a>
 				</div>
 
 				<!-- Gallery Item -->
 				<div class="owl-item gallery_item">
-					<a class="colorbox" href="${contextPath}/files/main/8.jpg">
-						<img src="${contextPath}/files/main/8.jpg" alt="">
+					<a class="colorbox" href="${contextPath}/images/gallery_5.jpg">
+						<img src="${contextPath}/images/gallery_5.jpg" alt="">
 					</a>
 				</div>
 
 				<!-- Gallery Item -->
 				<div class="owl-item gallery_item">
-					<a class="colorbox" href="${contextPath}/files/main/9.jpg">
-						<img src="${contextPath}/files/main/9.jpg" alt="">
+					<a class="colorbox" href="${contextPath}/images/gallery_6.jpg">
+						<img src="${contextPath}/images/gallery_6.jpg" alt="">
 					</a>
 				</div>
 
@@ -382,7 +379,7 @@
 						<div class="owl-item">
 							<div class="test_text">“Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestibulum ultrices nulla. Aliquam egestas tempor leo.”</div>
 							<div class="test_content">
-								<div class="test_image"><img src="${contextPath}/files/main/4.jpg" alt=""></div>
+								<div class="test_image"><img src="${contextPath}/images/testimonials.jpg" alt=""></div>
 								<div class="test_name">Christinne Smith</div>
 								<div class="test_title">client</div>
 							</div>
@@ -392,7 +389,7 @@
 						<div class="owl-item">
 							<div class="test_text">“Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestibulum ultrices nulla. Aliquam egestas tempor leo.”</div>
 							<div class="test_content">
-								<div class="test_image"><img src="${contextPath}/files/main/5.jpg" alt=""></div>
+								<div class="test_image"><img src="${contextPath}/images/testimonials.jpg" alt=""></div>
 								<div class="test_name">Christinne Smith</div>
 								<div class="test_title">client</div>
 							</div>
@@ -402,7 +399,7 @@
 						<div class="owl-item">
 							<div class="test_text">“Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestibulum ultrices nulla. Aliquam egestas tempor leo.”</div>
 							<div class="test_content">
-								<div class="test_image"><img src="${contextPath}/files/main/13.jpg" alt=""></div>
+								<div class="test_image"><img src="${contextPath}/images/testimonials.jpg" alt=""></div>
 								<div class="test_name">Christinne Smith</div>
 								<div class="test_title">client</div>
 							</div>
