@@ -58,26 +58,35 @@ public class ProductController extends HttpServlet{
 
 			setPagination(request);
 			
-			Map<String, Object> searchMap = new HashMap<String, Object>();
-			searchMap.put("pageNo", request.getAttribute("pageNo"));
-			searchMap.put("searchKeyword", request.getAttribute("searchKeyword"));
-			searchMap.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
-			searchMap.put("sortType", request.getAttribute("sortType"));
+			Map<String, Object> searchMap1 = new HashMap<String, Object>();
+			
+			searchMap1.put("pageNo", request.getAttribute("pageNo"));
+			searchMap1.put("searchKeyword", request.getAttribute("searchKeyword"));
+			searchMap1.put("searchCategoryNo", request.getAttribute("searchCategoryNo"));
+			searchMap1.put("sortType", request.getAttribute("sortType"));
 
-			Map<String, Object> productListMap = productService.listProduct(searchMap);			
+			Map<String, Object> productListMap = productService.listProduct(searchMap1);			
 			request.setAttribute("productListMap", productListMap);
 			
 			List<ProductCategoryVO> productCategoryList = productCategoryService.listProductCategory();			
 			request.setAttribute("productCategoryList", productCategoryList);
 
 			// Best Sellers
-			searchMap.put("pageNo", 1);
-			searchMap.put("searchKeyword", "");
-			searchMap.put("searchCategoryNo", 0);
-			searchMap.put("sortType", "best");
+			Map<String, Object> searchMap2 = new HashMap<String, Object>();
+			searchMap2.put("pageNo", 1);
+			searchMap2.put("searchKeyword", "");
+			searchMap2.put("searchCategoryNo", 0);
+			searchMap2.put("sortType", "best");
 
-			Map<String, Object> bestSellersListMap = productService.listProduct(searchMap);			
+			Map<String, Object> bestSellersListMap = productService.listProduct(searchMap2);			
 			request.setAttribute("bestSellersListMap", bestSellersListMap);
+			
+			System.out.println("==========");
+			System.out.println("pageNo: " + request.getAttribute("pageNo"));
+			System.out.println("searchKeyword: " + request.getAttribute("searchKeyword"));
+			System.out.println("searchCategoryNo: " + request.getAttribute("searchCategoryNo"));
+			System.out.println("sortType: " + request.getAttribute("sortType"));
+			
 			
 			nextPage = "/product/listProduct.jsp";
 			

@@ -475,7 +475,7 @@
 {
 	width: 100%;
 }
-.review_form div
+.review_form > div
 {
 	width: 100%;
 }
