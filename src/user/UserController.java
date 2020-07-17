@@ -276,10 +276,12 @@ public class UserController extends HttpServlet {
 			}else if(action.equals("/findPw.do")){
 				String userId = request.getParameter("userId");
 				String userEmail = request.getParameter("userEmail");
+				System.out.println("id;"+userId);
+				System.out.println("pw;" + userEmail);
 				String userPw = userDAO.findPw(userId,userEmail);
 				request.setAttribute("userEmail", userEmail);
 				request.setAttribute("userPw", userPw);
-				nextPage = "/userCon/sendMail.do";
+				nextPage = "/userServlet/sendMail.do";
 			}else if(action.equals("/sendMail.do")) {
 				Object userEmail = request.getAttribute("userEmail");
 				Object userPw = request.getAttribute("userPw");

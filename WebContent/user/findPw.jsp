@@ -23,8 +23,8 @@ request.setCharacterEncoding("UTF-8");
 </c:choose>
 </head>
 <body>
-		<form name="f" action="${contextPath}/userCon/findPw.do" method="post" >
-			<h2>아이디 찾기</h2>
+		<form name="f" action="${contextPath}/userServlet/findPw.do" method="post" >
+			<h2>비밀번호 찾기</h2>
 				<label>아이디</label>
 					<input type="text" name="userId" required>	
 				<label>이메일</label>
