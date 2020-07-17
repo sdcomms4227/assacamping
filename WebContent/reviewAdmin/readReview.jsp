@@ -80,7 +80,15 @@
 					</tr>
 					<tr>
 						<th class="align-middle">별점</th>
-						<td>${starRating}</td>
+						<td>
+							<div class="rating rating_${starRating}">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
