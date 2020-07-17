@@ -666,7 +666,7 @@ function qnaDelete(qnaNo){
 
 function scrollTop(target){
 	var top = $(target).offset().top;
-	$("html, boyd").animate({
+	$("html, body").animate({
 		scrollTop : top + "px"
 	},400);
 }

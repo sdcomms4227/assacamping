@@ -37,7 +37,7 @@
 
 	<!-- Home -->
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/categories.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="${contextPath}/images/product.jpg" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -310,9 +310,9 @@
 			<div class="sidebar_promo_2 sidebar_promo">
 				<div class="sidebar_promo_image" style="background-image: url(${contextPath}/images/sidebar_promo_2.jpg)"></div>
 				<div class="sidebar_promo_content text-center">
-					<div class="sidebar_promo_title">30%<span>off</span></div>
-					<div class="sidebar_promo_subtitle">침낭 / 매트 할인</div>
-					<div class="sidebar_promo_button"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=3">바로가기</a></div>
+					<div class="sidebar_promo_title">25%<span>off</span></div>
+					<div class="sidebar_promo_subtitle">캠핑소품 할인</div>
+					<div class="sidebar_promo_button"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=8">바로가기</a></div>
 				</div>
 			</div>
 		</div>

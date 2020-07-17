@@ -46,10 +46,7 @@
 						</tr>
 						<tr>
 							<th>주문상태</th>
-							<td>
-								${orderState}
-								<button type="button" class="btn btn-warning btn-sm ml-2" onclick="changeOrderState()">변경</button>
-							</td>
+							<td ${orderState eq '결제취소' ? 'class="text-danger"' : ''}">${orderState}</td>
 						</tr>
 					</tbody>
 				</table>

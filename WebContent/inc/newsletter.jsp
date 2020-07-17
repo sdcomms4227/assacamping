@@ -2,7 +2,7 @@
 <%@ include file="top.jsp"%>
 <div class="newsletter">
 	<div class="newsletter_content">
-		<div class="newsletter_image" style="background-image:url(${contextPath}/images/news3.jpg)"></div>
+		<div class="newsletter_image" style="background-image:url(${contextPath}/images/newsletter.jpg)"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
