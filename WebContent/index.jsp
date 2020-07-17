@@ -268,7 +268,7 @@
 			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra_1.jpg)"></div>
 			<div class="extra_1_content d-flex flex-column align-items-center justify-content-center text-center">
 				<div class="extra_1_price">30%<span>off</span></div>
-				<div class="extra_1_title">On all shoes</div>
+				<div class="extra_1_title">On all Tent</div>
 				<div class="extra_1_text">*Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra.</div>
 				<div class="button extra_1_button"><a href="${contextPath}/productServlet/listProduct.do">check out</a></div>
 			</div>
