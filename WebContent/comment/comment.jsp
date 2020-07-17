@@ -82,8 +82,6 @@
 			var _url = '${contextPath}/commentServlet/listComment.do';
 			var _commentListInfo = '{"eventNo":"'+${eventNo}+'"}';
 			
-			console.log(${eventNo});
-			
 		    $.ajax({
 		        url : _url,
 		        type : 'post',
@@ -127,7 +125,10 @@
 								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentUpdate('+no+',\''+content+'\')">수정</button>';
 								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentDelete('+no+')">삭제</button>';
 							}
-							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentReply('+no+')">답변</button>';
+							if('${userId}' != '') {
+								a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="commentReply('+no+')">답변</button>';	
+							}
+							
 							a += '</td>';
 							a += '<td class="d-none d-lg-table-cell text-center align-middle">';
 							a += '<small>'+date+'</small>';
