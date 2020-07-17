@@ -37,17 +37,21 @@ public class ProductDAO {
 		String sortType = (String)searchMap.get("sortType");
 		String orderByString = "";
 		String sql = "";
+		
+		if(sortType==null || sortType.equals("")) {
+			sortType = "new";
+		}
 
 		if (sortType.equals("new")) {
-			orderByString = "pr.productNo desc";
+			orderByString = "pr.productDate desc, pr.productNo desc";
 		} else if (sortType.equals("best")) {
 			orderByString = "pr.productRating desc, pr.productNo desc";
 		} else if (sortType.equals("minprice")) {
-			orderByString = "pr.productPrice asc";
+			orderByString = "pr.productPrice asc, pr.productNo desc";
 		} else if (sortType.equals("maxprice")) {
-			orderByString = "pr.productPrice desc";
+			orderByString = "pr.productPrice desc, pr.productNo desc";
 		} else {
-			orderByString = "pr.productNo desc";
+			orderByString = "pr.productDate desc, pr.productNo desc";
 		}
 		
 		try {

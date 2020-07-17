@@ -5,7 +5,7 @@
 <c:set var="beginNo" value="${(pageNo-1) - (pageNo-1)%10 + 1}" />
 <c:set var="endNo" value="${beginNo + 9}" />
 <c:set var="numberPerPage" value="12" />
-<c:set var="sortType" value="${sortType}" />
+<c:set var="sortType" value="${sortType!=null?sortType:'new'}" />
 <c:set var="bestSellersList" value="${bestSellersListMap.productList}" />
 <!DOCTYPE html>
 <html lang="kr">
@@ -348,9 +348,11 @@
 <script>
 function listProduct(pageNo,sortType){
 	var form = document.pagingForm;
-	form.action = "${contextPath}/productServlet/listProduct.do";	
+	form.action = "${contextPath}/productServlet/listProduct.do";
 	form.pageNo.value = pageNo;
-	form.sortType.value = sortType;
+	if(sortType){
+		form.sortType.value = sortType;		
+	}
 	form.submit();
 }
 

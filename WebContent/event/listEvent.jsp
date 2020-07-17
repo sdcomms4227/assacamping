@@ -89,8 +89,6 @@
 			</c:choose>
 		</div>
 		
-		
-		
 		<c:if test="${totEvents != null}">
 			<div class="row">
 				<div class="col-12">

@@ -217,21 +217,56 @@
 									
 									<c:if test="${userId != null}">
 										<div>
-											<label>
-												<input type="radio" name="review_start_raing" value="1"/>1
-											</label>
-											<label>
-												<input type="radio" name="review_start_raing" value="2"/>2
-											</label>
-											<label>
-												<input type="radio" name="review_start_raing"  value="3"/>3
-											</label>
-											<label>
-												<input type="radio" name="review_start_raing"  value="4"/>4
-											</label>
-											<label>
-												<input type="radio" name="review_start_raing" value="5" checked/>5
-											</label>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" name="review_start_raing" id="review_start_raing_5" value="5" class="custom-control-input" checked/>
+												<label class="custom-control-label cursor-pointer rating rating_5" for="review_start_raing_5">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</label>
+											</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" name="review_start_raing" id="review_start_raing_4" value="4" class="custom-control-input"/>
+												<label class="custom-control-label cursor-pointer rating rating_4" for="review_start_raing_4">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</label>
+											</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" name="review_start_raing" id="review_start_raing_3" value="3" class="custom-control-input"/>
+												<label class="custom-control-label cursor-pointer rating rating_3" for="review_start_raing_3">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</label>
+											</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" name="review_start_raing" id="review_start_raing_2" value="2" class="custom-control-input"/>
+												<label class="custom-control-label cursor-pointer rating rating_2" for="review_start_raing_2">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</label>
+											</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" name="review_start_raing" id="review_start_raing_1" value="1" class="custom-control-input"/>
+												<label class="custom-control-label cursor-pointer rating rating_1" for="review_start_raing_1">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</label>
+											</div>
 										</div>
 										<textarea class="review_form_text" name="review_form_text" id="review_form_text" placeholder="리뷰를 등록하세요.(최대 2048자)"  maxlength="2048"></textarea>
 										<div class="d-flex justify-content-end">
@@ -304,6 +339,7 @@
 	<input type="hidden" name="pageNo" value="${pageNo}" />
 	<input type="hidden" name="searchKeyword" value="${searchKeyword}" />
 	<input type="hidden" name="searchCategoryNo" value="${searchCategoryNo}" />
+	<input type="hidden" name="sortType" value="${sortType}" />
 </form>
 
 <script src="${contextPath}/js/jquery-3.2.1.min.js"></script>
@@ -374,7 +410,7 @@ function reviewList(){
 					a += '<div class="review_text">';
 					a += '<p>'+content+'</p>';
 					if('${userId}' == id || '${userId}' == 'admin'){
-						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="reviewDelete('+no+')">삭제</button>';
+						a += '<button type="button" class="btn btn-sm btn-danger mt-2" onclick="reviewDelete('+no+')">삭제</button>';
 					}
 					a += '</div>';
 					a += '</div>';
@@ -548,12 +584,12 @@ function qnaList(){
 					a += '<div class="qna_text">';
 					a += '<p>'+content+'</p>';
 					if('${userId}' == id){
-						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button></div>';
+						a += '<button type="button" class="btn btn-sm btn-danger mt-2" onclick="qnaDelete('+no+')">삭제</button></div>';
 					}
 					if('${userId}' == 'admin'){
-						a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="qnaDelete('+no+')">삭제</button>';
+						a += '<button type="button" class="btn btn-sm btn-danger mt-2" onclick="qnaDelete('+no+')">삭제</button>';
 						if(answer == null){
-							a += '<button type="button" class="btn btn-sm btn-danger ml-2" onclick="location.href='+'\'${contextPath}/qnaAdminServlet/answerQna.do?qnaNo='+no+'\'">답변</button></div>';
+							a += '<button type="button" class="btn btn-sm btn-danger mt-2 ml-2" onclick="location.href='+'\'${contextPath}/qnaAdminServlet/answerQna.do?qnaNo='+no+'\'">답변</button></div>';
 						} else {
 							a += '<div class="qna_content">';
 							a += '<div class="qna_name"><b>[답변]관리자</b></div>';
