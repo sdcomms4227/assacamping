@@ -261,32 +261,6 @@
 		</div>
 	</div>
 
-	<!-- Extra -->
-
-	<div class="extra clearfix">
-		<div class="extra_promo extra_promo_1">
-			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra_1.jpg)"></div>
-			<div class="extra_1_content d-flex flex-column align-items-center justify-content-center text-center">
-				<div class="extra_1_price">30%<span>off</span></div>
-				<div class="extra_1_title">On all Tent</div>
-				<div class="extra_1_text">*Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra.</div>
-				<div class="button extra_1_button"><a href="${contextPath}/productServlet/listProduct.do">check out</a></div>
-			</div>
-		</div>
-		<div class="extra_promo extra_promo_2">
-			<div class="extra_promo_image" style="background-image:url(${contextPath}/images/extra_2.jpg)"></div>
-			<div class="extra_2_content d-flex flex-column align-items-center justify-content-center text-center">
-				<div class="extra_2_title">
-					<div class="extra_2_center">&</div>
-					<div class="extra_2_top">Mix</div>
-					<div class="extra_2_bottom">Match</div>
-				</div>
-				<div class="extra_2_text">*Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra.</div>
-				<div class="button extra_2_button"><a href="${contextPath}/productServlet/listProduct.do">check out</a></div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Gallery -->
 
 	<div class="gallery">
@@ -355,61 +329,6 @@
 
 			</div>
 		</div>	
-	</div>
-
-	<!-- Testimonials -->
-
-	<div class="testimonials">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container text-center">
-						<div class="section_subtitle">only the best</div>
-						<div class="section_title">testimonials</div>
-					</div>
-				</div>
-			</div>
-			<div class="row test_slider_container">
-				<div class="col">
-
-					<!-- Testimonials Slider -->
-					<div class="owl-carousel owl-theme test_slider text-center">
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_text">“Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestibulum ultrices nulla. Aliquam egestas tempor leo.”</div>
-							<div class="test_content">
-								<div class="test_image"><img src="${contextPath}/images/testimonials.jpg" alt=""></div>
-								<div class="test_name">Christinne Smith</div>
-								<div class="test_title">client</div>
-							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_text">“Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestibulum ultrices nulla. Aliquam egestas tempor leo.”</div>
-							<div class="test_content">
-								<div class="test_image"><img src="${contextPath}/images/testimonials.jpg" alt=""></div>
-								<div class="test_name">Christinne Smith</div>
-								<div class="test_title">client</div>
-							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_text">“Integer ut imperdiet erat. Quisque ultricies lectus tellus, eu tristique magna pharetra nec. Fusce vel lorem libero. Integer ex mi, facilisis sed nisi ut, vestibulum ultrices nulla. Aliquam egestas tempor leo.”</div>
-							<div class="test_content">
-								<div class="test_image"><img src="${contextPath}/images/testimonials.jpg" alt=""></div>
-								<div class="test_name">Christinne Smith</div>
-								<div class="test_title">client</div>
-							</div>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<!-- Newsletter -->
