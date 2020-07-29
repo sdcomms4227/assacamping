@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-				<div class="footer_logo"><a href="${contextPath}"><img src="${contextPath}/images/footer_logo.jpg" alt="ASSA Camping" /></a></div>
+				<div class="footer_logo"><a href="${contextPath}/"><img src="${contextPath}/images/footer_logo.jpg" alt="ASSA Camping" /></a></div>
 				<nav class="footer_nav mt-5">
 					<ul>
 						<li><a href="${contextPath}/productServlet/listProduct.do">캠핑상품</a></li>

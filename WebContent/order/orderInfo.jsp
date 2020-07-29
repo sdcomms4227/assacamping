@@ -94,7 +94,7 @@
 	
 	<div class="row my-5">
 		<div class="col-12 text-center">
-			<a class="btn btn-secondary" href="${contextPath}">홈</a>
+			<a class="btn btn-secondary" href="${contextPath}/">홈</a>
 			<a class="btn btn-secondary" href="${contextPath}/orderServlet/myOrderList.do">나의 주문 내역</a>
 		</div>
 	</div>

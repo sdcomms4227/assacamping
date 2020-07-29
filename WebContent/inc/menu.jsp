@@ -2,7 +2,7 @@
 <%@ include file="top.jsp"%>
 <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
 	<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-	<div class="logo menu_mm"><a href="${contextPath}">ASSA</a></div>
+	<div class="logo menu_mm"><a href="${contextPath}/">ASSA</a></div>
 	<div class="search">
 		<form name="menuSearch" action="${contextPath}/productServlet/listProduct.do" method="post">
 			<div class="search_input">
