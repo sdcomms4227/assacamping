@@ -135,7 +135,7 @@
 								<div class="promo_subtitle">텐트 할인</div>
 							</div>
 						</div>
-						<div class="promo_link"><a href="${contextPath}/files/product/listProduct.do?searchCategoryNo=1">Shop Now</a></div>
+						<div class="promo_link"><a href="${contextPath}/productServlet/listProduct.do?searchCategoryNo=1">Shop Now</a></div>
 					</div>
 				</div>
 
@@ -210,7 +210,7 @@
 									</div>
 									<div class="product_content clearfix">
 										<div class="product_info">
-											<div class="product_name"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productNo}">${productVO.productName}</a></div>
+											<div class="product_name"><a href="${contextPath}/productServlet/readProduct.do?productNo=${productVO.productNo}">${productVO.productName}</a></div>
 											<c:choose>
 												<c:when test="${productVO.productQuantity > 0}">
 													<div class="product_price">${productFormattedPrice}</div>
