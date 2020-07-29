@@ -80,7 +80,7 @@
 			</tbody>
 		</table>
 		<div class="text-center my-5">
-			<a class="btn btn-secondary" href="${contextPath}">홈</a>
+			<a class="btn btn-secondary" href="${contextPath}/">홈</a>
 		</div>
 	</article>
 
@@ -123,7 +123,7 @@
 			</tbody>
 		</table>
 		<div class="text-center my-5">
-			<a class="btn btn-secondary" href="${contextPath}">홈</a>
+			<a class="btn btn-secondary" href="${contextPath}/">홈</a>
 		</div>
 	</article> --%>
 	
